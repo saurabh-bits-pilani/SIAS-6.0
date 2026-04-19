@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star, Clock, Users, Home } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
+import { SERVICES_CATALOG } from '../data/schema-entities';
 
 const Services = () => {
   const { category } = useParams<{ category: string }>();
@@ -177,8 +179,21 @@ const Services = () => {
         title={seoContent.title}
         description={seoContent.description}
         keywords={seoContent.keywords}
-       image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_spiritual_altar_scene_in_a_serene.webp"
+        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_spiritual_altar_scene_in_a_serene.webp"
+        omitDefaultSchema
       />
+      {category && SERVICES_CATALOG.some((s) => s.category === category) ? (
+        <SchemaMarkup
+          type="service-category"
+          webPage={{
+            name: seoContent.title,
+            description: seoContent.description,
+            url: `/services/${category}`,
+          }}
+        />
+      ) : (
+        <SchemaMarkup type="services-list" />
+      )}
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">

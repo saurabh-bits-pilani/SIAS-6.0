@@ -54,7 +54,7 @@ describe('SEOHead', () => {
     });
   });
 
-  it('injects a LocalBusiness JSON-LD script', async () => {
+  it('injects a LocalBusiness JSON-LD script with canonical NAP', async () => {
     renderAt('/', <SEOHead />);
     await waitFor(() => {
       const script = document.querySelector(
@@ -62,8 +62,24 @@ describe('SEOHead', () => {
       );
       expect(script).not.toBeNull();
       const parsed = JSON.parse(script?.textContent ?? '{}');
-      expect(parsed['@type']).toBe('LocalBusiness');
-      expect(parsed.founder?.name).toBe('Saurabh Jain');
+      // @type is now an array so Google can treat it as both
+      // ProfessionalService and LocalBusiness.
+      expect(parsed['@type']).toEqual(['ProfessionalService', 'LocalBusiness']);
+      expect(parsed.name).toBe('Soul Infinity Astro Solutions');
+      expect(parsed.address?.postalCode).toBe('382501');
+      // Person is a separate entity; LocalBusiness references it by @id.
+      expect(parsed.founder?.['@id']).toContain('#saurabh-jain');
+    });
+  });
+
+  it('omits the default LocalBusiness schema when omitDefaultSchema is set', async () => {
+    renderAt('/', <SEOHead omitDefaultSchema />);
+    await waitFor(() => {
+      // With no explicit schemas prop and omitDefaultSchema, SEOHead emits
+      // no JSON-LD — the page's <SchemaMarkup /> is expected to handle it.
+      expect(
+        document.querySelector('script[type="application/ld+json"]'),
+      ).toBeNull();
     });
   });
 });

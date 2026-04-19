@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Star, Calendar, Users, Heart, ArrowRight, Sparkles, Gift, Target } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 
 interface ServiceCard {
   title: string;
@@ -78,7 +79,9 @@ const Home = () => {
         title="Vedic Astrology Consultation in Ahmedabad – Soul Infinity"
         description="Discover your cosmic path with Soul Infinity. Expert Vedic astrology, spiritual healing, and divine guidance by certified astrologer Saurabh Jain in Ahmedabad."
         keywords="soul infinity, vedic astrology, saurabh jain, spiritual guidance, astrology ahmedabad, KP astrology, BNN, ashtakavarga"
+        omitDefaultSchema
       />
+      <SchemaMarkup type="home" />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden" role="banner">

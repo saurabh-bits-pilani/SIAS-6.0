@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-
-type JsonLd = Record<string, unknown>;
+import { getLocalBusinessSchema, SITE_ORIGIN, type JsonLd } from '../data/schema-entities';
 
 interface SEOHeadProps {
   title?: string;
@@ -11,11 +10,16 @@ interface SEOHeadProps {
   url?: string;
   type?: string;
   robots?: string;
-  /** Extra JSON-LD objects to emit alongside the LocalBusiness schema. */
+  /**
+   * Extra JSON-LD objects to emit alongside the default LocalBusiness schema.
+   * Pages that render <SchemaMarkup /> can set `omitDefaultSchema` to true
+   * to avoid duplicate emissions (SchemaMarkup already emits LocalBusiness
+   * with the same @id, so duplicates merge cleanly, but omitting saves bytes).
+   */
   schemas?: readonly JsonLd[];
+  /** If true, skip the default LocalBusiness JSON-LD emission. */
+  omitDefaultSchema?: boolean;
 }
-
-const SITE_ORIGIN = import.meta.env.VITE_SITE_ORIGIN || 'https://soul-infinitycom.vercel.app';
 
 const SEOHead = ({
   title = 'Soul Infinity - Vedic Astrology & Spiritual Guidance by Saurabh Jain',
@@ -26,40 +30,15 @@ const SEOHead = ({
   type = 'website',
   robots = 'index, follow, max-image-preview:large, max-snippet:-1',
   schemas,
+  omitDefaultSchema = false,
 }: SEOHeadProps) => {
   const location = useLocation();
   const resolvedUrl = url ?? `${SITE_ORIGIN}${location.pathname}${location.search}`;
 
-  const localBusiness: JsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Soul Infinity',
-    description,
-    image,
-    url: resolvedUrl,
-    telephone: '+91-90790-53840',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Ahmedabad',
-      addressRegion: 'Gujarat',
-      addressCountry: 'India',
-    },
-    founder: {
-      '@type': 'Person',
-      name: 'Saurabh Jain',
-      jobTitle: 'Certified Professional Astrologer',
-      alumniOf: 'K.N. Rao Institute',
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      opens: '09:00',
-      closes: '21:00',
-    },
-    priceRange: '$$',
-  };
-
-  const allSchemas: JsonLd[] = [localBusiness, ...(schemas ?? [])];
+  const allSchemas: JsonLd[] = [
+    ...(omitDefaultSchema ? [] : [getLocalBusinessSchema()]),
+    ...(schemas ?? []),
+  ];
 
   return (
     <Helmet>

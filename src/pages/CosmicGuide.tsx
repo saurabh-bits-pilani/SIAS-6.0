@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Star, Award, Calendar, Users, GraduationCap, Heart, MapPin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 
 const CosmicGuide = () => {
   const guide = {
@@ -39,8 +40,10 @@ const CosmicGuide = () => {
         title="Our Cosmic Guide - Saurabh Jain | Certified Astrologer | Soul Infinity"
         description="Meet Saurabh Jain, certified professional astrologer from K.N. Rao Institute. Expert in Vedic Astrology, BNN, KP, and Ashtakavarga with 15+ years of experience in Ahmedabad."
         keywords="saurabh jain, astrologer ahmedabad, vedic astrology expert, KN rao institute, BNN astrology, KP astrology, ashtakavarga, certified astrologer"
-       image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
+        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
+        omitDefaultSchema
       />
+      <SchemaMarkup type="cosmic-guide" />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
