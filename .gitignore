@@ -49,3 +49,7 @@ public/robots.txt
 # from ROUTES + VITE_SITE_URL; same reasoning as robots.txt above.
 public/sitemap.xml
 
+# llms.txt manifest for AI crawlers — regenerated every build by
+# scripts/generate-llms.mjs. (llms-full.txt is emitted straight to dist/.)
+public/llms.txt
+

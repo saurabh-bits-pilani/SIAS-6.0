@@ -335,6 +335,88 @@ const Mantra = () => {
         </div>
       </section>
 
+      {/* Author box + TL;DR + Key Takeaways — AI-friendly front-matter so
+          ChatGPT / Perplexity / Claude can extract the core answer without
+          having to read the full article. */}
+      <section className="py-10 bg-surface">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          {/* Author box */}
+          <article className="flex items-center gap-4 bg-white rounded-2xl p-5 shadow-soft">
+            <img
+              src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
+              alt="Saurabh Jain - Certified Vedic astrologer in Ahmedabad"
+              width="64"
+              height="64"
+              loading="lazy"
+              className="w-16 h-16 rounded-full object-cover flex-shrink-0 border-2 border-primary-100"
+            />
+            <div>
+              <p className="font-semibold text-gray-900">
+                By <a href="/cosmic-guide" className="hover:underline">Saurabh Jain</a>
+              </p>
+              <p className="text-sm text-gray-600">
+                Certified Professional Astrologer, K.N. Rao Institute · M.Tech, MBA, M.Phil
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Saurabh has guided 200+ clients across Vedic astrology, BNN, and KP methods from his Ahmedabad practice.
+              </p>
+            </div>
+          </article>
+
+          {/* Quick Answer / TL;DR */}
+          <aside
+            aria-label="Quick answer"
+            className="bg-gradient-to-br from-primary-50 to-secondary-50 border border-primary-100 rounded-2xl p-6"
+          >
+            <p className="text-xs uppercase tracking-wide text-primary-700 font-semibold mb-2">
+              Quick Answer
+            </p>
+            <p className="text-gray-800 leading-relaxed">
+              <strong>Navagraha mantras</strong> are Sanskrit chants dedicated to the nine
+              planetary deities — Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu
+              (north node), and Ketu (south node). Each mantra is traditionally chanted
+              108 times on the planet&apos;s associated weekday (for example, Sun mantras on
+              Sunday, Moon on Monday) using a rosary to balance that planet&apos;s influence
+              in the reciter&apos;s birth chart. Below you&apos;ll find each mantra with its
+              Sanskrit text, English meaning, benefits, and a step-by-step chanting
+              protocol you can follow at home.
+            </p>
+          </aside>
+
+          {/* Key Takeaways */}
+          <aside
+            aria-label="Key takeaways"
+            className="bg-white border border-gray-200 rounded-2xl p-6"
+          >
+            <p className="text-xs uppercase tracking-wide text-gray-700 font-semibold mb-3">
+              Key Takeaways
+            </p>
+            <ul className="space-y-2 text-gray-800">
+              <li className="flex gap-2">
+                <span aria-hidden="true" className="text-primary-600 font-bold">→</span>
+                <span>There are <strong>nine Navagraha mantras</strong>, one per planetary deity in Vedic astrology.</span>
+              </li>
+              <li className="flex gap-2">
+                <span aria-hidden="true" className="text-primary-600 font-bold">→</span>
+                <span>Each mantra has a <strong>specific weekday, direction, and offering</strong> (e.g. Sun → east, sunrise, 108 recitations).</span>
+              </li>
+              <li className="flex gap-2">
+                <span aria-hidden="true" className="text-primary-600 font-bold">→</span>
+                <span>Regular chanting is traditionally used to <strong>strengthen benefic planets</strong> and <strong>mitigate malefic placements</strong> in a birth chart.</span>
+              </li>
+              <li className="flex gap-2">
+                <span aria-hidden="true" className="text-primary-600 font-bold">→</span>
+                <span>Always chant in a <strong>clean, quiet space</strong> with clear pronunciation; audio guides and transliterations are provided for each mantra below.</span>
+              </li>
+              <li className="flex gap-2">
+                <span aria-hidden="true" className="text-primary-600 font-bold">→</span>
+                <span>For a <strong>personalised remedial plan</strong> based on your birth chart, consider a <a href="/services/vedic-astrology/parashari-jyotish" className="text-primary-700 hover:underline">Parashari Jyotish consultation</a>.</span>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
       {/* Planet Tabs */}
       <section className="py-8 bg-white border-b border-gray-100 sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

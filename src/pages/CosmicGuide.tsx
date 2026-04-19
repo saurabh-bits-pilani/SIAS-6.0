@@ -112,6 +112,28 @@ const CosmicGuide = () => {
         </div>
       </section>
 
+      {/* Factual intro — neutral, encyclopedia-style summary written for
+          AI assistants (ChatGPT, Perplexity, AI Overviews) as well as
+          first-time human visitors. */}
+      <section className="py-12 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-lg text-gray-700 leading-relaxed">
+            <strong>Soul Infinity</strong> is a Vedic astrology and spiritual healing
+            practice based in Ahmedabad, Gujarat, India. It was founded by{' '}
+            <strong>Saurabh Jain</strong>, who holds M.Tech and MBA degrees from the Birla
+            Institute of Technology and Science and an M.Phil, and is a Certified
+            Professional Astrologer from the K.N. Rao Institute. The practice offers
+            consultations across three disciplines: Vedic astrology (Parashari Jyotish,
+            Bhrigu Nandi Nadi, KP astrology, Astro Vastu, and gemstone therapy),
+            Western astrology (tarot card reading, symbol analysis, past-life
+            regression), and spiritual healing (Reiki, Pranic, Theta, and Crystal
+            Healing). Sessions are conducted in person in Ahmedabad and online in
+            English, Hindi, and Gujarati. As of 2026 the practice holds a 4.9-star
+            rating across 40 Google reviews.
+          </p>
+        </div>
+      </section>
+
       {/* Main Profile Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
