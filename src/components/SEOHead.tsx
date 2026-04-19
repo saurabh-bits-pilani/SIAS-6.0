@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { getLocalBusinessSchema, SITE_ORIGIN, type JsonLd } from '../data/schema-entities';
+import { IS_STAGING } from '../config/site';
 
 type TwitterCard = 'summary' | 'summary_large_image' | 'app' | 'player';
 
@@ -29,6 +30,10 @@ interface SEOHeadProps {
 const DEFAULT_ROBOTS =
   'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const NOINDEX_ROBOTS = 'noindex, follow';
+// Staging environment blanket directive — applied to every route regardless
+// of per-page `robots`/`noindex` props. Keeps staging out of every crawler
+// index, including archives and snippets.
+const STAGING_ROBOTS = 'noindex, nofollow, noarchive, nosnippet';
 
 const SEOHead = ({
   title = 'Soul Infinity - Vedic Astrology & Spiritual Guidance by Saurabh Jain',
@@ -49,7 +54,13 @@ const SEOHead = ({
   const pathname = location.pathname === '/' ? '/' : location.pathname.replace(/\/$/, '');
   const resolvedUrl = url ?? `${SITE_ORIGIN}${pathname}${location.search}`;
 
-  const resolvedRobots = noindex ? NOINDEX_ROBOTS : (robots ?? DEFAULT_ROBOTS);
+  // Staging overrides everything. Otherwise: explicit `noindex` prop beats
+  // `robots`, which beats the site-wide default.
+  const resolvedRobots = IS_STAGING
+    ? STAGING_ROBOTS
+    : noindex
+      ? NOINDEX_ROBOTS
+      : (robots ?? DEFAULT_ROBOTS);
 
   const allSchemas: JsonLd[] = [
     ...(omitDefaultSchema ? [] : [getLocalBusinessSchema()]),

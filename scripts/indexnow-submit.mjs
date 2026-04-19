@@ -19,8 +19,14 @@ const ROOT = path.resolve(__dirname, '..');
 // file at /<KEY>.txt must contain this exact string byte-for-byte (no
 // trailing newline, no BOM) — search engines do a strict equality check.
 const KEY = '9d4e5c7a8b6f4a3d9e1c2b5a7d8e0f1c';
-const HOST = process.env.INDEXNOW_HOST || 'soul-infinitycom.vercel.app';
-const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
+const SITE_ENV = process.env.VITE_SITE_ENV === 'production' ? 'production' : 'staging';
+// Prefer VITE_SITE_URL (canonical origin) over legacy INDEXNOW_HOST var.
+const SITE_URL_RAW =
+  process.env.VITE_SITE_URL ||
+  (process.env.INDEXNOW_HOST ? `https://${process.env.INDEXNOW_HOST}` : 'https://soul-infinity-liard.vercel.app');
+const SITE_URL = SITE_URL_RAW.replace(/\/$/, '');
+const HOST = SITE_URL.replace(/^https?:\/\//, '');
+const KEY_LOCATION = `${SITE_URL}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 
 /** Log and exit 0 — keeps CI green even when IndexNow is unhappy. */
@@ -52,6 +58,13 @@ async function verifyLocalKeyFile() {
 }
 
 async function main() {
+  if (SITE_ENV !== 'production') {
+    console.log(
+      `[IndexNow] VITE_SITE_ENV=${SITE_ENV} — skipping submission. IndexNow only runs on production deploys to avoid wasting quota on preview/staging URLs.`,
+    );
+    process.exit(0);
+  }
+
   await verifyLocalKeyFile();
 
   const sitemapPath = path.join(ROOT, 'public', 'sitemap.xml');

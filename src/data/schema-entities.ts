@@ -10,6 +10,7 @@
  */
 
 import reviewsDataRaw from './google-reviews.json';
+import { SITE_URL } from '../config/site';
 
 interface ReviewSnapshot {
   id: string;
@@ -36,9 +37,11 @@ interface ReviewsSnapshot {
 // `never[]`, so we assert the runtime shape explicitly.
 const reviewsData = reviewsDataRaw as ReviewsSnapshot;
 
-export const SITE_ORIGIN =
-  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SITE_ORIGIN) ||
-  'https://soul-infinitycom.vercel.app';
+/**
+ * Re-export canonical SITE_URL as SITE_ORIGIN for backward compat across
+ * the codebase. Source of truth is src/config/site.ts.
+ */
+export const SITE_ORIGIN = SITE_URL;
 
 /** Stable IDs for cross-entity references. */
 export const SCHEMA_IDS = {

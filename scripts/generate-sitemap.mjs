@@ -12,7 +12,12 @@ import { ROUTES } from './prerender.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.resolve(__dirname, '..', 'public');
 
-const SITE_ORIGIN = process.env.VITE_SITE_ORIGIN || 'https://soul-infinitycom.vercel.app';
+// Canonical origin lives in VITE_SITE_URL (set in Vercel env). Falls back
+// to the expected production URL so builds outside Vercel still work.
+const SITE_ORIGIN =
+  process.env.VITE_SITE_URL ||
+  process.env.VITE_SITE_ORIGIN ||
+  'https://soul-infinity-liard.vercel.app';
 
 // Routes excluded from the sitemap. /404 is prerendered as dist/404.html for
 // Vercel's unmatched-route convention; linking it from the sitemap would make

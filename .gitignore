@@ -40,3 +40,12 @@ coverage/
 # on fresh checkout (via postinstall) so TypeScript imports always resolve.
 src/data/google-reviews.json
 
+# robots.txt is regenerated every build by scripts/generate-robots.mjs
+# based on VITE_SITE_ENV (staging/production). Keeping a stale committed
+# copy would conflict with env-dependent output.
+public/robots.txt
+
+# sitemap.xml is regenerated every build by scripts/generate-sitemap.mjs
+# from ROUTES + VITE_SITE_URL; same reasoning as robots.txt above.
+public/sitemap.xml
+

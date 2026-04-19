@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import StagingBanner from '../components/StagingBanner';
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,6 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="min-h-screen bg-white font-body">
+      <StagingBanner />
       <Header />
       <main>
         {children}

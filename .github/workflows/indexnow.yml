@@ -26,6 +26,10 @@ jobs:
         run: sleep 90
 
       - name: Submit URLs to IndexNow
+        # The script itself bails early when VITE_SITE_ENV != "production",
+        # but gating here saves a setup-node run on staging deploys.
+        if: vars.VITE_SITE_ENV == 'production'
         run: node scripts/indexnow-submit.mjs
         env:
-          INDEXNOW_HOST: soul-infinitycom.vercel.app
+          VITE_SITE_ENV: ${{ vars.VITE_SITE_ENV }}
+          VITE_SITE_URL: ${{ vars.VITE_SITE_URL }}
