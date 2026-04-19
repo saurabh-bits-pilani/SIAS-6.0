@@ -109,28 +109,21 @@ function Stars({ rating, size = 'w-4 h-4' }: { rating: number; size?: string }) 
 interface AvatarProps {
   name: string;
   initial: string;
-  photoUrl: string | null;
 }
 
-function Avatar({ name, initial, photoUrl }: AvatarProps) {
-  if (photoUrl) {
-    return (
-      <img
-        src={photoUrl}
-        alt=""
-        aria-hidden="true"
-        width="40"
-        height="40"
-        loading="lazy"
-        referrerPolicy="no-referrer"
-        className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-      />
-    );
-  }
+/**
+ * Google Places API (New) `authorAttribution.photoUri` values are served
+ * from lh3.googleusercontent.com with strict CORS that blocks cross-origin
+ * <img> loads on most setups — browsers render a broken-image icon. We
+ * deliberately ignore `authorPhotoUrl` from the snapshot and always render
+ * a coloured-initial circle. The JSON retains the field for forward-compat
+ * if Google ever relaxes the policy.
+ */
+function Avatar({ name, initial }: AvatarProps) {
   return (
     <div
       aria-hidden="true"
-      className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0"
+      className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm uppercase flex-shrink-0"
       style={{ backgroundColor: avatarColor(name) }}
     >
       {initial}
@@ -142,11 +135,7 @@ function ReviewCard({ review }: { review: Review }) {
   return (
     <article className="relative bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition-shadow duration-300 flex flex-col">
       <div className="flex items-center gap-3 mb-3">
-        <Avatar
-          name={review.author}
-          initial={review.authorInitial}
-          photoUrl={review.authorPhotoUrl}
-        />
+        <Avatar name={review.author} initial={review.authorInitial} />
         <div className="min-w-0 flex-1">
           <p className="font-medium text-gray-900 truncate">{review.author}</p>
           <p className="text-xs text-gray-500 flex items-center gap-1">
