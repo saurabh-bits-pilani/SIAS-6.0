@@ -19,7 +19,8 @@ const NotFound = () => {
         <div className="absolute inset-0 opacity-10">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/luxurious_close_up_of_a_spiritual_arrangement_on.webp" 
-            alt="Cosmic Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
         </div>

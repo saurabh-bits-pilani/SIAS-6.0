@@ -81,7 +81,9 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-3">
             <img 
               src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png" 
-              alt="Soul Infinity Logo" 
+              alt="Soul Infinity - Vedic Astrology & Spiritual Guidance Ahmedabad"
+              width="40"
+              height="40"
               className="w-10 h-10 object-contain"
             />
             <div>

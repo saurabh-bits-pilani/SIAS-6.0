@@ -22,6 +22,7 @@ const Footer = () => {
     name: string;
     icon: string;
     href: string;
+    altText: string;
   }
 
   const whatsappPhone = import.meta.env.VITE_WHATSAPP_PHONE || '919079053840';
@@ -31,16 +32,19 @@ const Footer = () => {
       name: 'Facebook',
       icon: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Icons/facebook.png',
       href: 'https://www.facebook.com/people/Soul-Infinity/',
+      altText: 'Facebook - Soul Infinity page',
     },
     {
       name: 'WhatsApp',
       icon: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Icons/whatsapp_2504957.png',
       href: `https://wa.me/${whatsappPhone}`,
+      altText: 'WhatsApp - Contact Saurabh Jain',
     },
     {
       name: 'Quora',
       icon: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Icons/quora.png',
       href: 'https://www.quora.com/profile/Saurabh-Jain-Soul-Infinity',
+      altText: 'Quora - Saurabh Jain profile',
     },
   ];
 
@@ -51,9 +55,12 @@ const Footer = () => {
           {/* Brand */}
           <div className="xl:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <img 
-                src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png" 
-                alt="Soul Infinity Logo" 
+              <img
+                src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png"
+                alt="Soul Infinity logo"
+                width="40"
+                height="40"
+                loading="lazy"
                 className="w-10 h-10 object-contain"
               />
               <div>
@@ -132,9 +139,12 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors p-2"
                 >
-                  <img 
-                    src={social.icon} 
-                    alt={social.name} 
+                  <img
+                    src={social.icon}
+                    alt={social.altText}
+                    width="24"
+                    height="24"
+                    loading="lazy"
                     className="w-full h-full object-contain"
                   />
                 </a>

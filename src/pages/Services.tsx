@@ -219,7 +219,8 @@ const Services = () => {
         <div className="absolute inset-0">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_spiritual_altar_scene_in_a_serene.webp" 
-            alt="Spiritual Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/60"></div>
@@ -369,7 +370,8 @@ const Services = () => {
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Cosmic-time.jpg" 
-            alt="Cosmic Background" 
+            alt=""
+            aria-hidden="true" 
             className="w-full h-full object-cover"
           />
         </div>

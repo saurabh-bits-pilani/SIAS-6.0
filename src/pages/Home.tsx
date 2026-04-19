@@ -256,9 +256,10 @@ const Home = () => {
               <div className="relative mb-8">
                 <img
                   src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
-                  alt="Saurabh Jain"
+                  alt="Saurabh Jain - Certified Vedic astrologer in Ahmedabad"
                   width="160"
                   height="160"
+                  loading="lazy"
                   className="w-40 h-40 rounded-full mx-auto object-cover border-4 border-primary-100 shadow-lg"
                 />
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-4 py-2 rounded-full text-sm font-semibold">

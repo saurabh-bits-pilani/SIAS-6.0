@@ -51,7 +51,8 @@ const CosmicGuide = () => {
         <div className="absolute inset-0">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp" 
-            alt="Spiritual Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/60"></div>
@@ -126,9 +127,10 @@ const CosmicGuide = () => {
                 <div className="relative mb-8">
                   <img
                     src={guide.image}
-                    alt={guide.name}
+                    alt={`${guide.name} - Certified Vedic astrologer in Ahmedabad`}
                     width="256"
                     height="256"
+                    loading="lazy"
                     className="w-64 h-64 rounded-3xl mx-auto lg:mx-0 object-cover border-4 border-white shadow-lg"
                   />
                   <div className="absolute -bottom-4 left-1/2 lg:left-32 transform -translate-x-1/2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
@@ -294,7 +296,8 @@ const CosmicGuide = () => {
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Spritual%20BG-5.jpg" 
-            alt="Cosmic Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
         </div>

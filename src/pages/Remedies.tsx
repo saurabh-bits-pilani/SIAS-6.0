@@ -232,9 +232,10 @@ const Remedies = () => {
       {/* Hero Banner Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
-            src={remediesData.banner.image} 
-            alt="Planetary Remedies Banner" 
+          <img
+            src={remediesData.banner.image}
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
             loading="lazy"
           />
@@ -582,7 +583,8 @@ const Remedies = () => {
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Cosmic%20Music.jpg" 
-            alt="Cosmic Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
         </div>

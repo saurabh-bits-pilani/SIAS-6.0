@@ -738,7 +738,8 @@ const PitraDosh = () => {
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Cosmic%20Music.jpg" 
-            alt="Cosmic Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
         </div>

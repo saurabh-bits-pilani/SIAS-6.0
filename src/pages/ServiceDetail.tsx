@@ -726,7 +726,10 @@ const ServiceDetail = () => {
           >
             <img
               src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
-              alt="Saurabh Jain"
+              alt="Saurabh Jain - Certified Vedic astrologer in Ahmedabad"
+              width="96"
+              height="96"
+              loading="lazy"
               className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary-100 mb-6"
             />
             <h3 className="font-heading font-bold text-2xl text-gray-900 mb-2">
@@ -785,7 +788,8 @@ const ServiceDetail = () => {
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Cosmic-time.jpg" 
-            alt="Cosmic Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
         </div>

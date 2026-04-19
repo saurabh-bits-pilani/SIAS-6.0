@@ -142,7 +142,8 @@ const Gallery = () => {
         <div className="absolute inset-0">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/luxurious_close_up_of_a_spiritual_arrangement_on.webp" 
-            alt="Spiritual Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
             loading="lazy"
           />
@@ -336,7 +337,8 @@ const Gallery = () => {
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Cosmic%20Music.jpg" 
-            alt="Cosmic Background" 
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
         </div>
