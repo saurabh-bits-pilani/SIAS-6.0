@@ -2,6 +2,11 @@
 // Submit every URL from public/sitemap.xml to IndexNow so Bing, Yandex, Naver,
 // and Seznam hear about the latest deploy. Zero-dep; regex-extracts <loc>
 // entries from the sitemap.
+//
+// Failure mode: IndexNow outages, rate-limits, or ownership-verification
+// glitches MUST NOT break CI. This script logs errors verbosely and exits 0
+// unless something upstream is broken (missing sitemap, no URLs). SEO
+// self-heals on the next push.
 
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -11,20 +16,58 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 // IndexNow keys are public — they identify the site, not a secret. The key
-// file at /<KEY>.txt must contain this exact string and is how search
-// engines verify ownership of the URLs being submitted.
+// file at /<KEY>.txt must contain this exact string byte-for-byte (no
+// trailing newline, no BOM) — search engines do a strict equality check.
 const KEY = '9d4e5c7a8b6f4a3d9e1c2b5a7d8e0f1c';
 const HOST = process.env.INDEXNOW_HOST || 'soul-infinitycom.vercel.app';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 
-async function main() {
-  const sitemapPath = path.join(ROOT, 'public', 'sitemap.xml');
-  const xml = await fs.readFile(sitemapPath, 'utf-8');
-  const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+/** Log and exit 0 — keeps CI green even when IndexNow is unhappy. */
+function softFail(message, detail) {
+  console.warn(`[IndexNow] ${message}`);
+  if (detail) console.warn(detail);
+  console.warn('[IndexNow] Submission failed but continuing — SEO will self-heal on next push.');
+  process.exit(0);
+}
 
+/** Verify local key file matches the hardcoded KEY. Drift = broken IndexNow. */
+async function verifyLocalKeyFile() {
+  const filePath = path.join(ROOT, 'public', `${KEY}.txt`);
+  try {
+    const contents = await fs.readFile(filePath, 'utf-8');
+    if (contents !== KEY) {
+      console.warn(
+        `[IndexNow] WARNING: public/${KEY}.txt does not match KEY byte-for-byte.`,
+      );
+      console.warn(`  file bytes (${contents.length}): ${JSON.stringify(contents)}`);
+      console.warn(`  expected (${KEY.length}): ${JSON.stringify(KEY)}`);
+      console.warn('  IndexNow will reject ownership until this is fixed.');
+    } else {
+      console.log(`[IndexNow] Local key file verified (${contents.length} bytes, exact match).`);
+    }
+  } catch (err) {
+    console.warn(`[IndexNow] WARNING: could not read public/${KEY}.txt — ${err.message}`);
+  }
+}
+
+async function main() {
+  await verifyLocalKeyFile();
+
+  const sitemapPath = path.join(ROOT, 'public', 'sitemap.xml');
+  let xml;
+  try {
+    xml = await fs.readFile(sitemapPath, 'utf-8');
+  } catch (err) {
+    // Missing sitemap is an upstream pipeline bug — fail loudly.
+    console.error(`[IndexNow] sitemap.xml not found at ${sitemapPath}`);
+    console.error(err.message);
+    process.exit(1);
+  }
+
+  const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   if (urls.length === 0) {
-    console.error('No <loc> entries found in sitemap.xml — aborting.');
+    console.error('[IndexNow] No <loc> entries found in sitemap.xml — aborting.');
     process.exit(1);
   }
 
@@ -35,28 +78,35 @@ async function main() {
     urlList: urls,
   };
 
-  console.log(`Submitting ${urls.length} URL(s) to IndexNow for ${HOST}…`);
+  console.log(`[IndexNow] Submitting ${urls.length} URL(s) for ${HOST}…`);
 
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json; charset=utf-8' },
-    body: JSON.stringify(payload),
-  });
+  let res;
+  try {
+    res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json; charset=utf-8' },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    softFail('Network error contacting IndexNow endpoint.', err.message);
+    return;
+  }
 
-  const body = await res.text();
+  const body = await res.text().catch(() => '');
 
   if (res.ok) {
-    console.log(`IndexNow accepted the submission (HTTP ${res.status}).`);
+    console.log(`[IndexNow] Accepted (HTTP ${res.status}).`);
     if (body) console.log(body);
     return;
   }
 
-  console.error(`IndexNow rejected the submission (HTTP ${res.status}):`);
-  console.error(body || '(empty body)');
-  process.exit(1);
+  // Non-2xx: log the full error so future diagnostics are easy, but exit 0.
+  softFail(
+    `Submission rejected (HTTP ${res.status} ${res.statusText}).`,
+    body || '(empty body)',
+  );
 }
 
 main().catch((err) => {
-  console.error('IndexNow submit crashed:', err);
-  process.exit(1);
+  softFail('Submit script crashed unexpectedly.', err?.stack || String(err));
 });
