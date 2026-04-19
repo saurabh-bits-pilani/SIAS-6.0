@@ -226,6 +226,9 @@ const CosmicPodcast = () => {
                   <img
                     src={featuredEpisode.image}
                     alt={featuredEpisode.title}
+                    width="800"
+                    height="450"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 left-4">
@@ -304,6 +307,9 @@ const CosmicPodcast = () => {
                   <img
                     src={episode.image}
                     alt={episode.title}
+                    width="400"
+                    height="192"
+                    loading="lazy"
                     className="w-full h-48 object-cover"
                   />
                   <div className="absolute top-4 left-4">

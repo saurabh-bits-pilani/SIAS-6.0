@@ -5,9 +5,11 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 import ErrorBoundary from './components/ErrorBoundary';
 import { initAnalytics } from './utils/analytics';
+import { initWebVitals } from './utils/web-vitals';
 import './index.css';
 
 initAnalytics();
+initWebVitals();
 
 const container = document.getElementById('root')!;
 

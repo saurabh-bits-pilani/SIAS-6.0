@@ -155,11 +155,13 @@ const PitraDosh = () => {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <img
             src={mediaLinks.heroImage}
-            alt="Ancestral Portrait Wall - Pitra Dosh" 
-            className="w-full h-full object-cover"
+            alt="Ancestral Portrait Wall - Pitra Dosh"
+            width="1920"
+            height="1080"
             loading="lazy"
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/60"></div>
         </div>
@@ -288,6 +290,9 @@ const PitraDosh = () => {
                   <img
                     src={image.url}
                     alt={image.title}
+                    width="400"
+                    height="192"
+                    loading="lazy"
                     className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -438,6 +443,9 @@ const PitraDosh = () => {
                   <img
                     src={image.url}
                     alt={image.title}
+                    width="400"
+                    height="192"
+                    loading="lazy"
                     className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -614,6 +622,9 @@ const PitraDosh = () => {
                 <img
                   src={allImages[currentImageIndex].url}
                   alt={allImages[currentImageIndex].title}
+                  width="1200"
+                  height="384"
+                  loading="lazy"
                   className="w-full h-96 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>

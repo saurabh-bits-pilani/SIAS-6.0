@@ -158,6 +158,9 @@ const Blog = () => {
                   <img
                     src={featuredPost.image}
                     alt={featuredPost.title}
+                    width="800"
+                    height="450"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 left-4">
@@ -231,6 +234,9 @@ const Blog = () => {
                   <img
                     src={post.image}
                     alt={post.title}
+                    width="400"
+                    height="192"
+                    loading="lazy"
                     className="w-full h-48 object-cover"
                   />
                   <div className="absolute top-4 left-4">

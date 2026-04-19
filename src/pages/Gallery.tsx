@@ -211,6 +211,9 @@ const Gallery = () => {
                   <img
                     src={image.src}
                     alt={image.title}
+                    width="400"
+                    height="400"
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
@@ -283,6 +286,8 @@ const Gallery = () => {
                 <img
                   src={selectedImage.src}
                   alt={selectedImage.title}
+                  width="1200"
+                  height="900"
                   className="w-full h-auto max-h-[70vh] object-contain"
                 />
               </div>

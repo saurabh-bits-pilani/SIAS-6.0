@@ -230,6 +230,9 @@ const Home = () => {
                 <img
                   src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Ganesha%205.jpeg"
                   alt="Lord Ganesha, remover of obstacles and divine guide"
+                  width="1200"
+                  height="600"
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/60"></div>

@@ -621,6 +621,9 @@ const ServiceDetail = () => {
               <img
                 src={currentService.image}
                 alt={currentService.title}
+                width="1200"
+                height="384"
+                fetchPriority="high"
                 className="w-full h-96 object-cover rounded-2xl shadow-soft"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
