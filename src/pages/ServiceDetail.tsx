@@ -778,7 +778,7 @@ const ServiceDetail = () => {
           </div>
           <p className="text-gray-600 inline-flex items-center justify-center">
             <MapPin className="w-4 h-4 mr-2 text-primary-500" aria-hidden="true" />
-            The D3 Medows, Adani Shantigram, Ahmedabad, Gujarat 382421, India
+            The Meadows, D3 901, Adani Shantigram, Khodiyar, Ahmedabad, Gujarat 382501, India
           </p>
         </div>
       </section>

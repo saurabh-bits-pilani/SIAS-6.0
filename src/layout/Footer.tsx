@@ -160,9 +160,9 @@ const Footer = () => {
                 <MapPin className="w-4 h-4 text-primary-500 mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-gray-400">
-                    The D3 Medows<br />
-                    Adani Shantigram<br />
-                    Ahmedabad, Gujarat 382421<br />
+                    The Meadows, D3 901<br />
+                    Adani Shantigram, Khodiyar<br />
+                    Ahmedabad, Gujarat 382501<br />
                     India
                   </p>
                 </div>
@@ -247,7 +247,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © 2025 Soul Infinity. All rights reserved.
+            © 2026 Soul Infinity. All rights reserved.
           </p>
         </div>
       </div>

@@ -73,7 +73,7 @@ const contactInfo: readonly ContactInfoItem[] = [
     id: 'address',
     icon: MapPin,
     title: 'Visit Our Center',
-    details: ['The D3 Medows', 'Adani Shantigram', 'Ahmedabad, Gujarat 382421', 'India'],
+    details: ['The Meadows, D3 901', 'Adani Shantigram, Khodiyar', 'Ahmedabad, Gujarat 382501', 'India'],
     color: 'text-primary-500',
   },
   {
