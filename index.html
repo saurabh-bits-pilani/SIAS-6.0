@@ -2,8 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f97316" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f97316" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
 
     <!-- Default SEO meta. Per-route components override these via react-helmet-async. -->
     <title>Soul Infinity – Vedic Astrology & Spiritual Guidance by Saurabh Jain</title>
@@ -26,6 +28,14 @@
     <meta name="twitter:description" content="Vedic astrology, spiritual healing, and divine guidance by certified astrologer Saurabh Jain in Ahmedabad." />
     <meta name="twitter:image" content="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png" />
 
+    <!-- iOS / Android app-like behavior -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Soul Infinity" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/favicon_io/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/favicon_io/apple-touch-icon.png" />
@@ -36,6 +46,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev" crossorigin />
+    <link rel="dns-prefetch" href="https://pub-6dc6a649f1bd48ceb877305103f5ac87.r2.dev" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" />
 
     <!-- Preload the actual LCP hero image used by Home.tsx -->
@@ -85,6 +96,44 @@
           "closes": "15:00"
         }
       ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Soul Infinity",
+      "url": "https://soul-infinitycom.vercel.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://soul-infinitycom.vercel.app/blog?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Soul Infinity",
+      "url": "https://soul-infinitycom.vercel.app/",
+      "logo": "https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png",
+      "sameAs": [
+        "https://www.facebook.com/people/Soul-Infinity/",
+        "https://www.quora.com/profile/Saurabh-Jain-Soul-Infinity",
+        "https://wa.me/919079053840"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-90790-53840",
+        "contactType": "customer service",
+        "email": "soul.infinity.astro@gmail.com",
+        "areaServed": "IN",
+        "availableLanguage": ["en", "hi", "gu"]
+      }
     }
     </script>
 

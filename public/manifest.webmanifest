@@ -1,0 +1,27 @@
+{
+  "name": "Soul Infinity – Vedic Astrology & Spiritual Guidance",
+  "short_name": "Soul Infinity",
+  "description": "Vedic astrology, spiritual healing, and divine guidance by certified astrologer Saurabh Jain in Ahmedabad.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["lifestyle", "health", "spirituality"],
+  "icons": [
+    {
+      "src": "https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/favicon_io/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/favicon_io/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

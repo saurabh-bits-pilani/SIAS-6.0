@@ -514,6 +514,58 @@ const ServiceDetail = () => {
         description={currentService.description}
         keywords={`${currentService.title.toLowerCase()}, ${category.replace('-', ' ')}, spiritual guidance, consultation, saurabh jain, soul infinity`}
         image={currentService.image}
+        schemas={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: currentService.title,
+            description: currentService.longDescription,
+            provider: {
+              '@type': 'LocalBusiness',
+              name: 'Soul Infinity',
+              url: 'https://soul-infinitycom.vercel.app/',
+            },
+            areaServed: {
+              '@type': 'City',
+              name: 'Ahmedabad',
+            },
+            offers: {
+              '@type': 'Offer',
+              price: currentService.price.replace(/[^\d]/g, ''),
+              priceCurrency: 'INR',
+              availability: 'https://schema.org/InStock',
+            },
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: currentService.rating,
+              reviewCount: currentService.clients,
+              bestRating: 5,
+              worstRating: 1,
+            },
+            serviceType: categoryNames[category],
+            termsOfService: `Consultation duration: ${currentService.duration}`,
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://soul-infinitycom.vercel.app/' },
+              { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://soul-infinitycom.vercel.app/services' },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: categoryNames[category],
+                item: `https://soul-infinitycom.vercel.app/services/${category}`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 4,
+                name: currentService.title,
+                item: `https://soul-infinitycom.vercel.app/services/${category}/${service}`,
+              },
+            ],
+          },
+        ]}
       />
 
       {/* Breadcrumb */}

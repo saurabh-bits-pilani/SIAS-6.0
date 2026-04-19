@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
+type JsonLd = Record<string, unknown>;
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
@@ -9,6 +11,8 @@ interface SEOHeadProps {
   url?: string;
   type?: string;
   robots?: string;
+  /** Extra JSON-LD objects to emit alongside the LocalBusiness schema. */
+  schemas?: readonly JsonLd[];
 }
 
 const SITE_ORIGIN = import.meta.env.VITE_SITE_ORIGIN || 'https://soul-infinitycom.vercel.app';
@@ -21,11 +25,12 @@ const SEOHead = ({
   url,
   type = 'website',
   robots = 'index, follow, max-image-preview:large, max-snippet:-1',
+  schemas,
 }: SEOHeadProps) => {
   const location = useLocation();
   const resolvedUrl = url ?? `${SITE_ORIGIN}${location.pathname}${location.search}`;
 
-  const structuredData = {
+  const localBusiness: JsonLd = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'Soul Infinity',
@@ -54,6 +59,8 @@ const SEOHead = ({
     priceRange: '$$',
   };
 
+  const allSchemas: JsonLd[] = [localBusiness, ...(schemas ?? [])];
+
   return (
     <Helmet>
       <title>{title}</title>
@@ -78,7 +85,11 @@ const SEOHead = ({
       <link rel="canonical" href={resolvedUrl} />
 
       {/* JSON-LD Structured Data */}
-      <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+      {allSchemas.map((schema, i) => (
+        <script key={`ld-${i}`} type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      ))}
     </Helmet>
   );
 };

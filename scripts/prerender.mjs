@@ -106,9 +106,21 @@ async function main() {
         }
       }
 
-      const outDir = route === '/' ? DIST : path.join(DIST, route);
-      await fs.mkdir(outDir, { recursive: true });
-      await fs.writeFile(path.join(outDir, 'index.html'), page);
+      // Special case: /404 is written as dist/404.html (not dist/404/index.html)
+      // so Vercel's built-in "404.html" convention serves it with a real HTTP
+      // 404 status for any unmatched route. This is the cleanest way to avoid
+      // the soft-404 pattern without introducing a serverless function.
+      let targetPath;
+      if (route === '/404') {
+        targetPath = path.join(DIST, '404.html');
+      } else if (route === '/') {
+        targetPath = path.join(DIST, 'index.html');
+      } else {
+        const outDir = path.join(DIST, route);
+        await fs.mkdir(outDir, { recursive: true });
+        targetPath = path.join(outDir, 'index.html');
+      }
+      await fs.writeFile(targetPath, page);
 
       results.push({ route, status: 'ok', ms: Date.now() - started });
     } catch (err) {
