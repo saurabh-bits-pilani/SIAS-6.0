@@ -12,7 +12,7 @@ const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 const SSR_ENTRY = path.join(ROOT, 'dist-ssr', 'entry-server.js');
 
-const ROUTES = [
+export const ROUTES = [
   '/',
   '/services',
   '/services/vedic-astrology',
@@ -144,7 +144,11 @@ async function main() {
   console.log(`\nPrerendered ${results.length} routes.`);
 }
 
-main().catch((err) => {
-  console.error('Prerender failed:', err);
-  process.exit(1);
-});
+// Only run when executed directly (e.g. `node scripts/prerender.mjs`), not
+// when imported for its exports (e.g. generate-sitemap.mjs reuses ROUTES).
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error('Prerender failed:', err);
+    process.exit(1);
+  });
+}
