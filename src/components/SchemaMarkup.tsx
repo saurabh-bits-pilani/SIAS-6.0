@@ -18,6 +18,7 @@ import {
   type BreadcrumbCrumb,
   type JsonLd,
   type ServiceEntry,
+  type ServiceOfferOpts,
 } from '../data/schema-entities';
 
 export type SchemaPageType =
@@ -36,6 +37,8 @@ interface SchemaMarkupProps {
   type: SchemaPageType;
   /** Required for `service-detail`. */
   service?: ServiceEntry;
+  /** Optional pricing/duration for `service-detail` Offer schema. */
+  serviceOffer?: ServiceOfferOpts;
   /** Required for `blog-post`. */
   post?: BlogPostMeta;
   /** Auto-constructed for known types, but can be overridden. */
@@ -101,7 +104,7 @@ function schemasForType(props: SchemaMarkupProps): JsonLd[] {
         throw new Error('SchemaMarkup: type="service-detail" requires service prop');
       }
       const { service } = props;
-      out.push(getServiceSchema(service));
+      out.push(getServiceSchema(service, props.serviceOffer));
       out.push(
         props.breadcrumbs
           ? getBreadcrumbSchema(props.breadcrumbs)

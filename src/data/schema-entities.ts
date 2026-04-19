@@ -386,9 +386,17 @@ export function getServiceUrl(service: Pick<ServiceEntry, 'category' | 'slug'>):
   return `${SITE_ORIGIN}/services/${service.category}/${service.slug}`;
 }
 
+export interface ServiceOfferOpts {
+  /** Numeric price (rupees). Pass the raw number, not a formatted string. */
+  price?: number;
+  priceCurrency?: string;
+  /** Human-readable duration, e.g. "60-90 minutes". Emitted as termsOfService. */
+  duration?: string;
+}
+
 /** Rich Service schema for an individual service page. */
-export function getServiceSchema(service: ServiceEntry): JsonLd {
-  return {
+export function getServiceSchema(service: ServiceEntry, opts: ServiceOfferOpts = {}): JsonLd {
+  const base: JsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: service.title,
@@ -400,10 +408,20 @@ export function getServiceSchema(service: ServiceEntry): JsonLd {
       '@type': name === 'Worldwide' ? 'Country' : 'Place',
       name,
     })),
-    // Offers intentionally omitted until real prices are published.
-    // TODO: add `offers: { '@type': 'Offer', price, priceCurrency: 'INR' }`
-    // per service when pricing is finalised; a hollow Offer is worse than none.
   };
+  if (opts.price != null) {
+    base.offers = {
+      '@type': 'Offer',
+      price: opts.price,
+      priceCurrency: opts.priceCurrency ?? 'INR',
+      availability: 'https://schema.org/InStock',
+      url: getServiceUrl(service),
+    };
+  }
+  if (opts.duration) {
+    base.termsOfService = `Consultation duration: ${opts.duration}`;
+  }
+  return base;
 }
 
 /** Compact Service entry for the /services ItemList. */
