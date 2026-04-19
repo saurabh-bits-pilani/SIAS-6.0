@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send, AlertCircle } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 import {
   validateContactForm,
   buildWhatsappUrl,
@@ -153,41 +154,9 @@ const Contact = () => {
         description="Get in touch with Saurabh Jain for personalized consultations. Available via phone, email, WhatsApp, or visit our center in Ahmedabad. Book your session today."
         keywords="contact astrologer, book consultation, spiritual guidance contact, saurabh jain contact, astrology appointment, ahmedabad astrologer"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/atmospheric_himalayan_cave_interior_lit_by_flickering.webp"
-        schemas={[
-          {
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: faqs.map((faq) => ({
-              '@type': 'Question',
-              name: faq.question,
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: faq.answer,
-              },
-            })),
-          },
-          {
-            '@context': 'https://schema.org',
-            '@type': 'ContactPage',
-            name: 'Contact Soul Infinity',
-            url: 'https://soul-infinitycom.vercel.app/contact',
-            mainEntity: {
-              '@type': 'LocalBusiness',
-              name: 'Soul Infinity',
-              telephone: '+91-90790-53840',
-              email: 'soul.infinity.astro@gmail.com',
-              address: {
-                '@type': 'PostalAddress',
-                streetAddress: 'The D3 Medows, Adani Shantigram',
-                addressLocality: 'Ahmedabad',
-                addressRegion: 'Gujarat',
-                postalCode: '382421',
-                addressCountry: 'IN',
-              },
-            },
-          },
-        ]}
+        omitDefaultSchema
       />
+      <SchemaMarkup type="contact" />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">

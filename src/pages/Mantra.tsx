@@ -5,6 +5,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 
 interface IconProps {
   className?: string;
@@ -257,6 +258,29 @@ const Mantra = () => {
         description="Discover powerful Navagraha mantras for the nine planets. Learn Sanskrit chants, meanings, benefits, and proper chanting techniques for spiritual growth and planetary harmony."
         keywords="navagraha mantras, planetary mantras, sanskrit chants, sun mantra, moon mantra, mars mantra, mercury mantra, jupiter mantra, venus mantra, saturn mantra, rahu mantra, ketu mantra, vedic chanting, spiritual mantras"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_himalayan_cave_illuminated_by_flickering_oil.webp"
+        omitDefaultSchema
+      />
+      <SchemaMarkup
+        type="blog-post"
+        post={{
+          headline: 'Navagraha Mantras — Sacred Chants for the Nine Planets',
+          description:
+            'Complete guide to Navagraha mantras: Sanskrit text, meaning, benefits, and chanting methodology for each of the nine planets.',
+          image:
+            'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_himalayan_cave_illuminated_by_flickering_oil.webp',
+          // TODO: replace placeholder dates with real publication history
+          // when authoring timestamps become available.
+          datePublished: '2025-01-15',
+          dateModified: '2026-04-19',
+          url: '/blog/mantra',
+          articleSection: 'Vedic Astrology',
+          keywords: [
+            'navagraha mantras',
+            'planetary mantras',
+            'sanskrit chants',
+            'vedic chanting',
+          ],
+        }}
       />
 
       {/* Hero Section */}

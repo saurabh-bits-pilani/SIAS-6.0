@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Shield, Eye, Lock, UserCheck } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 
 const Privacy = () => {
   const sections = [
@@ -58,6 +59,20 @@ const Privacy = () => {
         description="Learn how we protect your personal information and respect your privacy. Our commitment to data security and transparent practices for all spiritual consultations."
         keywords="privacy policy, data protection, cookie policy, confidentiality, personal information security"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/banner%2021.webp"
+        omitDefaultSchema
+      />
+      <SchemaMarkup
+        type="webpage"
+        webPage={{
+          name: 'Privacy Policy & Cookie Policy',
+          description:
+            "How Soul Infinity collects, uses, and protects personal information — including data from astrology consultations, contact forms, and site cookies.",
+          url: '/privacy',
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Privacy Policy', url: '/privacy' },
+        ]}
       />
 
       {/* Hero Section */}

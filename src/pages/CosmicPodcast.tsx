@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Calendar, Mic, ExternalLink } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 
 interface PodcastEpisode {
   id: number;
@@ -120,6 +121,20 @@ const CosmicPodcast = () => {
         description="Listen to our spiritual podcast featuring episodes on Vedic astrology, energy healing, meditation, and cosmic wisdom by Saurabh Jain."
         keywords="cosmic podcast, spiritual podcast, astrology podcast, vedic astrology audio, energy healing podcast, meditation podcast, saurabh jain podcast"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/atmospheric_himalayan_cave_interior_lit_by_flickering.webp"
+        omitDefaultSchema
+      />
+      <SchemaMarkup
+        type="webpage"
+        webPage={{
+          name: 'Cosmic Podcast — Spiritual Wisdom & Astrology Insights',
+          description:
+            'Podcast episodes on Vedic astrology, energy healing, meditation, and cosmic wisdom by Saurabh Jain.',
+          url: '/cosmic-podcast',
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Cosmic Podcast', url: '/cosmic-podcast' },
+        ]}
       />
 
       {/* Hero Section */}

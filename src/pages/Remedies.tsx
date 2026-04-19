@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Eye, Heart, Zap, Brain, Sun, Moon, Star, Clock, Flame } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 import { useModalDismiss } from '../hooks/useModalDismiss';
 
 interface RemedyEntry {
@@ -210,7 +211,22 @@ const Remedies = () => {
         title="Planetary Remedies - Ancient Healing Solutions | Soul Infinity"
         description="Discover powerful planetary remedies for spiritual healing and life enhancement. Learn traditional solutions for planetary imbalances with expert guidance from Saurabh Jain."
         keywords="planetary remedies, astrological healing, vedic remedies, spiritual solutions, planetary imbalances, aura cleansing, saurabh jain remedies"
-       image={remediesData.banner.image}
+        image={remediesData.banner.image}
+        omitDefaultSchema
+      />
+      <SchemaMarkup
+        type="webpage"
+        webPage={{
+          name: 'Planetary Remedies — Ancient Healing Solutions',
+          description:
+            'Traditional planetary remedies for spiritual healing, aura cleansing, and balancing planetary influences.',
+          url: '/gallery/remedies',
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Gallery', url: '/gallery' },
+          { name: 'Planetary Remedies', url: '/gallery/remedies' },
+        ]}
       />
 
       {/* Hero Banner Section */}

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Sun, Moon, Star, Clock } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 
 interface PanchangData {
   date: string;
@@ -96,7 +97,9 @@ const Panchang = () => {
         description="Check today's Panchang with Tithi, Nakshatra, Yoga, Karana, and auspicious timings. Plan your activities according to Vedic astrology."
         keywords="panchang, vedic calendar, tithi, nakshatra, yoga, karana, rahu kaal, muhurta, auspicious time"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp"
+        omitDefaultSchema
       />
+      <SchemaMarkup type="panchang" />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause, Users, Calendar, Heart, Star, ArrowLeft, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 import { Link } from 'react-router-dom';
 
 interface SymptomItem {
@@ -125,6 +126,21 @@ const PitraDosh = () => {
         description="Learn about Pitra Dosh, its causes, symptoms, and effective remedies. Discover traditional Shraddha ceremonies and mantras to seek ancestral blessings with Soul Infinity."
         keywords="pitra dosh, ancestral karma, shraddha ceremony, pitru paksha, ancestral blessings, pitra dosh remedy, soul infinity, saurabh jain, vedic rituals"
         image={mediaLinks.heroImage}
+        omitDefaultSchema
+      />
+      <SchemaMarkup
+        type="webpage"
+        webPage={{
+          name: 'Pitra Dosh — Causes, Symptoms & Remedies',
+          description:
+            'Causes, symptoms, and remedies for Pitra Dosh (ancestral karma), including traditional Shraddha ceremonies and mantras.',
+          url: '/gallery/pitra-dosh',
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Gallery', url: '/gallery' },
+          { name: 'Pitra Dosh', url: '/gallery/pitra-dosh' },
+        ]}
       />
 
       {/* Breadcrumb */}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 import { useModalDismiss } from '../hooks/useModalDismiss';
 
 interface GalleryImage {
@@ -119,7 +120,21 @@ const Gallery = () => {
         title="Gallery - Sacred Moments & Spiritual Sessions | Soul Infinity"
         description="Explore our gallery showcasing peaceful healing sessions, spiritual consultations, workshops, and sacred ceremonies. Witness the transformative power of our services."
         keywords="spiritual gallery, healing sessions, astrology consultations, reiki healing, meditation workshops, sacred ceremonies, saurabh jain"
-       image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Gallaery/dark_blue_cosmic_room_interior_with_golden.jpeg"
+        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Gallaery/dark_blue_cosmic_room_interior_with_golden.jpeg"
+        omitDefaultSchema
+      />
+      <SchemaMarkup
+        type="webpage"
+        webPage={{
+          name: 'Gallery — Sacred Moments & Spiritual Sessions',
+          description:
+            'Photo gallery showcasing healing sessions, spiritual consultations, workshops, and sacred ceremonies at Soul Infinity.',
+          url: '/gallery',
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Gallery', url: '/gallery' },
+        ]}
       />
 
       {/* Hero Section */}

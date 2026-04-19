@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, ExternalLink } from 'lucide-react';
 import { format } from 'date-fns';
 import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
 
 interface BlogPost {
   id: string;
@@ -81,7 +82,9 @@ const Blog = () => {
         description="Explore our collection of articles on Vedic astrology, spiritual growth, planetary wisdom, and cosmic insights by Saurabh Jain to support your spiritual journey."
         keywords="spiritual blog, astrology articles, vedic astrology insights, saurabh jain blog, planetary wisdom, spiritual growth, cosmic guidance"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Blog%20Images-%20Ancient%20Wisdom/2_rahu_ketu_mysteries_prompt_twin_shadowy_serpents_coiling.jpeg"
+        omitDefaultSchema
       />
+      <SchemaMarkup type="blog-list" />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
