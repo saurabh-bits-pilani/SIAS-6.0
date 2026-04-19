@@ -85,7 +85,7 @@ const Header = () => {
               className="w-10 h-10 object-contain"
             />
             <div>
-              <h1 className="font-heading font-bold text-xl text-white">Soul Infinity</h1>
+              <p className="font-heading font-bold text-xl text-white leading-none">Soul Infinity</p>
               <p className="text-sm text-gray-300 leading-none">Vedic Astrology & Spiritual Guidance</p>
             </div>
           </Link>

@@ -75,7 +75,7 @@ const Home = () => {
   return (
     <>
       <SEOHead
-        title="Free Vedic Astrology Consultation in Ahmedabad – Soul Infinity"
+        title="Vedic Astrology Consultation in Ahmedabad – Soul Infinity"
         description="Discover your cosmic path with Soul Infinity. Expert Vedic astrology, spiritual healing, and divine guidance by certified astrologer Saurabh Jain in Ahmedabad."
         keywords="soul infinity, vedic astrology, saurabh jain, spiritual guidance, astrology ahmedabad, KP astrology, BNN, ashtakavarga"
       />
@@ -116,7 +116,7 @@ const Home = () => {
             transition={{ duration: 1, delay: 0.5 }}
           >
             <h1 className="font-heading font-bold text-5xl md:text-7xl mb-6">
-              Free Vedic Astrology Consultation in Ahmedabad – <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Soul Infinity</span>
+              Vedic Astrology Consultation in Ahmedabad – <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Soul Infinity</span>
             </h1>
             <h2 className="text-xl md:text-2xl mb-4 max-w-4xl mx-auto leading-relaxed">
               One whose mind remains undisturbed in sorrow, who does not crave for pleasures,
