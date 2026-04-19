@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, ExternalLink } from 'lucide-react';
@@ -48,26 +48,16 @@ const categories: readonly string[] = [
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Blog = () => {
-  const [posts, setPosts] = useState<readonly BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [subscribeEmail, setSubscribeEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'error' | 'success'>('idle');
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPosts(mockPosts);
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const filteredPosts =
     selectedCategory === 'All'
-      ? posts
-      : posts.filter((post) => post.category === selectedCategory);
+      ? mockPosts
+      : mockPosts.filter((post) => post.category === selectedCategory);
 
-  const featuredPost = posts[0];
+  const featuredPost = mockPosts[0];
 
   const handleSubscribe = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -83,17 +73,6 @@ const Blog = () => {
     setSubscribeStatus('success');
     setSubscribeEmail('');
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading latest insights...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
