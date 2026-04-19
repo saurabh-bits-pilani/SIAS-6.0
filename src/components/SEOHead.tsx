@@ -10,7 +10,7 @@ interface SEOHeadProps {
   type?: string;
 }
 
-const SITE_ORIGIN = 'https://soul-infinity-liard.vercel.app';
+const SITE_ORIGIN = import.meta.env.VITE_SITE_ORIGIN || 'https://soul-infinitycom.vercel.app';
 
 const SEOHead = ({
   title = 'Soul Infinity - Vedic Astrology & Spiritual Guidance by Saurabh Jain',
