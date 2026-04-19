@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 interface IconProps {
   className?: string;
@@ -282,6 +283,13 @@ const Mantra = () => {
             'vedic chanting',
           ],
         }}
+      />
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Blog', href: '/blog' },
+          { label: 'Sacred Mantras Guide' },
+        ]}
       />
 
       {/* Hero Section */}

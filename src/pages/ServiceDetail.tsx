@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Star, Users, CheckCircle, ArrowRight, Phone, MessageCircle, MapPin } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { SERVICES_CATALOG } from '../data/schema-entities';
 
 interface ServiceOffering {
@@ -540,18 +541,14 @@ const ServiceDetail = () => {
         );
       })()}
 
-      {/* Breadcrumb */}
-      <section className="bg-surface py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-sm">
-            <Link to="/" className="text-gray-500 hover:text-gray-700">Home</Link>
-            <span aria-hidden="true" className="text-gray-400">/</span>
-            <Link to="/services" className="text-gray-500 hover:text-gray-700">Services</Link>
-            <span aria-hidden="true" className="text-gray-400">/</span>
-            <span aria-current="page" className="text-primary-600 font-medium">{currentService.title}</span>
-          </nav>
-        </div>
-      </section>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Services', href: '/services' },
+          { label: categoryNames[category], href: `/services/${category}` },
+          { label: currentService.title },
+        ]}
+      />
 
       {/* Hero Section */}
       <section className="py-20 bg-white">
@@ -782,6 +779,59 @@ const ServiceDetail = () => {
           </p>
         </div>
       </section>
+
+      {/* Related Services */}
+      {catalogEntry && (
+        <section className="py-16 bg-surface">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="font-heading font-bold text-3xl text-gray-900 mb-8 text-center">
+              Related Services
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {catalogEntry.relatedSlugs
+                .map((slug) => SERVICES_CATALOG.find((s) => s.slug === slug))
+                .filter((s): s is NonNullable<typeof s> => !!s)
+                .map((related) => {
+                  const detail = serviceDetails[related.category]?.[related.slug];
+                  const image = detail?.image ?? currentService.image;
+                  return (
+                    <Link
+                      key={related.slug}
+                      to={`/services/${related.category}/${related.slug}`}
+                      className="group block bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 transform hover:-translate-y-1"
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={image}
+                          alt={`${related.title} — ${related.categoryName} service`}
+                          width="400"
+                          height="192"
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-heading font-bold text-lg text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                          {related.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                          {related.description}
+                        </p>
+                        <span className="inline-flex items-center text-primary-600 font-semibold text-sm group-hover:text-primary-700">
+                          Learn More
+                          <ArrowRight
+                            className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white relative overflow-hidden">

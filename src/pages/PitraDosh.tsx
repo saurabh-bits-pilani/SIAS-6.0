@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Play, Pause, Users, Calendar, Heart, Star, ArrowLeft, ArrowRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { Link } from 'react-router-dom';
 
 interface SymptomItem {
@@ -143,18 +144,13 @@ const PitraDosh = () => {
         ]}
       />
 
-      {/* Breadcrumb */}
-      <section className="bg-surface py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-sm">
-            <Link to="/" className="text-gray-500 hover:text-gray-700">Home</Link>
-            <span aria-hidden="true" className="text-gray-400">/</span>
-            <Link to="/gallery" className="text-gray-500 hover:text-gray-700">Gallery</Link>
-            <span aria-hidden="true" className="text-gray-400">/</span>
-            <span aria-current="page" className="text-primary-600 font-medium">Pitra Dosh</span>
-          </nav>
-        </div>
-      </section>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Gallery', href: '/gallery' },
+          { label: 'Pitra Dosh' },
+        ]}
+      />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">

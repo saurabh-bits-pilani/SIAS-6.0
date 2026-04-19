@@ -165,14 +165,30 @@ const CosmicGuide = () => {
                 <div className="mb-8">
                   <h4 className="font-semibold text-gray-900 mb-4">Specializations:</h4>
                   <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                    {guide.specialties.map((specialty) => (
-                      <span
-                        key={specialty}
-                        className="bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium"
-                      >
-                        {specialty}
-                      </span>
-                    ))}
+                    {guide.specialties.map((specialty) => {
+                      const specialtyHref: Record<string, string> = {
+                        'Vedic Astrology': '/services/vedic-astrology',
+                        BNN: '/services/vedic-astrology/bnn',
+                        KP: '/services/vedic-astrology/kp-astrology',
+                        Ashtakavarga: '/services/vedic-astrology/parashari-jyotish',
+                      };
+                      const href = specialtyHref[specialty];
+                      const base =
+                        'bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium';
+                      return href ? (
+                        <Link
+                          key={specialty}
+                          to={href}
+                          className={`${base} hover:bg-primary-200 transition-colors`}
+                        >
+                          {specialty}
+                        </Link>
+                      ) : (
+                        <span key={specialty} className={base}>
+                          {specialty}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
 

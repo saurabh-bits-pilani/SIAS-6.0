@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Eye, Heart, Zap, Brain, Sun, Moon, Star, Clock, Flame } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { useModalDismiss } from '../hooks/useModalDismiss';
 
 interface RemedyEntry {
@@ -226,6 +227,13 @@ const Remedies = () => {
           { name: 'Home', url: '/' },
           { name: 'Gallery', url: '/gallery' },
           { name: 'Planetary Remedies', url: '/gallery/remedies' },
+        ]}
+      />
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Gallery', href: '/gallery' },
+          { label: 'Vedic Remedies' },
         ]}
       />
 

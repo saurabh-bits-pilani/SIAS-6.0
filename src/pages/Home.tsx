@@ -281,22 +281,34 @@ const Home = () => {
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                <Link
+                  to="/services/vedic-astrology"
+                  className="bg-white/20 backdrop-blur-sm rounded-xl p-4 hover:bg-white/30 transition-colors"
+                >
                   <div className="font-bold text-primary-200">Vedic</div>
                   <div className="text-sm text-gray-200">Astrology</div>
-                </div>
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                </Link>
+                <Link
+                  to="/services/vedic-astrology/bnn"
+                  className="bg-white/20 backdrop-blur-sm rounded-xl p-4 hover:bg-white/30 transition-colors"
+                >
                   <div className="font-bold text-secondary-200">BNN</div>
                   <div className="text-sm text-gray-200">System</div>
-                </div>
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                </Link>
+                <Link
+                  to="/services/vedic-astrology/kp-astrology"
+                  className="bg-white/20 backdrop-blur-sm rounded-xl p-4 hover:bg-white/30 transition-colors"
+                >
                   <div className="font-bold text-accent-200">KP</div>
                   <div className="text-sm text-gray-200">Method</div>
-                </div>
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                </Link>
+                <Link
+                  to="/services/vedic-astrology/parashari-jyotish"
+                  className="bg-white/20 backdrop-blur-sm rounded-xl p-4 hover:bg-white/30 transition-colors"
+                >
                   <div className="font-bold text-purple-200">Ashtakavarga</div>
                   <div className="text-sm text-gray-200">Analysis</div>
-                </div>
+                </Link>
               </div>
 
               <Link

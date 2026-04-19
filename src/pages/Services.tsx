@@ -4,7 +4,14 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Star, Clock, Users, Home } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { SERVICES_CATALOG } from '../data/schema-entities';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  'vedic-astrology': 'Vedic Astrology',
+  'western-astrology': 'Western Astrology',
+  healing: 'Spiritual Healing',
+};
 
 const Services = () => {
   const { category } = useParams<{ category: string }>();
@@ -212,6 +219,15 @@ const Services = () => {
         />
       ) : (
         <SchemaMarkup type="services-list" />
+      )}
+      {category && CATEGORY_LABELS[category] && (
+        <Breadcrumbs
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Services', href: '/services' },
+            { label: CATEGORY_LABELS[category] },
+          ]}
+        />
       )}
 
       {/* Hero Section */}
