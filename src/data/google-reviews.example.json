@@ -1,0 +1,10 @@
+{
+  "aggregate": {
+    "averageRating": 4.9,
+    "totalCount": 40,
+    "source": "Google Business Profile",
+    "lastFetched": null,
+    "viewAllUrl": "https://www.google.com/maps/search/?api=1&query=Soul+Infinity+Astro+Solutions+Ahmedabad"
+  },
+  "reviews": []
+}

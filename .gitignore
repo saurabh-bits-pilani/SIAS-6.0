@@ -35,3 +35,8 @@ dist-ssr/
 # Test coverage
 coverage/
 
+# Google Places API reviews snapshot — regenerated every build via
+# scripts/fetch-google-reviews.mjs. Seeded from google-reviews.example.json
+# on fresh checkout (via postinstall) so TypeScript imports always resolve.
+src/data/google-reviews.json
+
