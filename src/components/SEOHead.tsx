@@ -8,6 +8,7 @@ interface SEOHeadProps {
   image?: string;
   url?: string;
   type?: string;
+  robots?: string;
 }
 
 const SITE_ORIGIN = import.meta.env.VITE_SITE_ORIGIN || 'https://soul-infinitycom.vercel.app';
@@ -19,6 +20,7 @@ const SEOHead = ({
   image = 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png',
   url,
   type = 'website',
+  robots = 'index, follow, max-image-preview:large, max-snippet:-1',
 }: SEOHeadProps) => {
   const location = useLocation();
   const resolvedUrl = url ?? `${SITE_ORIGIN}${location.pathname}${location.search}`;
@@ -57,6 +59,7 @@ const SEOHead = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
+      <meta name="robots" content={robots} />
 
       {/* Open Graph */}
       <meta property="og:title" content={title} />

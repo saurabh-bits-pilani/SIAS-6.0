@@ -10,7 +10,8 @@ const NotFound = () => {
         title="Page Not Found - Soul Infinity"
         description="The page you're looking for doesn't exist. Return to Soul Infinity's homepage for spiritual guidance and astrology services."
         keywords="404, page not found, soul infinity, spiritual guidance"
-       image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/luxurious_close_up_of_a_spiritual_arrangement_on.webp"
+        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/luxurious_close_up_of_a_spiritual_arrangement_on.webp"
+        robots="noindex, follow"
       />
 
       <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50 relative overflow-hidden">

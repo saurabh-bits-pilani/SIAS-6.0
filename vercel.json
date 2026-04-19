@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/((?!sitemap\\.xml|robots\\.txt|favicon\\.ico|image\\.png|assets/|_next/|api/).*)",
-      "destination": "/"
+      "destination": "/404"
     }
   ],
   "headers": [

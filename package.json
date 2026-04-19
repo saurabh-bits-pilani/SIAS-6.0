@@ -5,22 +5,26 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
+    "build:prerender": "node scripts/prerender.mjs",
+    "build": "npm run build:client && npm run build:ssr && npm run build:prerender",
     "preview": "vite preview",
     "serve": "node server.js",
     "lint": "eslint ."
   },
   "dependencies": {
+    "date-fns": "^3.6.0",
+    "framer-motion": "^11.5.4",
+    "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1",
-    "lucide-react": "^0.344.0",
     "react-helmet-async": "^2.0.4",
-    "date-fns": "^3.6.0",
-    "framer-motion": "^11.5.4"
+    "react-router-dom": "^6.26.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@types/node": "^25.6.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
