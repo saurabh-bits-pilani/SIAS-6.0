@@ -1,0 +1,31 @@
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/sitemap.xml'
+      - 'src/**'
+      - 'index.html'
+  workflow_dispatch:
+
+jobs:
+  submit:
+    # Wait a bit so Vercel has time to finish deploying before we ping search
+    # engines. IndexNow doesn't require the URLs to be live at submit time,
+    # but fresher crawls are nicer.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Wait for Vercel deploy
+        run: sleep 90
+
+      - name: Submit URLs to IndexNow
+        run: node scripts/indexnow-submit.mjs
+        env:
+          INDEXNOW_HOST: soul-infinitycom.vercel.app
