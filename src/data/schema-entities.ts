@@ -9,6 +9,33 @@
  * precise lat/lng becomes available.
  */
 
+import reviewsDataRaw from './google-reviews.json';
+
+interface ReviewSnapshot {
+  id: string;
+  author: string;
+  authorInitial: string;
+  authorPhotoUrl: string | null;
+  authorProfileUrl: string | null;
+  rating: number;
+  date: string | null;
+  relativeTime: string;
+  text: string;
+}
+interface ReviewsSnapshot {
+  aggregate: {
+    averageRating: number;
+    totalCount: number;
+    source: string;
+    lastFetched: string | null;
+    viewAllUrl: string;
+  };
+  reviews: readonly ReviewSnapshot[];
+}
+// JSON is generated at build time; empty-at-seed state makes TS infer
+// `never[]`, so we assert the runtime shape explicitly.
+const reviewsData = reviewsDataRaw as ReviewsSnapshot;
+
 export const SITE_ORIGIN =
   (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SITE_ORIGIN) ||
   'https://soul-infinitycom.vercel.app';
@@ -180,8 +207,54 @@ export function getOrganizationSchema(): JsonLd {
 }
 
 /** LocalBusiness with Astrologer specialisation. Core entity for local pack. */
+/** Build Review schema objects from the build-time Google Places snapshot. */
+function buildReviewSchemas(): JsonLd[] {
+  const reviews: readonly ReviewSnapshot[] = Array.isArray(reviewsData?.reviews)
+    ? reviewsData.reviews
+    : [];
+  return reviews
+    .filter((r) => r && typeof r.author === 'string' && typeof r.text === 'string' && r.text.length > 0)
+    .map((r) => {
+      const datePublished = r.date ? `${r.date}-01` : undefined;
+      const author: JsonLd = {
+        '@type': 'Person',
+        name: r.author,
+      };
+      if (r.authorProfileUrl) author.url = r.authorProfileUrl;
+      const review: JsonLd = {
+        '@type': 'Review',
+        author,
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: r.rating,
+          bestRating: 5,
+          worstRating: 1,
+        },
+        reviewBody: r.text,
+        itemReviewed: { '@id': SCHEMA_IDS.localBusiness },
+        publisher: { '@type': 'Organization', name: 'Google' },
+      };
+      if (datePublished) review.datePublished = datePublished;
+      return review;
+    });
+}
+
 export function getLocalBusinessSchema(): JsonLd {
-  return {
+  const reviews = buildReviewSchemas();
+  // Prefer live Places API rating/count when we have it; fall back to the
+  // canonical BUSINESS_NAP values if the JSON snapshot is the empty seed.
+  const liveRating =
+    typeof reviewsData?.aggregate?.averageRating === 'number' &&
+    reviewsData.aggregate.averageRating > 0
+      ? reviewsData.aggregate.averageRating
+      : BUSINESS_NAP.aggregateRating.ratingValue;
+  const liveCount =
+    typeof reviewsData?.aggregate?.totalCount === 'number' &&
+    reviewsData.aggregate.totalCount > 0
+      ? reviewsData.aggregate.totalCount
+      : BUSINESS_NAP.aggregateRating.reviewCount;
+
+  const schema: JsonLd = {
     '@context': 'https://schema.org',
     '@type': ['ProfessionalService', 'LocalBusiness'],
     '@id': SCHEMA_IDS.localBusiness,
@@ -212,13 +285,20 @@ export function getLocalBusinessSchema(): JsonLd {
     openingHoursSpecification: openingHoursSpec(),
     aggregateRating: {
       '@type': 'AggregateRating',
-      ...BUSINESS_NAP.aggregateRating,
+      ratingValue: liveRating,
+      reviewCount: liveCount,
+      bestRating: BUSINESS_NAP.aggregateRating.bestRating,
+      worstRating: BUSINESS_NAP.aggregateRating.worstRating,
     },
     sameAs: BUSINESS_NAP.sameAs,
     founder: { '@id': SCHEMA_IDS.saurabhJain },
     employee: { '@id': SCHEMA_IDS.saurabhJain },
     parentOrganization: { '@id': SCHEMA_IDS.organization },
   };
+  if (reviews.length > 0) {
+    schema.review = reviews;
+  }
+  return schema;
 }
 
 /** WebSite with SearchAction (blog search target) for sitelinks-searchbox. */
