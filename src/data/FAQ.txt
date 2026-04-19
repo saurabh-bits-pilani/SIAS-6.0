@@ -1,0 +1,44 @@
+{
+  "faq": [
+    {
+      "question": "What are the services offered by Soul Infinity Astro Solution?",
+      "answer": "Soul Infinity Astro Solution provides astrology consultations, personalized remedies, energy balancing guidance, and mantra recommendations to help individuals align with universal energies."
+    },
+    {
+      "question": "What is the prerequisite before booking a consultation with Soul Infinity Astro Solution?",
+      "answer": "Before consultation, it is recommended to follow a simple energy purification practice like salt-water baths for 7 days to maintain aura equilibrium. More details are available in our remedies section."
+    },
+    {
+      "question": "How do the astrology services of Soul Infinity Astro Solution work?",
+      "answer": "Our services combine traditional astrological principles with modern interpretation, providing actionable guidance for health, career, relationships, and spiritual growth."
+    },
+    {
+      "question": "How are remedies provided by Soul Infinity Astro Solution?",
+      "answer": "Remedies are designed to create only positive or neutral effects. They are customized based on the client’s horoscope, ensuring safe and effective energy alignment."
+    },
+    {
+      "question": "What kind of remedies can I expect?",
+      "answer": "Soul Infinity Astro Solution may recommend mantras, meditation practices, gem suggestions, rituals, or simple lifestyle changes—each tailored to your personal chart and needs."
+    },
+    {
+      "question": "What are the important mantras recommended by Soul Infinity Astro Solution?",
+      "answer": "We recommend specific Vedic mantras like the Gayatri Mantra, Mahamrityunjaya Mantra, and other planet-specific chants based on your astrological chart."
+    },
+    {
+      "question": "How do these mantras work in real life?",
+      "answer": "Mantras generate positive vibrations that balance planetary energies, reduce stress, and attract harmony in various aspects of life such as career, health, and relationships."
+    },
+    {
+      "question": "How long does it take for remedies to show results?",
+      "answer": "Remedies usually start showing effects within 40 days, though the exact time may vary depending on personal karma, discipline, and spiritual receptivity."
+    },
+    {
+      "question": "Can astrology really change my life?",
+      "answer": "Astrology does not change destiny but provides a roadmap. By following remedies and guidance, you can minimize challenges and maximize opportunities for growth."
+    },
+    {
+      "question": "How can I book a consultation with Soul Infinity Astro Solution?",
+      "answer": "You can book a consultation through our website’s contact form or by reaching out directly via the booking section. Online and in-person sessions are available."
+    }
+  ]
+}
