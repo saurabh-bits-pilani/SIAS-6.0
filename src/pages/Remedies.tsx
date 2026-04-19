@@ -248,7 +248,7 @@ const Remedies = () => {
               transition={{ duration: 0.8 }}
               className="font-heading font-bold text-4xl md:text-5xl mb-8"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">Planetary</span> Remedies
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">Vedic Remedies</span>
             </motion.h1>
             
             <motion.div

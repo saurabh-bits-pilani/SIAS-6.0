@@ -119,7 +119,7 @@ const Home = () => {
             transition={{ duration: 1, delay: 0.5 }}
           >
             <h1 className="font-heading font-bold text-5xl md:text-7xl mb-6">
-              Vedic Astrology Consultation in Ahmedabad – <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Soul Infinity</span>
+              Vedic Astrology Consultation in Ahmedabad by <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Saurabh Jain</span>
             </h1>
             <h2 className="text-xl md:text-2xl mb-4 max-w-4xl mx-auto leading-relaxed">
               One whose mind remains undisturbed in sorrow, who does not crave for pleasures,

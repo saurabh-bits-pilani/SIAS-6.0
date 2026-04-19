@@ -94,7 +94,7 @@ const Privacy = () => {
               transition={{ duration: 0.8 }}
               className="font-heading font-bold text-4xl md:text-5xl mb-6"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Privacy & Cookie</span> Policy
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Privacy</span> Policy
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}

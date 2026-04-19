@@ -232,7 +232,15 @@ const Services = () => {
               transition={{ duration: 0.8 }}
               className="font-heading font-bold text-4xl md:text-5xl mb-6"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Sacred Services</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">
+                {category === 'vedic-astrology'
+                  ? 'Vedic Astrology Services in Ahmedabad'
+                  : category === 'western-astrology'
+                    ? 'Western Astrology & Intuitive Readings'
+                    : category === 'healing'
+                      ? 'Spiritual Healing & Energy Therapy'
+                      : 'Sacred Services'}
+              </span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}

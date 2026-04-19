@@ -121,7 +121,7 @@ const Panchang = () => {
               transition={{ duration: 0.8 }}
               className="font-heading font-bold text-4xl md:text-5xl mb-6"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Daily</span> Panchang
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Today's</span> Panchang
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}

@@ -64,7 +64,7 @@ const CosmicGuide = () => {
               transition={{ duration: 0.8 }}
               className="font-heading font-bold text-4xl md:text-5xl mb-6"
             >
-              Meet Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Cosmic Guide</span>
+              Meet <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Saurabh Jain</span> — Your Cosmic Guide
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}

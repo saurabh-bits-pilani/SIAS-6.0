@@ -572,7 +572,7 @@ const ServiceDetail = () => {
               
               <h1 className="font-heading font-bold text-4xl md:text-5xl mb-6">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">
-                  {currentService.title}
+                  {catalogEntry?.h1 ?? currentService.title}
                 </span>
               </h1>
               
