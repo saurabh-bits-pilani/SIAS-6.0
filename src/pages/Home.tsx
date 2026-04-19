@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Star, Calendar, Users, Heart, ArrowRight, Sparkles, Gift, Target } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
+import GoogleReviewsWidget from '../components/GoogleReviewsWidget';
 
 interface ServiceCard {
   title: string;
@@ -54,24 +55,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const widgetSrc = import.meta.env.VITE_REVIEWS_WIDGET_SRC;
-    const integrity = import.meta.env.VITE_REVIEWS_WIDGET_SRI;
-    if (!widgetSrc || !integrity) return;
-
-    const script = document.createElement('script');
-    script.src = widgetSrc;
-    script.async = true;
-    script.integrity = integrity;
-    script.crossOrigin = 'anonymous';
-    document.body.appendChild(script);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
 
   return (
     <>
@@ -337,19 +320,9 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Google Reviews widget — only renders when VITE_REVIEWS_WIDGET_SRC and VITE_REVIEWS_WIDGET_SRI are configured. */}
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-6 relative overflow-hidden shadow-soft"
-            >
-              <div className="min-h-[400px] flex items-center justify-center">
-                <div id="reviews-widget-205" className="w-full"></div>
-              </div>
-            </motion.div>
-          </div>
+          {/* Google Reviews — data baked in at build time from the Places API,
+              served from the prerendered HTML (no client-side fetch). */}
+          <GoogleReviewsWidget />
         </div>
       </section>
 
