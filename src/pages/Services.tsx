@@ -152,22 +152,41 @@ const Services = () => {
     ? serviceCategories.filter(cat => cat.id === category)
     : serviceCategories;
 
-  // Generate dynamic SEO content based on filtered categories
+  // Generate dynamic SEO content based on filtered categories.
+  // Titles/descriptions match the SEO spec per category for search intent
+  // ("in Ahmedabad", method names, duration) — not auto-generated from data.
   const getSEOContent = () => {
-    if (category) {
-      const categoryData = serviceCategories.find(cat => cat.id === category);
-      if (categoryData) {
-        return {
-          title: `${categoryData.title} Services | Soul Infinity`,
-          description: `${categoryData.description} Professional ${categoryData.title.toLowerCase()} services by Saurabh Jain.`,
-          keywords: `${categoryData.title.toLowerCase()}, ${categoryData.services.map(s => s.name.toLowerCase()).join(', ')}, saurabh jain`
-        };
-      }
-    }
+    const categorySeo: Record<string, { title: string; description: string; keywords: string }> = {
+      'vedic-astrology': {
+        title: 'Vedic Astrology Services in Ahmedabad | Parashari, BNN, KP - Soul Infinity',
+        description:
+          'Authentic Vedic astrology services in Ahmedabad. Parashari Jyotish, Bhrigu Nandi Nadi, KP method, Astro Vastu & Gemstone consultations by Saurabh Jain.',
+        keywords:
+          'vedic astrology ahmedabad, parashari jyotish, BNN astrology, KP astrology, astro vastu, gemstone consultation, saurabh jain',
+      },
+      'western-astrology': {
+        title: 'Tarot, Symbol Analysis & Past Life Regression in Ahmedabad | Soul Infinity',
+        description:
+          'Western astrology & intuitive readings in Ahmedabad. Tarot card reading, astrological symbol analysis, past life regression therapy by certified expert.',
+        keywords:
+          'tarot reading ahmedabad, past life regression, symbol analysis, western astrology, saurabh jain',
+      },
+      healing: {
+        title: 'Reiki, Pranic, Theta & Crystal Healing in Ahmedabad | Soul Infinity',
+        description:
+          "Certified energy healing in Ahmedabad: Reiki, Pranic Healing, Theta Healing & Crystal Therapy. Restore balance with Saurabh Jain's compassionate guidance.",
+        keywords:
+          'reiki healing ahmedabad, pranic healing, theta healing, crystal healing, energy healer, saurabh jain',
+      },
+    };
+    if (category && categorySeo[category]) return categorySeo[category];
     return {
-      title: 'Our Services - Vedic Astrology, Western Astrology & Healing | Soul Infinity',
-      description: 'Explore our comprehensive range of spiritual services including Vedic astrology, Western astrology, Reiki, Tarot readings, and energy healing sessions by Saurabh Jain.',
-      keywords: 'vedic astrology services, tarot reading, reiki healing, pranic healing, KP astrology, parashari jyotish, crystal healing, saurabh jain'
+      title:
+        'Astrology & Healing Services in Ahmedabad - Vedic, Tarot, Reiki | Soul Infinity',
+      description:
+        'Explore 12 spiritual services: Parashari Jyotish, BNN, KP Astrology, Tarot, Reiki, Pranic & Crystal healing. Personalized consultations by Saurabh Jain in Ahmedabad.',
+      keywords:
+        'astrology services ahmedabad, vedic astrology, tarot reading, reiki healing, pranic healing, parashari jyotish, crystal healing, saurabh jain',
     };
   };
 

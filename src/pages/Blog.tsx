@@ -78,9 +78,9 @@ const Blog = () => {
   return (
     <>
       <SEOHead
-        title="Spiritual Blog - Astrology Insights & Ancient Wisdom | Soul Infinity"
-        description="Explore our collection of articles on Vedic astrology, spiritual growth, planetary wisdom, and cosmic insights by Saurabh Jain to support your spiritual journey."
-        keywords="spiritual blog, astrology articles, vedic astrology insights, saurabh jain blog, planetary wisdom, spiritual growth, cosmic guidance"
+        title="Astrology Blog - Vedic Wisdom, Horoscopes & Spiritual Guidance | Soul Infinity"
+        description="Explore Vedic astrology articles, rashifal, mantras, remedies & spiritual insights written by expert astrologer Saurabh Jain. Updated weekly."
+        keywords="astrology blog, vedic astrology articles, rashifal, mantras, remedies, saurabh jain blog, spiritual insights, planetary wisdom"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Blog%20Images-%20Ancient%20Wisdom/2_rahu_ketu_mysteries_prompt_twin_shadowy_serpents_coiling.jpeg"
         omitDefaultSchema
       />

@@ -55,10 +55,11 @@ const Privacy = () => {
   return (
     <>
       <SEOHead
-        title="Privacy Policy & Cookie Policy | Soul Infinity"
-        description="Learn how we protect your personal information and respect your privacy. Our commitment to data security and transparent practices for all spiritual consultations."
+        title="Privacy Policy - Soul Infinity"
+        description="How Soul Infinity handles your personal information and birth details. Your privacy and data security are our top priority."
         keywords="privacy policy, data protection, cookie policy, confidentiality, personal information security"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/banner%2021.webp"
+        noindex
         omitDefaultSchema
       />
       <SchemaMarkup

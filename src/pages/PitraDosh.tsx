@@ -122,8 +122,8 @@ const PitraDosh = () => {
   return (
     <>
       <SEOHead
-        title="Pitra Dosh - Causes, Symptoms & Remedies | Soul Infinity"
-        description="Learn about Pitra Dosh, its causes, symptoms, and effective remedies. Discover traditional Shraddha ceremonies and mantras to seek ancestral blessings with Soul Infinity."
+        title="Pitra Dosh - Causes, Effects & Remedies | Soul Infinity Ahmedabad"
+        description="Understand Pitra Dosh in your birth chart - causes, symptoms & authentic Vedic remedies. Expert guidance by Saurabh Jain, Ahmedabad. Book consultation."
         keywords="pitra dosh, ancestral karma, shraddha ceremony, pitru paksha, ancestral blessings, pitra dosh remedy, soul infinity, saurabh jain, vedic rituals"
         image={mediaLinks.heroImage}
         omitDefaultSchema

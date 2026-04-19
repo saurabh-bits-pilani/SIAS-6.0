@@ -208,9 +208,9 @@ const Remedies = () => {
   return (
     <>
       <SEOHead
-        title="Planetary Remedies - Ancient Healing Solutions | Soul Infinity"
-        description="Discover powerful planetary remedies for spiritual healing and life enhancement. Learn traditional solutions for planetary imbalances with expert guidance from Saurabh Jain."
-        keywords="planetary remedies, astrological healing, vedic remedies, spiritual solutions, planetary imbalances, aura cleansing, saurabh jain remedies"
+        title="Vedic Remedies - Mantras, Gems, Rituals by Soul Infinity Ahmedabad"
+        description="Authentic Vedic remedies personalized to your birth chart: mantras, gemstones, rituals & lifestyle practices. Safe, effective guidance by Saurabh Jain."
+        keywords="vedic remedies, planetary remedies, astrological healing, mantras, gemstones, rituals, aura cleansing, saurabh jain remedies"
         image={remediesData.banner.image}
         omitDefaultSchema
       />

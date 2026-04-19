@@ -254,10 +254,11 @@ const Mantra = () => {
   return (
     <>
       <SEOHead
-        title="Navagraha Mantras - Sacred Chants for Nine Planets | Soul Infinity"
-        description="Discover powerful Navagraha mantras for the nine planets. Learn Sanskrit chants, meanings, benefits, and proper chanting techniques for spiritual growth and planetary harmony."
+        title="Sacred Mantras Guide - Meaning, Benefits & How to Chant | Soul Infinity"
+        description="Complete guide to powerful Vedic mantras, their meanings, pronunciation & spiritual benefits. Learn proper chanting technique from Saurabh Jain."
         keywords="navagraha mantras, planetary mantras, sanskrit chants, sun mantra, moon mantra, mars mantra, mercury mantra, jupiter mantra, venus mantra, saturn mantra, rahu mantra, ketu mantra, vedic chanting, spiritual mantras"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_himalayan_cave_illuminated_by_flickering_oil.webp"
+        type="article"
         omitDefaultSchema
       />
       <SchemaMarkup

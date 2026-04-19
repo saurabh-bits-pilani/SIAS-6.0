@@ -117,8 +117,8 @@ const Gallery = () => {
   return (
     <>
       <SEOHead
-        title="Gallery - Sacred Moments & Spiritual Sessions | Soul Infinity"
-        description="Explore our gallery showcasing peaceful healing sessions, spiritual consultations, workshops, and sacred ceremonies. Witness the transformative power of our services."
+        title="Gallery - Soul Infinity Astrology & Healing Sessions Ahmedabad"
+        description="Glimpses of Soul Infinity's spiritual journey - consultations, healing sessions, events & sacred spaces in Ahmedabad. Led by Saurabh Jain."
         keywords="spiritual gallery, healing sessions, astrology consultations, reiki healing, meditation workshops, sacred ceremonies, saurabh jain"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Gallaery/dark_blue_cosmic_room_interior_with_golden.jpeg"
         omitDefaultSchema

@@ -253,6 +253,10 @@ export interface ServiceEntry {
   longDescription: string;
   category: ServiceCategorySlug;
   categoryName: string;
+  /** Page <title>. Written per-service for search intent (Ahmedabad + duration). */
+  seoTitle: string;
+  /** Page meta description. 150–160 chars, ends with a call-to-action. */
+  seoDescription: string;
 }
 
 /** 12 services across 3 categories. Keep in sync with src/pages/ServiceDetail.tsx. */
@@ -267,6 +271,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Classical Vedic astrology based on the teachings of Sage Parashara — insights into life path, karma, and spiritual evolution.',
     longDescription:
       'The most comprehensive Vedic astrology system, derived from Sage Parashara. Birth-chart analysis for personality, relationships, career, health, and spiritual growth.',
+    seoTitle: 'Parashari Jyotish Consultation in Ahmedabad | Birth Chart Analysis',
+    seoDescription:
+      'Classical Vedic birth chart reading by Saurabh Jain in Ahmedabad. 60-min Parashari Jyotish consultation - planetary analysis, predictions, remedies. Book now.',
   },
   {
     slug: 'bnn',
@@ -277,6 +284,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Ancient palm-leaf astrology system for precise predictions and remedies based on the Bhrigu Samhita.',
     longDescription:
       'A rare and highly accurate predictive system from ancient palm-leaf manuscripts. Delivers event-level precision about past, present, and future.',
+    seoTitle: 'Bhrigu Nandi Nadi (BNN) Astrology Online & Ahmedabad - Soul Infinity',
+    seoDescription:
+      'Ancient BNN astrology - precise predictions & personalized remedies. 90-min consultation with expert Saurabh Jain in Ahmedabad or online. Call +91 9079053840.',
   },
   {
     slug: 'kp-astrology',
@@ -287,6 +297,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Krishnamurti Paddhati — a precise, scientific approach to astrological timing and prediction.',
     longDescription:
       'Developed by Prof. K.S. Krishnamurti, KP removes ambiguity and provides clear, time-bound predictions using sub-lord theory.',
+    seoTitle: 'KP Astrology Consultation in Ahmedabad | Krishnamurti Paddhati Expert',
+    seoDescription:
+      'Scientific KP astrology with precise timing predictions. 75-min consultation by KP-trained Saurabh Jain in Ahmedabad. Book your session today.',
   },
   {
     slug: 'astro-vastu',
@@ -297,6 +310,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Harmonize your living space with astrological and Vastu principles for prosperity and well-being.',
     longDescription:
       'Astro-Vastu combines astrology and Vastu Shastra. Your birth chart and property layout are analysed together for optimal energy flow.',
+    seoTitle: 'Astro Vastu Consultation Ahmedabad | Home & Office Vastu Analysis',
+    seoDescription:
+      'Harmonize your living & working spaces with Astro Vastu. 120-min on-site or remote consultation in Ahmedabad by Saurabh Jain. Call +91 9079053840.',
   },
   {
     slug: 'gem-stone',
@@ -307,6 +323,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Personalised gemstone recommendations based on your birth chart for enhanced planetary benefits.',
     longDescription:
       'Gemstone therapy strengthens benefic planets and mitigates negative influences. Recommendations are individualised from your chart.',
+    seoTitle: 'Gemstone Consultation in Ahmedabad | Birth Chart Based Gem Recommendation',
+    seoDescription:
+      'Personalized gemstone recommendations based on your Vedic chart. 45-min session with Saurabh Jain in Ahmedabad. Safe, authentic, effective. Book consultation.',
   },
   // Western
   {
@@ -318,6 +337,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Intuitive card readings using traditional and modern tarot decks for guidance on life questions.',
     longDescription:
       'Combines intuitive insights with traditional tarot interpretations across multiple spreads to surface actionable guidance.',
+    seoTitle: 'Tarot Card Reading in Ahmedabad & Online | Expert Tarot Reader',
+    seoDescription:
+      'Intuitive tarot readings to reveal hidden truths & future paths. 45-min session with Saurabh Jain, online or in Ahmedabad. Book your tarot consultation.',
   },
   {
     slug: 'symbol-analysis',
@@ -328,6 +350,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Deep dive into astrological and spiritual symbols and their meaning in your life.',
     longDescription:
       'Interprets the symbolic language of the universe — the signs that recur across your chart and your lived experience.',
+    seoTitle: 'Astrological Symbol Analysis in Ahmedabad - Soul Infinity',
+    seoDescription:
+      'Deep dive into astrological symbols and their meaning in your life. 60-min personalized session by Saurabh Jain in Ahmedabad or online.',
   },
   {
     slug: 'past-life-regression',
@@ -338,6 +363,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Guided meditation to explore past lives and understand current life patterns and relationships.',
     longDescription:
       'A therapeutic regression practice to surface memories from previous lifetimes and resolve karmic patterns in present relationships.',
+    seoTitle: 'Past Life Regression Therapy in Ahmedabad | Soul Infinity',
+    seoDescription:
+      'Explore past lives to understand current life patterns & relationships. 120-min PLR therapy session with Saurabh Jain in Ahmedabad. Book today.',
   },
   // Healing
   {
@@ -349,6 +377,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Universal life-force energy healing for physical, emotional, and spiritual wellness.',
     longDescription:
       'A certified Reiki practitioner channels universal life-force energy to release blockages, reduce stress, and restore harmony across body, mind, and spirit.',
+    seoTitle: 'Reiki Healing in Ahmedabad | Certified Reiki Practitioner - Soul Infinity',
+    seoDescription:
+      'Universal life force healing for physical, emotional & spiritual wellness. 60-min Reiki session with certified practitioner Saurabh Jain. Book in Ahmedabad.',
   },
   {
     slug: 'pranic-healing',
@@ -359,6 +390,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'No-touch energy healing using prana to cleanse and energise the body\'s energy field.',
     longDescription:
       'Pranic Healing works with the body\'s bio-electromagnetic field to remove dirty energy and project fresh prana into the affected chakras and organs.',
+    seoTitle: 'Pranic Healing Consultation in Ahmedabad | Energy Healing Therapy',
+    seoDescription:
+      'Advanced pranic energy healing to cleanse & energize your aura. 75-min session by Saurabh Jain in Ahmedabad or distant healing available. Book now.',
   },
   {
     slug: 'theta-healing',
@@ -369,6 +403,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Meditative technique that reaches the theta brainwave state for belief reprogramming and healing.',
     longDescription:
       'Theta Healing uses a deep-meditative theta state to identify and replace limiting beliefs at the subconscious level, supporting emotional and physical healing.',
+    seoTitle: 'Theta Healing in Ahmedabad | Deep Meditation Therapy - Soul Infinity',
+    seoDescription:
+      'Access theta brain waves for deep transformational healing. 90-min Theta Healing session with Saurabh Jain in Ahmedabad or online. Book consultation.',
   },
   {
     slug: 'crystal-healing',
@@ -379,6 +416,9 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
       'Harness the therapeutic vibrations of crystals for chakra balancing and energetic cleansing.',
     longDescription:
       'Crystal Healing aligns the body\'s energy centres using specific stones chosen for their vibrational resonance with each chakra.',
+    seoTitle: 'Crystal Healing & Chakra Balancing in Ahmedabad - Soul Infinity',
+    seoDescription:
+      'Harness crystal vibrations to balance chakras & energy centers. 60-min Crystal Healing session by Saurabh Jain in Ahmedabad. Book your therapy today.',
   },
 ];
 

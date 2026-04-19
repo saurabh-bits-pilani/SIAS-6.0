@@ -37,10 +37,11 @@ const CosmicGuide = () => {
   return (
     <>
       <SEOHead
-        title="Our Cosmic Guide - Saurabh Jain | Certified Astrologer | Soul Infinity"
-        description="Meet Saurabh Jain, certified professional astrologer from K.N. Rao Institute. Expert in Vedic Astrology, BNN, KP, and Ashtakavarga with 15+ years of experience in Ahmedabad."
+        title="About Saurabh Jain - Certified Vedic Astrologer in Ahmedabad | Soul Infinity"
+        description="Meet Saurabh Jain: M.Tech, MBA, M.Phil, K.N. Rao Institute certified Vedic astrologer. 5+ years guiding 200+ clients in Ahmedabad with Parashari, BNN & KP methods."
         keywords="saurabh jain, astrologer ahmedabad, vedic astrology expert, KN rao institute, BNN astrology, KP astrology, ashtakavarga, certified astrologer"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
+        type="profile"
         omitDefaultSchema
       />
       <SchemaMarkup type="cosmic-guide" />

@@ -93,8 +93,8 @@ const Panchang = () => {
   return (
     <>
       <SEOHead
-        title="Daily Panchang - Vedic Calendar & Auspicious Timings | Soul Infinity"
-        description="Check today's Panchang with Tithi, Nakshatra, Yoga, Karana, and auspicious timings. Plan your activities according to Vedic astrology."
+        title="Today's Panchang - Daily Tithi, Nakshatra, Muhurat | Soul Infinity"
+        description="Live daily Panchang with tithi, nakshatra, yoga, karana & auspicious muhurat timings. Accurate Hindu calendar by Soul Infinity, Ahmedabad."
         keywords="panchang, vedic calendar, tithi, nakshatra, yoga, karana, rahu kaal, muhurta, auspicious time"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp"
         omitDefaultSchema

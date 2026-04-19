@@ -509,20 +509,24 @@ const ServiceDetail = () => {
     'healing': 'Healing'
   };
 
+  const catalogEntry = SERVICES_CATALOG.find(
+    (s) => s.category === category && s.slug === service,
+  );
+  const seoTitle = catalogEntry?.seoTitle
+    ?? `${currentService.title} - ${categoryNames[category]} | Soul Infinity`;
+  const seoDescription = catalogEntry?.seoDescription ?? currentService.description;
+
   return (
     <>
       <SEOHead
-        title={`${currentService.title} - ${categoryNames[category]} | Soul Infinity`}
-        description={currentService.description}
-        keywords={`${currentService.title.toLowerCase()}, ${category.replace('-', ' ')}, spiritual guidance, consultation, saurabh jain, soul infinity`}
+        title={seoTitle}
+        description={seoDescription}
+        keywords={`${currentService.title.toLowerCase()}, ${category.replace('-', ' ')}, ${categoryNames[category].toLowerCase()} ahmedabad, spiritual guidance, consultation, saurabh jain, soul infinity`}
         image={currentService.image}
+        type="article"
         omitDefaultSchema
       />
-      {(() => {
-        const catalogEntry = SERVICES_CATALOG.find(
-          (s) => s.category === category && s.slug === service,
-        );
-        if (!catalogEntry) return null;
+      {catalogEntry && (() => {
         const priceNumber = Number(currentService.price.replace(/[^\d]/g, ''));
         return (
           <SchemaMarkup

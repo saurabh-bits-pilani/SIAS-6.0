@@ -76,9 +76,9 @@ const Home = () => {
   return (
     <>
       <SEOHead
-        title="Vedic Astrology Consultation in Ahmedabad – Soul Infinity"
-        description="Discover your cosmic path with Soul Infinity. Expert Vedic astrology, spiritual healing, and divine guidance by certified astrologer Saurabh Jain in Ahmedabad."
-        keywords="soul infinity, vedic astrology, saurabh jain, spiritual guidance, astrology ahmedabad, KP astrology, BNN, ashtakavarga"
+        title="Best Vedic Astrologer in Ahmedabad | Saurabh Jain - Soul Infinity"
+        description="Vedic astrology, tarot & Reiki healing by certified astrologer Saurabh Jain in Ahmedabad. 200+ happy clients, 4.9★ rated. Book online or in-person consultation today."
+        keywords="vedic astrologer ahmedabad, best astrologer ahmedabad, saurabh jain astrologer, kundli consultation ahmedabad, tarot reader ahmedabad, reiki healer ahmedabad"
         omitDefaultSchema
       />
       <SchemaMarkup type="home" />

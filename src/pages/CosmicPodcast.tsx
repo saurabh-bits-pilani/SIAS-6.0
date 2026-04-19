@@ -117,8 +117,8 @@ const CosmicPodcast = () => {
   return (
     <>
       <SEOHead
-        title="Cosmic Podcast - Spiritual Wisdom & Astrology Insights | Soul Infinity"
-        description="Listen to our spiritual podcast featuring episodes on Vedic astrology, energy healing, meditation, and cosmic wisdom by Saurabh Jain."
+        title="Cosmic Podcast - Vedic Astrology Insights by Saurabh Jain | Soul Infinity"
+        description="Weekly cosmic podcast exploring Vedic astrology, spiritual wisdom & planetary insights. Hosted by Saurabh Jain from Soul Infinity, Ahmedabad."
         keywords="cosmic podcast, spiritual podcast, astrology podcast, vedic astrology audio, energy healing podcast, meditation podcast, saurabh jain podcast"
         image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/atmospheric_himalayan_cave_interior_lit_by_flickering.webp"
         omitDefaultSchema
