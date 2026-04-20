@@ -48,13 +48,31 @@ const services: readonly ServiceCard[] = [
 
 const Home = () => {
   const [currentHeroImage, setCurrentHeroImage] = useState(0);
+  // Gate the non-LCP hero images so they do not compete with the first
+  // image for bandwidth during initial paint. `loading="lazy"` is not
+  // enough here because all four slides share the same viewport, so the
+  // browser would eagerly fetch them otherwise.
+  const [mountRestOfHero, setMountRestOfHero] = useState(false);
 
   useEffect(() => {
+    // Wait until after LCP and network idle before mounting slides 1-3.
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    };
+    const schedule = (cb: () => void) =>
+      typeof w.requestIdleCallback === 'function'
+        ? w.requestIdleCallback(cb, { timeout: 2500 })
+        : window.setTimeout(cb, 1500);
+    schedule(() => setMountRestOfHero(true));
+  }, []);
+
+  useEffect(() => {
+    if (!mountRestOfHero) return;
     const interval = setInterval(() => {
       setCurrentHeroImage((prev) => (prev + 1) % heroImages.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [mountRestOfHero]);
 
 
   return (
@@ -71,27 +89,34 @@ const Home = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden" role="banner">
         {/* Background Image Carousel */}
         <div className="absolute inset-0">
-          {heroImages.map((image, index) => (
-            <motion.div
-              key={image}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: index === currentHeroImage ? 1 : 0 }}
-              transition={{ duration: 1.5 }}
-              className="absolute inset-0"
-            >
-              <img
-                src={image}
-                alt=""
-                aria-hidden="true"
-                width="1920"
-                height="1080"
-                decoding={index === 0 ? 'sync' : 'async'}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                fetchPriority={index === 0 ? 'high' : 'low'}
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-          ))}
+          {heroImages.map((image, index) => {
+            // Only the first (LCP) slide mounts on initial paint. The
+            // remaining three mount after idle so they never compete with
+            // the hero for bandwidth — `loading="lazy"` is not sufficient
+            // because all four slides share the same viewport.
+            if (index !== 0 && !mountRestOfHero) return null;
+            return (
+              <motion.div
+                key={image}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: index === currentHeroImage ? 1 : 0 }}
+                transition={{ duration: 1.5 }}
+                className="absolute inset-0"
+              >
+                <img
+                  src={image}
+                  alt=""
+                  aria-hidden="true"
+                  width="1920"
+                  height="1080"
+                  decoding={index === 0 ? 'sync' : 'async'}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : 'low'}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            );
+          })}
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
