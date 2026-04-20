@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackEvent } from '../utils/analytics';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -183,6 +184,7 @@ const Header = () => {
             {/* Book Consultation Button */}
             <Link
               to="/contact"
+              onClick={() => trackEvent('book_consultation_click', { location: 'header_desktop' })}
               className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2 rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             >
               Book Consultation
@@ -302,7 +304,10 @@ const Header = () => {
                 <Link
                   to="/contact"
                   className="block w-full text-center bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-lg text-sm font-medium mt-4"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    trackEvent('book_consultation_click', { location: 'header_mobile' });
+                    setIsMenuOpen(false);
+                  }}
                 >
                   Book Consultation
                 </Link>

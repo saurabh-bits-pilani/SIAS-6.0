@@ -1,14 +1,14 @@
 import { onCLS, onFCP, onINP, onLCP, onTTFB, type Metric } from 'web-vitals';
+import { isAnalyticsEnabled, trackEvent } from './analytics';
 
 /**
- * Core Web Vitals telemetry — currently console-only. Wires the five
- * primary metrics (CLS, FCP, INP, LCP, TTFB) so we can eyeball field
- * performance during dev and when visiting production in DevTools
- * without a third-party analytics dependency.
+ * Core Web Vitals telemetry. Dispatches each metric to GA4 via
+ * trackEvent when analytics is enabled; falls back to a console.log
+ * in dev/staging so the numbers stay visible during local work.
  *
- * When an analytics destination is wired up (e.g. GA4, Vercel Analytics,
- * a custom endpoint), swap `reportMetric` to dispatch there in addition
- * to the console.log.
+ * Events are sent with `non_interaction: true` so they never inflate
+ * engagement metrics, and the metric id is forwarded so GA can
+ * de-duplicate values within a session.
  */
 
 type RatingColour = 'good' | 'needs-improvement' | 'poor';
@@ -20,10 +20,25 @@ const RATING_EMOJI: Record<RatingColour, string> = {
 };
 
 function reportMetric(metric: Metric): void {
-  // Round numeric values for legibility. LCP/TTFB/FCP/INP in ms, CLS unitless.
-  const valueLabel = metric.name === 'CLS'
-    ? metric.value.toFixed(3)
-    : `${Math.round(metric.value)}ms`;
+  const isCls = metric.name === 'CLS';
+  // GA convention: CLS is multiplied by 1000 so the integer shows
+  // nicely in reports. Other metrics are already in milliseconds.
+  const gaValue = isCls ? Math.round(metric.value * 1000) : Math.round(metric.value);
+
+  if (isAnalyticsEnabled()) {
+    trackEvent(metric.name, {
+      value: gaValue,
+      metric_id: metric.id,
+      metric_value: metric.value,
+      metric_delta: metric.delta,
+      metric_rating: metric.rating,
+      event_category: 'Web Vitals',
+      non_interaction: true,
+    });
+    return;
+  }
+
+  const valueLabel = isCls ? metric.value.toFixed(3) : `${Math.round(metric.value)}ms`;
   const emoji = RATING_EMOJI[metric.rating] ?? '';
   // eslint-disable-next-line no-console
   console.log(

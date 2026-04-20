@@ -10,6 +10,7 @@ import {
   type ContactFormData,
   type ValidationError,
 } from '../utils/validation';
+import { trackEvent } from '../utils/analytics';
 
 const DEFAULT_WHATSAPP_PHONE = '919079053840';
 
@@ -132,8 +133,17 @@ const Contact = () => {
     const found = validateContactForm(formData);
     setErrors(found);
     if (found.length > 0) {
+      trackEvent('contact_form_validation_error', {
+        error_count: found.length,
+        first_field: found[0]?.field ?? 'unknown',
+      });
       return;
     }
+
+    trackEvent('contact_form_submit', {
+      country: formData.country,
+      has_birth_time: Boolean(formData.birthHour && formData.birthMinute),
+    });
 
     const phone = import.meta.env.VITE_WHATSAPP_PHONE || DEFAULT_WHATSAPP_PHONE;
     const url = buildWhatsappUrl(phone, formData);
@@ -622,6 +632,7 @@ const Contact = () => {
               aria-label="Contact us immediately via WhatsApp"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_click', { page: '/contact', location: 'immediate' })}
               className="bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
             >
               <MessageCircle className="w-5 h-5 mr-2" />

@@ -5,6 +5,7 @@ import { Star, Calendar, Users, Heart, ArrowRight, Sparkles, Gift, Target } from
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
 import GoogleReviewsWidget from '../components/GoogleReviewsWidget';
+import { trackEvent } from '../utils/analytics';
 
 interface ServiceCard {
   title: string;
@@ -300,6 +301,7 @@ const Home = () => {
               <Link
                 to="/contact#contact-form-section"
                 aria-label="Book a consultation with Saurabh Jain"
+                onClick={() => trackEvent('book_consultation_click', { location: 'home_hero' })}
                 className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center"
               >
                 Book Consultation

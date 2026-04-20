@@ -18,6 +18,7 @@ import SchemaMarkup from '../components/SchemaMarkup';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { SERVICES_CATALOG } from '../data/schema-entities';
 import { getServiceContent, type ServiceContent } from '../data/services-content';
+import { trackEvent } from '../utils/analytics';
 
 interface ServiceOffering {
   title: string;
@@ -650,6 +651,13 @@ const ServiceDetail = () => {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent('whatsapp_click', {
+                      page: `/services/${category}/${service}`,
+                      service: currentService.title,
+                      location: 'hero',
+                    })
+                  }
                   className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
                 >
                   <MessageCircle className="w-5 h-5 mr-2" />
@@ -657,6 +665,13 @@ const ServiceDetail = () => {
                 </a>
                 <a
                   href={PHONE_TEL}
+                  onClick={() =>
+                    trackEvent('phone_click', {
+                      page: `/services/${category}/${service}`,
+                      service: currentService.title,
+                      location: 'hero',
+                    })
+                  }
                   className="border-2 border-primary-500 text-primary-800 px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-50 transition-all duration-300 inline-flex items-center justify-center"
                 >
                   <Phone className="w-5 h-5 mr-2" />
@@ -940,6 +955,13 @@ const ServiceDetail = () => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent('whatsapp_click', {
+                  page: `/services/${category}/${service}`,
+                  service: currentService.title,
+                  location: 'cta',
+                })
+              }
               className="bg-white text-primary-600 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
             >
               <MessageCircle className="w-5 h-5 mr-2" />
@@ -947,6 +969,13 @@ const ServiceDetail = () => {
             </a>
             <a
               href={PHONE_TEL}
+              onClick={() =>
+                trackEvent('phone_click', {
+                  page: `/services/${category}/${service}`,
+                  service: currentService.title,
+                  location: 'cta',
+                })
+              }
               className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-primary-600 transition-all duration-300 inline-flex items-center justify-center"
             >
               <Phone className="w-5 h-5 mr-2" />

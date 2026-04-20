@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, MessageCircle, Clock, ExternalLink, ChevronDown } from 'lucide-react';
 import faqData from '../data/faqData.json';
+import { trackEvent } from '../utils/analytics';
 
 const Footer = () => {
   const { faq } = faqData;
@@ -184,6 +185,7 @@ const Footer = () => {
                   href="https://wa.me/919079053840"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent('whatsapp_click', { location: 'footer' })}
                   className="text-gray-400 hover:text-green-400 transition-colors"
                 >
                   WhatsApp

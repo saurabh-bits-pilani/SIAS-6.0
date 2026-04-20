@@ -4,6 +4,7 @@ import Layout from './layout/Layout';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
+import { usePageTracking } from './hooks/usePageTracking';
 
 // Lazy load non-critical pages for better performance
 const CosmicGuide = lazy(() => import('./pages/CosmicGuide'));
@@ -29,6 +30,7 @@ const LoadingSpinner = () => (
 );
 
 function App() {
+  usePageTracking();
   return (
     <Layout>
       <Suspense fallback={<LoadingSpinner />}>
