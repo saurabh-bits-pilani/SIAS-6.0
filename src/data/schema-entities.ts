@@ -224,18 +224,32 @@ function buildReviewSchemas(): JsonLd[] {
         name: r.author,
       };
       if (r.authorProfileUrl) author.url = r.authorProfileUrl;
+      // Coerce to Number defensively. The upstream fetch script emits a
+      // number, but hand-edited snapshots have surprised the schema
+      // validator before. Google's Rich Results test flags string
+      // ratingValue as a non-critical issue.
+      const ratingNumber = Number(r.rating);
       const review: JsonLd = {
         '@type': 'Review',
         author,
         reviewRating: {
           '@type': 'Rating',
-          ratingValue: r.rating,
+          ratingValue: Number.isFinite(ratingNumber) ? ratingNumber : 5,
           bestRating: 5,
           worstRating: 1,
         },
         reviewBody: r.text,
-        itemReviewed: { '@id': SCHEMA_IDS.localBusiness },
-        publisher: { '@type': 'Organization', name: 'Google' },
+        // Include @type alongside @id so validators that don't resolve
+        // @id references still see a typed reference.
+        itemReviewed: {
+          '@type': 'LocalBusiness',
+          '@id': SCHEMA_IDS.localBusiness,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Google',
+          url: 'https://www.google.com',
+        },
       };
       if (datePublished) review.datePublished = datePublished;
       return review;
