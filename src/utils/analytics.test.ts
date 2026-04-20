@@ -15,13 +15,16 @@ describe('initAnalytics', () => {
     vi.resetModules();
   });
 
-  it('does nothing when VITE_GA_MEASUREMENT_ID is unset (even in production)', async () => {
+  it('falls back to the hardcoded default GA ID when env var is unset (production)', async () => {
     vi.stubEnv('VITE_SITE_ENV', 'production');
     vi.stubEnv('VITE_GA_MEASUREMENT_ID', '');
     const { initAnalytics } = await import('./analytics');
     initAnalytics();
-    expect(document.querySelector('script[data-ga-id]')).toBeNull();
-    expect(window.gtag).toBeUndefined();
+    // Hardcoded default loads; keeps production GA resilient to Vercel
+    // env-var drift. Measurement IDs are public and not a secret.
+    const tag = document.querySelector('script[data-ga-id]');
+    expect(tag).not.toBeNull();
+    expect(tag?.getAttribute('data-ga-id')).toMatch(/^G-[A-Z0-9]+$/);
   });
 
   it('does nothing for an obviously-bogus measurement ID', async () => {

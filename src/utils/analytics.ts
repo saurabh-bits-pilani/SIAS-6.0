@@ -23,15 +23,29 @@ declare global {
 
 const GA_ID_PATTERN = /^G-[A-Z0-9]+$/;
 
+/**
+ * Canonical production GA4 measurement ID.
+ *
+ * Hardcoded as a fallback because GA4 measurement IDs are public (they
+ * appear in plaintext in every HTML that loads gtag.js — not a secret)
+ * and because Vite statically replaces `import.meta.env.VITE_*` at build
+ * time. If the env var is missing when Vercel builds the bundle, the
+ * minifier dead-code-eliminates the entire loader. The hardcoded default
+ * makes production GA resilient to Vercel env-var drift; the env var,
+ * when set, still takes precedence for rotations or staging-like overrides.
+ */
+const DEFAULT_GA_ID = 'G-C933H43FB7';
+
 /** Module-scoped cache so `trackEvent` et al. can short-circuit when GA never loaded. */
 let gaEnabled = false;
 let measurementIdResolved: string | null = null;
 
 function getMeasurementId(): string | null {
   const raw = import.meta.env.VITE_GA_MEASUREMENT_ID;
-  if (typeof raw !== 'string' || raw.length === 0) return null;
-  if (!GA_ID_PATTERN.test(raw)) return null;
-  return raw;
+  const candidate =
+    typeof raw === 'string' && raw.length > 0 ? raw : DEFAULT_GA_ID;
+  if (!GA_ID_PATTERN.test(candidate)) return null;
+  return candidate;
 }
 
 /**
