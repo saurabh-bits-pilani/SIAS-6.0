@@ -6,6 +6,7 @@ import {
   getBreadcrumbSchema,
   getContactPageSchema,
   getFaqPageSchema,
+  getFaqPageSchemaFromList,
   getLocalBusinessSchema,
   getOrganizationSchema,
   getPersonSaurabhSchema,
@@ -39,6 +40,13 @@ interface SchemaMarkupProps {
   service?: ServiceEntry;
   /** Optional pricing/duration for `service-detail` Offer schema. */
   serviceOffer?: ServiceOfferOpts;
+  /**
+   * Visible FAQ Q&A list. When passed on `service-detail`, a FAQPage schema
+   * is emitted alongside the Service schema. Answers MUST be visibly
+   * rendered on the page (Google policy) — these are sourced from
+   * services-content.ts and rendered in the accordion/FAQ section.
+   */
+  serviceFaqs?: ReadonlyArray<{ question: string; answer: string }>;
   /** Required for `blog-post`. */
   post?: BlogPostMeta;
   /** Auto-constructed for known types, but can be overridden. */
@@ -105,6 +113,9 @@ function schemasForType(props: SchemaMarkupProps): JsonLd[] {
       }
       const { service } = props;
       out.push(getServiceSchema(service, props.serviceOffer));
+      if (props.serviceFaqs && props.serviceFaqs.length > 0) {
+        out.push(getFaqPageSchemaFromList(props.serviceFaqs));
+      }
       out.push(
         props.breadcrumbs
           ? getBreadcrumbSchema(props.breadcrumbs)

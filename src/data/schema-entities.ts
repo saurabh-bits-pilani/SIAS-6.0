@@ -651,6 +651,28 @@ export function getFaqPageSchema(): JsonLd {
   };
 }
 
+/**
+ * Build a FAQPage schema from an arbitrary Q&A list. Used on service detail
+ * pages where per-service FAQs are visibly rendered (Google's FAQPage
+ * rich-result guidelines require the answers to appear on the page).
+ */
+export function getFaqPageSchemaFromList(
+  faqs: ReadonlyArray<{ question: string; answer: string }>,
+): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
 /* --------------------------- Breadcrumbs ---------------------------- */
 
 export interface BreadcrumbCrumb {
