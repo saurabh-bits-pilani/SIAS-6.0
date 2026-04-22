@@ -78,6 +78,9 @@ const moonData: MoonStaticData = {
     accentIconClass: 'text-blue-500',
     accentIconClassSoft: 'text-blue-400',
     featherQuillUrl: `${SUN_ASSETS}/feather-quill.png`,
+    heroHighlightClass:
+      'text-blue-300 font-semibold underline decoration-wavy decoration-blue-400 underline-offset-4',
+    primaryIconKey: 'moon',
   },
   quickFacts: [
     { icon: 'moon', label: 'Planet', value: 'Chandra' },

@@ -225,6 +225,14 @@ export interface Theme {
   accentIconClassSoft?: string;
   /** URL for a feather-quill decoration on the "How to Connect" card. Optional. */
   featherQuillUrl?: string;
+  /** Tailwind class applied to highlighted phrases in the hero description.
+   *  When set, hero highlights use this className instead of the yellow
+   *  `.highlight-marker`, which is unreadable against the dark hero.
+   *  Recommended: a wavy-underline color in the planet's theme family. */
+  heroHighlightClass?: string;
+  /** Primary Tabler icon key for small decorative trios (e.g. "moon" for
+   *  Moon, "sun" for Sun). Used in the Sacred Mantras heading row. */
+  primaryIconKey?: IconKey;
 }
 
 /**
@@ -343,6 +351,38 @@ function renderWithMarks(
 
 function Mark({ children }: { children: React.ReactNode }) {
   return <mark className="highlight-marker bg-transparent text-inherit">{children}</mark>;
+}
+
+/**
+ * Hero description highlight renderer. When `className` is provided, wraps
+ * each matched phrase in a <span> with that class (e.g. a blue wavy
+ * underline readable on the dark hero). Otherwise falls back to <Mark>.
+ * The yellow pen-brush .highlight-marker is unreadable on the dark hero,
+ * so Moon/Saturn/etc. should set theme.heroHighlightClass.
+ */
+function renderThemedHighlights(
+  text: string,
+  highlights: readonly string[] | undefined,
+  className: string | undefined,
+): React.ReactNode {
+  if (!highlights || highlights.length === 0) return text;
+  if (!className) return renderWithMarks(text, highlights);
+  const parts: React.ReactNode[] = [];
+  let remaining = text;
+  let keyCounter = 0;
+  for (const phrase of highlights) {
+    const i = remaining.indexOf(phrase);
+    if (i < 0) continue;
+    if (i > 0) parts.push(remaining.slice(0, i));
+    parts.push(
+      <span key={`h-${keyCounter++}`} className={className}>
+        {phrase}
+      </span>,
+    );
+    remaining = remaining.slice(i + phrase.length);
+  }
+  if (remaining) parts.push(remaining);
+  return parts;
 }
 
 /**
@@ -549,7 +589,11 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               </p>
               <p className="font-caveat text-3xl text-white/90 mt-3">{tagline}</p>
               <p className="font-poppins text-base text-white/85 mt-6 max-w-md leading-relaxed py-1">
-                {renderWithMarks(hero.description, hero.descriptionHighlights)}
+                {renderThemedHighlights(
+                  hero.description,
+                  hero.descriptionHighlights,
+                  theme.heroHighlightClass,
+                )}
               </p>
             </div>
             <div className="relative">
@@ -634,39 +678,34 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 <h2 className="font-caveat text-4xl md:text-5xl text-yellow-700">
                   {mantrasTitle}
                 </h2>
-                <img
-                  src={doodles.primary}
-                  alt=""
-                  width={24}
-                  height={24}
-                  loading="lazy"
-                  aria-hidden="true"
-                  className="w-6 h-6 opacity-70"
-                />
-                <IconSparkles
-                  size={16}
-                  className={`${theme.accentIconClass ?? 'text-yellow-500'} opacity-70`}
-                  aria-hidden="true"
-                />
-                <IconArrowCurveRight
-                  size={18}
-                  className={`${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-55 -rotate-12`}
-                  aria-hidden="true"
-                />
+                <span className="flex items-center gap-2 opacity-70" aria-hidden="true">
+                  <TIcon
+                    name={theme.primaryIconKey ?? 'sun'}
+                    size={18}
+                    className={theme.accentIconClass ?? 'text-yellow-500'}
+                  />
+                  <IconSparkles size={14} className="text-yellow-500" aria-hidden="true" />
+                  <IconArrowCurveRight
+                    size={20}
+                    className={`${theme.accentIconClassSoft ?? 'text-yellow-400'} -rotate-12`}
+                    aria-hidden="true"
+                  />
+                </span>
               </div>
 
               {mantras.map((m, idx) => (
                 <div key={m.title} className={`relative ${idx < mantras.length - 1 ? 'mb-8' : ''}`}>
                   {idx > 0 ? (
-                    <img
-                      src={doodles.primary}
-                      alt=""
-                      width={40}
-                      height={40}
-                      loading="lazy"
+                    <span
+                      className="absolute -top-1 right-0 opacity-60 pointer-events-none"
                       aria-hidden="true"
-                      className="absolute -top-1 right-0 w-10 h-10 opacity-60 pointer-events-none"
-                    />
+                    >
+                      <TIcon
+                        name={theme.primaryIconKey ?? 'sun'}
+                        size={22}
+                        className={theme.accentIconClass ?? 'text-yellow-500'}
+                      />
+                    </span>
                   ) : null}
                   <p className="font-caveat text-2xl text-yellow-700 mb-3">
                     {m.titleHighlight ? (
@@ -912,8 +951,8 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 {gemstone.caption}
               </p>
               <IconCircleHalf2
-                size={40}
-                className={`mt-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 rotate-90`}
+                size={32}
+                className={`mt-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-50 rotate-90`}
                 aria-hidden="true"
               />
             </div>
@@ -927,7 +966,7 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               <div className="tape-decoration" aria-hidden="true" />
               <div className="flex items-center gap-2 mb-4 relative z-10">
                 <IconHeart
-                  size={24}
+                  size={20}
                   className={theme.accentIconClass ?? 'text-red-500'}
                   aria-hidden="true"
                 />
@@ -939,8 +978,8 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 {renderWithMarks(affirmation.text, affirmation.highlights)}
               </p>
               <IconFlower
-                size={32}
-                className={`absolute bottom-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-30 pointer-events-none`}
+                size={24}
+                className={`absolute bottom-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 pointer-events-none`}
                 aria-hidden="true"
               />
             </ParchmentCard>
