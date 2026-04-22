@@ -67,14 +67,14 @@ export default function DoshaHubPage() {
 
       <section className="py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-sacramento text-6xl md:text-7xl text-gray-900 leading-tight">
+          <h1 className="font-caveat text-5xl md:text-7xl text-gray-900 leading-tight">
             Doshas in Vedic Astrology
           </h1>
           <p className="font-devanagari text-3xl md:text-4xl text-gray-700 mt-2">दोष</p>
           <p className="font-inter mt-6 text-lg text-gray-700 max-w-3xl mx-auto">
             Doshas are planetary afflictions in the birth chart that can create challenges in
-            specific life areas, such as marriage, career, family, and longevity. Understanding
-            your doshas is the first step toward appropriate remedies and acceptance.
+            specific life areas like marriage, career, family, and longevity. Understanding your
+            doshas is the first step toward appropriate remedies and acceptance.
           </p>
         </div>
       </section>
@@ -92,7 +92,7 @@ export default function DoshaHubPage() {
 
       <section className="py-16 bg-surface">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 font-inter prose prose-lg text-gray-700">
-          <h2 className="font-tangerine text-5xl text-gray-900 mb-6">Understanding Doshas</h2>
+          <h2 className="font-heading text-3xl text-gray-900 mb-6">Understanding Doshas</h2>
           <p>
             Doshas in Vedic astrology are specific planetary afflictions: configurations of graha
             placement, aspect, or nodal involvement that create recurring friction in a defined
@@ -129,7 +129,7 @@ export default function DoshaHubPage() {
 
       <section className="py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-tangerine text-5xl text-gray-900 mb-8 text-center">
+          <h2 className="font-heading text-3xl text-gray-900 mb-8 text-center">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4 font-inter">

@@ -50,6 +50,7 @@ export default {
         inter: ['Inter', 'sans-serif'],
         devanagari: ['"Noto Serif Devanagari"', 'serif'],
         caveat: ['Caveat', 'cursive'],
+        kalam: ['Kalam', 'cursive'],
         homemade: ['"Homemade Apple"', 'cursive'],
         dafoe: ['"Mr Dafoe"', 'cursive'],
         // TODO: Replace Pacifico with The Bredan when user provides font file

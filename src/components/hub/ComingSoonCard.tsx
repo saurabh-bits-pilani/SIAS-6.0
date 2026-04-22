@@ -13,7 +13,7 @@ export default function ComingSoonCard({ title, sanskrit }: ComingSoonCardProps)
       <span className="absolute top-3 right-3 bg-yellow-400 text-gray-900 font-inter text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full">
         Coming Soon
       </span>
-      <h3 className="font-tangerine text-3xl text-gray-800 leading-tight">{title}</h3>
+      <h3 className="font-kalam text-2xl text-gray-800 leading-tight">{title}</h3>
       {sanskrit ? (
         <p className="font-devanagari text-xl text-gray-600 mt-2">{sanskrit}</p>
       ) : null}
