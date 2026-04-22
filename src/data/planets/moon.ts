@@ -68,16 +68,17 @@ const moonData: MoonStaticData = {
     accentHex: '#60a5fa',
     heroRadialRgba: 'rgba(147, 197, 253, 0.18)',
     darkGradientFrom: '#0b1a2f',
-    darkGradientTo: '#000000',
-    heroTitleClass: 'text-blue-200',
+    darkGradientTo: '#050b1a',
+    heroTitleClass: 'text-blue-300',
     heroTitleShadow:
-      '0 0 30px rgba(147, 197, 253, 0.45), 0 0 60px rgba(147, 197, 253, 0.2)',
+      '0 0 30px rgba(147, 197, 253, 0.5), 0 0 60px rgba(147, 197, 253, 0.25)',
     footerCaptionClass: 'text-blue-200',
     heroImageRingClass: 'ring-blue-300/25',
     heroImageGlowRgba: 'rgba(147, 197, 253, 0.22)',
     accentIconClass: 'text-blue-500',
     accentIconClassSoft: 'text-blue-400',
-    featherQuillUrl: `${SUN_ASSETS}/feather-quill.png`,
+    pageDarkBg:
+      'linear-gradient(to bottom, #0b1a2f 0%, #0a1428 50%, #050b1a 100%)',
     heroHighlightClass:
       'text-blue-300 font-semibold underline decoration-wavy decoration-blue-400 underline-offset-4',
     primaryIconKey: 'moon',
@@ -204,7 +205,7 @@ const moonData: MoonStaticData = {
   },
   doodles: {
     primary: `${MOON_ASSETS}/doodle-moon.webp`,
-    secondary: `${SUN_ASSETS}/doodle-lion.png`,
+    secondary: `${MOON_ASSETS}/doodle-moon.webp`,
     tertiary: `${SUN_ASSETS}/star-accent.svg`,
     parchmentTextureUrl: `${SUN_ASSETS}/parchment-texture.webp`,
     quickFactIconBase: SUN_ASSETS,

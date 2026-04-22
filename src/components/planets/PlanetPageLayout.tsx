@@ -33,6 +33,7 @@ import {
   IconBrain,
   IconWaveSquare,
   IconFlower,
+  IconFeather,
   IconCircleHalf2,
   type Icon as TablerIconType,
 } from '@tabler/icons-react';
@@ -223,8 +224,6 @@ export interface Theme {
   /** Softer variant of the accent icon color for background-level decorations.
    *  Defaults to "text-yellow-400" if unset. */
   accentIconClassSoft?: string;
-  /** URL for a feather-quill decoration on the "How to Connect" card. Optional. */
-  featherQuillUrl?: string;
   /** Tailwind class applied to highlighted phrases in the hero description.
    *  When set, hero highlights use this className instead of the yellow
    *  `.highlight-marker`, which is unreadable against the dark hero.
@@ -233,6 +232,11 @@ export interface Theme {
   /** Primary Tabler icon key for small decorative trios (e.g. "moon" for
    *  Moon, "sun" for Sun). Used in the Sacred Mantras heading row. */
   primaryIconKey?: IconKey;
+  /** Full-page dark background applied to the root wrapper. Gives all dark
+   *  sections (hero, quick facts, mantras, mid break, bottom three, footer,
+   *  closing extension) a continuous gradient with no visible seams. When
+   *  omitted the page falls back to plain white. */
+  pageDarkBg?: string;
 }
 
 /**
@@ -513,7 +517,10 @@ export default function PlanetPageLayout(props: PlanetPageData) {
   });
 
   return (
-    <div className="bg-white">
+    <div
+      className={theme.pageDarkBg ? '' : 'bg-white'}
+      style={theme.pageDarkBg ? { background: theme.pageDarkBg } : undefined}
+    >
       <SEOHead
         title={meta.title}
         description={meta.description}
@@ -552,15 +559,21 @@ export default function PlanetPageLayout(props: PlanetPageData) {
       {/* ───────────── Hero ───────────── */}
       <section
         className="relative overflow-hidden"
-        style={{
-          backgroundImage: `radial-gradient(circle at 30% 20%, ${theme.heroRadialRgba}, transparent 55%), linear-gradient(to bottom, ${theme.darkGradientFrom} 0%, ${theme.darkGradientTo} 100%)`,
-        }}
+        style={
+          theme.pageDarkBg
+            ? {
+                backgroundImage: `radial-gradient(circle at 30% 20%, ${theme.heroRadialRgba}, transparent 55%)`,
+              }
+            : {
+                backgroundImage: `radial-gradient(circle at 30% 20%, ${theme.heroRadialRgba}, transparent 55%), linear-gradient(to bottom, ${theme.darkGradientFrom} 0%, ${theme.darkGradientTo} 100%)`,
+              }
+        }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="relative">
               <h1
-                className={`font-sacramento text-8xl md:text-9xl leading-none ${theme.heroTitleClass}`}
+                className={`font-sacramento text-7xl md:text-9xl leading-none ${theme.heroTitleClass}`}
                 style={{ textShadow: theme.heroTitleShadow }}
               >
                 {name.english === 'Moon' || name.english === 'Sun'
@@ -625,7 +638,7 @@ export default function PlanetPageLayout(props: PlanetPageData) {
       </section>
 
       {/* ───────────── Quick Facts Strip ───────────── */}
-      <section className="relative bg-black">
+      <section className={`relative ${theme.pageDarkBg ? '' : 'bg-black'}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className="grid grid-cols-2 md:grid-cols-5 gap-0 rounded-2xl shadow-2xl ring-1 ring-black/5 overflow-hidden -translate-y-10"
@@ -661,9 +674,13 @@ export default function PlanetPageLayout(props: PlanetPageData) {
       {/* ───────────── Mantras + Life + Benefits ───────────── */}
       <section
         className="pb-20"
-        style={{
-          background: `linear-gradient(to bottom, #000 0%, #0d0805 50%, ${theme.darkGradientFrom} 100%)`,
-        }}
+        style={
+          theme.pageDarkBg
+            ? undefined
+            : {
+                background: `linear-gradient(to bottom, #000 0%, #0d0805 50%, ${theme.darkGradientFrom} 100%)`,
+              }
+        }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -765,16 +782,12 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                   height={64}
                   loading="lazy"
                   aria-hidden="true"
-                  className="absolute bottom-3 right-3 w-16 h-16 opacity-25 pointer-events-none"
+                  className="absolute bottom-3 right-3 w-16 h-16 opacity-30 pointer-events-none"
                 />
-                <img
-                  src={doodles.secondary}
-                  alt=""
-                  width={80}
-                  height={80}
-                  loading="lazy"
+                <IconSparkles
+                  size={48}
+                  className={`absolute bottom-14 right-20 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-20 pointer-events-none`}
                   aria-hidden="true"
-                  className="absolute bottom-12 right-16 w-20 h-20 opacity-25 pointer-events-none"
                 />
                 <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 border-b-2 border-yellow-500 pb-2 mb-4 inline-block">
                   {lifeCardTitle}
@@ -845,9 +858,15 @@ export default function PlanetPageLayout(props: PlanetPageData) {
       {/* ───────────── Mid Break ───────────── */}
       <section
         className="py-16 md:py-20"
-        style={{
-          backgroundImage: `radial-gradient(circle at center, ${theme.heroRadialRgba}, transparent 60%), linear-gradient(to bottom, ${theme.darkGradientFrom}, ${theme.darkGradientTo})`,
-        }}
+        style={
+          theme.pageDarkBg
+            ? {
+                backgroundImage: `radial-gradient(circle at center, ${theme.heroRadialRgba}, transparent 60%)`,
+              }
+            : {
+                backgroundImage: `radial-gradient(circle at center, ${theme.heroRadialRgba}, transparent 60%), linear-gradient(to bottom, ${theme.darkGradientFrom}, ${theme.darkGradientTo})`,
+              }
+        }
       >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <img
@@ -868,10 +887,14 @@ export default function PlanetPageLayout(props: PlanetPageData) {
 
       {/* ───────────── Bottom 3 cards ───────────── */}
       <section
-        className="py-16"
-        style={{
-          background: `linear-gradient(to bottom, ${theme.darkGradientTo}, ${theme.darkGradientFrom})`,
-        }}
+        className="py-8"
+        style={
+          theme.pageDarkBg
+            ? undefined
+            : {
+                background: `linear-gradient(to bottom, ${theme.darkGradientTo}, ${theme.darkGradientFrom})`,
+              }
+        }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -880,23 +903,17 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               rotation="md:rotate-[0.5deg]"
               parchmentUrl={doodles.parchmentTextureUrl}
             >
-              {theme.featherQuillUrl ? (
-                <img
-                  src={theme.featherQuillUrl}
-                  alt=""
-                  width={80}
-                  height={80}
-                  loading="lazy"
-                  aria-hidden="true"
-                  className="absolute -top-3 -left-3 w-20 h-auto opacity-60 -rotate-12 pointer-events-none"
-                />
-              ) : null}
+              <IconFeather
+                size={32}
+                className={`absolute bottom-4 left-4 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 -rotate-12 pointer-events-none`}
+                aria-hidden="true"
+              />
               <TIcon
-                name="moon"
+                name={theme.primaryIconKey ?? 'sun'}
                 size={20}
                 className={`absolute top-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 pointer-events-none`}
               />
-              <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 mb-4 pl-10 relative z-10">
+              <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 mb-4 relative z-10">
                 {howToConnectTitle}
               </h3>
               <ul className="space-y-3 font-poppins text-sm text-gray-800 relative z-10">
@@ -937,24 +954,15 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               <p className="font-poppins text-sm text-white/60 mt-1">
                 ({gemstone.sanskrit})
               </p>
-              {gemstone.accentDoodleUrl ? (
-                <img
-                  src={gemstone.accentDoodleUrl}
-                  alt={gemstone.accentDoodleAlt ?? ''}
-                  width={64}
-                  height={64}
-                  loading="lazy"
-                  className="w-16 h-16 mt-4 opacity-50 pointer-events-none"
-                />
-              ) : null}
               <p className="italic text-sm text-gray-400 mt-2 text-center max-w-xs">
                 {gemstone.caption}
               </p>
-              <IconCircleHalf2
-                size={32}
-                className={`mt-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-50 rotate-90`}
-                aria-hidden="true"
-              />
+              <div className="flex items-center justify-center mt-2" aria-hidden="true">
+                <IconCircleHalf2
+                  size={28}
+                  className={`${theme.accentIconClassSoft ?? 'text-blue-200'} opacity-50`}
+                />
+              </div>
             </div>
 
             {/* Affirmation */}
@@ -978,8 +986,8 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 {renderWithMarks(affirmation.text, affirmation.highlights)}
               </p>
               <IconFlower
-                size={24}
-                className={`absolute bottom-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 pointer-events-none`}
+                size={32}
+                className={`absolute bottom-4 right-4 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 pointer-events-none`}
                 aria-hidden="true"
               />
             </ParchmentCard>
@@ -989,10 +997,14 @@ export default function PlanetPageLayout(props: PlanetPageData) {
 
       {/* ───────────── Footer strip ───────────── */}
       <section
-        className="relative py-14"
-        style={{
-          background: `linear-gradient(to bottom, ${theme.darkGradientFrom} 0%, ${theme.darkGradientTo} 100%)`,
-        }}
+        className="relative py-6"
+        style={
+          theme.pageDarkBg
+            ? undefined
+            : {
+                background: `linear-gradient(to bottom, ${theme.darkGradientFrom} 0%, ${theme.darkGradientTo} 100%)`,
+              }
+        }
       >
         <ScatteredStars
           stars={[
@@ -1017,16 +1029,13 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 {closingShloka.left}
               </p>
             </div>
-            <div className="flex justify-center">
-              <img
-                src={doodles.tertiary}
-                alt=""
-                width={96}
-                height={96}
-                loading="lazy"
-                aria-hidden="true"
-                className="opacity-90"
+            <div className="flex items-center justify-center gap-2" aria-hidden="true">
+              <IconStar size={12} className="text-yellow-300 opacity-60" />
+              <IconMoonStars
+                size={36}
+                className={`${theme.accentIconClassSoft ?? 'text-blue-300'} opacity-70`}
               />
+              <IconStar size={12} className="text-yellow-300 opacity-60" />
             </div>
             <div className="flex flex-col items-center gap-2">
               <p className={`font-devanagari text-xl ${theme.footerCaptionClass}`}>
