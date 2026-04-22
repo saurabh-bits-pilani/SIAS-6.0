@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 // Regenerate public/robots.txt based on deploy environment.
 //
-// - VITE_SITE_ENV=production → rich policy with AI-crawler allowlist and
-//   a Sitemap: reference pointing at the canonical origin.
-// - VITE_SITE_ENV=staging (default) → blanket Disallow: / so search engines
-//   and AI crawlers skip the entire staging deployment.
+// Resolution order (first match wins):
+//   1. VERCEL_ENV=production → real production robots.txt (allow all + AI
+//      crawlers + Sitemap reference). Set automatically by Vercel on
+//      production deployments.
+//   2. VERCEL_ENV=preview | development → staging robots.txt (Disallow: /).
+//      Prevents preview URLs from leaking into search indexes even when
+//      the project inherits VITE_SITE_ENV=production from production env.
+//   3. Fallback (no VERCEL_ENV, e.g. local builds or non-Vercel CI):
+//      VITE_SITE_ENV=production → production template, else staging.
 //
 // Matches the noindex meta tag emitted by SEOHead when IS_STAGING is true
-// (src/components/SEOHead.tsx). Both must agree — robots.txt is the
-// first-line defence, the meta tag catches anything that does fetch.
+// (src/components/SEOHead.tsx) — both derive from the same logic in
+// src/config/site.ts. robots.txt is the first-line defence, the meta tag
+// catches anything that does fetch.
 
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -17,7 +23,13 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = path.resolve(__dirname, '..', 'public', 'robots.txt');
 
-const SITE_ENV = process.env.VITE_SITE_ENV === 'production' ? 'production' : 'staging';
+function resolveSiteEnv() {
+  const vercelEnv = process.env.VERCEL_ENV;
+  if (vercelEnv) return vercelEnv === 'production' ? 'production' : 'staging';
+  return process.env.VITE_SITE_ENV === 'production' ? 'production' : 'staging';
+}
+
+const SITE_ENV = resolveSiteEnv();
 const SITE_URL =
   (process.env.VITE_SITE_URL || process.env.VITE_SITE_ORIGIN || 'https://soul-infinity-liard.vercel.app').replace(/\/$/, '');
 
@@ -82,7 +94,11 @@ Disallow: /
 async function main() {
   const body = SITE_ENV === 'production' ? PRODUCTION_TEMPLATE : STAGING_TEMPLATE;
   await fs.writeFile(OUT_PATH, body, 'utf-8');
-  console.log(`Generated public/robots.txt for env=${SITE_ENV} (origin: ${SITE_URL})`);
+  const vercelEnv = process.env.VERCEL_ENV || '(unset)';
+  console.log(
+    `Generated public/robots.txt for env=${SITE_ENV} ` +
+      `(VERCEL_ENV=${vercelEnv}, origin: ${SITE_URL})`,
+  );
 }
 
 main().catch((err) => {

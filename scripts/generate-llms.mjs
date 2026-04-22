@@ -48,6 +48,9 @@ const DESCRIPTIONS = {
   '/blog': 'Blog index — articles on Vedic astrology, remedies, and spiritual growth.',
   '/blog/mantra': 'Navagraha mantras — meanings, benefits, and chanting methodology.',
   '/panchang': 'Today’s Panchang — Tithi, Nakshatra, Yoga, Karana, and muhurat timings.',
+  '/planets': 'Planets — the nine planets (Navagraha) in Vedic astrology: Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu. Learn each planet’s significance, signs ruled, exaltation, debilitation, and remedies.',
+  '/zodiac': 'Zodiac Signs — the twelve zodiac signs (Rashi) in Vedic astrology: Aries through Pisces. Explore each sign’s ruling planet, element, nature, character traits, and life themes.',
+  '/dosha': 'Doshas — common doshas in Vedic astrology: Mangal Dosha, Kaal Sarp Dosh, Sade Sati, Pitru Dosh, and Nadi Dosh. Understand what they mean, how they affect life, and their traditional remedies.',
   '/gallery': 'Photo gallery — consultations, healing sessions, and sacred spaces.',
   '/gallery/remedies': 'Vedic planetary remedies — mantras, gemstones, rituals.',
   '/gallery/pitra-dosh': 'Pitra Dosh — causes, symptoms, and Vedic remedies for ancestral karma.',
@@ -80,6 +83,10 @@ const SECTIONS = [
       '/services/healing/theta-healing',
       '/services/healing/crystal-healing',
     ],
+  },
+  {
+    heading: 'Learn',
+    routes: ['/planets', '/zodiac', '/dosha'],
   },
   {
     heading: 'Content',

@@ -18,6 +18,9 @@ const Panchang = lazy(() => import('./pages/Panchang'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const PlanetsHubPage = lazy(() => import('./pages/hubs/PlanetsHubPage'));
+const ZodiacHubPage = lazy(() => import('./pages/hubs/ZodiacHubPage'));
+const DoshaHubPage = lazy(() => import('./pages/hubs/DoshaHubPage'));
 
 // Loading component for lazy-loaded pages
 const LoadingSpinner = () => (
@@ -47,6 +50,9 @@ function App() {
           <Route path="/gallery/remedies" element={<Remedies />} />
           <Route path="/gallery/pitra-dosh" element={<PitraDosh />} />
           <Route path="/panchang" element={<Panchang />} />
+          <Route path="/planets" element={<PlanetsHubPage />} />
+          <Route path="/zodiac" element={<ZodiacHubPage />} />
+          <Route path="/dosha" element={<DoshaHubPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />

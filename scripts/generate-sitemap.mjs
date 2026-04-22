@@ -40,6 +40,9 @@ const PRIORITY_RULES = [
   [/^\/gallery\/[^/]+$/, 0.7],
   ['/gallery', 0.6],
   ['/panchang', 0.7],
+  ['/planets', 0.8],
+  ['/zodiac', 0.8],
+  ['/dosha', 0.8],
   ['/cosmic-podcast', 0.6],
   ['/privacy', 0.3],
 ];
