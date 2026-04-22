@@ -46,8 +46,8 @@ export default {
         heading: ['Poppins', 'sans-serif'],
         body: ['Open Sans', 'sans-serif'],
         sacramento: ['Sacramento', 'cursive'],
-        caveat: ['Caveat', 'cursive'],
-        kalam: ['Kalam', 'cursive'],
+        tangerine: ['Tangerine', 'cursive'],
+        inter: ['Inter', 'sans-serif'],
         devanagari: ['"Noto Serif Devanagari"', 'serif'],
       },
       boxShadow: {
