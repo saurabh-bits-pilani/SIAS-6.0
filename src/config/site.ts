@@ -2,15 +2,31 @@
  * Central site configuration — single source of truth for canonical URL
  * and deploy environment.
  *
- * Env vars (set in Vercel dashboard per project):
- *   VITE_SITE_ENV = "staging" | "production"   — controls robots/noindex
- *   VITE_SITE_URL = canonical origin            — used in all schemas, canonicals,
- *                                                 OG URLs, and sitemap locs
+ * Env vars:
+ *   VERCEL_ENV    = "production" | "preview" | "development"   — Vercel-injected,
+ *                                                                 authoritative when
+ *                                                                 present. Preview
+ *                                                                 and development
+ *                                                                 both mean staging.
+ *   VITE_SITE_ENV = "staging" | "production"                  — legacy fallback
+ *                                                                 for non-Vercel
+ *                                                                 builds (local dev,
+ *                                                                 CI previews).
+ *   VITE_SITE_URL = canonical origin                            — used in all
+ *                                                                 schemas, canonicals,
+ *                                                                 OG URLs, and
+ *                                                                 sitemap locs.
  *
  * Philosophy: SITE_URL is always the *canonical production origin* regardless
  * of which deployment is serving the request. Staging deploys point their
  * canonicals here and emit noindex so Google never competes staging against
  * production. Migration to a custom domain = flip VITE_SITE_URL.
+ *
+ * Why prefer VERCEL_ENV over VITE_SITE_ENV? Preview deployments on Vercel
+ * often inherit the production project's VITE_SITE_ENV=production, which
+ * would incorrectly flag them as production. VERCEL_ENV is set per-deploy
+ * by Vercel and always reflects the actual deployment type. VERCEL_ENV is
+ * exposed to the client bundle via vite.config.ts → define.
  */
 
 type SiteEnv = 'staging' | 'production';
@@ -34,8 +50,22 @@ function readEnv(key: string): string | undefined {
   return undefined;
 }
 
-const envRaw = readEnv('VITE_SITE_ENV');
-export const SITE_ENV: SiteEnv = envRaw === 'production' ? 'production' : 'staging';
+/**
+ * Derive the deploy environment. VERCEL_ENV is authoritative when present;
+ * VITE_SITE_ENV is the fallback for non-Vercel builds. The default is
+ * 'staging' — safer to accidentally emit noindex than to accidentally
+ * index a staging deployment.
+ */
+function deriveSiteEnv(): SiteEnv {
+  const vercelEnv = readEnv('VERCEL_ENV');
+  if (vercelEnv != null && vercelEnv.length > 0) {
+    return vercelEnv === 'production' ? 'production' : 'staging';
+  }
+  const legacy = readEnv('VITE_SITE_ENV');
+  return legacy === 'production' ? 'production' : 'staging';
+}
+
+export const SITE_ENV: SiteEnv = deriveSiteEnv();
 export const IS_STAGING = SITE_ENV === 'staging';
 export const IS_PRODUCTION = SITE_ENV === 'production';
 
