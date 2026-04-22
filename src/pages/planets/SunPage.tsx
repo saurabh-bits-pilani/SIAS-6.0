@@ -1,6 +1,25 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, Phone, MessageCircle } from 'lucide-react';
+import {
+  IconSparkles,
+  IconStar,
+  IconHome,
+  IconCrown,
+  IconClock,
+  IconLeaf,
+  IconHeartHandshake,
+  IconUserCircle,
+  IconBook,
+  IconSun,
+  IconDroplet,
+  IconDiamond,
+  IconYoga,
+  IconHeart,
+  IconCalendar,
+  IconGift,
+  IconArrowRight,
+} from '@tabler/icons-react';
 import SEOHead from '../../components/SEOHead';
 import SchemaMarkup from '../../components/SchemaMarkup';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -33,6 +52,73 @@ const {
  */
 function Mark({ children }: { children: React.ReactNode }) {
   return <mark className="highlight-marker bg-transparent text-inherit">{children}</mark>;
+}
+
+function SectionDivider() {
+  return (
+    <div className="my-16 flex items-center justify-center gap-4 opacity-60">
+      <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-300" />
+      <img
+        src={sunAsset('star-accent.svg')}
+        alt=""
+        aria-hidden="true"
+        className="w-8 h-8"
+      />
+      <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-300" />
+    </div>
+  );
+}
+
+function HouseCard({
+  number,
+  name,
+  text,
+}: {
+  number: string;
+  name: string;
+  text: string;
+}) {
+  return (
+    <div className="bg-white/70 border border-yellow-200 rounded-lg p-5 hover:shadow-md hover:border-yellow-400 transition-all">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="font-caveat text-3xl text-yellow-700 leading-none">{number}</span>
+        <span className="font-poppins font-semibold text-gray-900">{name}</span>
+      </div>
+      <p className="text-gray-700 text-sm leading-relaxed">{text}</p>
+    </div>
+  );
+}
+
+function RemedyCard({
+  icon,
+  title,
+  text,
+}: {
+  icon: React.ReactNode;
+  title: React.ReactNode;
+  text: React.ReactNode;
+}) {
+  return (
+    <div className="flex gap-4 p-5 bg-white/70 border-l-4 border-yellow-500 rounded-r-lg shadow-sm">
+      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+        {icon}
+      </div>
+      <div className="min-w-0">
+        <h4 className="font-caveat text-2xl text-yellow-800 mb-1 leading-tight">
+          {title}
+        </h4>
+        <p className="text-gray-700 text-sm leading-relaxed">{text}</p>
+      </div>
+    </div>
+  );
+}
+
+function CredentialBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="px-3 py-1 bg-white rounded-full text-sm font-semibold text-yellow-800 border border-yellow-300 shadow-sm">
+      {children}
+    </span>
+  );
 }
 
 function ParchmentCard({
@@ -569,87 +655,171 @@ export default function SunPage() {
       </section>
 
       {/* ───────────────── Section 7: SEO Body (2,000 words) ───────────────── */}
-      <section className="py-16 bg-surface">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 font-inter prose prose-lg text-gray-800">
-          <h2 className="font-heading text-3xl text-gray-900 mb-4">
-            Surya <span className="font-devanagari">(सूर्य)</span>: The Soul of Vedic
-            Astrology
-          </h2>
-          <p>
+      <section
+        className="relative py-20 md:py-28 overflow-hidden"
+        style={{
+          backgroundColor: '#FBF7EF',
+          backgroundImage: `url(${sunAsset('parchment-texture.svg')})`,
+          backgroundSize: '800px',
+          backgroundRepeat: 'repeat',
+          backgroundBlendMode: 'multiply',
+        }}
+      >
+        {/* Cream wash over the texture so it reads as faint, not busy */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ backgroundColor: 'rgba(251, 247, 239, 0.92)' }}
+          aria-hidden="true"
+        />
+
+        {/* Margin doodles (desktop only) */}
+        <img
+          src={sunAsset('doodle-sun.svg')}
+          alt=""
+          aria-hidden="true"
+          className="hidden md:block absolute top-[22%] right-4 w-28 h-28 opacity-10 pointer-events-none"
+        />
+        <img
+          src={sunAsset('doodle-scales.svg')}
+          alt=""
+          aria-hidden="true"
+          className="hidden md:block absolute top-[48%] left-4 w-28 h-28 opacity-10 pointer-events-none"
+        />
+        <img
+          src={sunAsset('doodle-lion.svg')}
+          alt=""
+          aria-hidden="true"
+          className="hidden md:block absolute top-[70%] right-4 w-32 h-32 opacity-10 pointer-events-none"
+        />
+        <img
+          src={sunAsset('star-accent.svg')}
+          alt=""
+          aria-hidden="true"
+          className="hidden md:block absolute top-[85%] left-6 w-16 h-16 opacity-15 pointer-events-none"
+        />
+
+        <div className="relative max-w-4xl mx-auto px-6 md:px-0 font-inter text-gray-800">
+
+          {/* ── Section 1: Soul ─────────────────────────────────── */}
+          <div className="flex items-center gap-4 mb-3">
+            <IconSparkles size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+              Surya <span className="font-devanagari text-4xl md:text-5xl">(सूर्य)</span>: The Soul of Vedic Astrology
+            </h2>
+          </div>
+          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
+
+          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
             In the classical Vedic tradition, Surya is not merely a celestial body in the sky.
-            He is the luminous centre of the chart, the karaka of the Atma, the soul itself.
-            The{' '}
-            <em>Brihat Parashara Hora Shastra</em>, the seminal text attributed to Sage
-            Parashara, names the Sun as the king among the Navagraha, seated on a chariot
-            drawn by seven horses that represent the seven colours of light and the seven
-            major pranic currents in the body.
-          </p>
-          <p>
-            Mythologically, Surya is the son of the sage Kashyapa and the goddess Aditi. His
-            lineage places him within the highest strata of Vedic cosmology, and his epithets,
-            among them Divakara (maker of day), Bhaskara (maker of light), and Savitur (the
-            quickener), hint at the depth with which the tradition has observed him. The
-            Gayatri Mantra itself is addressed to the solar deity Savitur, and its daily
-            recitation is considered a foundational spiritual practice.
-          </p>
-          <p>
-            A classical invocation from the Aditya Hridayam captures the mood:{' '}
-            <em>ādityaṁ sarva bhūtānām antaryāmiṇaṁ param</em>, which translates as, the
-            Sun, the inner witness of all beings, the supreme one. This line reminds the
-            student that the Sun in the chart is less about the outer persona and more about
-            the soul-witness behind every action.
-          </p>
-          <p>
-            At Soul Infinity, this luminary is always read with reverence. Before looking at
-            house placement, dignity, or dasha, Saurabh Jain studies the solar planet as
-            the silent observer at the centre of the chart, the fixed point from which the
-            rest of the planetary orchestra can be understood. This contemplative first
-            step, rarely discussed in modern commentary, is the difference between a
-            predictive reading and a reading that helps a client meet themselves.
+            He is the luminous centre of the chart, the karaka of the Atma, the{' '}
+            <Mark>soul</Mark> itself. The Brihat Parashara Hora Shastra, the seminal text
+            attributed to <Mark>Sage Parashara</Mark>, names the Sun as the king among the
+            Navagraha, seated on a chariot drawn by seven horses that represent the seven
+            colours of light and the seven major pranic currents in the body.
           </p>
 
-          <h2 className="font-heading text-3xl text-gray-900 mt-10 mb-4">
-            Significations of the Sun in a Birth Chart
-          </h2>
-          <p>
-            The Sun represents the father, the source of authority, and the way a person
-            relates to power, hierarchy, and recognition. Karaka for the first house and
-            the tenth, Surya shapes identity, reputation, and the capacity to hold a
-            position of responsibility. A well-placed Sun often correlates with a stable
-            father figure, a clear sense of purpose, and a natural ability to lead without
-            needing to dominate.
+          <div className="my-6 inline-flex items-center gap-3 px-4 py-2 rounded-lg shadow-sm ring-1 ring-yellow-700/20"
+            style={{
+              backgroundImage: `url(${sunAsset('parchment-texture.svg')})`,
+              backgroundSize: 'cover',
+              backgroundColor: '#fdf6e3',
+            }}
+          >
+            <IconBook size={20} className="text-yellow-700" aria-hidden="true" />
+            <span className="font-caveat text-xl text-yellow-900">Brihat Parashara Hora Shastra</span>
+          </div>
+
+          <p className="text-lg leading-relaxed mb-6">
+            Mythologically, Surya is the son of the sage <Mark>Kashyapa</Mark> and the
+            goddess Aditi. His lineage places him within the highest strata of Vedic
+            cosmology, and his epithets, among them Divakara (maker of day), Bhaskara
+            (maker of light), and Savitur (the quickener), hint at the depth with which
+            the tradition has observed him. The Gayatri Mantra itself is addressed to the
+            solar deity Savitur, and its daily recitation is considered a foundational
+            spiritual practice.
           </p>
-          <p>
+
+          <p className="text-lg leading-relaxed mb-6">
+            A classical invocation from the Aditya Hridayam captures the mood:
+          </p>
+
+          <blockquote className="my-10 mx-auto max-w-2xl border-l-4 border-yellow-500 pl-8 pr-6 py-6 bg-yellow-50/60 rounded-r-xl shadow-sm">
+            <p className="font-kalam text-xl md:text-2xl italic text-gray-800 mb-2">
+              ādityaṁ sarva bhūtānām antaryāmiṇaṁ param
+            </p>
+            <p className="font-poppins text-base text-gray-600">
+              The Sun, the inner witness of all beings, the supreme one.
+            </p>
+            <cite className="block mt-3 text-sm text-yellow-700 font-semibold uppercase tracking-wide not-italic">
+              Aditya Hridayam
+            </cite>
+          </blockquote>
+
+          <p className="text-lg leading-relaxed mb-6">
+            This line reminds the student that the Sun in the chart is less about the
+            outer persona and more about the <Mark>Atmakaraka</Mark>, the soul-witness
+            behind every action.
+          </p>
+
+          <p className="text-lg leading-relaxed mb-6">
+            At Soul Infinity, this luminary is always read with reverence. Before looking
+            at house placement, dignity, or dasha, Saurabh Jain studies the solar planet
+            as the silent observer at the centre of the chart, the fixed point from which
+            the rest of the planetary orchestra can be understood. This contemplative
+            first step, rarely discussed in modern commentary, is the difference between
+            a predictive reading and a reading that helps a client meet themselves.
+          </p>
+
+          <SectionDivider />
+
+          {/* ── Section 2: Significations ────────────────────────── */}
+          <div className="flex items-center gap-4 mb-3">
+            <IconStar size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+              Significations of the Sun in a Birth Chart
+            </h2>
+          </div>
+          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
+
+          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
+            The Sun represents the <Mark>father</Mark>, the source of{' '}
+            <Mark>authority</Mark>, and the way a person relates to power, hierarchy,
+            and recognition. Karaka for the first house and the tenth, Surya shapes
+            identity, reputation, and the capacity to hold a position of responsibility.
+            A well-placed Sun often correlates with a stable father figure, a clear
+            sense of purpose, and a natural ability to lead without needing to dominate.
+          </p>
+          <p className="text-lg leading-relaxed mb-6">
             In the physical body, Surya is linked to the bones, the heart, and the eyes.
-            For men, the right eye is read through the Sun; for women, the left. Vitality,
-            immunity, and the functioning of the circulatory system are all assessed in
-            part through the strength of Surya in the natal chart and its transits,
-            especially during Solar return periods.
+            For men, the right eye is read through the Sun; for women, the left.{' '}
+            <Mark>Vitality</Mark>, immunity, and the functioning of the circulatory
+            system are all assessed in part through the strength of Surya in the natal
+            chart and its transits, especially during Solar return periods.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             The Sun is also the karaka for government, institutional structures, and
             public-facing roles. When Saurabh evaluates a chart for career direction, a
-            strong Sun placed in angular houses often suggests natural alignment with
-            leadership, administration, or civil service paths. A weak Sun does not rule
-            out such paths, but points instead to cycles where confidence and timing need
-            careful cultivation.
+            strong Sun placed in angular houses often suggests natural alignment with{' '}
+            <Mark>leadership</Mark>, administration, or civil service paths. A weak Sun
+            does not rule out such paths, but points instead to cycles where confidence
+            and timing need careful cultivation.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             In Hindu cultural vocabulary, the Sun is often called{' '}
-            <span className="font-devanagari">आत्मकारक</span>{' '}
-            (ātmakāraka), the significator of the soul, when it is the planet with the
-            highest degrees in the chart according to Jaimini astrology. This role makes
-            the Sun one of the most studied planets in soul-level analysis, relationship
-            karma, and dharmic direction.
+            <span className="font-devanagari text-xl">आत्मकारक</span>{' '}
+            (<em>ātmakāraka</em>), the significator of the soul, when it is the planet
+            with the highest degrees in the chart according to Jaimini astrology. This
+            role makes the Sun one of the most studied planets in soul-level analysis,
+            relationship karma, and dharmic direction.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             Beyond individual life, Surya also governs the immune system in subtle
             energetic terms and the spinal column in somatic reading. Classical texts
             associate a weak or afflicted solar position with pride, arrogance, or
             conversely a collapsed sense of self, and a dignified placement with
             generosity, fairness, and a steady commitment to truth.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             Another layer that often gets missed in surface readings is the way this
             luminary interacts with the rising sign. When the ascendant lord happens to
             be Surya or shares nakshatra with him, identity and life direction tend to
@@ -658,78 +828,106 @@ export default function SunPage() {
             consultation because it frames the rest of the chart narrative.
           </p>
 
-          <h2 className="font-heading text-3xl text-gray-900 mt-10 mb-4">
-            Sun in the 12 Houses
-          </h2>
-          <p>
+          <SectionDivider />
+
+          {/* ── Section 3: 12 Houses ────────────────────────────── */}
+          <div className="flex items-center gap-4 mb-3">
+            <IconHome size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+              Sun in the 12 Houses
+            </h2>
+          </div>
+          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
+
+          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
             A concise overview of the solar luminary’s classical themes house by house.
             Each placement is modulated by sign, aspect, and dasha, so these summaries
             are a starting point rather than a final verdict.
           </p>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li>
-              <strong>First house:</strong> Strong sense of self, leadership
-              inclination, visible confidence. Tendency toward the right eye being
-              dominant.
-            </li>
-            <li>
-              <strong>Second house:</strong> Authority in family matters, speech
-              that carries weight. Wealth often tied to government or institutional
-              work.
-            </li>
-            <li>
-              <strong>Third house:</strong> Courage, initiative, assertive
-              communication. Favours independent ventures and younger-sibling dynamics.
-            </li>
-            <li>
-              <strong>Fourth house:</strong> Complex relationship with mother or
-              home-base, intense inner drive for emotional sovereignty.
-            </li>
-            <li>
-              <strong>Fifth house:</strong> Creative authority, teaching talent,
-              classical scholarship. Strong bond with first-born child.
-            </li>
-            <li>
-              <strong>Sixth house:</strong> Fighter placement, capacity to overcome
-              enemies and illness. Can indicate father-related service themes.
-            </li>
-            <li>
-              <strong>Seventh house:</strong> As marriage karaka, this luminary raises
-              independence in partnerships. Partner with a strong public profile.
-            </li>
-            <li>
-              <strong>Eighth house:</strong> Deep soul research, interest in the
-              occult. Father’s longevity and karmic inheritance are themes.
-            </li>
-            <li>
-              <strong>Ninth house:</strong> Classical favourable placement for
-              dharma, guru connection, long-distance travel, and legal standing.
-            </li>
-            <li>
-              <strong>Tenth house:</strong> Digbala placement. One of the strongest
-              positions, giving career visibility and institutional authority.
-            </li>
-            <li>
-              <strong>Eleventh house:</strong> Gains through leaders, mentors, and
-              elder brothers. Network of powerful associations.
-            </li>
-            <li>
-              <strong>Twelfth house:</strong> Inner spiritual focus, foreign
-              residence, work behind the scenes. Ego dissolution as a life theme.
-            </li>
-          </ol>
 
-          <h2 className="font-heading text-3xl text-gray-900 mt-10 mb-4">
-            Sun’s Dignities: Exaltation, Debilitation, and Relationships
-          </h2>
-          <p>
-            Surya is exalted in Aries, with peak exaltation at 10 degrees. In Leo, the
-            Sun occupies its own sign and is in Mooltrikona from 0 to 20 degrees. The
-            debilitation sign is Libra, with deepest debilitation at 10 degrees. These
-            dignity points are the backbone of classical strength assessment and inform
-            every remedy recommendation.
+          <div className="grid md:grid-cols-2 gap-4 my-8">
+            <HouseCard
+              number="1st"
+              name="First house"
+              text="Strong sense of self, leadership inclination, visible confidence. Tendency toward the right eye being dominant."
+            />
+            <HouseCard
+              number="2nd"
+              name="Second house"
+              text="Authority in family matters, speech that carries weight. Wealth often tied to government or institutional work."
+            />
+            <HouseCard
+              number="3rd"
+              name="Third house"
+              text="Courage, initiative, assertive communication. Favours independent ventures and younger-sibling dynamics."
+            />
+            <HouseCard
+              number="4th"
+              name="Fourth house"
+              text="Complex relationship with mother or home-base, intense inner drive for emotional sovereignty."
+            />
+            <HouseCard
+              number="5th"
+              name="Fifth house"
+              text="Creative authority, teaching talent, classical scholarship. Strong bond with first-born child."
+            />
+            <HouseCard
+              number="6th"
+              name="Sixth house"
+              text="Fighter placement, capacity to overcome enemies and illness. Can indicate father-related service themes."
+            />
+            <HouseCard
+              number="7th"
+              name="Seventh house"
+              text="As marriage karaka, this luminary raises independence in partnerships. Partner with a strong public profile."
+            />
+            <HouseCard
+              number="8th"
+              name="Eighth house"
+              text="Deep soul research, interest in the occult. Father’s longevity and karmic inheritance are themes."
+            />
+            <HouseCard
+              number="9th"
+              name="Ninth house"
+              text="Classical favourable placement for dharma, guru connection, long-distance travel, and legal standing."
+            />
+            <HouseCard
+              number="10th"
+              name="Tenth house"
+              text="Digbala placement. One of the strongest positions, giving career visibility and institutional authority."
+            />
+            <HouseCard
+              number="11th"
+              name="Eleventh house"
+              text="Gains through leaders, mentors, and elder brothers. Network of powerful associations."
+            />
+            <HouseCard
+              number="12th"
+              name="Twelfth house"
+              text="Inner spiritual focus, foreign residence, work behind the scenes. Ego dissolution as a life theme."
+            />
+          </div>
+
+          <SectionDivider />
+
+          {/* ── Section 4: Dignities ─────────────────────────────── */}
+          <div className="flex items-center gap-4 mb-3">
+            <IconCrown size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+              Sun’s Dignities: Exaltation, Debilitation, and Relationships
+            </h2>
+          </div>
+          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
+
+          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
+            Surya is <Mark>exalted in Aries</Mark>, with peak exaltation at 10 degrees.
+            In Leo, the Sun occupies its own sign and is in <Mark>Mooltrikona</Mark> from
+            0 to 20 degrees. The debilitation sign is{' '}
+            <Mark>debilitated in Libra</Mark>, with deepest debilitation at 10 degrees.
+            These dignity points are the backbone of classical strength assessment and
+            inform every remedy recommendation.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             In Parashari relationship tables, this luminary counts Moon, Mars, and
             Jupiter as friends. Venus and Saturn are treated as enemies because of
             their opposing cosmological character, and Mercury is neutral. The shadow
@@ -740,34 +938,42 @@ export default function SunPage() {
             and identity reinvention, which is why Saurabh pays particular attention to
             these configurations before framing any remedy sequence.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             When Saurabh evaluates the Sun’s strength, he looks beyond dignity alone.
-            Shadbala, Ashtakavarga points, nakshatra placement, and Vargottama status all
-            feed into a layered reading. A technically debilitated Sun can still yield
-            powerful results through Neecha Bhanga Raja Yoga, while a technically exalted
-            Sun can underperform if surrounded by malefic aspects.
+            Shadbala, Ashtakavarga points, nakshatra placement, and Vargottama status
+            all feed into a layered reading. A technically debilitated Sun can still
+            yield powerful results through Neecha Bhanga Raja Yoga, while a technically
+            exalted Sun can underperform if surrounded by malefic aspects.
           </p>
 
-          <h2 className="font-heading text-3xl text-gray-900 mt-10 mb-4">
-            Surya Mahadasha: The Six-Year Period
-          </h2>
-          <p>
+          <SectionDivider />
+
+          {/* ── Section 5: Mahadasha ─────────────────────────────── */}
+          <div className="flex items-center gap-4 mb-3">
+            <IconClock size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+              <Mark>Surya Mahadasha</Mark>: The Six-Year Period
+            </h2>
+          </div>
+          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
+
+          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
             In the Vimshottari Dasha system, Surya Mahadasha runs for six years. The
             themes that rise during this period often relate to authority, recognition,
             father’s health, career positioning, and the individual’s relationship with
-            their own ego. Saurabh frequently observes clients experiencing a crystallising
-            sense of purpose during these years, sometimes accompanied by a public
-            milestone or a pivotal shift in professional standing.
+            their own ego. Saurabh frequently observes clients experiencing a
+            crystallising sense of purpose during these years, sometimes accompanied by
+            a public milestone or a pivotal shift in professional standing.
           </p>
-          <p>
-            Results depend entirely on the natal placement. A luminary dignified in
-            Leo, Aries, or an angular house can bring promotions, recognition, and a
-            consolidation of personal power. A solar placement in Libra, debilitated
-            and under affliction, may surface ego-wound themes, health events related
-            to the heart or eyes, or challenges with authority figures. The sub-periods
+          <p className="text-lg leading-relaxed mb-6">
+            Results depend entirely on the natal placement. A luminary dignified in Leo,
+            Aries, or an angular house can bring promotions, recognition, and a
+            consolidation of personal power. A solar placement in Libra, debilitated and
+            under affliction, may surface ego-wound themes, health events related to the
+            heart or eyes, or challenges with authority figures. The sub-periods
             (antardasha) within this six-year cycle refine these themes month by month.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             Because Surya rules the immune system and vitality in Ayurvedic and
             astrological terms, Mahadasha outcomes often manifest physically as well as
             circumstantially. Saurabh therefore recommends a wellbeing baseline at the
@@ -775,126 +981,211 @@ export default function SunPage() {
             body through the period’s intensity.
           </p>
 
-          <h2 className="font-heading text-3xl text-gray-900 mt-10 mb-4">
-            Traditional Remedies for a Weak or Afflicted Sun
-          </h2>
-          <p>
+          <SectionDivider />
+
+          {/* ── Section 6: Remedies ──────────────────────────────── */}
+          <div className="flex items-center gap-4 mb-3">
+            <IconLeaf size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+              Traditional Remedies for a Weak or Afflicted Sun
+            </h2>
+          </div>
+          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
+
+          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
             Classical Vedic remedies for this luminary are grounded in lifestyle,
             mantra, and charity. They can support a well-placed but weak position, and
             they work best when practised consistently over a dasha-appropriate window,
             not as quick fixes. None of these carry medical or financial guarantees and
             should be adopted with clear intention rather than expectation.
           </p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Chant the Surya mantra at sunrise, facing East.</li>
-            <li>
-              Offer Arghya, a stream of water mixed with red flowers, to the rising Sun
-              each morning.
-            </li>
-            <li>
-              Wear Ruby (Manikya) set in gold on the ring finger of the right hand, only
-              after astrological verification.
-            </li>
-            <li>Practise Surya Namaskar twelve rounds daily as a sadhana.</li>
-            <li>
-              Honour the father and father-figures. In the classical view, this alone
-              can shift the Sun’s expression significantly.
-            </li>
-            <li>
-              Observe Sunday fasts with appropriate discipline, breaking them before
-              sunset with simple food.
-            </li>
-            <li>
-              Donate wheat, jaggery, or copper on Sundays, traditionally before noon.
-            </li>
-          </ul>
-          <p>
+
+          <div className="grid md:grid-cols-2 gap-6 my-10">
+            <RemedyCard
+              icon={<IconSun size={24} className="text-yellow-700" />}
+              title={<>Chant at Sunrise</>}
+              text={
+                <>
+                  <Mark>Chant the Surya mantra at sunrise</Mark>, facing East.
+                </>
+              }
+            />
+            <RemedyCard
+              icon={<IconDroplet size={24} className="text-yellow-700" />}
+              title={<>Offer Arghya</>}
+              text={
+                <>
+                  Offer Arghya, a stream of water mixed with red flowers, to the rising
+                  Sun each morning.
+                </>
+              }
+            />
+            <RemedyCard
+              icon={<IconDiamond size={24} className="text-yellow-700" />}
+              title={<>Wear Ruby</>}
+              text={
+                <>
+                  Wear Ruby (Manikya) set in gold on the ring finger of the right hand,
+                  only after <Mark>astrological verification</Mark>.
+                </>
+              }
+            />
+            <RemedyCard
+              icon={<IconYoga size={24} className="text-yellow-700" />}
+              title={<>Surya Namaskar</>}
+              text={
+                <>
+                  Practise <Mark>Surya Namaskar</Mark> twelve rounds daily as a sadhana.
+                </>
+              }
+            />
+            <RemedyCard
+              icon={<IconHeart size={24} className="text-yellow-700" />}
+              title={<>Honour the Father</>}
+              text={
+                <>
+                  Honour the father and father-figures. In the classical view, this
+                  alone can shift the Sun’s expression significantly.
+                </>
+              }
+            />
+            <RemedyCard
+              icon={<IconCalendar size={24} className="text-yellow-700" />}
+              title={<>Sunday Fasts</>}
+              text={
+                <>
+                  Observe Sunday fasts with appropriate discipline, breaking them before
+                  sunset with simple food.
+                </>
+              }
+            />
+            <RemedyCard
+              icon={<IconGift size={24} className="text-yellow-700" />}
+              title={<>Donate Traditional Offerings</>}
+              text={
+                <>
+                  Donate wheat, jaggery, or copper on Sundays, traditionally before
+                  noon.
+                </>
+              }
+            />
+          </div>
+
+          <p className="text-lg leading-relaxed mb-6">
             The tradition is careful to note that gemstone recommendations must come
             from a qualified astrologer after chart analysis. Ruby can support a
             placement that is functionally benefic but weak in strength. It can also
             amplify the difficulties of a karmically difficult Sun, which is why Soul
             Infinity never advises gemstone wearing without a prior consultation.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             Mantra practice is the most universally safe remedy, and the two mantras
             above (the Navagraha Stotra verse and the short Om Sūryāya namaḥ) are the
             classical entry points. A suggested starting cadence is 108 repetitions at
             sunrise, continuing for at least 40 days to allow the vibration to settle
             into daily life.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             Lifestyle adjustments matter equally. Waking near sunrise, stepping into
             early morning sunlight for a few minutes, and structuring the day around a
             clear dharmic intention all feed the solar current in the chart. These
             small disciplines can sometimes do more than elaborate rituals.
           </p>
 
-          <h2 className="font-heading text-3xl text-gray-900 mt-10 mb-4">
-            Surya in Modern Life
-          </h2>
-          <p>
-            The ancient symbolism of Surya translates directly into contemporary themes.
-            Self-confidence, purpose-finding, and the capacity for leadership are all
-            expressions of a healthy solar principle. In a culture of distraction, the
-            Sun represents the ability to hold a clear inner centre and act from it with
-            steady integrity.
+          <SectionDivider />
+
+          {/* ── Section 7: Modern Life ───────────────────────────── */}
+          <div className="flex items-center gap-4 mb-3">
+            <IconHeartHandshake size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+              Surya in Modern Life
+            </h2>
+          </div>
+          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
+
+          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
+            The ancient symbolism of Surya translates directly into contemporary themes.{' '}
+            <Mark>Self-confidence</Mark>, <Mark>purpose</Mark>-finding, and the capacity
+            for <Mark>leadership</Mark> are all expressions of a healthy solar
+            principle. In a culture of distraction, the Sun represents the ability to
+            hold a clear inner centre and act from it with steady integrity.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             Modern clients often come to Soul Infinity asking about career direction,
             visibility, and relationships with authority. These are textbook Sun
-            questions. The answers almost always involve building a stable daily
-            rhythm, protecting vitality, and aligning work with a deeper sense of
-            dharma rather than chasing external validation.
+            questions. The answers almost always involve building a stable daily rhythm,
+            protecting vitality, and aligning work with a deeper sense of dharma rather
+            than chasing external validation.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             Practical modern expressions of Surya sadhana include a consistent morning
             routine that greets sunrise, time offline to protect focus, and periodic
             retreats that allow the soul-current to reset. None of this is mystical in
             the theatrical sense. It is simply the ancient wisdom applied to the
             architecture of a twenty-first-century life.
           </p>
-          <p>
+          <p className="text-lg leading-relaxed mb-6">
             A useful clarifier here: modern psychology talks about self-actualisation
             and inner locus of control, both of which map cleanly onto a healthy solar
             principle in a chart. When clients describe feeling scattered, overextended,
             or vaguely purposeless, the astrological diagnosis often lands on an
             under-supported luminary that can be strengthened through lifestyle rather
-            than elaborate ritual. This reframe helps secular-minded clients engage
-            with remedies without feeling they must abandon their rational outlook.
+            than elaborate ritual. This reframe helps secular-minded clients engage with
+            remedies without feeling they must abandon their rational outlook.
           </p>
 
-          <h2 className="font-heading text-3xl text-gray-900 mt-10 mb-4">
-            How Saurabh Jain Reads Surya in Your Chart
-          </h2>
-          <p>
-            Saurabh Jain brings a multi-system approach to solar analysis. Trained at
-            the K.N. Rao Institute and holding an M.Tech, MBA, and M.Phil, he combines
-            classical Parashari Jyotish with Bhrigu Nandi Nadi and KP Astrology to
-            triangulate the Sun’s role in a chart. This layered method surfaces
-            patterns that a single-system reading can miss, from dasha-timed
-            recognition events to subtle health signals.
-          </p>
-          <p>
-            A personalised Surya analysis includes a review of house and sign placement,
-            Shadbala and Ashtakavarga strength, nakshatra lord behaviour, and the
-            classical timing tools that indicate when the solar promise is set to
-            activate. Clients leave with concrete lifestyle, mantra, and remedial
-            guidance, and where appropriate, a considered gemstone recommendation.
-            Saurabh also walks through the running Vimshottari and Yogini dashas so
-            that the near-term unfolding is mapped out clearly, not left abstract.
-            Where relevant, he cross-checks the reading against a Bhrigu Nandi Nadi
-            axis or a KP sub-lord query, which lets a single question receive a
-            consistent answer across three classical lenses. The practice is less
-            about predicting a fixed future and more about showing the client the
-            cycles they are already in, so decisions land with more clarity.{' '}
+          <SectionDivider />
+
+          {/* ── Section 8: Saurabh Jain (gradient card) ──────────── */}
+          <div className="my-8 rounded-2xl border border-yellow-300 bg-gradient-to-br from-yellow-50 to-orange-50 p-8 md:p-10 shadow-lg">
+            <div className="flex items-center gap-4 mb-5">
+              <IconUserCircle size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
+              <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
+                How Saurabh Jain Reads Surya in Your Chart
+              </h2>
+            </div>
+            <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-6" />
+
+            <div className="flex flex-wrap gap-2 mb-6">
+              <CredentialBadge>M.Tech</CredentialBadge>
+              <CredentialBadge>MBA</CredentialBadge>
+              <CredentialBadge>M.Phil</CredentialBadge>
+              <CredentialBadge>K.N. Rao Institute trained</CredentialBadge>
+            </div>
+
+            <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
+              Saurabh Jain brings a multi-system approach to solar analysis. Trained at
+              the <Mark>K.N. Rao Institute</Mark> and holding an M.Tech, MBA, and
+              M.Phil, he combines classical <Mark>Parashari Jyotish</Mark> with{' '}
+              <Mark>BNN</Mark> and <Mark>KP</Mark> Astrology to triangulate the Sun’s
+              role in a chart. This layered method surfaces patterns that a
+              single-system reading can miss, from dasha-timed recognition events to
+              subtle health signals.
+            </p>
+            <p className="text-lg leading-relaxed mb-6">
+              A personalised Surya analysis includes a review of house and sign
+              placement, Shadbala and Ashtakavarga strength, nakshatra lord behaviour,
+              and the classical timing tools that indicate when the solar promise is
+              set to activate. Clients leave with concrete lifestyle, mantra, and
+              remedial guidance, and where appropriate, a considered gemstone
+              recommendation. Saurabh also walks through the running Vimshottari and
+              Yogini dashas so that the near-term unfolding is mapped out clearly, not
+              left abstract. Where relevant, he cross-checks the reading against a
+              Bhrigu Nandi Nadi axis or a KP sub-lord query, which lets a single
+              question receive a consistent answer across three classical lenses. The
+              practice is less about predicting a fixed future and more about showing
+              the client the cycles they are already in, so decisions land with more
+              clarity.
+            </p>
+
             <Link
-              to="/services/vedic-astrology/parashari-jyotish"
-              className="text-primary-600 underline font-medium hover:text-primary-700"
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
             >
-              Book a consultation
-            </Link>{' '}
-            to explore how Surya is expressing in your own chart.
-          </p>
+              Book a Surya reading
+              <IconArrowRight size={18} />
+            </Link>
+          </div>
         </div>
       </section>
 
