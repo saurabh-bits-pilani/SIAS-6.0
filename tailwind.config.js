@@ -49,6 +49,15 @@ export default {
         tangerine: ['Tangerine', 'cursive'],
         inter: ['Inter', 'sans-serif'],
         devanagari: ['"Noto Serif Devanagari"', 'serif'],
+        caveat: ['Caveat', 'cursive'],
+        homemade: ['"Homemade Apple"', 'cursive'],
+        dafoe: ['"Mr Dafoe"', 'cursive'],
+        // TODO: Replace Pacifico with The Bredan when user provides font file
+        bredan: ['Pacifico', 'cursive'],
+        rocksalt: ['"Rock Salt"', 'cursive'],
+        montez: ['Montez', 'cursive'],
+        reenie: ['"Reenie Beanie"', 'cursive'],
+        kristi: ['Kristi', 'cursive'],
       },
       boxShadow: {
         soft: '0 4px 20px rgba(79, 195, 247, 0.15)',

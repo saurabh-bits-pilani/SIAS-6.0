@@ -11,6 +11,10 @@ import './index.css';
 initAnalytics();
 initWebVitals();
 
+if (import.meta.env.DEV) {
+  console.info('[fonts] 12 font families loaded. Monitor Core Web Vitals for performance impact.');
+}
+
 const container = document.getElementById('root')!;
 
 const tree = (
