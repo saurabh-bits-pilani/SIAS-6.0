@@ -3,16 +3,18 @@ import SEOHead from '../../components/SEOHead';
 import SchemaMarkup from '../../components/SchemaMarkup';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import ComingSoonCard from '../../components/hub/ComingSoonCard';
+import LiveCard from '../../components/hub/LiveCard';
 import { getFaqPageSchemaFromList } from '../../data/schema-entities';
 
 interface PlanetEntry {
   english: string;
   sanskritName: string;
   devanagari: string;
+  href?: string;
 }
 
 const PLANETS: readonly PlanetEntry[] = [
-  { english: 'Sun', sanskritName: 'Surya', devanagari: 'सूर्य' },
+  { english: 'Sun', sanskritName: 'Surya', devanagari: 'सूर्य', href: '/planets/sun' },
   { english: 'Moon', sanskritName: 'Chandra', devanagari: 'चन्द्र' },
   { english: 'Mars', sanskritName: 'Mangal', devanagari: 'मङ्गल' },
   { english: 'Mercury', sanskritName: 'Budh', devanagari: 'बुध' },
@@ -88,13 +90,23 @@ export default function PlanetsHubPage() {
       <section className="pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div role="list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PLANETS.map((planet) => (
-              <ComingSoonCard
-                key={planet.english}
-                title={`${planet.english} (${planet.sanskritName})`}
-                sanskrit={planet.devanagari}
-              />
-            ))}
+            {PLANETS.map((planet) =>
+              planet.href ? (
+                <LiveCard
+                  key={planet.english}
+                  title={`${planet.english} (${planet.sanskritName})`}
+                  sanskrit={planet.devanagari}
+                  href={planet.href}
+                  accentColor="yellow"
+                />
+              ) : (
+                <ComingSoonCard
+                  key={planet.english}
+                  title={`${planet.english} (${planet.sanskritName})`}
+                  sanskrit={planet.devanagari}
+                />
+              ),
+            )}
           </div>
         </div>
       </section>
