@@ -6,7 +6,7 @@
   .animate-fade-in {
     animation: fadeIn 0.3s ease-in-out;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -16,5 +16,33 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  .highlight-marker {
+    background-image: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(250, 204, 21, 0.55) 0.5%,
+      rgba(250, 204, 21, 0.55) 99.5%,
+      transparent 100%
+    );
+    background-size: 100% 40%;
+    background-repeat: no-repeat;
+    background-position: 0 85%;
+    padding: 0 2px;
+  }
+
+  .highlight-marker-orange {
+    background-image: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(251, 146, 60, 0.45) 0.5%,
+      rgba(251, 146, 60, 0.45) 99.5%,
+      transparent 100%
+    );
+    background-size: 100% 40%;
+    background-repeat: no-repeat;
+    background-position: 0 85%;
+    padding: 0 2px;
   }
 }

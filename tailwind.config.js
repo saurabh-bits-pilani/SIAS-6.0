@@ -45,6 +45,10 @@ export default {
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
         body: ['Open Sans', 'sans-serif'],
+        sacramento: ['Sacramento', 'cursive'],
+        caveat: ['Caveat', 'cursive'],
+        kalam: ['Kalam', 'cursive'],
+        devanagari: ['"Noto Serif Devanagari"', 'serif'],
       },
       boxShadow: {
         soft: '0 4px 20px rgba(79, 195, 247, 0.15)',
