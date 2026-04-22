@@ -19,6 +19,7 @@ import {
   IconCalendar,
   IconGift,
   IconArrowRight,
+  IconPaperclip,
 } from '@tabler/icons-react';
 import SEOHead from '../../components/SEOHead';
 import SchemaMarkup from '../../components/SchemaMarkup';
@@ -133,15 +134,16 @@ function ParchmentCard({
   style?: React.CSSProperties;
 }) {
   const parchmentStyle: React.CSSProperties = {
-    backgroundImage: `url(${sunAsset('parchment-texture.svg')})`,
+    backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
     backgroundSize: 'cover',
+    backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundColor: '#fdf6e3',
     ...style,
   };
   return (
     <div
-      className={`relative rounded-xl shadow-xl ring-1 ring-black/5 p-6 md:p-8 ${rotation} ${className}`}
+      className={`relative rounded-xl border border-amber-900/20 p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] ${rotation} ${className}`}
       style={parchmentStyle}
     >
       {children}
@@ -230,21 +232,27 @@ export default function SunPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="relative">
-              <img
-                src={sunAsset('doodle-sun.svg')}
-                alt=""
-                width={72}
-                height={72}
-                loading="eager"
-                className="absolute -top-6 -left-2 opacity-60"
-                aria-hidden="true"
-              />
-              <h1 className="font-caveat text-7xl md:text-8xl leading-none text-yellow-400 drop-shadow-[0_2px_12px_rgba(252,211,77,0.35)]">
+              <h1
+                className="font-sacramento text-8xl md:text-9xl leading-none text-yellow-400"
+                style={{
+                  textShadow:
+                    '0 0 30px rgba(250, 204, 21, 0.4), 0 0 60px rgba(250, 204, 21, 0.2)',
+                }}
+              >
                 {hero.name}
               </h1>
+              <img
+                src={sunAsset('doodle-sun.png')}
+                alt=""
+                width={48}
+                height={48}
+                loading="eager"
+                className="absolute -top-2 right-6 md:right-10 w-12 h-12 rotate-12 opacity-90 pointer-events-none"
+                aria-hidden="true"
+              />
               <p className="font-devanagari text-3xl text-white/80 mt-2">सूर्य</p>
               <p className="font-caveat text-3xl text-white/90 mt-3">{hero.subtitle}</p>
-              <p className="font-poppins text-base text-white/80 mt-6 max-w-md leading-relaxed">
+              <p className="font-poppins text-base text-white/85 mt-6 max-w-md leading-relaxed py-1">
                 The source of light, life and consciousness. Surya illuminates our{' '}
                 <Mark>soul</Mark>, <Mark>vitality</Mark> and <Mark>purpose</Mark>.
               </p>
@@ -277,7 +285,7 @@ export default function SunPage() {
           <div
             className="grid grid-cols-2 md:grid-cols-5 gap-0 rounded-2xl shadow-2xl ring-1 ring-black/5 overflow-hidden -translate-y-10"
             style={{
-              backgroundImage: `url(${sunAsset('parchment-texture.svg')})`,
+              backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundColor: '#fdf6e3',
@@ -340,11 +348,11 @@ export default function SunPage() {
               </div>
 
               <div className="mb-8">
-                <p className="font-caveat text-2xl md:text-3xl text-gray-800 mb-3">
+                <p className="font-caveat text-2xl text-yellow-700 mb-3">
                   <Mark>{mantras.primary.heading}</Mark>
                 </p>
-                <div className="border-l-4 border-red-700 pl-4 py-2 bg-white/50 rounded-r-lg mb-3">
-                  <p className="font-devanagari text-xl md:text-2xl text-gray-900 leading-relaxed">
+                <div className="my-4 bg-[#fdf6e3] border-2 border-red-700/70 rounded-lg p-5">
+                  <p className="font-devanagari text-xl md:text-2xl leading-loose text-gray-900">
                     {mantras.primary.devanagari}
                   </p>
                 </div>
@@ -360,7 +368,7 @@ export default function SunPage() {
 
               <div className="relative">
                 <img
-                  src={sunAsset('doodle-sun.svg')}
+                  src={sunAsset('doodle-sun.png')}
                   alt=""
                   width={64}
                   height={64}
@@ -368,11 +376,11 @@ export default function SunPage() {
                   aria-hidden="true"
                   className="absolute -top-2 right-0 opacity-50"
                 />
-                <p className="font-caveat text-2xl md:text-3xl text-gray-800 mb-3">
+                <p className="font-caveat text-2xl text-yellow-700 mb-3">
                   {mantras.short.heading}
                 </p>
-                <div className="inline-block border-l-4 border-red-700 pl-4 pr-6 py-2 bg-white/50 rounded-r-lg mb-3">
-                  <p className="font-devanagari text-xl text-gray-900">
+                <div className="inline-block my-4 bg-[#fdf6e3] border-2 border-red-700/70 rounded-lg px-6 py-4">
+                  <p className="font-devanagari text-xl md:text-2xl leading-loose text-gray-900">
                     {mantras.short.devanagari}
                   </p>
                 </div>
@@ -389,25 +397,30 @@ export default function SunPage() {
             <div className="md:col-span-2 space-y-6">
               {/* Surya in Our Life */}
               <ParchmentCard rotation="md:rotate-[0.5deg]">
-                <img
-                  src={sunAsset('doodle-scales.svg')}
-                  alt=""
-                  width={48}
-                  height={48}
-                  loading="lazy"
+                <IconPaperclip
+                  size={40}
+                  className="absolute -top-3 -right-3 text-red-600 -rotate-45 drop-shadow-md"
                   aria-hidden="true"
-                  className="absolute top-3 right-3 opacity-25"
                 />
                 <img
-                  src={sunAsset('doodle-lion.svg')}
+                  src={sunAsset('doodle-scales.png')}
                   alt=""
-                  width={100}
-                  height={100}
+                  width={64}
+                  height={64}
                   loading="lazy"
                   aria-hidden="true"
-                  className="absolute bottom-2 right-2 opacity-20"
+                  className="absolute bottom-24 right-4 w-16 h-16 opacity-50 pointer-events-none"
                 />
-                <h3 className="font-caveat text-3xl text-yellow-700 border-b-2 border-yellow-500 pb-2 mb-4 inline-block">
+                <img
+                  src={sunAsset('doodle-lion.png')}
+                  alt=""
+                  width={96}
+                  height={96}
+                  loading="lazy"
+                  aria-hidden="true"
+                  className="absolute bottom-2 right-2 w-24 h-24 opacity-40 pointer-events-none"
+                />
+                <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 border-b-2 border-yellow-500 pb-2 mb-4 inline-block">
                   Surya in Our Life
                 </h3>
                 <ul className="space-y-3 font-poppins text-sm text-gray-800 relative z-10">
@@ -430,19 +443,19 @@ export default function SunPage() {
               </ParchmentCard>
 
               {/* Benefits */}
-              <ParchmentCard rotation="md:-rotate-[0.5deg]">
+              <ParchmentCard rotation="md:-rotate-[0.3deg]">
                 <div className="flex items-center gap-3 mb-4">
-                  <h3 className="font-caveat text-3xl text-yellow-700">
+                  <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700">
                     Benefits of Surya Mantra
                   </h3>
                   <img
-                    src={sunAsset('doodle-sun.svg')}
+                    src={sunAsset('doodle-sun.png')}
                     alt=""
-                    width={40}
-                    height={40}
+                    width={48}
+                    height={48}
                     loading="lazy"
                     aria-hidden="true"
-                    className="opacity-70"
+                    className="w-12 h-12 opacity-80"
                   />
                 </div>
                 <ul className="space-y-2.5 font-poppins text-sm text-gray-800">
@@ -517,17 +530,17 @@ export default function SunPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1: How to Connect */}
-            <ParchmentCard>
+            <ParchmentCard rotation="md:rotate-[0.5deg]">
               <img
-                src={sunAsset('feather-quill.svg')}
+                src={sunAsset('feather-quill.png')}
                 alt=""
-                width={64}
-                height={64}
+                width={80}
+                height={80}
                 loading="lazy"
                 aria-hidden="true"
-                className="absolute top-2 left-2 opacity-40 rotate-[-12deg]"
+                className="absolute -top-3 -left-3 w-20 h-auto opacity-70 -rotate-12 pointer-events-none"
               />
-              <h3 className="font-caveat text-3xl text-yellow-700 mb-4 pl-10">
+              <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 mb-4 pl-14">
                 How to Connect with Surya
               </h3>
               <ul className="space-y-3 font-poppins text-sm text-gray-800">
@@ -540,34 +553,45 @@ export default function SunPage() {
               </ul>
             </ParchmentCard>
 
-            {/* Card 2: Gemstone Ruby (transparent) */}
+            {/* Card 2: Gemstone Ruby (transparent, real photo) */}
             <div className="relative flex flex-col items-center justify-center text-center py-10 px-4">
               <div
                 className="absolute inset-0 rounded-xl pointer-events-none"
                 style={{
-                  boxShadow: '0 0 120px 10px rgba(220,38,38,0.25) inset',
+                  background:
+                    'radial-gradient(circle at center, rgba(234,179,8,0.18) 0%, transparent 65%)',
                 }}
                 aria-hidden="true"
               />
               <img
                 src={gemstone.imageUrl}
-                alt="A ruby ring set in gold, traditional gemstone associated with Surya"
-                width={240}
-                height={240}
+                alt="Ornate gold ring with a large oval ruby gemstone representing Manikya, the gemstone of Surya"
+                width={288}
+                height={288}
                 loading="lazy"
-                className="drop-shadow-[0_0_30px_rgba(220,38,38,0.45)]"
+                className="w-60 h-60 md:w-72 md:h-72 object-contain"
+                style={{ filter: 'drop-shadow(0 0 40px rgba(234, 179, 8, 0.45))' }}
               />
-              <p className="font-caveat text-3xl text-yellow-400 mt-4">Gemstone</p>
-              <p className="font-caveat text-6xl md:text-7xl text-white uppercase tracking-wide">
+              <h3 className="font-caveat text-3xl text-yellow-400 mt-6">Gemstone:</h3>
+              <h4 className="font-sacramento text-6xl md:text-7xl text-white mt-1">
                 {gemstone.name}
-              </p>
-              <p className="font-poppins text-sm italic text-white/70 mt-3 max-w-xs">
+              </h4>
+              <img
+                src={sunAsset('doodle-temple.png')}
+                alt=""
+                width={64}
+                height={64}
+                loading="lazy"
+                aria-hidden="true"
+                className="w-16 h-16 mt-4 opacity-50 pointer-events-none"
+              />
+              <p className="italic text-sm text-gray-400 mt-2 text-center max-w-xs">
                 {gemstone.caveat}
               </p>
             </div>
 
             {/* Card 3: Affirmation */}
-            <ParchmentCard className="pt-10">
+            <ParchmentCard className="pt-10" rotation="md:-rotate-[1deg]">
               <img
                 src={sunAsset('tape-strip.svg')}
                 alt=""
@@ -586,7 +610,9 @@ export default function SunPage() {
                   loading="lazy"
                   aria-hidden="true"
                 />
-                <h3 className="font-caveat text-3xl text-yellow-700">Affirmation</h3>
+                <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700">
+                  Affirmation
+                </h3>
               </div>
               <p className="font-poppins text-lg italic text-gray-800 leading-relaxed">
                 I am a <Mark>radiant being of light</Mark>, filled with{' '}
@@ -659,7 +685,7 @@ export default function SunPage() {
         className="relative py-20 md:py-28 overflow-hidden"
         style={{
           backgroundColor: '#FBF7EF',
-          backgroundImage: `url(${sunAsset('parchment-texture.svg')})`,
+          backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
           backgroundSize: '800px',
           backgroundRepeat: 'repeat',
           backgroundBlendMode: 'multiply',
@@ -674,19 +700,19 @@ export default function SunPage() {
 
         {/* Margin doodles (desktop only) */}
         <img
-          src={sunAsset('doodle-sun.svg')}
+          src={sunAsset('doodle-sun.png')}
           alt=""
           aria-hidden="true"
           className="hidden md:block absolute top-[22%] right-4 w-28 h-28 opacity-10 pointer-events-none"
         />
         <img
-          src={sunAsset('doodle-scales.svg')}
+          src={sunAsset('doodle-scales.png')}
           alt=""
           aria-hidden="true"
           className="hidden md:block absolute top-[48%] left-4 w-28 h-28 opacity-10 pointer-events-none"
         />
         <img
-          src={sunAsset('doodle-lion.svg')}
+          src={sunAsset('doodle-lion.png')}
           alt=""
           aria-hidden="true"
           className="hidden md:block absolute top-[70%] right-4 w-32 h-32 opacity-10 pointer-events-none"
@@ -720,7 +746,7 @@ export default function SunPage() {
 
           <div className="my-6 inline-flex items-center gap-3 px-4 py-2 rounded-lg shadow-sm ring-1 ring-yellow-700/20"
             style={{
-              backgroundImage: `url(${sunAsset('parchment-texture.svg')})`,
+              backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
               backgroundSize: 'cover',
               backgroundColor: '#fdf6e3',
             }}

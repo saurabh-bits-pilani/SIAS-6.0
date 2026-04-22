@@ -82,6 +82,7 @@ export interface SunContent {
     imageAlt: string;
     caption: string;
   };
+  templeDoodleUrl: string;
   connect: readonly ConnectStep[];
   gemstone: {
     name: string;
@@ -169,6 +170,7 @@ const sunData: SunContent = {
       'A sage standing on a mountain at sunrise with arms raised, worshipping the blazing Sun encircled by Sanskrit glyphs',
     caption: 'Connect with the light at sunrise.',
   },
+  templeDoodleUrl: sunAsset('doodle-temple.png'),
   connect: [
     { icon: 'icon-calendar.svg', text: 'Chant Surya mantra at sunrise facing East' },
     { icon: 'icon-lotus.svg', text: 'Offer water (Arghya) to the rising Sun' },
@@ -179,7 +181,7 @@ const sunData: SunContent = {
   gemstone: {
     name: 'Ruby',
     sanskrit: 'Manikya',
-    imageUrl: sunAsset('ruby-ring.svg'),
+    imageUrl: sunAsset('ruby-ring.webp'),
     caveat: 'Sanctified only after astrological verification',
   },
   affirmation:
