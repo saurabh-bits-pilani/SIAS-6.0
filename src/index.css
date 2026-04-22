@@ -24,6 +24,8 @@
     background-size: 100% 100%;
     margin: -2px -6px;
     padding: 2px 6px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   .highlight-marker-orange {
@@ -32,5 +34,67 @@
     background-size: 100% 100%;
     margin: -2px -6px;
     padding: 2px 6px;
+  }
+
+  /* ---------- Pillar-page shared utilities ---------- */
+
+  .card-parchment {
+    background: url("https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/parchment-texture.webp")
+      center/cover;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.4),
+      inset 0 0 40px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    position: relative;
+  }
+  .card-parchment::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 60%,
+      rgba(0, 0, 0, 0.25) 100%
+    );
+    pointer-events: none;
+  }
+
+  .circle-mark {
+    display: inline-block;
+    border: 2px solid #dc2626;
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+
+  .tape-decoration {
+    position: absolute;
+    width: 90px;
+    height: 22px;
+    background: rgba(253, 230, 138, 0.75);
+    transform: rotate(-5deg);
+    top: -10px;
+    left: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .drop-cap::first-letter {
+    font-family: "Caveat", cursive;
+    font-size: 4rem;
+    float: left;
+    line-height: 1;
+    margin-right: 8px;
+    margin-top: 4px;
+    color: var(--accent-color, #facc15);
+  }
+
+  .glow-moon {
+    filter: drop-shadow(0 0 25px rgba(147, 197, 253, 0.55));
+  }
+  .glow-gold {
+    filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.55));
+  }
+  .glow-silver {
+    filter: drop-shadow(0 0 25px rgba(203, 213, 225, 0.5));
   }
 }
