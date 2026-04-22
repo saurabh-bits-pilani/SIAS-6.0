@@ -10,6 +10,7 @@ import {
   IconUserCircle,
   IconBook,
   IconMoon,
+  IconMoonStars,
   IconDroplet,
   IconDiamond,
   IconHeart,
@@ -603,6 +604,125 @@ function MoonSEOBody() {
   );
 }
 
+const DIYA_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/diya.svg';
+
+interface MoonPhase {
+  symbol: string;
+  label: string;
+  sub: string;
+}
+
+const MOON_PHASES: readonly MoonPhase[] = [
+  { symbol: '\u{1F311}', label: 'New Moon', sub: 'Set Intentions' },
+  { symbol: '\u{1F312}', label: 'Waxing Crescent', sub: 'Take Action' },
+  { symbol: '\u{1F313}', label: 'First Quarter', sub: 'Build Momentum' },
+  { symbol: '\u{1F314}', label: 'Waxing Gibbous', sub: 'Refine Efforts' },
+  { symbol: '\u{1F315}', label: 'Full Moon', sub: 'Receive and Heal' },
+  { symbol: '\u{1F316}', label: 'Waning Gibbous', sub: 'Gratitude' },
+  { symbol: '\u{1F317}', label: 'Last Quarter', sub: 'Release' },
+  { symbol: '\u{1F318}', label: 'Waning Crescent', sub: 'Rest and Surrender' },
+];
+
+function MoonClosingPhases() {
+  return (
+    <section className="border-t border-blue-900/40 bg-gradient-to-b from-[#050b1a] via-[#0b1a2f] to-[#050b1a] py-10 px-6">
+      <div className="relative max-w-6xl mx-auto">
+        {/* Row 1: three-column strip */}
+        <div className="grid md:grid-cols-3 items-center gap-6">
+          <div className="flex items-start gap-3">
+            <span className="font-devanagari text-4xl text-yellow-300 leading-none">
+              {'ॐ'}
+            </span>
+            <p className="font-caveat text-xl text-blue-100/85 italic leading-snug max-w-xs">
+              The mind is like the moon, it reflects what it receives.
+            </p>
+          </div>
+
+          <div className="relative flex items-center justify-center py-4">
+            <IconMoonStars
+              size={48}
+              className="text-blue-300 opacity-70"
+              aria-hidden="true"
+            />
+            <IconStar
+              size={10}
+              className="absolute top-2 left-1/3 text-yellow-200 opacity-70"
+              aria-hidden="true"
+            />
+            <IconStar
+              size={12}
+              className="absolute top-6 right-1/3 text-yellow-200 opacity-60"
+              aria-hidden="true"
+            />
+            <IconStar
+              size={8}
+              className="absolute bottom-2 left-1/2 text-yellow-200 opacity-80"
+              aria-hidden="true"
+            />
+            <IconStar
+              size={11}
+              className="absolute bottom-4 right-1/4 text-yellow-200 opacity-50"
+              aria-hidden="true"
+            />
+          </div>
+
+          <div className="flex items-center justify-end gap-3 flex-wrap">
+            <div className="text-right">
+              <p className="font-devanagari text-xl text-yellow-300 leading-tight">
+                {'ॐ सोम सोमाय नमः ।'}
+              </p>
+              <p className="font-caveat italic text-blue-200 text-lg">
+                Om Som Somaya Namah
+              </p>
+            </div>
+            <img
+              src={DIYA_URL}
+              alt=""
+              width={32}
+              height={32}
+              loading="lazy"
+              aria-hidden="true"
+              className="w-8 h-8"
+            />
+          </div>
+        </div>
+
+        {/* Row 2: 8 Phases of Nourishment */}
+        <h3 className="font-caveat text-2xl md:text-3xl text-yellow-300 text-center mt-8 mb-4">
+          Chandra&rsquo;s 8 Phases of Nourishment
+        </h3>
+        <div
+          role="list"
+          className="grid grid-cols-4 md:grid-cols-8 gap-4 items-start text-center"
+        >
+          {MOON_PHASES.map((phase) => (
+            <div key={phase.label} role="listitem" className="flex flex-col items-center gap-1 px-1">
+              <span
+                aria-hidden="true"
+                className="text-3xl md:text-4xl leading-none select-none"
+                style={{ filter: 'drop-shadow(0 0 8px rgba(147,197,253,0.35))' }}
+              >
+                {phase.symbol}
+              </span>
+              <p className="font-caveat text-sm md:text-base text-yellow-200 leading-tight">
+                {phase.label}
+              </p>
+              <p className="text-xs text-blue-200/70 leading-snug">{phase.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function MoonPage() {
-  return <PlanetPageLayout {...moonData} seoBody={<MoonSEOBody />} />;
+  return (
+    <PlanetPageLayout
+      {...moonData}
+      seoBody={<MoonSEOBody />}
+      closingExtension={<MoonClosingPhases />}
+    />
+  );
 }

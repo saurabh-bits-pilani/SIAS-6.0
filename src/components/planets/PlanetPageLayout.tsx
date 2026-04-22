@@ -296,6 +296,9 @@ export interface PlanetPageData {
   faqs: readonly FaqItem[];
   related: readonly RelatedLink[];
   seoBody: React.ReactNode;
+  /** Optional planet-specific strip rendered between the footer strip and the
+   *  SEO body. Moon uses this for the "8 Phases of Nourishment" panel. */
+  closingExtension?: React.ReactNode;
   /** e.g. "Surya" or "Chandra" , the short personal name the CTA uses. */
   ctaName: string;
   /** Headline above the CTA buttons. */
@@ -452,6 +455,7 @@ export default function PlanetPageLayout(props: PlanetPageData) {
     faqs,
     related,
     seoBody,
+    closingExtension,
     ctaName,
     ctaHeadline,
     ctaSubline,
@@ -1006,6 +1010,9 @@ export default function PlanetPageLayout(props: PlanetPageData) {
           </div>
         </div>
       </section>
+
+      {/* ───────────── Closing extension (planet-specific) ───────────── */}
+      {closingExtension}
 
       {/* ───────────── SEO Body (planet-authored) ───────────── */}
       {seoBody}
