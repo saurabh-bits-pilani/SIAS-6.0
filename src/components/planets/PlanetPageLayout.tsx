@@ -28,6 +28,12 @@ import {
   IconPaperclip,
   IconFlame,
   IconPlanet,
+  IconMoonStars,
+  IconArrowCurveRight,
+  IconBrain,
+  IconWaveSquare,
+  IconFlower,
+  IconCircleHalf2,
   type Icon as TablerIconType,
 } from '@tabler/icons-react';
 import SEOHead from '../SEOHead';
@@ -211,6 +217,14 @@ export interface Theme {
   heroImageRingClass: string;
   /** Hero image inner glow color (rgba). */
   heroImageGlowRgba: string;
+  /** Accent icon color class applied to small decorative Tabler icons (brain, arrow, heart, flower).
+   *  Defaults to "text-yellow-500" if unset. */
+  accentIconClass?: string;
+  /** Softer variant of the accent icon color for background-level decorations.
+   *  Defaults to "text-yellow-400" if unset. */
+  accentIconClassSoft?: string;
+  /** URL for a feather-quill decoration on the "How to Connect" card. Optional. */
+  featherQuillUrl?: string;
 }
 
 /**
@@ -326,6 +340,39 @@ function renderWithMarks(
 
 function Mark({ children }: { children: React.ReactNode }) {
   return <mark className="highlight-marker bg-transparent text-inherit">{children}</mark>;
+}
+
+/**
+ * Tiny decorative stars scattered across a relatively-positioned parent.
+ * All stars inherit the given color class (default text-yellow-300). Purely
+ * ornamental, always aria-hidden.
+ */
+function ScatteredStars({
+  className = '',
+  stars,
+  colorClass = 'text-yellow-300',
+}: {
+  className?: string;
+  stars: readonly { top: string; left?: string; right?: string; size: number; opacity: number }[];
+  colorClass?: string;
+}) {
+  return (
+    <div className={`pointer-events-none ${className}`} aria-hidden="true">
+      {stars.map((s, i) => (
+        <IconStar
+          key={`star-${i}`}
+          size={s.size}
+          className={`absolute ${colorClass}`}
+          style={{
+            top: s.top,
+            left: s.left,
+            right: s.right,
+            opacity: s.opacity,
+          }}
+        />
+      ))}
+    </div>
+  );
 }
 
 function ParchmentCard({
@@ -485,6 +532,14 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 className="absolute -top-2 right-6 md:right-10 w-12 h-12 rotate-12 opacity-90 pointer-events-none"
                 aria-hidden="true"
               />
+              {/* Scattered stars around the title */}
+              <ScatteredStars
+                stars={[
+                  { top: '1rem', left: '7rem', size: 14, opacity: 0.6 },
+                  { top: '6rem', right: '2rem', size: 10, opacity: 0.7 },
+                  { top: '11rem', left: '4rem', size: 12, opacity: 0.5 },
+                ]}
+              />
               <p className="font-devanagari text-3xl text-white/80 mt-2">
                 {name.devanagari}
               </p>
@@ -507,6 +562,14 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 className="absolute inset-0 rounded-xl pointer-events-none"
                 style={{ boxShadow: `0 0 120px 10px ${theme.heroImageGlowRgba} inset` }}
                 aria-hidden="true"
+              />
+              {/* Stars floating above the chariot */}
+              <ScatteredStars
+                stars={[
+                  { top: '-0.5rem', right: '-0.5rem', size: 14, opacity: 0.65 },
+                  { top: '1.5rem', left: '-0.75rem', size: 10, opacity: 0.55 },
+                  { top: '3rem', right: '1.5rem', size: 8, opacity: 0.7 },
+                ]}
               />
             </div>
           </div>
@@ -567,11 +630,40 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 <h2 className="font-caveat text-4xl md:text-5xl text-yellow-700">
                   {mantrasTitle}
                 </h2>
-                <IconBook size={28} className="text-yellow-700" aria-hidden="true" />
+                <img
+                  src={doodles.primary}
+                  alt=""
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                  aria-hidden="true"
+                  className="w-6 h-6 opacity-70"
+                />
+                <IconSparkles
+                  size={16}
+                  className={`${theme.accentIconClass ?? 'text-yellow-500'} opacity-70`}
+                  aria-hidden="true"
+                />
+                <IconArrowCurveRight
+                  size={18}
+                  className={`${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-55 -rotate-12`}
+                  aria-hidden="true"
+                />
               </div>
 
               {mantras.map((m, idx) => (
-                <div key={m.title} className={idx < mantras.length - 1 ? 'mb-8' : ''}>
+                <div key={m.title} className={`relative ${idx < mantras.length - 1 ? 'mb-8' : ''}`}>
+                  {idx > 0 ? (
+                    <img
+                      src={doodles.primary}
+                      alt=""
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                      aria-hidden="true"
+                      className="absolute -top-1 right-0 w-10 h-10 opacity-60 pointer-events-none"
+                    />
+                  ) : null}
                   <p className="font-caveat text-2xl text-yellow-700 mb-3">
                     {m.titleHighlight ? (
                       <Mark>{m.title}</Mark>
@@ -607,14 +699,39 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                   className="absolute -top-3 -right-3 text-red-600 -rotate-45 drop-shadow-md"
                   aria-hidden="true"
                 />
+                {/* subtle accents inside the card */}
+                <IconBrain
+                  size={22}
+                  className={`absolute top-10 right-4 ${theme.accentIconClass ?? 'text-yellow-500'} opacity-30 pointer-events-none`}
+                  aria-hidden="true"
+                />
+                <IconArrowCurveRight
+                  size={24}
+                  className={`absolute top-1/2 right-6 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-30 -rotate-[15deg] pointer-events-none`}
+                  aria-hidden="true"
+                />
+                <IconWaveSquare
+                  size={28}
+                  className={`absolute bottom-6 left-4 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-25 pointer-events-none`}
+                  aria-hidden="true"
+                />
+                <img
+                  src={doodles.primary}
+                  alt=""
+                  width={64}
+                  height={64}
+                  loading="lazy"
+                  aria-hidden="true"
+                  className="absolute bottom-3 right-3 w-16 h-16 opacity-25 pointer-events-none"
+                />
                 <img
                   src={doodles.secondary}
                   alt=""
-                  width={96}
-                  height={96}
+                  width={80}
+                  height={80}
                   loading="lazy"
                   aria-hidden="true"
-                  className="absolute bottom-2 right-2 w-24 h-24 opacity-40 pointer-events-none"
+                  className="absolute bottom-12 right-16 w-20 h-20 opacity-25 pointer-events-none"
                 />
                 <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 border-b-2 border-yellow-500 pb-2 mb-4 inline-block">
                   {lifeCardTitle}
@@ -636,7 +753,25 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 rotation="md:-rotate-[0.3deg]"
                 parchmentUrl={doodles.parchmentTextureUrl}
               >
-                <div className="flex items-center gap-3 mb-4">
+                <IconMoonStars
+                  size={28}
+                  className={`absolute top-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-50 pointer-events-none`}
+                  aria-hidden="true"
+                />
+                <ScatteredStars
+                  stars={[
+                    { top: '4.5rem', right: '1.5rem', size: 10, opacity: 0.4 },
+                    { top: '8rem', right: '3rem', size: 12, opacity: 0.35 },
+                    { top: '12rem', right: '1rem', size: 10, opacity: 0.45 },
+                    { top: '16rem', right: '2.5rem', size: 8, opacity: 0.5 },
+                  ]}
+                />
+                <IconSparkles
+                  size={20}
+                  className={`absolute bottom-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-30 pointer-events-none`}
+                  aria-hidden="true"
+                />
+                <div className="flex items-center gap-3 mb-4 relative z-10">
                   <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700">
                     {benefitsTitle}
                   </h3>
@@ -650,7 +785,7 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                     className="w-12 h-12 opacity-80"
                   />
                 </div>
-                <ul className="space-y-2.5 font-poppins text-sm text-gray-800">
+                <ul className="space-y-2.5 font-poppins text-sm text-gray-800 relative z-10">
                   {benefits.map((b) => (
                     <li key={b.text} className="flex items-start gap-2">
                       <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
@@ -702,10 +837,26 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               rotation="md:rotate-[0.5deg]"
               parchmentUrl={doodles.parchmentTextureUrl}
             >
-              <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 mb-4">
+              {theme.featherQuillUrl ? (
+                <img
+                  src={theme.featherQuillUrl}
+                  alt=""
+                  width={80}
+                  height={80}
+                  loading="lazy"
+                  aria-hidden="true"
+                  className="absolute -top-3 -left-3 w-20 h-auto opacity-60 -rotate-12 pointer-events-none"
+                />
+              ) : null}
+              <TIcon
+                name="moon"
+                size={20}
+                className={`absolute top-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 pointer-events-none`}
+              />
+              <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 mb-4 pl-10 relative z-10">
                 {howToConnectTitle}
               </h3>
-              <ul className="space-y-3 font-poppins text-sm text-gray-800">
+              <ul className="space-y-3 font-poppins text-sm text-gray-800 relative z-10">
                 {howToConnect.map((step) => (
                   <li key={step.text} className="flex items-start gap-3">
                     <TIcon name={step.icon} size={20} className="text-yellow-800 mt-0.5 flex-shrink-0" />
@@ -756,6 +907,11 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               <p className="italic text-sm text-gray-400 mt-2 text-center max-w-xs">
                 {gemstone.caption}
               </p>
+              <IconCircleHalf2
+                size={40}
+                className={`mt-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-40 rotate-90`}
+                aria-hidden="true"
+              />
             </div>
 
             {/* Affirmation */}
@@ -765,15 +921,24 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               parchmentUrl={doodles.parchmentTextureUrl}
             >
               <div className="tape-decoration" aria-hidden="true" />
-              <div className="flex items-center gap-2 mb-4">
-                <IconHeart size={24} className="text-red-500" aria-hidden="true" />
+              <div className="flex items-center gap-2 mb-4 relative z-10">
+                <IconHeart
+                  size={24}
+                  className={theme.accentIconClass ?? 'text-red-500'}
+                  aria-hidden="true"
+                />
                 <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700">
                   Affirmation
                 </h3>
               </div>
-              <p className="font-poppins text-lg italic text-gray-800 leading-relaxed">
+              <p className="font-poppins text-lg italic text-gray-800 leading-relaxed relative z-10">
                 {renderWithMarks(affirmation.text, affirmation.highlights)}
               </p>
+              <IconFlower
+                size={32}
+                className={`absolute bottom-3 right-3 ${theme.accentIconClassSoft ?? 'text-yellow-400'} opacity-30 pointer-events-none`}
+                aria-hidden="true"
+              />
             </ParchmentCard>
           </div>
         </div>
@@ -781,12 +946,20 @@ export default function PlanetPageLayout(props: PlanetPageData) {
 
       {/* ───────────── Footer strip ───────────── */}
       <section
-        className="py-14"
+        className="relative py-14"
         style={{
           background: `linear-gradient(to bottom, ${theme.darkGradientFrom} 0%, ${theme.darkGradientTo} 100%)`,
         }}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ScatteredStars
+          stars={[
+            { top: '2rem', left: '20%', size: 10, opacity: 0.45 },
+            { top: '4rem', right: '18%', size: 14, opacity: 0.55 },
+            { top: '7rem', left: '72%', size: 8, opacity: 0.5 },
+            { top: '5rem', left: '8%', size: 12, opacity: 0.4 },
+          ]}
+        />
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
             <div className="flex items-center justify-center gap-3">
               <img

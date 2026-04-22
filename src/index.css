@@ -24,6 +24,8 @@
     background-size: 100% 100%;
     margin: -2px -6px;
     padding: 2px 6px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   .highlight-marker-orange {
