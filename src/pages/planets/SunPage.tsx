@@ -1,4 +1,5 @@
 import { useMemo, useState, type CSSProperties } from 'react';
+import { Link } from 'react-router-dom';
 import SEOHead from '../../components/SEOHead';
 import {
   getArticleSchema,
@@ -591,6 +592,16 @@ export default function SunPage() {
       />
 
       <div className="bg-[#050200] text-white">
+        <div className="px-4 pt-5 sm:px-6 lg:px-10">
+          <Link
+            to="/planets"
+            aria-label="Back to Planets hub"
+            className="inline-flex font-caveat text-lg text-[#f8d985]/90 transition hover:text-[#facc15] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#facc15]"
+          >
+            ← Back to Planets
+          </Link>
+        </div>
+
         <section
           className="relative overflow-hidden"
           style={{
