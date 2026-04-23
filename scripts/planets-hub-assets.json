@@ -1,0 +1,43 @@
+{
+  "backgrounds": {
+    "nebula": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/bg-nebula-overlay.webp",
+    "notebookPaper": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/bg-notebook-paper.webp",
+    "parchmentTexture": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/bg-parchment-texture.webp"
+  },
+  "doodles": {
+    "arrows": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-arrows.webp",
+    "compass": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-compass.webp",
+    "feather": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-feather.webp",
+    "featherSingle": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-feather-single.webp",
+    "heart": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-heart.webp",
+    "moon": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-moon.webp",
+    "planetOrbit": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-planet-orbit.webp",
+    "sparkles": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-sparkles.webp",
+    "spiral": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-spiral.webp",
+    "stars": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-stars.webp",
+    "sun": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/doodle-sun.webp"
+  },
+  "planets": {
+    "surya": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-surya.webp",
+    "chandra": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-chandra.webp",
+    "mangala": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-mangala.webp",
+    "budha": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-budha.webp",
+    "guru": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-guru.webp",
+    "shukra": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-shukra.webp",
+    "shani": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-shani.webp",
+    "rahu": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-rahu.webp",
+    "ketu": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-ketu.webp",
+    "navagrahaOrbit": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-navagraha-orbit.webp"
+  },
+  "ui": {
+    "highlightStroke": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/ui-highlight-stroke.webp",
+    "paperClip": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/ui-paper-clip.webp",
+    "redCircle": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/ui-red-circle.webp",
+    "washiTape": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/ui-washi-tape.webp"
+  },
+  "misc": {
+    "geometry": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/geometry.webp",
+    "layer": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/layer.webp",
+    "main": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/main.webp"
+  }
+}
