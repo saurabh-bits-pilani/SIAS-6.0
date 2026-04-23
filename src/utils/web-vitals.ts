@@ -40,7 +40,6 @@ function reportMetric(metric: Metric): void {
 
   const valueLabel = isCls ? metric.value.toFixed(3) : `${Math.round(metric.value)}ms`;
   const emoji = RATING_EMOJI[metric.rating] ?? '';
-  // eslint-disable-next-line no-console
   console.log(
     `[web-vitals] ${emoji} ${metric.name} ${valueLabel} (${metric.rating}) · delta ${Math.round(metric.delta)} · id ${metric.id}`,
   );

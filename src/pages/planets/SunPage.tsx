@@ -1,1297 +1,1026 @@
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import { CheckCircle2, Phone, MessageCircle } from 'lucide-react';
-import {
-  IconSparkles,
-  IconStar,
-  IconHome,
-  IconCrown,
-  IconClock,
-  IconLeaf,
-  IconHeartHandshake,
-  IconUserCircle,
-  IconBook,
-  IconSun,
-  IconDroplet,
-  IconDiamond,
-  IconYoga,
-  IconHeart,
-  IconCalendar,
-  IconGift,
-  IconArrowRight,
-  IconPaperclip,
-} from '@tabler/icons-react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import SEOHead from '../../components/SEOHead';
-import SchemaMarkup from '../../components/SchemaMarkup';
-import Breadcrumbs from '../../components/Breadcrumbs';
-import sunData, { sunAsset } from '../../data/planets/sun';
 import {
   getArticleSchema,
+  getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getWebPageSchema,
   type JsonLd,
+  SITE_ORIGIN,
 } from '../../data/schema-entities';
 
-const {
-  meta,
-  hero,
-  quickFacts,
-  mantras,
-  significations,
-  benefits,
-  midBreak,
-  connect,
-  gemstone,
-  affirmation,
-  footer,
-  faqs,
-  related,
-} = sunData;
+const SUN_ASSET_BASE =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun';
+const SUN_HERO_URL = `${SUN_ASSET_BASE}/hero-surya.webp`;
+const RUBY_RING_URL = `${SUN_ASSET_BASE}/ruby-ring.webp`;
+const PARCHMENT_URL = `${SUN_ASSET_BASE}/parchment-texture.webp`;
+const STAR_ACCENT_URL = `${SUN_ASSET_BASE}/star-accent.svg`;
+const DIYA_URL = `${SUN_ASSET_BASE}/diya.svg`;
+const FEATHER_URL = `${SUN_ASSET_BASE}/feather-quill.png`;
 
-/**
- * Marker-highlighted inline span. Wraps content in the global
- * .highlight-marker utility defined in src/index.css.
- */
-function Mark({ children }: { children: React.ReactNode }) {
-  return <mark className="highlight-marker bg-transparent text-inherit">{children}</mark>;
+const PAGE_TITLE =
+  'Surya (Sun) in Vedic Astrology: Meaning, Mantras, Remedies | Soul Infinity';
+const PAGE_DESCRIPTION =
+  'Complete guide to Surya in Vedic astrology, including Sun mantras, birth chart meaning, house results, Surya Mahadasha, Ruby guidance, and traditional remedies.';
+const PAGE_KEYWORDS =
+  'surya, sun in vedic astrology, sun mantra, navagraha, ruby gemstone, manikya, sun remedies, leo ruler, aries exaltation, soul infinity';
+const PAGE_URL = `${SITE_ORIGIN}/planets/sun`;
+
+type IconName =
+  | 'planet'
+  | 'fire'
+  | 'nature'
+  | 'metal'
+  | 'day'
+  | 'soul'
+  | 'crown'
+  | 'sign'
+  | 'up'
+  | 'down'
+  | 'direction'
+  | 'symbol'
+  | 'benefit'
+  | 'connect'
+  | 'gem'
+  | 'quote'
+  | 'faq'
+  | 'water'
+  | 'heart';
+
+type QuickFact = {
+  icon: IconName;
+  label: string;
+  value: string;
+};
+
+type MantraBlock = {
+  title: string;
+  devanagari: string;
+  iast: string;
+  meaning: string;
+};
+
+type DetailRow = {
+  icon: IconName;
+  label: string;
+  value: string;
+};
+
+type EditorialSection = {
+  title: string;
+  paragraphs: string[];
+};
+
+type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+const quickFacts: QuickFact[] = [
+  { icon: 'planet', label: 'Planet', value: 'Surya' },
+  { icon: 'fire', label: 'Element', value: 'Fire' },
+  { icon: 'nature', label: 'Nature', value: 'Masculine' },
+  { icon: 'metal', label: 'Metal', value: 'Gold' },
+  { icon: 'day', label: 'Day', value: 'Sunday' },
+];
+
+const mantras: MantraBlock[] = [
+  {
+    title: 'Navagraha Stotra, Surya Mantra',
+    devanagari:
+      'जपाकुसुम संकाशं काश्यपेयं महाद्युतिम् । तमोऽरिं सर्वपापघ्नं प्रणतोऽस्मि दिवाकरम् ॥',
+    iast:
+      "Japākusuma saṅkāśaṁ kāśyapeyaṁ mahādhyutim | Tamo'riṁ sarva-pāpaghnaṁ praṇato'smi divākaram ||",
+    meaning:
+      'I bow to Surya, who shines like the red hibiscus flower, son of Kashyapa, greatly radiant, the enemy of darkness and destroyer of all sins.',
+  },
+  {
+    title: 'Beej Mantra for Surya',
+    devanagari: 'ॐ सूर्याय नमः ॥',
+    iast: 'Om Sūryāya namaḥ ||',
+    meaning: 'Salutations to Surya, the luminous lord of the soul.',
+  },
+];
+
+const lifeRows: DetailRow[] = [
+  { icon: 'soul', label: 'Represents', value: 'Soul, Atma, Consciousness' },
+  {
+    icon: 'crown',
+    label: 'Governs',
+    value: 'Father, Leadership, Authority, Confidence',
+  },
+  { icon: 'sign', label: 'Signs Ruled', value: 'Leo (Simha)' },
+  { icon: 'up', label: 'Exalted In', value: 'Aries (Mesha)' },
+  { icon: 'down', label: 'Debilitated In', value: 'Libra (Tula)' },
+  { icon: 'direction', label: 'Direction', value: 'East' },
+  { icon: 'symbol', label: 'Symbol', value: 'Circle with a dot' },
+];
+
+const benefits = [
+  'Boosts confidence and self-esteem',
+  'Improves leadership qualities',
+  'Brings success, recognition, and fame',
+  'Enhances vitality and immune system',
+  'Dispels negative energy and darkness',
+  'Brings clarity, purpose, and willpower',
+];
+
+const connectPractices = [
+  'Chant Surya mantra at sunrise facing East',
+  'Offer water (Arghya) to the rising Sun',
+  'Wear Ruby (Manikya) in gold on ring finger after verification',
+  'Observe fast on Sundays with light vegetarian food',
+  'Practice gratitude and act with integrity',
+];
+
+const rays = [
+  { glyph: '☀', name: 'Dawn Rising', sub: 'Awaken awareness' },
+  { glyph: '✺', name: 'Morning Light', sub: 'Ignite purpose' },
+  { glyph: '◉', name: 'Midday Sun', sub: 'Full expression' },
+  { glyph: '✹', name: 'Afternoon Glow', sub: 'Sustained effort' },
+  { glyph: '✦', name: 'Golden Hour', sub: 'Inner reflection' },
+  { glyph: '◐', name: 'Sunset', sub: 'Release with gratitude' },
+  { glyph: '✧', name: 'Twilight', sub: 'Rest in stillness' },
+];
+
+const houses = [
+  ['1st', 'First House', 'A visible solar identity, confidence, independence, and a strong need to lead life from the front.'],
+  ['2nd', 'Second House', 'Authoritative speech, family pride, financial responsibility, and a voice that carries weight.'],
+  ['3rd', 'Third House', 'Courage, initiative, communication strength, entrepreneurial will, and a self-made path.'],
+  ['4th', 'Fourth House', 'A private need for inner authority, complex home themes, and effort to build emotional sovereignty.'],
+  ['5th', 'Fifth House', 'Creative command, teaching talent, mantra affinity, and a strong bond with intelligence and children.'],
+  ['6th', 'Sixth House', 'Capacity to defeat obstacles, serve with discipline, and build vitality through routine.'],
+  ['7th', 'Seventh House', 'Partnerships with strong personalities and lessons around balancing selfhood with cooperation.'],
+  ['8th', 'Eighth House', 'Deep research, occult interest, identity transformation, and karmic father themes.'],
+  ['9th', 'Ninth House', 'Dharma, blessings from teachers, respect for tradition, and confidence in moral direction.'],
+  ['10th', 'Tenth House', 'Career visibility, public authority, institutional recognition, and strong professional drive.'],
+  ['11th', 'Eleventh House', 'Gains through leaders, networks, elder circles, and goal-oriented solar ambition.'],
+  ['12th', 'Twelfth House', 'Foreign links, inner spiritual focus, work behind the scenes, and ego refinement through surrender.'],
+];
+
+const remedies = [
+  ['Chant at Sunrise', 'Repeat the Surya mantra at sunrise while facing East, with a steady mind and clean intention.'],
+  ['Offer Arghya', 'Offer water to the rising Sun, traditionally with reverence, gratitude, and simple discipline.'],
+  ['Ruby With Verification', 'Wear Ruby only after chart analysis confirms that strengthening Surya is appropriate.'],
+  ['Sunday Discipline', 'Observe a light Sunday fast or simplified diet if suitable for your health and lifestyle.'],
+  ['Honor Father Figures', 'Repair respect, responsibility, and gratitude toward father, mentors, and righteous authority.'],
+  ['Live With Integrity', 'Choose truth, punctuality, accountability, and clear promises as daily solar remedies.'],
+];
+
+const editorialSections: EditorialSection[] = [
+  {
+    title: 'Surya: The Soul of Vedic Astrology',
+    paragraphs: [
+      'Surya is the visible heart of the sky and the inner heart of the horoscope. In Vedic astrology, the Sun is not only a marker of personality. It is the radiant witness, the Atma principle, and the flame of consciousness that gives direction to the rest of the chart. Where Chandra receives and reflects, Surya shines and organizes. It gives life a center.',
+      'A healthy Sun gives the courage to stand in truth without becoming harsh. It supports self-respect, clarity of purpose, vitality, and the ability to carry responsibility. When Surya is honored, a person does not need constant validation. Their life begins to move from inner authority rather than comparison.',
+      'This is why Surya is studied carefully in every serious chart reading. The placement of the Sun by sign, house, nakshatra, dignity, aspect, and dasha reveals how the soul seeks expression. It also shows where the native must learn the difference between ego and essence.',
+    ],
+  },
+  {
+    title: 'Significations of the Sun in a Birth Chart',
+    paragraphs: [
+      'The Sun represents father, authority, government, leadership, fame, honor, bones, heart, right eye, confidence, immunity, and the power to command. It shows the quality of self-esteem and the way a person relates to visible responsibility. A strong Sun can make a person naturally dignified, decisive, and willing to lead.',
+      'Surya also reveals how one handles recognition. Some people seek attention because the solar principle feels wounded. Others carry presence without effort because the Sun is stable. In consultation, this difference matters. A remedy for weak confidence is not the same as a remedy for inflated pride.',
+      'The Sun is a natural malefic because its heat separates, dries, and burns away softness. Yet that heat is also purifying. It can remove confusion, expose falsehood, and help a person choose dharma over comfort. The result depends on the full chart, not on one placement alone.',
+    ],
+  },
+  {
+    title: 'Sun in the 12 Houses',
+    paragraphs: [
+      'The house occupied by Surya shows where the soul seeks visibility and where life asks the person to develop authority. These summaries are starting points. Sign, aspects, combustion, conjunctions, nakshatra, divisional charts, and dasha timing must refine the final reading.',
+    ],
+  },
+  {
+    title: "Sun's Dignities: Exaltation, Debilitation, and Relationships",
+    paragraphs: [
+      'Surya is exalted in Aries, where courage and initiative support the solar will. It rules Leo, the royal sign of self-expression, command, and visible dignity. It is debilitated in Libra, where the need to balance, please, or negotiate can weaken direct self-assertion. Debilitation does not mean failure. It means the solar principle must be trained consciously.',
+      'In classical relationship tables, the Sun is friendly to Moon, Mars, and Jupiter; neutral to Mercury; and challenged by Venus and Saturn. Rahu and Ketu can create eclipse-like conditions when they closely afflict Surya. Such combinations often bring unusual authority themes, father karma, public visibility, or identity reinvention.',
+      'A careful reading does not stop at dignity. Saurabh Jain also evaluates Shadbala, Ashtakavarga, combustion context, nakshatra lord, yogas, and functional benefic or malefic role for the ascendant. A debilitated Sun may rise through Neecha Bhanga, while an exalted Sun can still act harshly if poorly supported.',
+    ],
+  },
+  {
+    title: 'Surya Mahadasha: The Six-Year Period',
+    paragraphs: [
+      'Surya Mahadasha lasts six years in the Vimshottari Dasha system. It is often a period of crystallization. Themes of authority, father, health, recognition, role clarity, career direction, and self-respect come forward. The person may feel called to stop hiding and make a more defined choice about life direction.',
+      'If the Sun is strong and supportive, this period can bring promotion, leadership, public respect, clearer purpose, and a stronger relationship with discipline. If the Sun is weak or afflicted, the same period may surface ego wounds, conflicts with authority, vitality concerns, or pressure around father-related duties.',
+      'The antardashas inside Surya Mahadasha make the story more precise. A Sun-Mars period behaves differently from Sun-Saturn or Sun-Rahu. Timing is therefore not guessed from the Sun alone. It is read through the full dasha sequence and the natal promise of the chart.',
+    ],
+  },
+  {
+    title: 'Traditional Remedies for a Weak or Afflicted Sun',
+    paragraphs: [
+      'Surya remedies are simple, bright, and disciplined. They are not meant to force destiny. They help the person align with the healthy form of solar energy: truthfulness, punctuality, gratitude, vitality, and respect for rightful authority. The best remedies are repeated steadily rather than performed dramatically once.',
+      'Mantra and sunrise practice are usually safer than gemstones. Ruby can amplify Surya power, which is useful only when the chart can receive that amplification. If the Sun is functionally difficult, afflicted, or tied to sensitive houses, gemstone use may intensify problems instead of solving them.',
+      'Lifestyle is also a remedy. Waking closer to sunrise, protecting the heart through healthy routines, keeping promises, honoring mentors, and choosing honest leadership all strengthen the lived expression of Surya.',
+    ],
+  },
+  {
+    title: 'Surya in Modern Life',
+    paragraphs: [
+      'In modern life, Surya shows up as confidence, executive presence, boundaries, career direction, personal branding, and the courage to be seen. Many people with a weak solar principle can be talented yet hesitant. They wait for permission, avoid visibility, or feel drained by comparison. Strengthening Surya helps them return to their own center.',
+      'A balanced Sun does not dominate every room. It brings warmth, steadiness, and accountability. It makes leadership feel like service rather than performance. This is especially important for founders, managers, teachers, healers, parents, and anyone whose decisions affect others.',
+      'The modern solar remedy is not only ritual. It is also a calendar that reflects priorities, a body cared for with sunlight and movement, a voice that speaks truth, and a life arranged around purpose instead of noise.',
+    ],
+  },
+  {
+    title: 'How Saurabh Jain Reads Surya in Your Chart',
+    paragraphs: [
+      'Saurabh Jain reads Surya through a layered Vedic method that combines classical Parashari principles with timing, dignity, nakshatra, and practical remedy logic. His training at the K.N. Rao Institute and his background across M.Tech, MBA, and M.Phil disciplines help him translate traditional chart factors into clear life guidance.',
+      'A personalized Surya reading looks at the Sun sign and house, conjunctions, aspects, combustion patterns, dasha activation, divisional support, and the Sun relationship to the ascendant. The goal is not to label the planet as simply good or bad. The goal is to understand what the soul is trying to mature through this solar placement.',
+      'Where appropriate, Saurabh may recommend mantra, Arghya, Sunday discipline, integrity practices, father-related healing, or gemstone verification. The guidance stays practical, respectful, and chart-specific so the client knows exactly how to honor Surya without fear or exaggeration.',
+    ],
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    question: 'What does Surya represent in Vedic astrology?',
+    answer:
+      'Surya represents the Atma or soul, father, authority, leadership, self-esteem, vitality, recognition, and the central life force in a birth chart.',
+  },
+  {
+    question: 'What are the effects of a strong Sun in a birth chart?',
+    answer:
+      'A strong Sun can support confidence, leadership, recognition, vitality, respect from authority, clarity of purpose, and the ability to carry responsibility with dignity.',
+  },
+  {
+    question: 'How do I know if my Sun is weak or afflicted?',
+    answer:
+      'Common indicators include debilitation in Libra, heavy affliction from Saturn or Rahu, difficult house placement, low Shadbala, or repeated life themes around confidence, father, authority, and vitality. The full chart must confirm this.',
+  },
+  {
+    question: 'Can wearing Ruby strengthen my Sun?',
+    answer:
+      'Ruby is the traditional gemstone for Surya, but it should be worn only after astrological verification. A gemstone amplifies the planet, so it is not suitable for every chart.',
+  },
+  {
+    question: 'How long is Surya Mahadasha and what does it bring?',
+    answer:
+      'Surya Mahadasha lasts six years. It often brings themes of authority, recognition, father, health, self-respect, career direction, and important lessons around ego and purpose.',
+  },
+  {
+    question: 'Is Surya Namaskar an effective remedy for a weak Sun?',
+    answer:
+      'Surya Namaskar can be a helpful lifestyle remedy when practiced regularly at sunrise with breath, gratitude, and mantra. It supports vitality, discipline, and solar awareness.',
+  },
+  {
+    question: 'What is the difference between Sun in Vedic versus Western astrology?',
+    answer:
+      'Vedic astrology uses the sidereal zodiac and reads the Sun as a karaka for soul, father, authority, and vitality. Western astrology commonly emphasizes tropical Sun-sign personality. Both systems have different calculations and interpretive logic.',
+  },
+];
+
+const cardTextureStyle = {
+  backgroundImage: `linear-gradient(rgba(245,230,200,0.95), rgba(245,230,200,0.95)), url(${PARCHMENT_URL})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+};
+
+const SolarFieldDoodle = ({ className = '' }: { className?: string }) => (
+  <svg
+    className={`pointer-events-none ${className}`}
+    viewBox="0 0 900 620"
+    preserveAspectRatio="xMidYMid slice"
+    aria-hidden="true"
+  >
+    {Array.from({ length: 74 }).map((_, i) => {
+      const x = (i * 157) % 900;
+      const y = (i * 101) % 620;
+      const r = 0.6 + (((i * 9) % 10) / 10) * 1.5;
+      const opacity = 0.22 + (((i * 17) % 10) / 10) * 0.55;
+      return <circle key={i} cx={x} cy={y} r={r} fill="#facc15" opacity={opacity} />;
+    })}
+  </svg>
+);
+
+const SolarOrbitDoodle = ({ className = '' }: { className?: string }) => (
+  <svg
+    className={`pointer-events-none ${className}`}
+    viewBox="0 0 800 600"
+    preserveAspectRatio="xMidYMid slice"
+    aria-hidden="true"
+  >
+    <circle cx="420" cy="290" r="130" fill="none" stroke="#facc15" strokeWidth="0.7" strokeDasharray="2 5" opacity="0.55" />
+    <circle cx="420" cy="290" r="190" fill="none" stroke="#f59e0b" strokeWidth="0.6" strokeDasharray="3 7" opacity="0.42" />
+    <circle cx="420" cy="290" r="260" fill="none" stroke="#fb923c" strokeWidth="0.5" strokeDasharray="2 9" opacity="0.33" />
+    {Array.from({ length: 18 }).map((_, i) => {
+      const angle = (Math.PI * 2 * i) / 18;
+      const x1 = 420 + Math.cos(angle) * 160;
+      const y1 = 290 + Math.sin(angle) * 160;
+      const x2 = 420 + Math.cos(angle) * 176;
+      const y2 = 290 + Math.sin(angle) * 176;
+      return <path key={i} d={`M${x1} ${y1} ${x2} ${y2}`} stroke="#facc15" strokeWidth="1" opacity="0.38" />;
+    })}
+  </svg>
+);
+
+function iconSvg(name: IconName, className = 'h-6 w-6'): JSX.Element {
+  const base = 'none';
+  switch (name) {
+    case 'planet':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="12" r="6" />
+          <circle cx="12" cy="12" r="1.8" fill="currentColor" />
+        </svg>
+      );
+    case 'fire':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 21c4 0 7-2.8 7-6.8 0-2.7-1.5-4.9-3.2-6.6-.3 2.2-1.4 3.5-2.5 4.2.3-3.4-1.5-6.3-4.1-8.8.1 3.7-2.2 5.5-3.3 7.6A7 7 0 0 0 5 14.2C5 18.2 8 21 12 21Z" />
+        </svg>
+      );
+    case 'nature':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M12 12v8M8 16h8" />
+        </svg>
+      );
+    case 'metal':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="m12 3 6 4v10l-6 4-6-4V7l6-4Z" />
+          <path d="m12 3v18M6 7l6 4 6-4" />
+        </svg>
+      );
+    case 'day':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <rect x="3" y="5" width="18" height="16" rx="2.5" />
+          <path d="M7 3v4M17 3v4M3 10h18" />
+        </svg>
+      );
+    case 'soul':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 3c3.5 3 5.5 6 5.5 9.2A5.5 5.5 0 0 1 12 18a5.5 5.5 0 0 1-5.5-5.8C6.5 9 8.5 6 12 3Z" />
+          <path d="M8 21h8" />
+        </svg>
+      );
+    case 'crown':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="m4 8 4 4 4-7 4 7 4-4-2 10H6L4 8Z" />
+          <path d="M6 21h12" />
+        </svg>
+      );
+    case 'sign':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M6 17c3-8 9-8 12 0" />
+          <path d="M7 7c2 1.8 3.6 2.7 5 2.7S15 8.8 17 7" />
+          <path d="M8 17h8" />
+        </svg>
+      );
+    case 'up':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" />
+        </svg>
+      );
+    case 'down':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 5v14M17.5 13.5 12 19l-5.5-5.5" />
+        </svg>
+      );
+    case 'direction':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="12" r="8" />
+          <path d="m10 14 6-6-2 8-4-2Z" />
+        </svg>
+      );
+    case 'symbol':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="12" r="7" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+        </svg>
+      );
+    case 'benefit':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="2">
+          <path d="m5 12 4 4 10-10" />
+        </svg>
+      );
+    case 'connect':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" />
+        </svg>
+      );
+    case 'gem':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="m7 4-3 5 8 11 8-11-3-5H7Z" />
+          <path d="m9 4 3 5 3-5M4 9h16" />
+        </svg>
+      );
+    case 'quote':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+          <path d="M8.2 10.7c0 2.5-1.6 4.4-4.4 4.9l-.3-1.2c1.5-.5 2.4-1.3 2.6-2.5a2.8 2.8 0 0 1-2.3-2.8C3.8 7.4 5 6 6.8 6c1.9 0 3.4 1.6 3.4 4.7Zm10 0c0 2.5-1.6 4.4-4.4 4.9l-.3-1.2c1.5-.5 2.4-1.3 2.6-2.5a2.8 2.8 0 0 1-2.3-2.8c0-1.7 1.2-3.1 3-3.1 1.9 0 3.4 1.6 3.4 4.7Z" />
+        </svg>
+      );
+    case 'faq':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 18h.01M9.2 9.3a2.8 2.8 0 1 1 4.6 2.2c-.9.7-1.5 1.2-1.5 2.5" />
+          <circle cx="12" cy="12" r="9" />
+        </svg>
+      );
+    case 'water':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 3c3 4 5.5 6.7 5.5 10.3A5.5 5.5 0 1 1 6.5 13.3C6.5 9.7 9 7 12 3Z" />
+        </svg>
+      );
+    case 'heart':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
+        </svg>
+      );
+  }
 }
 
-function SectionDivider() {
-  return (
-    <div className="my-16 flex items-center justify-center gap-4 opacity-60">
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-300" />
-      <img
-        src={sunAsset('star-accent.svg')}
-        alt=""
-        aria-hidden="true"
-        className="w-8 h-8"
-      />
-      <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-300" />
-    </div>
-  );
-}
-
-function HouseCard({
-  number,
-  name,
-  text,
-}: {
-  number: string;
-  name: string;
-  text: string;
-}) {
-  return (
-    <div className="bg-white/70 border border-yellow-200 rounded-lg p-5 hover:shadow-md hover:border-yellow-400 transition-all">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="font-caveat text-3xl text-yellow-700 leading-none">{number}</span>
-        <span className="font-poppins font-semibold text-gray-900">{name}</span>
-      </div>
-      <p className="text-gray-700 text-sm leading-relaxed">{text}</p>
-    </div>
-  );
-}
-
-function RemedyCard({
-  icon,
-  title,
-  text,
-}: {
-  icon: React.ReactNode;
-  title: React.ReactNode;
-  text: React.ReactNode;
-}) {
-  return (
-    <div className="flex gap-4 p-5 bg-white/70 border-l-4 border-yellow-500 rounded-r-lg shadow-sm">
-      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
-        {icon}
-      </div>
-      <div className="min-w-0">
-        <h4 className="font-caveat text-2xl text-yellow-800 mb-1 leading-tight">
-          {title}
-        </h4>
-        <p className="text-gray-700 text-sm leading-relaxed">{text}</p>
-      </div>
-    </div>
-  );
-}
-
-function CredentialBadge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="px-3 py-1 bg-white rounded-full text-sm font-semibold text-yellow-800 border border-yellow-300 shadow-sm">
-      {children}
-    </span>
-  );
+function Highlight({ children }: { children: string }) {
+  return <span className="highlight-marker rounded px-1.5 py-0.5 text-[#241306]">{children}</span>;
 }
 
 function ParchmentCard({
   children,
   className = '',
-  rotation = '',
-  style,
+  rotate = '',
 }: {
   children: React.ReactNode;
   className?: string;
-  rotation?: string;
-  style?: React.CSSProperties;
+  rotate?: string;
 }) {
-  const parchmentStyle: React.CSSProperties = {
-    backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: '#fdf6e3',
-    ...style,
-  };
   return (
     <div
-      className={`relative rounded-xl border border-amber-900/20 p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] ${rotation} ${className}`}
-      style={parchmentStyle}
+      className={`card-parchment relative overflow-hidden border border-[#8c4f1e]/45 p-5 text-[#2b1a0f] shadow-[0_10px_30px_rgba(0,0,0,0.5)] sm:p-6 ${rotate} ${className}`}
+      style={cardTextureStyle}
     >
-      {children}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.35),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(92,42,11,0.2),transparent_30%)]" />
+      <div className="relative z-10">{children}</div>
     </div>
   );
 }
 
-function IconImg({ file, alt = '', size = 20 }: { file: string; alt?: string; size?: number }) {
+function SunMandala({ className = 'h-16 w-16' }: { className?: string }) {
   return (
-    <img
-      src={sunAsset(file)}
-      alt={alt}
-      width={size}
-      height={size}
-      loading="lazy"
-      className="inline-block flex-shrink-0"
-    />
+    <svg viewBox="0 0 80 80" className={className} fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <circle cx="40" cy="40" r="13" />
+      <circle cx="40" cy="40" r="22" strokeDasharray="3 5" />
+      {Array.from({ length: 16 }).map((_, i) => {
+        const angle = (Math.PI * 2 * i) / 16;
+        const x1 = 40 + Math.cos(angle) * 28;
+        const y1 = 40 + Math.sin(angle) * 28;
+        const x2 = 40 + Math.cos(angle) * 36;
+        const y2 = 40 + Math.sin(angle) * 36;
+        return <path key={i} d={`M${x1} ${y1} ${x2} ${y2}`} strokeLinecap="round" />;
+      })}
+    </svg>
+  );
+}
+
+function SectionRule() {
+  return (
+    <div className="my-10 flex items-center gap-4 text-[#b45309]/60">
+      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#f59e0b] to-transparent" />
+      <SunMandala className="h-9 w-9" />
+      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#f59e0b] to-transparent" />
+    </div>
+  );
+}
+
+function EditorialSidebar() {
+  return (
+    <div className="space-y-6 lg:sticky lg:top-24">
+      <ParchmentCard rotate="lg:rotate-[0.35deg]">
+        <div className="flex items-start gap-3">
+          <div className="text-[#b45309]">{iconSvg('connect', 'h-7 w-7')}</div>
+          <div>
+            <h3 className="font-caveat text-4xl leading-none text-[#2b1a0f]">Solar Notes</h3>
+            <p className="mt-2 font-kalam text-lg leading-relaxed text-[#3b2414]">
+              Surya does not ask us to perform brightness. It asks us to live from a steady center.
+            </p>
+          </div>
+        </div>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:-rotate-[0.3deg]">
+        <div className="font-caveat text-4xl leading-none text-[#2b1a0f]">Core Associations</div>
+        <div className="mt-4 space-y-3 font-kalam text-lg leading-relaxed text-[#3b2414]">
+          <div><span className="font-semibold text-[#b45309]">Karaka:</span> Soul, father, authority</div>
+          <div><span className="font-semibold text-[#b45309]">Natural Sign:</span> Leo</div>
+          <div><span className="font-semibold text-[#b45309]">Temperament:</span> Hot, royal, clarifying</div>
+          <div><span className="font-semibold text-[#b45309]">Colour:</span> Gold, saffron, copper-red</div>
+          <div><span className="font-semibold text-[#b45309]">Lifestyle Medicine:</span> Sunrise, truth, discipline</div>
+        </div>
+      </ParchmentCard>
+
+      <div className="rounded-[28px] border border-[#facc15]/20 bg-[#1a0f05]/95 p-5 text-white shadow-[0_22px_55px_rgba(0,0,0,0.34)]">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <div className="font-caveat text-4xl leading-none text-[#facc15]">Closing Light</div>
+            <div className="mt-2 font-kalam text-lg text-white/75">
+              A solar reminder to choose clarity over confusion.
+            </div>
+          </div>
+          <img src={DIYA_URL} alt="" className="h-16 w-16" />
+        </div>
+        <div className="mt-5 font-devanagari text-3xl text-[#facc15]">तमसो मा ज्योतिर्गमय ।</div>
+        <div className="mt-2 font-kalam text-xl text-white/80">Lead me from darkness to light.</div>
+      </div>
+    </div>
   );
 }
 
 export default function SunPage() {
-  const articleSchema: JsonLd = getArticleSchema({
-    headline: meta.articleHeadline,
-    description: meta.description,
-    image: hero.imageUrl,
-    datePublished: meta.articleDatePublished,
-    dateModified: meta.articleDateModified,
-    url: meta.canonicalPath,
-    articleSection: 'Vedic Astrology',
-    keywords: [
-      'Surya',
-      'Sun in Vedic astrology',
-      'Navagraha',
-      'Ruby Manikya',
-      'Surya mantra',
-      'exaltation Aries',
-      'debilitation Libra',
+  const [openFaq, setOpenFaq] = useState<number>(0);
+
+  const schemas = useMemo<JsonLd[]>(
+    () => [
+      getArticleSchema({
+        headline: 'Surya (Sun) in Vedic Astrology: Meaning, Mantras, Remedies, and FAQ',
+        description: PAGE_DESCRIPTION,
+        image: SUN_HERO_URL,
+        datePublished: '2026-04-23',
+        dateModified: '2026-04-23',
+        url: '/planets/sun',
+        articleSection: 'Vedic Astrology',
+        keywords: [
+          'Surya',
+          'Sun in Vedic astrology',
+          'Surya mantra',
+          'Ruby gemstone',
+          'Sun remedies',
+          'Surya Mahadasha',
+        ],
+      }),
+      getFaqPageSchemaFromList(faqs),
+      getBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'Planets', url: '/planets' },
+        { name: 'Sun (Surya)', url: '/planets/sun' },
+      ]),
+      getWebPageSchema({
+        name: 'Surya (Sun) in Vedic Astrology',
+        description: PAGE_DESCRIPTION,
+        url: PAGE_URL,
+      }),
     ],
-  });
+    [],
+  );
 
   return (
-    <div className="bg-white">
+    <>
       <SEOHead
-        title={meta.title}
-        description={meta.description}
-        keywords={meta.keywords}
-        image={meta.ogImage}
+        title={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        keywords={PAGE_KEYWORDS}
+        image={SUN_HERO_URL}
+        url={PAGE_URL}
         type="article"
-      />
-      <SchemaMarkup
-        type="webpage"
-        webPage={{
-          name: 'Surya (Sun) in Vedic Astrology',
-          description: meta.description,
-          url: meta.canonicalPath,
-        }}
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Planets', url: '/planets' },
-          { name: 'Sun (Surya)', url: meta.canonicalPath },
-        ]}
-      />
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
-        <script type="application/ld+json">
-          {JSON.stringify(getFaqPageSchemaFromList(faqs))}
-        </script>
-      </Helmet>
-
-      <Breadcrumbs
-        items={[
-          { label: 'Home', href: '/' },
-          { label: 'Planets', href: '/planets' },
-          { label: 'Sun (Surya)' },
-        ]}
+        schemas={schemas}
       />
 
-      {/* ───────────────────────── Section 1: Hero ───────────────────────── */}
-      <section
-        className="relative overflow-hidden"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 30% 20%, rgba(252,211,77,0.15), transparent 55%), linear-gradient(to bottom, #1a0f05 0%, #000000 100%)',
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div className="relative">
-              <h1
-                className="font-sacramento text-8xl md:text-9xl leading-none text-yellow-400"
-                style={{
-                  textShadow:
-                    '0 0 30px rgba(250, 204, 21, 0.4), 0 0 60px rgba(250, 204, 21, 0.2)',
-                }}
-              >
-                {hero.name}
-              </h1>
-              <img
-                src={sunAsset('doodle-sun.png')}
-                alt=""
-                width={48}
-                height={48}
-                loading="eager"
-                className="absolute -top-2 right-6 md:right-10 w-12 h-12 rotate-12 opacity-90 pointer-events-none"
-                aria-hidden="true"
-              />
-              <p className="font-devanagari text-3xl text-white/80 mt-2">सूर्य</p>
-              <p className="font-caveat text-3xl text-white/90 mt-3">{hero.subtitle}</p>
-              <p className="font-poppins text-base text-white/85 mt-6 max-w-md leading-relaxed py-1">
-                The source of light, life and consciousness. Surya illuminates our{' '}
-                <Mark>soul</Mark>, <Mark>vitality</Mark> and <Mark>purpose</Mark>.
-              </p>
-            </div>
-            <div className="relative">
-              <img
-                src={hero.imageUrl}
-                alt={hero.imageAlt}
-                width={800}
-                height={450}
-                loading="eager"
-                fetchPriority="high"
-                className="w-full h-auto rounded-xl shadow-2xl ring-1 ring-yellow-400/20"
-              />
-              <div
-                className="absolute inset-0 rounded-xl pointer-events-none"
-                style={{
-                  boxShadow: '0 0 120px 10px rgba(252,211,77,0.25) inset',
-                }}
-                aria-hidden="true"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────────────────── Section 2: Quick Facts Strip ───────────────────── */}
-      <section className="relative bg-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bg-[#050200] text-white">
+        <section
+          className="relative overflow-hidden"
+          style={{
+            background:
+              'radial-gradient(circle at 66% 18%, rgba(245,158,11,0.56) 0%, rgba(124,45,18,0.44) 28%, rgba(26,15,5,0.98) 56%, #000 100%)',
+          }}
+        >
           <div
-            className="grid grid-cols-2 md:grid-cols-5 gap-0 rounded-2xl shadow-2xl ring-1 ring-black/5 overflow-hidden -translate-y-10"
-            style={{
-              backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: '#fdf6e3',
-            }}
-          >
-            {quickFacts.map((fact, i) => (
-              <div
-                key={fact.label}
-                className={`flex items-center gap-3 p-5 md:p-6 ${
-                  i < quickFacts.length - 1 ? 'md:border-r md:border-yellow-800/20' : ''
-                }`}
-              >
-                <img
-                  src={sunAsset(fact.icon)}
-                  alt=""
-                  width={40}
-                  height={40}
-                  loading="lazy"
-                  aria-hidden="true"
-                  className="flex-shrink-0"
-                />
-                <div className="min-w-0">
-                  <p className="font-poppins text-xs uppercase tracking-wide text-yellow-900/70">
-                    {fact.label}
-                  </p>
-                  <p className="font-poppins text-base font-semibold text-gray-900">
-                    {fact.value}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────── Section 3: Mantras + Significations ─────────────────── */}
-      <section className="bg-gradient-to-b from-black via-[#0d0805] to-[#1a0f05] pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {/* LEFT: Sacred Mantras */}
-            <ParchmentCard
-              className="md:col-span-3"
-              rotation="md:-rotate-[0.5deg]"
-            >
-              <img
-                src={sunAsset('icon-praying-hands.svg')}
-                alt=""
-                width={40}
-                height={40}
-                loading="lazy"
-                aria-hidden="true"
-                className="absolute top-4 left-4 opacity-70"
-              />
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <IconImg file="icon-om.svg" size={32} />
-                <h2 className="font-caveat text-4xl md:text-5xl text-yellow-700">
-                  {mantras.title}
-                </h2>
-                <IconImg file="icon-om.svg" size={32} />
-              </div>
-
-              <div className="mb-8">
-                <p className="font-caveat text-2xl text-yellow-700 mb-3">
-                  <Mark>{mantras.primary.heading}</Mark>
-                </p>
-                <div className="my-4 bg-[#fdf6e3] border-2 border-red-700/70 rounded-lg p-5">
-                  <p className="font-devanagari text-xl md:text-2xl leading-loose text-gray-900">
-                    {mantras.primary.devanagari}
-                  </p>
-                </div>
-                <p className="italic font-semibold text-gray-800 mb-2 leading-relaxed">
-                  {mantras.primary.iast}
-                </p>
-                <p className="italic font-semibold text-gray-800 leading-relaxed">
-                  I bow to Surya, who shines like the{' '}
-                  <Mark>red hibiscus flower</Mark>, son of <Mark>Kashyapa</Mark>, greatly
-                  radiant, the enemy of darkness, and destroyer of all sins.
-                </p>
-              </div>
-
-              <div className="relative">
-                <img
-                  src={sunAsset('doodle-sun.png')}
-                  alt=""
-                  width={64}
-                  height={64}
-                  loading="lazy"
-                  aria-hidden="true"
-                  className="absolute -top-2 right-0 opacity-50"
-                />
-                <p className="font-caveat text-2xl text-yellow-700 mb-3">
-                  {mantras.short.heading}
-                </p>
-                <div className="inline-block my-4 bg-[#fdf6e3] border-2 border-red-700/70 rounded-lg px-6 py-4">
-                  <p className="font-devanagari text-xl md:text-2xl leading-loose text-gray-900">
-                    {mantras.short.devanagari}
-                  </p>
-                </div>
-                <p className="italic font-semibold text-gray-800 mb-2">
-                  {mantras.short.iast}
-                </p>
-                <p className="italic font-semibold text-gray-800">
-                  Salutations to Surya, the <Mark>Sun-god</Mark>.
-                </p>
-              </div>
-            </ParchmentCard>
-
-            {/* RIGHT: stacked cards */}
-            <div className="md:col-span-2 space-y-6">
-              {/* Surya in Our Life */}
-              <ParchmentCard rotation="md:rotate-[0.5deg]">
-                <IconPaperclip
-                  size={40}
-                  className="absolute -top-3 -right-3 text-red-600 -rotate-45 drop-shadow-md"
-                  aria-hidden="true"
-                />
-                <img
-                  src={sunAsset('doodle-scales.png')}
-                  alt=""
-                  width={64}
-                  height={64}
-                  loading="lazy"
-                  aria-hidden="true"
-                  className="absolute bottom-24 right-4 w-16 h-16 opacity-50 pointer-events-none"
-                />
-                <img
-                  src={sunAsset('doodle-lion.png')}
-                  alt=""
-                  width={96}
-                  height={96}
-                  loading="lazy"
-                  aria-hidden="true"
-                  className="absolute bottom-2 right-2 w-24 h-24 opacity-40 pointer-events-none"
-                />
-                <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 border-b-2 border-yellow-500 pb-2 mb-4 inline-block">
-                  Surya in Our Life
-                </h3>
-                <ul className="space-y-3 font-poppins text-sm text-gray-800 relative z-10">
-                  {significations.map((row) => (
-                    <li key={row.label} className="flex items-start gap-3">
-                      <IconImg file={row.icon} size={20} />
-                      <span>
-                        <span className="font-bold">{row.label}:</span>{' '}
-                        {row.label === 'Represents' ? (
-                          <>
-                            <Mark>Soul</Mark>, Atma, Consciousness
-                          </>
-                        ) : (
-                          row.value
-                        )}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </ParchmentCard>
-
-              {/* Benefits */}
-              <ParchmentCard rotation="md:-rotate-[0.3deg]">
-                <div className="flex items-center gap-3 mb-4">
-                  <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700">
-                    Benefits of Surya Mantra
-                  </h3>
-                  <img
-                    src={sunAsset('doodle-sun.png')}
-                    alt=""
-                    width={48}
-                    height={48}
-                    loading="lazy"
-                    aria-hidden="true"
-                    className="w-12 h-12 opacity-80"
-                  />
-                </div>
-                <ul className="space-y-2.5 font-poppins text-sm text-gray-800">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span>
-                      Boosts <Mark>confidence</Mark> and self-esteem
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span>Improves leadership qualities</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span>
-                      Brings <Mark>success</Mark>, recognition, fame
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span>
-                      Enhances <Mark>vitality</Mark> and immune system
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span>Dispels negative energy and darkness</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span>
-                      Brings <Mark>clarity</Mark>, <Mark>purpose</Mark>, willpower
-                    </span>
-                  </li>
-                </ul>
-                {/* fallback so benefits data stays in sync if list ever reuses data export */}
-                <span className="sr-only">
-                  {benefits.join('. ')}
-                </span>
-              </ParchmentCard>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────────────── Section 4: Mid-Page Visual Break ───────────────── */}
-      <section
-        className="py-16 md:py-20"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at center, rgba(252,211,77,0.15), transparent 60%), linear-gradient(to bottom, #1a0f05, #000000)',
-        }}
-      >
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <img
-            src={midBreak.imageUrl}
-            alt={midBreak.imageAlt}
-            width={600}
-            height={400}
-            loading="lazy"
-            className="mx-auto rounded-2xl shadow-2xl ring-1 ring-yellow-400/20 max-w-full h-auto"
+            className="absolute inset-0 bg-cover bg-[center_right_20%] bg-no-repeat"
+            style={{ backgroundImage: `url(${SUN_HERO_URL})` }}
           />
-          <p className="font-caveat text-3xl md:text-4xl text-yellow-400 mt-8">
-            {midBreak.caption}
-          </p>
-        </div>
-      </section>
-
-      {/* ───────────────── Section 5: Bottom 3-Card Row ───────────────── */}
-      <section className="py-16 bg-gradient-to-b from-black to-[#1a0f05]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1: How to Connect */}
-            <ParchmentCard rotation="md:rotate-[0.5deg]">
-              <img
-                src={sunAsset('feather-quill.png')}
-                alt=""
-                width={80}
-                height={80}
-                loading="lazy"
-                aria-hidden="true"
-                className="absolute -top-3 -left-3 w-20 h-auto opacity-70 -rotate-12 pointer-events-none"
-              />
-              <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700 mb-4 pl-14">
-                How to Connect with Surya
-              </h3>
-              <ul className="space-y-3 font-poppins text-sm text-gray-800">
-                {connect.map((step) => (
-                  <li key={step.text} className="flex items-start gap-3">
-                    <IconImg file={step.icon} size={20} />
-                    <span>{step.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </ParchmentCard>
-
-            {/* Card 2: Gemstone Ruby (transparent, real photo) */}
-            <div className="relative flex flex-col items-center justify-center text-center py-10 px-4">
-              <div
-                className="absolute inset-0 rounded-xl pointer-events-none"
-                style={{
-                  background:
-                    'radial-gradient(circle at center, rgba(234,179,8,0.18) 0%, transparent 65%)',
-                }}
-                aria-hidden="true"
-              />
-              <img
-                src={gemstone.imageUrl}
-                alt="Ornate gold ring with a large oval ruby gemstone representing Manikya, the gemstone of Surya"
-                width={288}
-                height={288}
-                loading="lazy"
-                className="w-60 h-60 md:w-72 md:h-72 object-contain"
-                style={{ filter: 'drop-shadow(0 0 40px rgba(234, 179, 8, 0.45))' }}
-              />
-              <h3 className="font-caveat text-3xl text-yellow-400 mt-6">Gemstone:</h3>
-              <h4 className="font-sacramento text-6xl md:text-7xl text-white mt-1">
-                {gemstone.name}
-              </h4>
-              <img
-                src={sunAsset('doodle-temple.png')}
-                alt=""
-                width={64}
-                height={64}
-                loading="lazy"
-                aria-hidden="true"
-                className="w-16 h-16 mt-4 opacity-50 pointer-events-none"
-              />
-              <p className="italic text-sm text-gray-400 mt-2 text-center max-w-xs">
-                {gemstone.caveat}
-              </p>
-            </div>
-
-            {/* Card 3: Affirmation */}
-            <ParchmentCard className="pt-10" rotation="md:-rotate-[1deg]">
-              <img
-                src={sunAsset('tape-strip.svg')}
-                alt=""
-                width={80}
-                height={20}
-                loading="lazy"
-                aria-hidden="true"
-                className="absolute -top-2 left-4 rotate-[-8deg] opacity-85"
-              />
-              <div className="flex items-center gap-2 mb-4">
-                <img
-                  src={sunAsset('icon-heart.svg')}
-                  alt=""
-                  width={28}
-                  height={28}
-                  loading="lazy"
-                  aria-hidden="true"
-                />
-                <h3 className="font-caveat text-4xl md:text-5xl text-yellow-700">
-                  Affirmation
-                </h3>
-              </div>
-              <p className="font-poppins text-lg italic text-gray-800 leading-relaxed">
-                I am a <Mark>radiant being of light</Mark>, filled with{' '}
-                <Mark>purpose and power</Mark>.
-              </p>
-              <span className="sr-only">{affirmation}</span>
-            </ParchmentCard>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,6,2,0.96)_0%,rgba(18,9,3,0.88)_20%,rgba(18,9,3,0.45)_42%,rgba(18,9,3,0.08)_72%,rgba(18,9,3,0.01)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,2,0,0.1)_0%,rgba(5,2,0,0.2)_42%,rgba(5,2,0,0.78)_100%)]" />
+          <div className="absolute inset-0 opacity-80 mix-blend-screen">
+            <SolarFieldDoodle className="absolute inset-0" />
           </div>
-        </div>
-      </section>
 
-      {/* ───────────────── Section 6: Footer Strip ───────────────── */}
-      <section
-        className="py-14"
-        style={{
-          background:
-            'linear-gradient(to bottom, #1a0f05 0%, #0a0603 100%)',
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
-            <div className="flex items-center justify-center gap-3">
-              <img
-                src={sunAsset('icon-om.svg')}
-                alt=""
-                width={36}
-                height={36}
-                loading="lazy"
-                aria-hidden="true"
-              />
-              <p className="italic text-yellow-100/90 font-caveat text-2xl">
-                {footer.left}
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <img
-                src={sunAsset('star-accent.svg')}
-                alt=""
-                width={96}
-                height={96}
-                loading="lazy"
-                aria-hidden="true"
-                className="opacity-90"
-              />
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <p className="font-devanagari text-xl text-yellow-100">
-                {footer.devanagari}
-              </p>
-              <div className="flex items-center gap-2">
-                <p className="italic font-caveat text-2xl text-yellow-200">
-                  {footer.translation}
-                </p>
-                <img
-                  src={sunAsset('diya.svg')}
-                  alt=""
-                  width={28}
-                  height={28}
-                  loading="lazy"
-                  aria-hidden="true"
-                />
+          <div className="mx-auto max-w-[1440px] px-4 pb-8 pt-6 sm:px-6 lg:px-10">
+            <div className="relative mt-2 min-h-[34rem] sm:min-h-[39rem] lg:min-h-[44rem] xl:min-h-[48rem]">
+              <div className="relative z-10 max-w-2xl pt-8 sm:pt-12 lg:max-w-[43rem] lg:pt-16">
+                <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#f8d985]/90">
+                  Planetary Wisdom
+                </div>
+                <div className="relative inline-block">
+                  <h1 className="font-sacramento text-[5.2rem] leading-[0.86] text-[#facc15] drop-shadow-[0_0_34px_rgba(250,204,21,0.58)] sm:text-[6.7rem] lg:text-[8.4rem] xl:text-[9.2rem]">
+                    Surya
+                  </h1>
+                  <SunMandala className="absolute -right-14 -top-3 hidden h-12 w-12 text-[#facc15] sm:block" />
+                </div>
+                <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
+                  The Radiant Soul
+                </h2>
+
+                <div className="mt-8 max-w-2xl font-kalam text-[1.75rem] leading-relaxed text-[#fff3d0] sm:text-[2.05rem]">
+                  The source of light, life, and consciousness. Surya illuminates our{' '}
+                  <Highlight>soul</Highlight>, <Highlight>vitality</Highlight> and{' '}
+                  <Highlight>purpose</Highlight>.
+                </div>
+
+                <div className="mt-8 flex items-center gap-5 text-[#facc15]">
+                  <SunMandala className="h-14 w-14" />
+                  <img src={STAR_ACCENT_URL} alt="" className="h-9 w-9 drop-shadow-[0_0_18px_rgba(250,204,21,0.7)]" />
+                </div>
+              </div>
+
+              <div className="pointer-events-none absolute inset-y-0 right-[3%] hidden w-[60%] lg:block">
+                <SolarOrbitDoodle className="absolute inset-0 opacity-95" />
+                <div className="absolute left-[30%] top-[12%] h-[66%] w-[66%] rounded-full bg-[#facc15]/12 blur-3xl" />
+              </div>
+
+              <div className="relative z-10 mt-8 max-w-[21rem] sm:mt-10 sm:max-w-[35rem] lg:absolute lg:bottom-5 lg:left-0 lg:mt-0 lg:max-w-[36rem]">
+                <div className="rounded-[22px] border border-[#facc15]/25 bg-[#2a1a0f]/95 p-3 text-[#fff7dd] shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur">
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:gap-0">
+                    {quickFacts.map((fact, index) => (
+                      <div
+                        key={fact.label}
+                        className={`flex min-h-[94px] flex-col items-center justify-center px-2.5 py-2.5 text-center ${
+                          index < quickFacts.length - 1 ? 'lg:border-r lg:border-[#facc15]/20' : ''
+                        }`}
+                      >
+                        <div className="text-[#facc15]">{iconSvg(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
+                        <div className="mt-1.5 font-caveat text-[1.55rem] leading-none sm:text-[1.8rem]">{fact.label}</div>
+                        <div className="mt-1 font-kalam text-[1rem] leading-tight text-[#fde68a] sm:text-[1.08rem]">{fact.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ───────────────── Section 7: SEO Body (2,000 words) ───────────────── */}
-      <section
-        className="relative py-20 md:py-28 overflow-hidden"
-        style={{
-          backgroundColor: '#FBF7EF',
-          backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
-          backgroundSize: '800px',
-          backgroundRepeat: 'repeat',
-          backgroundBlendMode: 'multiply',
-        }}
-      >
-        {/* Cream wash over the texture so it reads as faint, not busy */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ backgroundColor: 'rgba(251, 247, 239, 0.92)' }}
-          aria-hidden="true"
-        />
-
-        {/* Margin doodles (desktop only) */}
-        <img
-          src={sunAsset('doodle-sun.png')}
-          alt=""
-          aria-hidden="true"
-          className="hidden md:block absolute top-[22%] right-4 w-28 h-28 opacity-10 pointer-events-none"
-        />
-        <img
-          src={sunAsset('doodle-scales.png')}
-          alt=""
-          aria-hidden="true"
-          className="hidden md:block absolute top-[48%] left-4 w-28 h-28 opacity-10 pointer-events-none"
-        />
-        <img
-          src={sunAsset('doodle-lion.png')}
-          alt=""
-          aria-hidden="true"
-          className="hidden md:block absolute top-[70%] right-4 w-32 h-32 opacity-10 pointer-events-none"
-        />
-        <img
-          src={sunAsset('star-accent.svg')}
-          alt=""
-          aria-hidden="true"
-          className="hidden md:block absolute top-[85%] left-6 w-16 h-16 opacity-15 pointer-events-none"
-        />
-
-        <div className="relative max-w-4xl mx-auto px-6 md:px-0 font-inter text-gray-800">
-
-          {/* ── Section 1: Soul ─────────────────────────────────── */}
-          <div className="flex items-center gap-4 mb-3">
-            <IconSparkles size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-              Surya <span className="font-devanagari text-4xl md:text-5xl">(सूर्य)</span>: The Soul of Vedic Astrology
-            </h2>
+        <section
+          className="relative overflow-hidden bg-[#070301] text-white"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(5,2,0,1) 0%, rgba(14,7,2,1) 55%, rgba(26,15,5,1) 100%)',
+          }}
+        >
+          <div className="absolute inset-0 opacity-35 mix-blend-screen">
+            <SolarFieldDoodle className="absolute inset-0" />
           </div>
-          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
 
-          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-            In the classical Vedic tradition, Surya is not merely a celestial body in the sky.
-            He is the luminous centre of the chart, the karaka of the Atma, the{' '}
-            <Mark>soul</Mark> itself. The Brihat Parashara Hora Shastra, the seminal text
-            attributed to <Mark>Sage Parashara</Mark>, names the Sun as the king among the
-            Navagraha, seated on a chariot drawn by seven horses that represent the seven
-            colours of light and the seven major pranic currents in the body.
-          </p>
+          <div className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-5 sm:px-6 lg:px-10">
+            <div className="grid gap-5 xl:grid-cols-[1.18fr_0.82fr]">
+              <ParchmentCard className="min-h-full" rotate="xl:-rotate-[0.5deg]">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="mb-2 flex items-center gap-3">
+                      <span className="font-devanagari text-4xl text-[#2b1a0f]">ॐ</span>
+                      <h3 className="font-caveat text-4xl leading-none text-[#2b1a0f] sm:text-5xl">
+                        Sacred Mantras
+                      </h3>
+                    </div>
+                    <div className="h-[3px] w-56 rounded-full bg-gradient-to-r from-[#991b1b] via-[#f59e0b] to-transparent" />
+                  </div>
+                  <div className="flex items-center gap-4 text-[#9a3412]/80">
+                    <SunMandala className="h-14 w-14" />
+                    <img src={STAR_ACCENT_URL} alt="" className="h-6 w-6" />
+                  </div>
+                </div>
 
-          <div className="my-6 inline-flex items-center gap-3 px-4 py-2 rounded-lg shadow-sm ring-1 ring-yellow-700/20"
+                <div className="mt-6 space-y-10">
+                  {mantras.map((mantra, index) => (
+                    <div key={mantra.title}>
+                      <div className="font-caveat text-[2rem] leading-none text-[#b45309] sm:text-[2.4rem]">
+                        {index + 1}. {mantra.title}
+                      </div>
+
+                      <div className="mt-4 rounded-[14px] border-2 border-[#b91c1c]/80 bg-[#f6ebd6] px-5 py-4 shadow-[inset_0_0_20px_rgba(185,28,28,0.1)]">
+                        <div className="font-devanagari text-[1.7rem] leading-tight text-[#1e120c] sm:text-[2.1rem]">
+                          {mantra.devanagari}
+                        </div>
+                      </div>
+
+                      <div className="mt-5 space-y-3 font-kalam text-xl leading-relaxed text-[#2d1e13]">
+                        <div>
+                          <span className="font-semibold text-[#b45309]">IAST:</span> {mantra.iast}
+                        </div>
+                        <div>
+                          <span className="font-semibold text-[#b45309]">Meaning:</span> {mantra.meaning}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <img
+                  src={FEATHER_URL}
+                  alt=""
+                  className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
+                />
+              </ParchmentCard>
+
+              <div className="grid gap-6">
+                <ParchmentCard rotate="xl:rotate-[0.4deg]">
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-caveat text-4xl leading-none text-[#2b1a0f] sm:text-5xl">
+                      Surya in Our Life
+                    </h3>
+                    <div className="text-[#b45309]">{iconSvg('faq', 'h-12 w-12')}</div>
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    {lifeRows.map((row) => (
+                      <div key={row.label} className="flex gap-3 border-b border-[#745834]/15 pb-3 last:border-b-0 last:pb-0">
+                        <div className="mt-1 text-[#b45309]">{iconSvg(row.icon, 'h-6 w-6')}</div>
+                        <div className="font-kalam text-lg leading-relaxed text-[#2b1b10]">
+                          <span className="font-semibold text-[#9a3412]">{row.label}:</span> {row.value}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="pointer-events-none absolute bottom-3 right-4 text-[#b45309]/45">
+                    <SunMandala className="h-24 w-24" />
+                  </div>
+                </ParchmentCard>
+
+                <ParchmentCard rotate="xl:-rotate-[0.35deg]">
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-caveat text-4xl leading-none text-[#2b1a0f] sm:text-5xl">
+                      Benefits of Surya Mantra
+                    </h3>
+                    <SunMandala className="h-12 w-12 text-[#b45309]" />
+                  </div>
+                  <div className="mt-5 space-y-3">
+                    {benefits.map((benefit) => (
+                      <div key={benefit} className="flex gap-3">
+                        <div className="mt-0.5 text-[#16a34a]">{iconSvg('benefit', 'h-5 w-5')}</div>
+                        <p className="font-kalam text-xl leading-relaxed text-[#29190f]">{benefit}</p>
+                      </div>
+                    ))}
+                  </div>
+                </ParchmentCard>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <ParchmentCard rotate="lg:-rotate-[0.25deg]">
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="font-caveat text-4xl leading-none text-[#2b1a0f] sm:text-5xl">
+                    How to Connect with Surya
+                  </h3>
+                  <div className="text-[#b45309]">{iconSvg('connect', 'h-12 w-12')}</div>
+                </div>
+                <div className="mt-5 grid gap-4 lg:grid-cols-5">
+                  {connectPractices.map((practice, index) => (
+                    <div
+                      key={practice}
+                      className="rounded-2xl border border-[#7b603e]/20 bg-white/25 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]"
+                    >
+                      <div className="mb-3 text-[#b45309]">
+                        {iconSvg(index === 1 ? 'water' : index === 2 ? 'gem' : index === 4 ? 'heart' : 'connect', 'h-6 w-6')}
+                      </div>
+                      <p className="font-kalam text-lg leading-relaxed text-[#2a190f]">{practice}</p>
+                    </div>
+                  ))}
+                </div>
+              </ParchmentCard>
+            </div>
+
+            <div className="mt-6 grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+              <ParchmentCard rotate="xl:-rotate-[0.6deg]">
+                <div className="text-center">
+                  <div className="font-caveat text-4xl leading-none text-[#2b1a0f] sm:text-5xl">
+                    Gemstone: Ruby
+                  </div>
+                  <p className="mt-2 font-kalam text-xl text-[#b45309]">Manikya</p>
+                </div>
+                <div className="relative mx-auto mt-5 max-w-[380px]">
+                  <div className="pointer-events-none absolute inset-0 rounded-full bg-[#facc15]/25 blur-3xl" />
+                  <div className="relative rounded-[24px] border-2 border-[#facc15]/85 bg-[#180802] p-1.5 shadow-[0_14px_34px_rgba(0,0,0,0.3)]">
+                    <img
+                      src={RUBY_RING_URL}
+                      alt="Ruby gemstone ring associated with Surya"
+                      className="mx-auto w-full rounded-[18px] object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="mt-5 text-center font-kalam text-lg leading-relaxed text-[#2a190f]">
+                  Sanctified only after astrological verification.
+                </div>
+              </ParchmentCard>
+
+              <ParchmentCard rotate="xl:rotate-[0.45deg]">
+                <div className="tape-decoration hidden sm:block" />
+                <div className="pointer-events-none absolute inset-0 opacity-15">
+                  <SolarOrbitDoodle className="absolute right-0 top-0 h-full w-full" />
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="font-caveat text-4xl leading-none text-[#2b1a0f] sm:text-5xl">
+                    Affirmation
+                  </h3>
+                  <div className="text-[#b45309]">{iconSvg('heart', 'h-8 w-8')}</div>
+                </div>
+                <div className="mt-8 font-kalam text-[2rem] leading-snug text-[#9a3412] sm:text-[2.4rem]">
+                  “I am a <Highlight>radiant being of light</Highlight>, filled with{' '}
+                  <Highlight>purpose and power</Highlight>.”
+                </div>
+                <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
+                  This affirmation supports confidence without arrogance and power without harshness.
+                </div>
+              </ParchmentCard>
+            </div>
+
+            <div className="mt-8 rounded-[30px] border border-[#facc15]/25 bg-[#140902]/90 px-5 py-6 shadow-[0_20px_70px_rgba(0,0,0,0.42)] backdrop-blur sm:px-8">
+              <div className="grid gap-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+                <div className="flex items-start gap-4">
+                  <div className="mt-1 text-[#facc15]">{iconSvg('quote', 'h-9 w-9')}</div>
+                  <div>
+                    <div className="font-caveat text-3xl text-[#facc15] sm:text-4xl">
+                      Light is the true nature
+                    </div>
+                    <div className="mt-1 font-kalam text-xl text-white/80 sm:text-2xl">
+                      of the soul.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center justify-center gap-3 text-[#facc15]">
+                  <SunMandala className="h-16 w-16" />
+                  <div className="h-px w-28 bg-gradient-to-r from-transparent via-[#facc15]/70 to-transparent" />
+                </div>
+
+                <div className="text-left lg:text-right">
+                  <div className="font-devanagari text-3xl text-[#facc15] sm:text-4xl">तमसो मा ज्योतिर्गमय ।</div>
+                  <div className="mt-2 font-kalam text-xl text-white/80 sm:text-2xl">Lead me from darkness to light.</div>
+                </div>
+              </div>
+
+              <div className="mt-8 border-t border-[#facc15]/15 pt-6">
+                <div className="text-center font-caveat text-3xl text-[#f8d985] sm:text-4xl">
+                  Surya&apos;s 7 Rays of Awakening
+                </div>
+                <div className="mt-6 grid grid-cols-2 gap-4 text-center sm:grid-cols-3 xl:grid-cols-7">
+                  {rays.map((ray) => (
+                    <div key={ray.name} className="rounded-2xl border border-[#facc15]/15 bg-white/5 px-3 py-4">
+                      <div className="text-4xl leading-none text-[#facc15] drop-shadow-[0_0_14px_rgba(250,204,21,0.65)]">
+                        {ray.glyph}
+                      </div>
+                      <div className="mt-3 font-caveat text-2xl leading-none text-[#f8d985]">{ray.name}</div>
+                      <div className="mt-1 text-sm leading-snug text-white/65">{ray.sub}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative overflow-hidden bg-[#f4ecda] py-20 text-[#26180d]">
+          <div
+            className="absolute inset-0 opacity-70"
             style={{
-              backgroundImage: `url(${sunAsset('parchment-texture.webp')})`,
-              backgroundSize: 'cover',
-              backgroundColor: '#fdf6e3',
+              backgroundImage: `linear-gradient(rgba(244,236,218,0.9), rgba(244,236,218,0.9)), url(${PARCHMENT_URL})`,
+              backgroundSize: '780px',
+              backgroundPosition: 'center',
             }}
-          >
-            <IconBook size={20} className="text-yellow-700" aria-hidden="true" />
-            <span className="font-caveat text-xl text-yellow-900">Brihat Parashara Hora Shastra</span>
+          />
+
+          <div className="pointer-events-none absolute right-6 top-24 hidden text-[#b45309]/10 lg:block">
+            <SunMandala className="h-28 w-28" />
           </div>
+          <img src={STAR_ACCENT_URL} alt="" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-20 lg:block" />
 
-          <p className="text-lg leading-relaxed mb-6">
-            Mythologically, Surya is the son of the sage <Mark>Kashyapa</Mark> and the
-            goddess Aditi. His lineage places him within the highest strata of Vedic
-            cosmology, and his epithets, among them Divakara (maker of day), Bhaskara
-            (maker of light), and Savitur (the quickener), hint at the depth with which
-            the tradition has observed him. The Gayatri Mantra itself is addressed to the
-            solar deity Savitur, and its daily recitation is considered a foundational
-            spiritual practice.
-          </p>
+          <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+              <div className="space-y-12">
+                {editorialSections.map((section, index) => (
+                  <div key={section.title}>
+                    <h2 className="font-caveat text-4xl leading-none text-[#9a3412] sm:text-5xl">{section.title}</h2>
+                    <div className="mt-3 h-[3px] w-36 rounded-full bg-gradient-to-r from-[#b91c1c] via-[#f59e0b] to-transparent" />
+                    <div className="mt-6 space-y-4 text-lg leading-8 text-[#332117]">
+                      {section.paragraphs.map((paragraph, paragraphIndex) => (
+                        <p
+                          key={paragraph}
+                          className={paragraphIndex === 0 ? 'drop-cap' : undefined}
+                          style={
+                            paragraphIndex === 0
+                              ? ({ ['--accent-color' as string]: '#f59e0b' } as CSSProperties)
+                              : undefined
+                          }
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
 
-          <p className="text-lg leading-relaxed mb-6">
-            A classical invocation from the Aditya Hridayam captures the mood:
-          </p>
+                    {index === 2 ? (
+                      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                        {houses.map(([number, name, text]) => (
+                          <div key={number} className="rounded-2xl border border-[#b45309]/20 bg-white/45 p-4 shadow-[0_10px_24px_rgba(80,43,16,0.1)]">
+                            <div className="flex items-center gap-3">
+                              <div className="font-caveat text-3xl leading-none text-[#b45309]">{number}</div>
+                              <div className="font-semibold text-[#2b1a0f]">{name}</div>
+                            </div>
+                            <p className="mt-2 text-sm leading-relaxed text-[#3a271a]">{text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
 
-          <blockquote className="my-10 mx-auto max-w-2xl border-l-4 border-yellow-500 pl-8 pr-6 py-6 bg-yellow-50/60 rounded-r-xl shadow-sm">
-            <p className="font-kalam text-xl md:text-2xl italic text-gray-800 mb-2">
-              ādityaṁ sarva bhūtānām antaryāmiṇaṁ param
-            </p>
-            <p className="font-poppins text-base text-gray-600">
-              The Sun, the inner witness of all beings, the supreme one.
-            </p>
-            <cite className="block mt-3 text-sm text-yellow-700 font-semibold uppercase tracking-wide not-italic">
-              Aditya Hridayam
-            </cite>
-          </blockquote>
+                    {index === 5 ? (
+                      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                        {remedies.map(([title, text], remedyIndex) => (
+                          <div key={title} className="flex gap-4 rounded-2xl border border-[#b45309]/20 bg-white/45 p-4 shadow-[0_10px_24px_rgba(80,43,16,0.1)]">
+                            <div className="mt-1 text-[#b45309]">
+                              {iconSvg(remedyIndex === 1 ? 'water' : remedyIndex === 2 ? 'gem' : 'connect', 'h-6 w-6')}
+                            </div>
+                            <div>
+                              <div className="font-caveat text-2xl leading-none text-[#9a3412]">{title}</div>
+                              <p className="mt-2 text-sm leading-relaxed text-[#3a271a]">{text}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
 
-          <p className="text-lg leading-relaxed mb-6">
-            This line reminds the student that the Sun in the chart is less about the
-            outer persona and more about the <Mark>Atmakaraka</Mark>, the soul-witness
-            behind every action.
-          </p>
+                    {index === 7 ? (
+                      <div className="mt-8 rounded-[28px] border border-[#facc15]/50 bg-gradient-to-br from-[#fff7ed] via-[#fef3c7] to-[#fed7aa] p-6 shadow-[0_18px_35px_rgba(146,64,14,0.18)]">
+                        <div className="flex flex-wrap gap-2">
+                          {['M.Tech', 'MBA', 'M.Phil', 'K.N. Rao Institute trained', 'Parashari', 'BNN', 'KP'].map((badge) => (
+                            <span key={badge} className="rounded-full border border-[#f59e0b]/45 bg-white/70 px-3 py-1 text-sm font-semibold text-[#9a3412]">
+                              {badge}
+                            </span>
+                          ))}
+                        </div>
+                        <p className="mt-5 text-lg leading-8 text-[#332117]">
+                          This is the consultation approach behind Soul Infinity: traditional enough to honor the lineage, practical enough to guide real decisions, and careful enough to avoid generic remedies.
+                        </p>
+                      </div>
+                    ) : null}
 
-          <p className="text-lg leading-relaxed mb-6">
-            At Soul Infinity, this luminary is always read with reverence. Before looking
-            at house placement, dignity, or dasha, Saurabh Jain studies the solar planet
-            as the silent observer at the centre of the chart, the fixed point from which
-            the rest of the planetary orchestra can be understood. This contemplative
-            first step, rarely discussed in modern commentary, is the difference between
-            a predictive reading and a reading that helps a client meet themselves.
-          </p>
+                    {index < editorialSections.length - 1 ? <SectionRule /> : null}
+                  </div>
+                ))}
+              </div>
 
-          <SectionDivider />
-
-          {/* ── Section 2: Significations ────────────────────────── */}
-          <div className="flex items-center gap-4 mb-3">
-            <IconStar size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-              Significations of the Sun in a Birth Chart
-            </h2>
-          </div>
-          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
-
-          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-            The Sun represents the <Mark>father</Mark>, the source of{' '}
-            <Mark>authority</Mark>, and the way a person relates to power, hierarchy,
-            and recognition. Karaka for the first house and the tenth, Surya shapes
-            identity, reputation, and the capacity to hold a position of responsibility.
-            A well-placed Sun often correlates with a stable father figure, a clear
-            sense of purpose, and a natural ability to lead without needing to dominate.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            In the physical body, Surya is linked to the bones, the heart, and the eyes.
-            For men, the right eye is read through the Sun; for women, the left.{' '}
-            <Mark>Vitality</Mark>, immunity, and the functioning of the circulatory
-            system are all assessed in part through the strength of Surya in the natal
-            chart and its transits, especially during Solar return periods.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            The Sun is also the karaka for government, institutional structures, and
-            public-facing roles. When Saurabh evaluates a chart for career direction, a
-            strong Sun placed in angular houses often suggests natural alignment with{' '}
-            <Mark>leadership</Mark>, administration, or civil service paths. A weak Sun
-            does not rule out such paths, but points instead to cycles where confidence
-            and timing need careful cultivation.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            In Hindu cultural vocabulary, the Sun is often called{' '}
-            <span className="font-devanagari text-xl">आत्मकारक</span>{' '}
-            (<em>ātmakāraka</em>), the significator of the soul, when it is the planet
-            with the highest degrees in the chart according to Jaimini astrology. This
-            role makes the Sun one of the most studied planets in soul-level analysis,
-            relationship karma, and dharmic direction.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Beyond individual life, Surya also governs the immune system in subtle
-            energetic terms and the spinal column in somatic reading. Classical texts
-            associate a weak or afflicted solar position with pride, arrogance, or
-            conversely a collapsed sense of self, and a dignified placement with
-            generosity, fairness, and a steady commitment to truth.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Another layer that often gets missed in surface readings is the way this
-            luminary interacts with the rising sign. When the ascendant lord happens to
-            be Surya or shares nakshatra with him, identity and life direction tend to
-            braid together, and the person often reports a strong inner compass even in
-            turbulent periods. Reading this interaction is part of every Soul Infinity
-            consultation because it frames the rest of the chart narrative.
-          </p>
-
-          <SectionDivider />
-
-          {/* ── Section 3: 12 Houses ────────────────────────────── */}
-          <div className="flex items-center gap-4 mb-3">
-            <IconHome size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-              Sun in the 12 Houses
-            </h2>
-          </div>
-          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
-
-          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-            A concise overview of the solar luminary’s classical themes house by house.
-            Each placement is modulated by sign, aspect, and dasha, so these summaries
-            are a starting point rather than a final verdict.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-4 my-8">
-            <HouseCard
-              number="1st"
-              name="First house"
-              text="Strong sense of self, leadership inclination, visible confidence. Tendency toward the right eye being dominant."
-            />
-            <HouseCard
-              number="2nd"
-              name="Second house"
-              text="Authority in family matters, speech that carries weight. Wealth often tied to government or institutional work."
-            />
-            <HouseCard
-              number="3rd"
-              name="Third house"
-              text="Courage, initiative, assertive communication. Favours independent ventures and younger-sibling dynamics."
-            />
-            <HouseCard
-              number="4th"
-              name="Fourth house"
-              text="Complex relationship with mother or home-base, intense inner drive for emotional sovereignty."
-            />
-            <HouseCard
-              number="5th"
-              name="Fifth house"
-              text="Creative authority, teaching talent, classical scholarship. Strong bond with first-born child."
-            />
-            <HouseCard
-              number="6th"
-              name="Sixth house"
-              text="Fighter placement, capacity to overcome enemies and illness. Can indicate father-related service themes."
-            />
-            <HouseCard
-              number="7th"
-              name="Seventh house"
-              text="As marriage karaka, this luminary raises independence in partnerships. Partner with a strong public profile."
-            />
-            <HouseCard
-              number="8th"
-              name="Eighth house"
-              text="Deep soul research, interest in the occult. Father’s longevity and karmic inheritance are themes."
-            />
-            <HouseCard
-              number="9th"
-              name="Ninth house"
-              text="Classical favourable placement for dharma, guru connection, long-distance travel, and legal standing."
-            />
-            <HouseCard
-              number="10th"
-              name="Tenth house"
-              text="Digbala placement. One of the strongest positions, giving career visibility and institutional authority."
-            />
-            <HouseCard
-              number="11th"
-              name="Eleventh house"
-              text="Gains through leaders, mentors, and elder brothers. Network of powerful associations."
-            />
-            <HouseCard
-              number="12th"
-              name="Twelfth house"
-              text="Inner spiritual focus, foreign residence, work behind the scenes. Ego dissolution as a life theme."
-            />
-          </div>
-
-          <SectionDivider />
-
-          {/* ── Section 4: Dignities ─────────────────────────────── */}
-          <div className="flex items-center gap-4 mb-3">
-            <IconCrown size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-              Sun’s Dignities: Exaltation, Debilitation, and Relationships
-            </h2>
-          </div>
-          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
-
-          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-            Surya is <Mark>exalted in Aries</Mark>, with peak exaltation at 10 degrees.
-            In Leo, the Sun occupies its own sign and is in <Mark>Mooltrikona</Mark> from
-            0 to 20 degrees. The debilitation sign is{' '}
-            <Mark>debilitated in Libra</Mark>, with deepest debilitation at 10 degrees.
-            These dignity points are the backbone of classical strength assessment and
-            inform every remedy recommendation.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            In Parashari relationship tables, this luminary counts Moon, Mars, and
-            Jupiter as friends. Venus and Saturn are treated as enemies because of
-            their opposing cosmological character, and Mercury is neutral. The shadow
-            nodes Rahu and Ketu carry a special, often antagonistic relationship with
-            the solar principle, and an eclipse-like conjunction in the birth chart
-            (Grahan Yoga) is read with particular care. The timing of such yogas
-            relative to Vimshottari periods often surfaces themes of authority-testing
-            and identity reinvention, which is why Saurabh pays particular attention to
-            these configurations before framing any remedy sequence.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            When Saurabh evaluates the Sun’s strength, he looks beyond dignity alone.
-            Shadbala, Ashtakavarga points, nakshatra placement, and Vargottama status
-            all feed into a layered reading. A technically debilitated Sun can still
-            yield powerful results through Neecha Bhanga Raja Yoga, while a technically
-            exalted Sun can underperform if surrounded by malefic aspects.
-          </p>
-
-          <SectionDivider />
-
-          {/* ── Section 5: Mahadasha ─────────────────────────────── */}
-          <div className="flex items-center gap-4 mb-3">
-            <IconClock size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-              <Mark>Surya Mahadasha</Mark>: The Six-Year Period
-            </h2>
-          </div>
-          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
-
-          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-            In the Vimshottari Dasha system, Surya Mahadasha runs for six years. The
-            themes that rise during this period often relate to authority, recognition,
-            father’s health, career positioning, and the individual’s relationship with
-            their own ego. Saurabh frequently observes clients experiencing a
-            crystallising sense of purpose during these years, sometimes accompanied by
-            a public milestone or a pivotal shift in professional standing.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Results depend entirely on the natal placement. A luminary dignified in Leo,
-            Aries, or an angular house can bring promotions, recognition, and a
-            consolidation of personal power. A solar placement in Libra, debilitated and
-            under affliction, may surface ego-wound themes, health events related to the
-            heart or eyes, or challenges with authority figures. The sub-periods
-            (antardasha) within this six-year cycle refine these themes month by month.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Because Surya rules the immune system and vitality in Ayurvedic and
-            astrological terms, Mahadasha outcomes often manifest physically as well as
-            circumstantially. Saurabh therefore recommends a wellbeing baseline at the
-            start of Surya dasha, and gentle lifestyle disciplines that can support the
-            body through the period’s intensity.
-          </p>
-
-          <SectionDivider />
-
-          {/* ── Section 6: Remedies ──────────────────────────────── */}
-          <div className="flex items-center gap-4 mb-3">
-            <IconLeaf size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-              Traditional Remedies for a Weak or Afflicted Sun
-            </h2>
-          </div>
-          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
-
-          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-            Classical Vedic remedies for this luminary are grounded in lifestyle,
-            mantra, and charity. They can support a well-placed but weak position, and
-            they work best when practised consistently over a dasha-appropriate window,
-            not as quick fixes. None of these carry medical or financial guarantees and
-            should be adopted with clear intention rather than expectation.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6 my-10">
-            <RemedyCard
-              icon={<IconSun size={24} className="text-yellow-700" />}
-              title={<>Chant at Sunrise</>}
-              text={
-                <>
-                  <Mark>Chant the Surya mantra at sunrise</Mark>, facing East.
-                </>
-              }
-            />
-            <RemedyCard
-              icon={<IconDroplet size={24} className="text-yellow-700" />}
-              title={<>Offer Arghya</>}
-              text={
-                <>
-                  Offer Arghya, a stream of water mixed with red flowers, to the rising
-                  Sun each morning.
-                </>
-              }
-            />
-            <RemedyCard
-              icon={<IconDiamond size={24} className="text-yellow-700" />}
-              title={<>Wear Ruby</>}
-              text={
-                <>
-                  Wear Ruby (Manikya) set in gold on the ring finger of the right hand,
-                  only after <Mark>astrological verification</Mark>.
-                </>
-              }
-            />
-            <RemedyCard
-              icon={<IconYoga size={24} className="text-yellow-700" />}
-              title={<>Surya Namaskar</>}
-              text={
-                <>
-                  Practise <Mark>Surya Namaskar</Mark> twelve rounds daily as a sadhana.
-                </>
-              }
-            />
-            <RemedyCard
-              icon={<IconHeart size={24} className="text-yellow-700" />}
-              title={<>Honour the Father</>}
-              text={
-                <>
-                  Honour the father and father-figures. In the classical view, this
-                  alone can shift the Sun’s expression significantly.
-                </>
-              }
-            />
-            <RemedyCard
-              icon={<IconCalendar size={24} className="text-yellow-700" />}
-              title={<>Sunday Fasts</>}
-              text={
-                <>
-                  Observe Sunday fasts with appropriate discipline, breaking them before
-                  sunset with simple food.
-                </>
-              }
-            />
-            <RemedyCard
-              icon={<IconGift size={24} className="text-yellow-700" />}
-              title={<>Donate Traditional Offerings</>}
-              text={
-                <>
-                  Donate wheat, jaggery, or copper on Sundays, traditionally before
-                  noon.
-                </>
-              }
-            />
-          </div>
-
-          <p className="text-lg leading-relaxed mb-6">
-            The tradition is careful to note that gemstone recommendations must come
-            from a qualified astrologer after chart analysis. Ruby can support a
-            placement that is functionally benefic but weak in strength. It can also
-            amplify the difficulties of a karmically difficult Sun, which is why Soul
-            Infinity never advises gemstone wearing without a prior consultation.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Mantra practice is the most universally safe remedy, and the two mantras
-            above (the Navagraha Stotra verse and the short Om Sūryāya namaḥ) are the
-            classical entry points. A suggested starting cadence is 108 repetitions at
-            sunrise, continuing for at least 40 days to allow the vibration to settle
-            into daily life.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Lifestyle adjustments matter equally. Waking near sunrise, stepping into
-            early morning sunlight for a few minutes, and structuring the day around a
-            clear dharmic intention all feed the solar current in the chart. These
-            small disciplines can sometimes do more than elaborate rituals.
-          </p>
-
-          <SectionDivider />
-
-          {/* ── Section 7: Modern Life ───────────────────────────── */}
-          <div className="flex items-center gap-4 mb-3">
-            <IconHeartHandshake size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-            <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-              Surya in Modern Life
-            </h2>
-          </div>
-          <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-8" />
-
-          <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-            The ancient symbolism of Surya translates directly into contemporary themes.{' '}
-            <Mark>Self-confidence</Mark>, <Mark>purpose</Mark>-finding, and the capacity
-            for <Mark>leadership</Mark> are all expressions of a healthy solar
-            principle. In a culture of distraction, the Sun represents the ability to
-            hold a clear inner centre and act from it with steady integrity.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Modern clients often come to Soul Infinity asking about career direction,
-            visibility, and relationships with authority. These are textbook Sun
-            questions. The answers almost always involve building a stable daily rhythm,
-            protecting vitality, and aligning work with a deeper sense of dharma rather
-            than chasing external validation.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Practical modern expressions of Surya sadhana include a consistent morning
-            routine that greets sunrise, time offline to protect focus, and periodic
-            retreats that allow the soul-current to reset. None of this is mystical in
-            the theatrical sense. It is simply the ancient wisdom applied to the
-            architecture of a twenty-first-century life.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            A useful clarifier here: modern psychology talks about self-actualisation
-            and inner locus of control, both of which map cleanly onto a healthy solar
-            principle in a chart. When clients describe feeling scattered, overextended,
-            or vaguely purposeless, the astrological diagnosis often lands on an
-            under-supported luminary that can be strengthened through lifestyle rather
-            than elaborate ritual. This reframe helps secular-minded clients engage with
-            remedies without feeling they must abandon their rational outlook.
-          </p>
-
-          <SectionDivider />
-
-          {/* ── Section 8: Saurabh Jain (gradient card) ──────────── */}
-          <div className="my-8 rounded-2xl border border-yellow-300 bg-gradient-to-br from-yellow-50 to-orange-50 p-8 md:p-10 shadow-lg">
-            <div className="flex items-center gap-4 mb-5">
-              <IconUserCircle size={40} className="text-yellow-600 flex-shrink-0" aria-hidden="true" />
-              <h2 className="font-caveat text-5xl md:text-6xl text-yellow-700 leading-none">
-                How Saurabh Jain Reads Surya in Your Chart
-              </h2>
+              <EditorialSidebar />
             </div>
-            <div className="h-0.5 w-32 bg-gradient-to-r from-yellow-500 via-orange-400 to-transparent mb-6" />
+          </div>
+        </section>
 
-            <div className="flex flex-wrap gap-2 mb-6">
-              <CredentialBadge>M.Tech</CredentialBadge>
-              <CredentialBadge>MBA</CredentialBadge>
-              <CredentialBadge>M.Phil</CredentialBadge>
-              <CredentialBadge>K.N. Rao Institute trained</CredentialBadge>
+        <section className="bg-[#f1e7d1] py-20 text-[#26180d]">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 text-center">
+              <div className="font-caveat text-5xl leading-none text-[#9a3412] sm:text-6xl">Frequently Asked Questions</div>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-xl leading-relaxed text-[#3a271a]">
+                Common questions about Surya, Sun strength, Ruby, remedies, and how solar energy works in a Vedic chart.
+              </p>
             </div>
 
-            <p className="text-lg leading-relaxed mb-6 first-letter:font-caveat first-letter:text-6xl first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-yellow-700 first-letter:leading-none">
-              Saurabh Jain brings a multi-system approach to solar analysis. Trained at
-              the <Mark>K.N. Rao Institute</Mark> and holding an M.Tech, MBA, and
-              M.Phil, he combines classical <Mark>Parashari Jyotish</Mark> with{' '}
-              <Mark>BNN</Mark> and <Mark>KP</Mark> Astrology to triangulate the Sun’s
-              role in a chart. This layered method surfaces patterns that a
-              single-system reading can miss, from dasha-timed recognition events to
-              subtle health signals.
-            </p>
-            <p className="text-lg leading-relaxed mb-6">
-              A personalised Surya analysis includes a review of house and sign
-              placement, Shadbala and Ashtakavarga strength, nakshatra lord behaviour,
-              and the classical timing tools that indicate when the solar promise is
-              set to activate. Clients leave with concrete lifestyle, mantra, and
-              remedial guidance, and where appropriate, a considered gemstone
-              recommendation. Saurabh also walks through the running Vimshottari and
-              Yogini dashas so that the near-term unfolding is mapped out clearly, not
-              left abstract. Where relevant, he cross-checks the reading against a
-              Bhrigu Nandi Nadi axis or a KP sub-lord query, which lets a single
-              question receive a consistent answer across three classical lenses. The
-              practice is less about predicting a fixed future and more about showing
-              the client the cycles they are already in, so decisions land with more
-              clarity.
-            </p>
-
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
-            >
-              Book a Surya reading
-              <IconArrowRight size={18} />
-            </Link>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    key={faq.question}
+                    className="overflow-hidden rounded-[24px] border border-[#8c6e47]/25 shadow-[0_15px_30px_rgba(64,40,18,0.12)]"
+                    style={cardTextureStyle}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left sm:px-6"
+                      aria-expanded={isOpen}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 text-[#b45309]">{iconSvg('faq', 'h-6 w-6')}</div>
+                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</div>
+                      </div>
+                      <div className="text-[#b45309]">
+                        <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">
+                          <path d="M12 5v14M5 12h14" />
+                        </svg>
+                      </div>
+                    </button>
+                    {isOpen ? (
+                      <div className="px-5 pb-5 sm:px-6">
+                        <div className="border-t border-[#8c6e47]/15 pt-4 font-kalam text-lg leading-relaxed text-[#38251a]">
+                          {faq.answer}
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* ───────────────── Section 8: FAQ ───────────────── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading text-3xl text-gray-900 mb-8 text-center">
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-4 font-inter">
-            {faqs.map((faq) => (
-              <details
-                key={faq.question}
-                className="group bg-white border border-gray-200 rounded-xl p-5"
-              >
-                <summary className="cursor-pointer font-semibold text-gray-900">
-                  {faq.question}
-                </summary>
-                <p className="mt-3 text-gray-700 leading-relaxed">{faq.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ───────────────── Section 9: Related + CTA ───────────────── */}
-      <section className="py-16 bg-surface">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading text-3xl text-gray-900 mb-8 text-center">
-            Explore Related Practices
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {related.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className="block bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-primary-300 transition-all"
-              >
-                <h3 className="font-heading text-lg text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.blurb}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="py-16"
-        style={{
-          background: 'linear-gradient(to bottom, #1a0f05, #000000)',
-        }}
-      >
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-caveat text-4xl md:text-5xl text-yellow-400">
-            Want a personalised Surya analysis in your birth chart?
-          </h2>
-          <p className="mt-4 font-poppins text-lg text-white/85">
-            Connect with Saurabh Jain, K.N. Rao Institute trained astrologer, for a
-            detailed reading.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://wa.me/919079053840"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-colors"
-            >
-              <MessageCircle className="w-5 h-5" />
-              Chat on WhatsApp
-            </a>
-            <a
-              href="tel:+919079053840"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-3 rounded-lg ring-1 ring-white/30 transition-colors"
-            >
-              <Phone className="w-5 h-5" />
-              Call +91 90790 53840
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 }
