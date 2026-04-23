@@ -16,6 +16,11 @@
       "permanent": true
     },
     {
+      "source": "/planets/surya",
+      "destination": "/planets/sun",
+      "permanent": true
+    },
+    {
       "source": "/planets/chandra",
       "destination": "/planets/moon",
       "permanent": true

@@ -40,6 +40,7 @@ export const ROUTES = [
   '/panchang',
   '/planets',
   '/planets/moon',
+  '/planets/sun',
   '/zodiac',
   '/dosha',
   '/contact',

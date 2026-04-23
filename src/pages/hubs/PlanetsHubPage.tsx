@@ -15,7 +15,7 @@ interface PlanetEntry {
 }
 
 const PLANETS: readonly PlanetEntry[] = [
-  { english: 'Sun', sanskritName: 'Surya', devanagari: 'सूर्य' },
+  { english: 'Sun', sanskritName: 'Surya', devanagari: 'सूर्य', href: '/planets/sun', accent: 'yellow' },
   { english: 'Moon', sanskritName: 'Chandra', devanagari: 'चन्द्र', href: '/planets/moon', accent: 'blue' },
   { english: 'Mars', sanskritName: 'Mangal', devanagari: 'मङ्गल' },
   { english: 'Mercury', sanskritName: 'Budh', devanagari: 'बुध' },

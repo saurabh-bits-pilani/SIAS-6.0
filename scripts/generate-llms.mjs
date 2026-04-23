@@ -49,6 +49,7 @@ const DESCRIPTIONS = {
   '/blog/mantra': 'Navagraha mantras — meanings, benefits, and chanting methodology.',
   '/panchang': 'Today’s Panchang — Tithi, Nakshatra, Yoga, Karana, and muhurat timings.',
   '/planets': 'Planets — the nine planets (Navagraha) in Vedic astrology: Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu. Learn each planet’s significance, signs ruled, exaltation, debilitation, and remedies.',
+  '/planets/sun': 'Surya (Sun) — karaka of the soul, authority, and father. Mantras, 12-house significations, exaltation in Aries, debilitation in Libra, Ruby (Manikya) gemstone guidance, and six-year Mahadasha themes.',
   '/planets/moon': 'Chandra (Moon) — karaka of the mind, emotions, and mother. Mantras, 12-house significations, exaltation in Taurus, debilitation in Scorpio, Pearl (Moti) gemstone guidance, and ten-year Mahadasha themes.',
   '/zodiac': 'Zodiac Signs — the twelve zodiac signs (Rashi) in Vedic astrology: Aries through Pisces. Explore each sign’s ruling planet, element, nature, character traits, and life themes.',
   '/dosha': 'Doshas — common doshas in Vedic astrology: Mangal Dosha, Kaal Sarp Dosh, Sade Sati, Pitru Dosh, and Nadi Dosh. Understand what they mean, how they affect life, and their traditional remedies.',
