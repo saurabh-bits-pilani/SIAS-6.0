@@ -39,6 +39,7 @@ export const ROUTES = [
   '/gallery/pitra-dosh',
   '/panchang',
   '/planets',
+  '/planets/mercury',
   '/planets/moon',
   '/planets/sun',
   '/zodiac',

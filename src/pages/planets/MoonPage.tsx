@@ -26,6 +26,8 @@ const DIYA_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/diya.svg';
 const FEATHER_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/feather-quill.png';
+const PAGE_PARCHMENT_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/bg-parchment-texture.webp';
 
 const PAGE_TITLE =
   'Chandra (Moon) in Vedic Astrology: Meaning, Mantras, Remedies | Soul Infinity';
@@ -34,6 +36,12 @@ const PAGE_DESCRIPTION =
 const PAGE_KEYWORDS =
   'chandra, moon in vedic astrology, chandra mantra, moon remedies, pearl gemstone, janma rashi, soma, moon in birth chart, soul infinity';
 const PAGE_URL = `${SITE_ORIGIN}/planets/moon`;
+
+const pageShellStyle = {
+  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+};
 
 type IconName =
   | 'planet'
@@ -528,12 +536,12 @@ export default function MoonPage() {
         schemas={schemas}
       />
 
-      <div className="bg-[#050b18] text-white">
+      <div className="min-h-screen text-[#2b1a0f]" style={pageShellStyle}>
         <div className="px-4 pt-5 sm:px-6 lg:px-10">
           <Link
             to="/planets"
             aria-label="Back to Planets hub"
-            className="inline-flex font-caveat text-lg text-[#eed49a]/90 transition hover:text-[#f8d985] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#eed49a]"
+            className="inline-flex font-caveat text-lg text-[#1d4ed8] transition hover:text-[#1e40af] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#93c5fd]"
           >
             ← Back to Planets
           </Link>
@@ -571,7 +579,7 @@ export default function MoonPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#eed49a]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-sacramento text-[4.8rem] leading-[0.88] text-[#c5d8ff] drop-shadow-[0_0_34px_rgba(166,194,255,0.38)] sm:text-[6.1rem] lg:text-[7.6rem] xl:text-[8.4rem]">
+                <h1 className="font-caveat text-[5.8rem] leading-[0.88] text-[#c5d8ff] drop-shadow-[0_0_34px_rgba(166,194,255,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
                   Chandra
                 </h1>
                 <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
@@ -628,10 +636,10 @@ export default function MoonPage() {
         </section>
 
         <section
-          className="relative overflow-hidden bg-[#071127] text-white"
+          className="relative overflow-hidden"
           style={{
             background:
-              'linear-gradient(180deg, rgba(7,17,39,1) 0%, rgba(5,11,24,1) 100%)',
+              'linear-gradient(rgba(245,230,200,0.78), rgba(245,230,200,0.9))',
           }}
         >
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">

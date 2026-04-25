@@ -175,6 +175,7 @@ const PLANETS: PlanetConfig[] = [
       'border-lime-400/70 shadow-[0_0_30px_rgba(34,197,94,0.24)] hover:shadow-[0_0_36px_rgba(34,197,94,0.4)]',
     symbolClass: 'text-lime-300',
     symbolStroke: '#86efac',
+    href: '/planets/mercury',
     heroPosition: { top: '42%', right: '14%', width: 'auto' },
     orbit: {
       radius: 135,
