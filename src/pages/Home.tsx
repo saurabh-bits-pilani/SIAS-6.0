@@ -111,7 +111,7 @@ const Home = () => {
                   height="1080"
                   decoding={index === 0 ? 'sync' : 'async'}
                   loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchPriority={index === 0 ? 'high' : 'low'}
+                  fetchpriority={index === 0 ? 'high' : 'low'}
                   className="w-full h-full object-cover"
                 />
               </motion.div>

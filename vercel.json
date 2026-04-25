@@ -24,6 +24,11 @@
       "source": "/planets/chandra",
       "destination": "/planets/moon",
       "permanent": true
+    },
+    {
+      "source": "/planets/budha",
+      "destination": "/planets/mercury",
+      "permanent": true
     }
   ],
   "headers": [

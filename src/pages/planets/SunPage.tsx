@@ -18,6 +18,8 @@ const PARCHMENT_URL = `${SUN_ASSET_BASE}/parchment-texture.webp`;
 const STAR_ACCENT_URL = `${SUN_ASSET_BASE}/star-accent.svg`;
 const DIYA_URL = `${SUN_ASSET_BASE}/diya.svg`;
 const FEATHER_URL = `${SUN_ASSET_BASE}/feather-quill.png`;
+const PAGE_PARCHMENT_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/bg-parchment-texture.webp';
 
 const PAGE_TITLE =
   'Surya (Sun) in Vedic Astrology: Meaning, Mantras, Remedies | Soul Infinity';
@@ -26,6 +28,12 @@ const PAGE_DESCRIPTION =
 const PAGE_KEYWORDS =
   'surya, sun in vedic astrology, sun mantra, navagraha, ruby gemstone, manikya, sun remedies, leo ruler, aries exaltation, soul infinity';
 const PAGE_URL = `${SITE_ORIGIN}/planets/sun`;
+
+const pageShellStyle = {
+  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+};
 
 type IconName =
   | 'planet'
@@ -591,12 +599,12 @@ export default function SunPage() {
         schemas={schemas}
       />
 
-      <div className="bg-[#050200] text-white">
+      <div className="min-h-screen text-[#2b1a0f]" style={pageShellStyle}>
         <div className="px-4 pt-5 sm:px-6 lg:px-10">
           <Link
             to="/planets"
             aria-label="Back to Planets hub"
-            className="inline-flex font-caveat text-lg text-[#f8d985]/90 transition hover:text-[#facc15] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#facc15]"
+            className="inline-flex font-caveat text-lg text-[#9a3412] transition hover:text-[#b45309] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f59e0b]"
           >
             ← Back to Planets
           </Link>
@@ -626,7 +634,7 @@ export default function SunPage() {
                   Planetary Wisdom
                 </div>
                 <div className="relative inline-block">
-                  <h1 className="font-sacramento text-[5.2rem] leading-[0.86] text-[#facc15] drop-shadow-[0_0_34px_rgba(250,204,21,0.58)] sm:text-[6.7rem] lg:text-[8.4rem] xl:text-[9.2rem]">
+                  <h1 className="font-caveat text-[6rem] leading-[0.86] text-[#facc15] drop-shadow-[0_0_34px_rgba(250,204,21,0.58)] sm:text-[7.6rem] lg:text-[9rem] xl:text-[9.8rem]">
                     Surya
                   </h1>
                   <SunMandala className="absolute -right-14 -top-3 hidden h-12 w-12 text-[#facc15] sm:block" />
@@ -675,13 +683,13 @@ export default function SunPage() {
         </section>
 
         <section
-          className="relative overflow-hidden bg-[#070301] text-white"
+          className="relative overflow-hidden"
           style={{
             background:
-              'linear-gradient(180deg, rgba(5,2,0,1) 0%, rgba(14,7,2,1) 55%, rgba(26,15,5,1) 100%)',
+              'linear-gradient(rgba(245,230,200,0.78), rgba(245,230,200,0.9))',
           }}
         >
-          <div className="absolute inset-0 opacity-35 mix-blend-screen">
+          <div className="absolute inset-0 opacity-15 mix-blend-multiply">
             <SolarFieldDoodle className="absolute inset-0" />
           </div>
 

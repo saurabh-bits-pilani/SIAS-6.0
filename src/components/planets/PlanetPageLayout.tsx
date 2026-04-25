@@ -199,7 +199,7 @@ export interface PlanetMeta {
 }
 
 export interface Theme {
-  /** Tailwind color family for hero title + accents: "yellow" | "blue" | "red" | etc. */
+  /** Tailwind color family for hero title + accents: "yellow" | "blue" | "red" | etc. Hero titles now use Caveat, Sacramento is reserved for special cosmic moments only. */
   accentFamily: string;
   /** Accent color hex for the gradient under section dividers. */
   accentHex: string;
@@ -573,7 +573,7 @@ export default function PlanetPageLayout(props: PlanetPageData) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="relative">
               <h1
-                className={`font-sacramento text-7xl md:text-9xl leading-none ${theme.heroTitleClass}`}
+                className={`font-caveat text-7xl md:text-9xl leading-none ${theme.heroTitleClass}`}
                 style={{ textShadow: theme.heroTitleShadow }}
               >
                 {name.english === 'Moon' || name.english === 'Sun'
@@ -616,7 +616,7 @@ export default function PlanetPageLayout(props: PlanetPageData) {
                 width={800}
                 height={450}
                 loading="eager"
-                fetchPriority="high"
+                fetchpriority="high"
                 className={`w-full h-auto rounded-xl shadow-2xl ring-1 ${theme.heroImageRingClass}`}
               />
               <div
@@ -948,7 +948,7 @@ export default function PlanetPageLayout(props: PlanetPageData) {
               <h3 className={`font-caveat text-3xl mt-6 ${theme.footerCaptionClass}`}>
                 Gemstone:
               </h3>
-              <h4 className="font-sacramento text-6xl md:text-7xl text-white mt-1">
+              <h4 className="font-caveat text-6xl md:text-7xl text-white mt-1">
                 {gemstone.name}
               </h4>
               <p className="font-poppins text-sm text-white/60 mt-1">
