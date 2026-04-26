@@ -1,5 +1,14 @@
 import { useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  AlertCircle,
+  Briefcase,
+  Check,
+  Compass,
+  Crown,
+  Sun as SunIcon,
+  Users,
+} from 'lucide-react';
 import SEOHead from '../../components/SEOHead';
 import {
   getArticleSchema,
@@ -546,6 +555,267 @@ function EditorialSidebar() {
         <div className="mt-5 font-devanagari text-3xl text-[#facc15]">तमसो मा ज्योतिर्गमय ।</div>
         <div className="mt-2 font-kalam text-xl text-white/80">Lead me from darkness to light.</div>
       </div>
+
+      <ParchmentCard rotate="lg:rotate-[0.4deg]">
+        <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">Quick Facts</h3>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#3b2414]">
+          <div><span className="font-semibold text-[#b45309]">Element:</span> Fire (Agni)</div>
+          <div><span className="font-semibold text-[#b45309]">Day:</span> Sunday (Ravivara)</div>
+          <div><span className="font-semibold text-[#b45309]">Direction:</span> East</div>
+          <div><span className="font-semibold text-[#b45309]">Mahadasha:</span> 6 years</div>
+          <div><span className="font-semibold text-[#b45309]">Friends:</span> Moon, Mars, Jupiter</div>
+          <div><span className="font-semibold text-[#b45309]">Enemies:</span> Venus, Saturn</div>
+          <div><span className="font-semibold text-[#b45309]">Neutral:</span> Mercury</div>
+        </div>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:-rotate-[0.3deg]">
+        <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">Did You Know?</h3>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <ul className="mt-4 space-y-3 font-kalam text-base leading-snug text-[#3b2414]">
+          <li>Surya is the only planet that does not retrograde, symbolizing the unwavering soul.</li>
+          <li>The Sun&apos;s seven horses represent the seven days of the week and the seven chakras of the body.</li>
+          <li>Surya is worshipped at sunrise during the Sandhya ritual, a daily practice in many Indian households.</li>
+          <li>The Surya Namaskar yoga sequence is a 12-posture salutation, with each posture corresponding to a Sun mantra.</li>
+        </ul>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:rotate-[0.35deg]">
+        <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">Mantra at a Glance</h3>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <p className="mt-3 font-kalam text-base leading-snug text-[#3b2414]">
+          Surya Navagraha Stotra is shown in the Sacred Mantras section above.
+        </p>
+        <div className="mt-3 space-y-2 font-kalam text-base leading-snug text-[#3b2414]">
+          <div><span className="font-semibold text-[#b45309]">Day:</span> Sunday</div>
+          <div><span className="font-semibold text-[#b45309]">Direction:</span> Face East</div>
+          <div><span className="font-semibold text-[#b45309]">Best time:</span> Sunrise (Sandhya)</div>
+          <div><span className="font-semibold text-[#b45309]">Repetitions:</span> 108 with a rosary</div>
+          <div className="pt-1 italic text-[#3b2414]/80">
+            Keynote: Tamo&apos;riṁ sarvapāpaghnaṁ, remover of darkness and sin.
+          </div>
+        </div>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:-rotate-[0.4deg]">
+        <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">Notable Influences</h3>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <p className="mt-2 font-kalam text-base leading-snug text-[#3b2414]">
+          Surya governs:
+        </p>
+        <ul className="mt-2 space-y-1.5 font-kalam text-base leading-snug text-[#3b2414]">
+          <li>Leaders, kings, executives</li>
+          <li>Government officials and civil servants</li>
+          <li>Doctors and physicians</li>
+          <li>Politicians and statesmen</li>
+          <li>Goldsmiths and luxury trade</li>
+          <li>Authority figures and patriarchs</li>
+          <li>Heart specialists and ophthalmologists</li>
+          <li>Heads of family and dynasty</li>
+        </ul>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:rotate-[0.25deg]">
+        <div className="font-caveat text-xl italic leading-tight text-[#b45309]/80">
+          A line worth carrying
+        </div>
+        <blockquote className="mt-3 font-caveat text-[2rem] leading-tight text-[#1a110a] sm:text-[2.3rem]">
+          When Surya is honored, a person does not need constant validation.
+        </blockquote>
+        <div className="mt-3 font-kalam text-sm leading-relaxed text-[#3b2414]/70">
+          Drawn from the body above, this is the heart of what Surya invites in any chart.
+        </div>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:-rotate-[0.35deg]">
+        <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">Continue Your Journey</h3>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <p className="mt-2 font-kalam text-base leading-snug text-[#3b2414]">
+          Explore the other Navagraha pillars.
+        </p>
+        <ul className="mt-3 space-y-2 font-kalam text-lg leading-snug">
+          <li>
+            <Link to="/planets/moon" className="text-[#b45309] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#facc15]">
+              Chandra (Moon) →
+            </Link>
+          </li>
+          <li>
+            <Link to="/planets/mercury" className="text-[#b45309] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#facc15]">
+              Budh (Mercury) →
+            </Link>
+          </li>
+          <li>
+            <Link to="/planets" className="text-[#b45309] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#facc15]">
+              Explore all 9 Navagraha planets →
+            </Link>
+          </li>
+        </ul>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:-rotate-[0.4deg]">
+        <div className="flex items-center gap-2">
+          <Users className="h-5 w-5 text-[#b45309]" aria-hidden="true" />
+          <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">
+            Surya&apos;s Friends and Enemies
+          </h3>
+        </div>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <div className="font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#b45309]">
+              Friendly
+            </div>
+            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
+              <li>Chandra (Moon)</li>
+              <li>Mangala (Mars)</li>
+              <li>Guru (Jupiter)</li>
+            </ul>
+            <div className="mt-3 font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#7c1d1d]">
+              Enemy
+            </div>
+            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
+              <li>Shukra (Venus)</li>
+              <li>Shani (Saturn)</li>
+            </ul>
+          </div>
+          <div>
+            <div className="font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#3b2414]/70">
+              Neutral
+            </div>
+            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
+              <li>Budh (Mercury)</li>
+            </ul>
+            <div className="mt-3 font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#3b2414]/70">
+              Eclipse-makers
+            </div>
+            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
+              <li>Rahu and Ketu can shadow Surya</li>
+            </ul>
+          </div>
+        </div>
+        <p className="mt-4 font-caveat text-lg leading-snug text-[#3b2414]/80">
+          These relationships shape how Surya behaves in conjunction with other planets.
+        </p>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:rotate-[0.3deg]">
+        <div className="flex items-center gap-2">
+          <Crown className="h-5 w-5 text-[#b45309]" aria-hidden="true" />
+          <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">
+            Sun&apos;s Dignity at a Glance
+          </h3>
+        </div>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <div className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#3b2414]">
+          <div><span className="font-semibold text-[#b45309]">Exalted in:</span> Aries (Mesha), at 10 degrees per Parashara</div>
+          <div><span className="font-semibold text-[#b45309]">Own sign:</span> Leo (Simha)</div>
+          <div><span className="font-semibold text-[#b45309]">Debilitated in:</span> Libra (Tula)</div>
+          <div><span className="font-semibold text-[#b45309]">Mooltrikona:</span> Leo, 0 to 20 degrees</div>
+          <div><span className="font-semibold text-[#b45309]">Direction:</span> East</div>
+          <div><span className="font-semibold text-[#b45309]">Element:</span> Fire (Agni)</div>
+        </div>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:-rotate-[0.25deg]">
+        <div className="flex items-center gap-2">
+          <SunIcon className="h-5 w-5 text-[#b45309]" aria-hidden="true" />
+          <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">
+            Signs of a Strong Surya
+          </h3>
+        </div>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#3b2414]">
+          {[
+            'Natural confidence and presence',
+            'Steady leadership without dominance',
+            'Clear sense of purpose and direction',
+            'Healthy heart and steady vitality',
+            'Respected by elders and peers',
+            'Father figure energy in the family',
+            'Thrives in visible and authority roles',
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2">
+              <Check className="mt-1 h-4 w-4 shrink-0 text-[#facc15]" strokeWidth={2.6} aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:rotate-[0.4deg]">
+        <div className="flex items-center gap-2">
+          <AlertCircle className="h-5 w-5 text-[#b45309]" aria-hidden="true" />
+          <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">
+            Signs of a Weakened Surya
+          </h3>
+        </div>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#92400e] via-[#f59e0b] to-transparent" />
+        <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#3b2414]">
+          {[
+            'Hesitation to be seen or take charge',
+            'Low confidence despite real talent',
+            'Strained relationship with father or authority',
+            'Heart, eye, or bone-related concerns',
+            'Difficulty completing what was started',
+            'Feeling drained by comparison',
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2">
+              <AlertCircle className="mt-1 h-4 w-4 shrink-0 text-[#b45309]" strokeWidth={2.2} aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4 font-caveat text-base leading-snug text-[#3b2414]/80">
+          These are tendencies that may benefit from Surya remedies, not certainties. A qualified Jyotishi can confirm through chart analysis.
+        </p>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:-rotate-[0.3deg]">
+        <div className="flex items-center gap-2">
+          <Briefcase className="h-5 w-5 text-[#b45309]" aria-hidden="true" />
+          <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">
+            Modern Surya in Daily Life
+          </h3>
+        </div>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <ul className="mt-4 space-y-1.5 font-kalam text-base leading-snug text-[#3b2414]">
+          <li>Executive presence in meetings</li>
+          <li>Personal branding and visibility</li>
+          <li>Career direction and ambition</li>
+          <li>Boundary-setting in relationships</li>
+          <li>Voice that speaks truth without theater</li>
+          <li>Showing up for one&apos;s own life</li>
+        </ul>
+        <p className="mt-4 font-caveat text-lg leading-snug text-[#b45309]">
+          A balanced Surya makes leadership feel like service, not performance.
+        </p>
+      </ParchmentCard>
+
+      <ParchmentCard rotate="lg:rotate-[0.25deg]">
+        <div className="flex items-center gap-2">
+          <Compass className="h-5 w-5 text-[#b45309]" aria-hidden="true" />
+          <h3 className="font-caveat text-[1.7rem] leading-tight text-[#2b1a0f]">
+            Reading Surya in Your Chart
+          </h3>
+        </div>
+        <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
+        <p className="mt-3 font-kalam text-base leading-snug text-[#3b2414]">
+          What Saurabh evaluates:
+        </p>
+        <ul className="mt-2 space-y-1.5 font-kalam text-base leading-snug text-[#3b2414]">
+          <li>Sign and house placement</li>
+          <li>Shadbala (six-fold strength)</li>
+          <li>Ashtakavarga points</li>
+          <li>Combustion context</li>
+          <li>Nakshatra lord</li>
+          <li>Yogas involving Surya</li>
+          <li>Functional benefic or malefic role for the ascendant</li>
+        </ul>
+        <p className="mt-4 font-caveat text-base leading-snug text-[#3b2414]/80">
+          Dignity alone never tells the full story. A careful reading weighs all of these together.
+        </p>
+      </ParchmentCard>
     </div>
   );
 }
