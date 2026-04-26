@@ -34,6 +34,16 @@
       "source": "/planets/mangala",
       "destination": "/planets/mars",
       "permanent": true
+    },
+    {
+      "source": "/planets/guru",
+      "destination": "/planets/jupiter",
+      "permanent": true
+    },
+    {
+      "source": "/planets/brihaspati",
+      "destination": "/planets/jupiter",
+      "permanent": true
     }
   ],
   "headers": [
