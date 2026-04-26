@@ -258,6 +258,7 @@ const PLANETS: PlanetConfig[] = [
       'border-blue-900/80 shadow-[0_0_30px_rgba(30,58,138,0.34)] hover:shadow-[0_0_40px_rgba(30,58,138,0.5)]',
     symbolClass: 'text-violet-300',
     symbolStroke: '#93c5fd',
+    href: '/planets/saturn',
     heroPosition: { bottom: '29%', left: '55%', width: 'auto' },
     orbit: {
       radius: 410,

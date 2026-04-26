@@ -44,6 +44,16 @@
       "source": "/planets/brihaspati",
       "destination": "/planets/jupiter",
       "permanent": true
+    },
+    {
+      "source": "/planets/shani",
+      "destination": "/planets/saturn",
+      "permanent": true
+    },
+    {
+      "source": "/planets/shanaishchara",
+      "destination": "/planets/saturn",
+      "permanent": true
     }
   ],
   "headers": [
