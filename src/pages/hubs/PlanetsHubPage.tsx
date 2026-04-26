@@ -204,6 +204,7 @@ const PLANETS: PlanetConfig[] = [
       'border-amber-300/70 shadow-[0_0_30px_rgba(251,191,36,0.24)] hover:shadow-[0_0_36px_rgba(251,191,36,0.4)]',
     symbolClass: 'text-amber-300',
     symbolStroke: '#fcd34d',
+    href: '/planets/jupiter',
     heroPosition: { bottom: '33%', right: '26%', width: 'auto' },
     orbit: {
       radius: 345,
