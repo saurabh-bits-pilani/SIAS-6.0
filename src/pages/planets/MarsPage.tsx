@@ -9,57 +9,22 @@ import {
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
-import marsAssetsRaw from '../../../blog-images-folder/mars/components.json';
 
-type MarsAssets = {
-  components: {
-    hero: { url: string };
-    decorativeQuill: { url: string };
-    gemstoneCoral: { url: string };
-    glyphAries: { url: string };
-    glyphScorpio: { url: string };
-    chariot: { url: string };
-    planetDot: { url: string };
-    planetSphere: { url: string };
-    seal: { url: string };
-    symbolMars: { url: string };
-    yantra: { url: string };
-    iconSpear: { url: string };
-  };
-  shared: {
-    doodleCrystal: { url: string };
-    doodleNamaste: { url: string };
-    iconCrown: { url: string };
-    iconFlame: { url: string };
-  };
-  sharedLegacy: {
-    items: {
-      parchmentStripe: string;
-      parchmentStickyNote: string;
-      diya: string;
-      featherDoodle: string;
-      bgLarge: string;
-      allFooterImages: string;
-    };
-  };
-};
-
-const marsAssets = marsAssetsRaw as MarsAssets;
-
-const HERO_URL = marsAssets.components.hero.url;
-const CORAL_URL = marsAssets.components.gemstoneCoral.url;
-const PLANET_SPHERE_URL = marsAssets.components.planetSphere.url;
-const SEAL_URL = marsAssets.components.seal.url;
-const SYMBOL_MARS_URL = marsAssets.components.symbolMars.url;
-const YANTRA_URL = marsAssets.components.yantra.url;
-const SPEAR_URL = marsAssets.components.iconSpear.url;
-const QUILL_URL = marsAssets.components.decorativeQuill.url;
-const CRYSTAL_URL = marsAssets.shared.doodleCrystal.url;
-const CROWN_URL = marsAssets.shared.iconCrown.url;
-const FLAME_URL = marsAssets.shared.iconFlame.url;
-const STICKY_NOTE_URL = marsAssets.sharedLegacy.items.parchmentStickyNote;
-const DIYA_URL = marsAssets.sharedLegacy.items.diya;
-const FEATHER_URL = marsAssets.sharedLegacy.items.featherDoodle;
+const R2_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
+const HERO_URL = `${R2_BASE}/Pillar/Planets/Mars/hero-mangala.webp`;
+const CORAL_URL = `${R2_BASE}/Pillar/Planets/Mars/gemstone-coral.svg`;
+const PLANET_SPHERE_URL = `${R2_BASE}/Pillar/Planets/Mars/planet-mars.svg`;
+const SEAL_URL = `${R2_BASE}/Pillar/Planets/Mars/seal-mars.svg`;
+const SYMBOL_MARS_URL = `${R2_BASE}/Pillar/Planets/Mars/symbol-mars.svg`;
+const YANTRA_URL = `${R2_BASE}/Pillar/Planets/Mars/yantra-mars.svg`;
+const SPEAR_URL = `${R2_BASE}/Pillar/Planets/Mars/icon-spear.svg`;
+const QUILL_URL = `${R2_BASE}/Pillar/Planets/Mars/doodle-quill-inkpot-mars.svg`;
+const CRYSTAL_URL = `${R2_BASE}/Pillar/Planets/Shared/doodle-crystal.svg`;
+const CROWN_URL = `${R2_BASE}/Pillar/Planets/Shared/icon-crown.svg`;
+const FLAME_URL = `${R2_BASE}/Pillar/Planets/Shared/icon-flame.svg`;
+const STICKY_NOTE_URL = `${R2_BASE}/Pillar/Hub/Planets/Shared/parchment-sticky-note.svg`;
+const DIYA_URL = `${R2_BASE}/Pillar/Hub/Planets/Shared/diya.svg`;
+const FEATHER_URL = `${R2_BASE}/Pillar/Hub/Planets/Shared/feather-doodle.svg`;
 
 const PARCHMENT_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/parchment-texture.webp';
