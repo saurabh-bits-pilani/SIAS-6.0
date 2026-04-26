@@ -29,6 +29,11 @@
       "source": "/planets/budha",
       "destination": "/planets/mercury",
       "permanent": true
+    },
+    {
+      "source": "/planets/mangala",
+      "destination": "/planets/mars",
+      "permanent": true
     }
   ],
   "headers": [
