@@ -1,0 +1,147 @@
+{
+  "mercury": {
+    "ring": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Mercury/ring.webp",
+      "key": "Pillar/Hub/Planets/Mercury/ring.webp",
+      "bytes": 315138,
+      "sha256": "bf16484e606b152c5dd5164ac5dde11285cf8ae2c387cd4dbc1061f75e45da89",
+      "contentType": "image/webp"
+    },
+    "stickyNoteGreen": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Mercury/sticky-note-green.svg",
+      "key": "Pillar/Hub/Planets/Mercury/sticky-note-green.svg",
+      "bytes": 90619,
+      "sha256": "e126013cd380fd301ede0f46c7e5600ced73848b2d6250b386ea95aabcd4b8cc",
+      "contentType": "image/svg+xml"
+    },
+    "ovalBorderGreen": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Mercury/oval-border-green.svg",
+      "key": "Pillar/Hub/Planets/Mercury/oval-border-green.svg",
+      "bytes": 221711,
+      "sha256": "5d4ea42491b940bfee94df3e22d2f62d29730c2735a5591d7643a937e05bc136",
+      "contentType": "image/svg+xml"
+    },
+    "offeringDurva": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Mercury/offering-durva.svg",
+      "key": "Pillar/Hub/Planets/Mercury/offering-durva.svg",
+      "bytes": 48209,
+      "sha256": "080db2725064139398b3f5c820adbd51c9bb5af4b0379fc11d1299cc796ac0ce",
+      "contentType": "image/svg+xml"
+    },
+    "offeringFruitGreen": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Mercury/offering-fruit-green.svg",
+      "key": "Pillar/Hub/Planets/Mercury/offering-fruit-green.svg",
+      "bytes": 41706,
+      "sha256": "7e7d316f44b697d740b833364200ca55776b2ed3fb67e1692ea587eee7765418",
+      "contentType": "image/svg+xml"
+    },
+    "offeringMoong": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Mercury/offering-moong.svg",
+      "key": "Pillar/Hub/Planets/Mercury/offering-moong.svg",
+      "bytes": 39476,
+      "sha256": "1b9ac9b1f77f7f5d2253a0d7093c4f00b9dfcc4aa6d4779939c341ed35ffb976",
+      "contentType": "image/svg+xml"
+    },
+    "heroBudha": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Mercury/hero-budha.webp",
+      "key": "Pillar/Hub/Planets/Mercury/hero-budha.webp",
+      "bytes": 428804,
+      "sha256": "69b80913381dbcdfaf5bfc504a51e57e9223297be38d6fa64f0b8fc5faec8584",
+      "contentType": "image/webp"
+    }
+  },
+  "shared": {
+    "parchmentStripe": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/parchment-textures-1-stripe.svg",
+      "key": "Pillar/Hub/Planets/Shared/parchment-textures-1-stripe.svg",
+      "bytes": 228283,
+      "sha256": "e852faaa96e3a0f0ef9e33d505a8fff77b85afd10c811ae7769b8b836ac0f572",
+      "contentType": "image/svg+xml"
+    },
+    "notebookPage": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/notebook-page.svg",
+      "key": "Pillar/Hub/Planets/Shared/notebook-page.svg",
+      "bytes": 321326,
+      "sha256": "3eefdcdd2d2355c64003d56ea56013d415ec51851c6482ea582c4c2687b2094b",
+      "contentType": "image/svg+xml"
+    },
+    "parchmentStickyNote": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/parchment-sticky-note.svg",
+      "key": "Pillar/Hub/Planets/Shared/parchment-sticky-note.svg",
+      "bytes": 123737,
+      "sha256": "8618736fce7a71395843e52f02ee0a7a137ad3e28ac2810bec7d4d9b661625bb",
+      "contentType": "image/svg+xml"
+    },
+    "sacredGeometry": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/sacred-geometry.svg",
+      "key": "Pillar/Hub/Planets/Shared/sacred-geometry.svg",
+      "bytes": 65477,
+      "sha256": "05deca5043833319cc9b24d019c8df7859bfc58e88225eee76dc2d380e055e08",
+      "contentType": "image/svg+xml"
+    },
+    "featherDoodle": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/feather-doodle.svg",
+      "key": "Pillar/Hub/Planets/Shared/feather-doodle.svg",
+      "bytes": 36509,
+      "sha256": "1aa0911c1e0652926fe5b184bc793f9569f40458f23065464263b7f7ea335d83",
+      "contentType": "image/svg+xml"
+    },
+    "diya": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/diya.svg",
+      "key": "Pillar/Hub/Planets/Shared/diya.svg",
+      "bytes": 54591,
+      "sha256": "a69648ddebd4ff6006556481fd8756fa9f2f8f6ff26d157926830994460318b6",
+      "contentType": "image/svg+xml"
+    },
+    "offeringGheeLamp": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/offering-ghee-lamp.svg",
+      "key": "Pillar/Hub/Planets/Shared/offering-ghee-lamp.svg",
+      "bytes": 44455,
+      "sha256": "98ca956b82a3471ea4d8c3285967c17de72afd4490d72fb082c807255889fff3",
+      "contentType": "image/svg+xml"
+    },
+    "mandala": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/mandla.webp",
+      "key": "Pillar/Hub/Planets/Shared/mandla.webp",
+      "bytes": 388838,
+      "sha256": "0d07eacc3ceb363743f3a230e9172b92b2e7d0a09da02de8fa9b529528318a4a",
+      "contentType": "image/webp"
+    },
+    "bgLarge": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/bg-large.webp",
+      "key": "Pillar/Hub/Planets/Shared/bg-large.webp",
+      "bytes": 226138,
+      "sha256": "0646ca613cb866e15c5bc826245ba4fad319e7f5004b62e07698aa40bd87193b",
+      "contentType": "image/webp"
+    },
+    "bgSmall": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/bg-small.webp",
+      "key": "Pillar/Hub/Planets/Shared/bg-small.webp",
+      "bytes": 173088,
+      "sha256": "4088be9d860ac19f7e19b5ce6302a1eb7518983b1f90226298b81e3ef8b3cc0a",
+      "contentType": "image/webp"
+    },
+    "stripBg": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/strip-bg.webp",
+      "key": "Pillar/Hub/Planets/Shared/strip-bg.webp",
+      "bytes": 173272,
+      "sha256": "354c03063e83d4aa6003944376479eaa4a4ebb9cddc83c291e8b5048dbd476dd",
+      "contentType": "image/webp"
+    },
+    "allFooterImages": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/all-footer-images.webp",
+      "key": "Pillar/Hub/Planets/Shared/all-footer-images.webp",
+      "bytes": 188146,
+      "sha256": "7b1539f9e500dfc839322705d9b07a8d2ee530760d4883c0495c8ecba698c3b8",
+      "contentType": "image/webp"
+    },
+    "offeringTulsi": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/Shared/offering-tulsi.svg",
+      "key": "Pillar/Hub/Planets/Shared/offering-tulsi.svg",
+      "bytes": 43253,
+      "sha256": "c541bef96b58440db2e1a478b716074a6889424fb8ad7a83ea037c8b77b580c1",
+      "contentType": "image/svg+xml"
+    }
+  },
+  "generatedAt": "2026-04-25T06:55:54.142Z"
+}

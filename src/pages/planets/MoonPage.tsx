@@ -26,6 +26,8 @@ const DIYA_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/diya.svg';
 const FEATHER_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/feather-quill.png';
+const PAGE_PARCHMENT_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/bg-parchment-texture.webp';
 
 const PAGE_TITLE =
   'Chandra (Moon) in Vedic Astrology: Meaning, Mantras, Remedies | Soul Infinity';
@@ -34,6 +36,12 @@ const PAGE_DESCRIPTION =
 const PAGE_KEYWORDS =
   'chandra, moon in vedic astrology, chandra mantra, moon remedies, pearl gemstone, janma rashi, soma, moon in birth chart, soul infinity';
 const PAGE_URL = `${SITE_ORIGIN}/planets/moon`;
+
+const pageShellStyle = {
+  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+};
 
 type IconName =
   | 'planet'
@@ -528,12 +536,12 @@ export default function MoonPage() {
         schemas={schemas}
       />
 
-      <div className="bg-[#050b18] text-white">
+      <div className="min-h-screen text-[#2b1a0f]" style={pageShellStyle}>
         <div className="px-4 pt-5 sm:px-6 lg:px-10">
           <Link
             to="/planets"
             aria-label="Back to Planets hub"
-            className="inline-flex font-caveat text-lg text-[#eed49a]/90 transition hover:text-[#f8d985] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#eed49a]"
+            className="inline-flex font-caveat text-lg text-[#1d4ed8] transition hover:text-[#1e40af] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#93c5fd]"
           >
             ← Back to Planets
           </Link>
@@ -571,7 +579,7 @@ export default function MoonPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#eed49a]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-sacramento text-[4.8rem] leading-[0.88] text-[#c5d8ff] drop-shadow-[0_0_34px_rgba(166,194,255,0.38)] sm:text-[6.1rem] lg:text-[7.6rem] xl:text-[8.4rem]">
+                <h1 className="font-caveat text-[5.8rem] leading-[0.88] text-[#c5d8ff] drop-shadow-[0_0_34px_rgba(166,194,255,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
                   Chandra
                 </h1>
                 <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
@@ -628,10 +636,10 @@ export default function MoonPage() {
         </section>
 
         <section
-          className="relative overflow-hidden bg-[#071127] text-white"
+          className="relative overflow-hidden"
           style={{
             background:
-              'linear-gradient(180deg, rgba(7,17,39,1) 0%, rgba(5,11,24,1) 100%)',
+              'linear-gradient(rgba(245,230,200,0.78), rgba(245,230,200,0.9))',
           }}
         >
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
@@ -939,6 +947,103 @@ export default function MoonPage() {
                     The Moon is born from the mind, a reminder that emotional reality deserves reverence, not dismissal.
                   </div>
                 </div>
+
+                <ParchmentCard rotate="lg:rotate-[0.4deg]">
+                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Quick Facts</h3>
+                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#24447e] via-[#93c5fd] to-transparent" />
+                  <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#2a190f]">
+                    <div><span className="font-semibold text-[#24447e]">Element:</span> Water (Jal)</div>
+                    <div><span className="font-semibold text-[#24447e]">Day:</span> Monday (Somavara)</div>
+                    <div><span className="font-semibold text-[#24447e]">Direction:</span> North-West</div>
+                    <div><span className="font-semibold text-[#24447e]">Mahadasha:</span> 10 years</div>
+                    <div><span className="font-semibold text-[#24447e]">Friends:</span> Sun, Mercury</div>
+                    <div><span className="font-semibold text-[#24447e]">Enemies:</span> None (friendly to all)</div>
+                    <div><span className="font-semibold text-[#24447e]">Neutral:</span> Mars, Jupiter, Venus, Saturn</div>
+                  </div>
+                </ParchmentCard>
+
+                <ParchmentCard rotate="lg:-rotate-[0.3deg]">
+                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Did You Know?</h3>
+                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#24447e] via-[#93c5fd] to-transparent" />
+                  <ul className="mt-4 space-y-3 font-kalam text-base leading-snug text-[#2a190f]">
+                    <li>Chandra waxes and wanes on a 28-day cycle, mirrored in the human menstrual rhythm and emotional tides.</li>
+                    <li>The Moon is exalted in Taurus, the sign of nourishment and steady comfort.</li>
+                    <li>Soma, an alternate name for Chandra, also refers to the sacred ritual nectar in Vedic ceremonies.</li>
+                    <li>Worshippers offer water (arghya) to Chandra on Monday nights, especially during Purnima (full moon).</li>
+                  </ul>
+                </ParchmentCard>
+
+                <ParchmentCard rotate="lg:rotate-[0.35deg]">
+                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Mantra at a Glance</h3>
+                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#24447e] via-[#93c5fd] to-transparent" />
+                  <p className="mt-3 font-kalam text-base leading-snug text-[#2a190f]">
+                    Chandra Navagraha Stotra is shown in the Sacred Mantras section above.
+                  </p>
+                  <div className="mt-3 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
+                    <div><span className="font-semibold text-[#24447e]">Day:</span> Monday</div>
+                    <div><span className="font-semibold text-[#24447e]">Direction:</span> Face West (evening)</div>
+                    <div><span className="font-semibold text-[#24447e]">Best time:</span> Moonrise or Purnima night</div>
+                    <div><span className="font-semibold text-[#24447e]">Repetitions:</span> 108 with a rosary</div>
+                    <div className="pt-1 italic text-[#2a190f]/80">
+                      Keynote: Namāmi śaśinaṁ somaṁ, salutation to the calming hare-marked Moon.
+                    </div>
+                  </div>
+                </ParchmentCard>
+
+                <ParchmentCard rotate="lg:-rotate-[0.4deg]">
+                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Notable Influences</h3>
+                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#24447e] via-[#93c5fd] to-transparent" />
+                  <p className="mt-2 font-kalam text-base leading-snug text-[#2a190f]">
+                    Chandra governs:
+                  </p>
+                  <ul className="mt-2 space-y-1.5 font-kalam text-base leading-snug text-[#2a190f]">
+                    <li>Mothers, caregivers, nurses</li>
+                    <li>Hoteliers and hospitality workers</li>
+                    <li>Travellers and sailors</li>
+                    <li>Public-facing professionals</li>
+                    <li>Dairy and milk industry workers</li>
+                    <li>Poets and lyricists</li>
+                    <li>Therapists and counsellors</li>
+                    <li>Midwives and obstetricians</li>
+                  </ul>
+                </ParchmentCard>
+
+                <ParchmentCard rotate="lg:rotate-[0.25deg]">
+                  <div className="font-caveat text-xl italic leading-tight text-[#24447e]/80">
+                    A line worth carrying
+                  </div>
+                  <blockquote className="mt-3 font-caveat text-[2rem] leading-tight text-[#1a110a] sm:text-[2.3rem]">
+                    The deepest lunar teaching is not speed, conquest, or control. It is attunement.
+                  </blockquote>
+                  <div className="mt-3 font-kalam text-sm leading-relaxed text-[#2a190f]/70">
+                    Drawn from the body above, this is the quiet heart of Chandra&apos;s wisdom.
+                  </div>
+                </ParchmentCard>
+
+                <ParchmentCard rotate="lg:-rotate-[0.35deg]">
+                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Continue Your Journey</h3>
+                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#24447e] via-[#93c5fd] to-transparent" />
+                  <p className="mt-2 font-kalam text-base leading-snug text-[#2a190f]">
+                    Explore the other Navagraha pillars.
+                  </p>
+                  <ul className="mt-3 space-y-2 font-kalam text-lg leading-snug">
+                    <li>
+                      <Link to="/planets/sun" className="text-[#24447e] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#93c5fd]">
+                        Surya (Sun) →
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/planets/mercury" className="text-[#24447e] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#93c5fd]">
+                        Budh (Mercury) →
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/planets" className="text-[#24447e] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#93c5fd]">
+                        Explore all 9 Navagraha planets →
+                      </Link>
+                    </li>
+                  </ul>
+                </ParchmentCard>
               </div>
             </div>
           </div>
