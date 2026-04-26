@@ -490,11 +490,7 @@ function iconSvg(name: IconName, className = 'h-6 w-6'): JSX.Element {
 }
 
 function Highlight({ children }: { children: string }) {
-  return (
-    <span className="rounded px-1.5 py-0.5 text-slate-900 shadow-[0_3px_12px_rgba(252,211,77,0.18)]" style={{ background: 'linear-gradient(180deg, #fde68a 0%, #fcd34d 100%)' }}>
-      {children}
-    </span>
-  );
+  return <span className="highlight-marker rounded px-1.5 py-0.5 text-slate-900">{children}</span>;
 }
 
 function ParchmentCard({
@@ -678,24 +674,24 @@ export default function JupiterPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#f3c9a6]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat text-[5.8rem] leading-[0.98] text-[#fcd34d] drop-shadow-[0_0_34px_rgba(252,211,77,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
+                <h1 className="font-caveat text-[5.8rem] leading-[0.88] text-[#fcd34d] drop-shadow-[0_0_34px_rgba(252,211,77,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
                   Guru
                 </h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fef3c7] sm:text-4xl">गुरु</div>
                   <div className="font-kalam text-2xl text-[#fde68a] sm:text-3xl">(Jupiter)</div>
                 </div>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[4rem]">
-                  the guide and teacher
+                <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
+                  The Guide and Teacher
                 </h2>
 
-                <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] [text-shadow:0_3px_10px_rgba(0,0,0,0.34)] sm:text-[2.15rem]">
+                <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
                   <p>Guru blesses our <Highlight>wisdom</Highlight>, <Highlight>knowledge</Highlight></p>
+                  <p>and <Highlight>growth</Highlight>.</p>
                   <div className="flex items-center gap-3">
-                    <p>and <Highlight>growth</Highlight>.</p>
+                    <p>He teaches <Highlight>dharma</Highlight> and brings <Highlight>abundance</Highlight>.</p>
                     <ScribbleLine />
                   </div>
-                  <p>He teaches <Highlight>dharma</Highlight> and brings <Highlight>abundance</Highlight>.</p>
                 </div>
 
                 <div className="mt-8 flex items-center gap-5 text-[#f6c06d]">
