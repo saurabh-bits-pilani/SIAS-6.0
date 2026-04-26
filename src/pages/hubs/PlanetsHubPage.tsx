@@ -149,6 +149,7 @@ const PLANETS: PlanetConfig[] = [
       'border-red-500/70 shadow-[0_0_30px_rgba(220,38,38,0.24)] hover:shadow-[0_0_36px_rgba(220,38,38,0.4)]',
     symbolClass: 'text-red-400',
     symbolStroke: '#f87171',
+    href: '/planets/mars',
     heroPosition: { top: '26%', right: '25%', width: 'auto' },
     orbit: {
       radius: 280,
