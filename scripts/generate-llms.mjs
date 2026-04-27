@@ -54,6 +54,7 @@ const DESCRIPTIONS = {
   '/planets/mercury': "Budh (Mercury), the planet of intellect, communication, and adaptability. Mantras, gemstone, remedies, and traditions for awakening Budh's blessings in your life.",
   '/planets/sun': 'Surya (Sun) — karaka of the soul, authority, and father. Mantras, 12-house significations, exaltation in Aries, debilitation in Libra, Ruby (Manikya) gemstone guidance, and six-year Mahadasha themes.',
   '/planets/moon': 'Chandra (Moon) — karaka of the mind, emotions, and mother. Mantras, 12-house significations, exaltation in Taurus, debilitation in Scorpio, Pearl (Moti) gemstone guidance, and ten-year Mahadasha themes.',
+  '/planets/rahu': "Rahu, the North Node of the Moon and shadow lord of ambition, illusion, and transformation. Mantras, gemstone (Hessonite), remedies, and Vedic traditions for awakening Rahu's wisdom in your life.",
   '/planets/saturn': "Shani (Saturn), the lord of karma, discipline, and dharmic maturity. Mantras, gemstone (Blue Sapphire), Sade Sati guidance, and Vedic remedies for awakening Shani's blessings in your life.",
   '/planets/venus': "Shukra (Venus), the lord of love, beauty, art, and refinement. Mantras, gemstone (Diamond), remedies, and Vedic traditions for awakening Shukra's blessings in your life.",
   '/zodiac': 'Zodiac Signs — the twelve zodiac signs (Rashi) in Vedic astrology: Aries through Pisces. Explore each sign’s ruling planet, element, nature, character traits, and life themes.',
@@ -93,7 +94,7 @@ const SECTIONS = [
   },
   {
     heading: 'Learn',
-    routes: ['/planets', '/planets/jupiter', '/planets/mars', '/planets/mercury', '/planets/saturn', '/planets/venus', '/zodiac', '/dosha'],
+    routes: ['/planets', '/planets/jupiter', '/planets/mars', '/planets/mercury', '/planets/rahu', '/planets/saturn', '/planets/venus', '/zodiac', '/dosha'],
   },
   {
     heading: 'Content',
