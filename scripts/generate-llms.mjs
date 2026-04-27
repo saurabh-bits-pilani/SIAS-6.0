@@ -50,6 +50,7 @@ const DESCRIPTIONS = {
   '/panchang': 'Today’s Panchang — Tithi, Nakshatra, Yoga, Karana, and muhurat timings.',
   '/planets': 'Planets — the nine planets (Navagraha) in Vedic astrology: Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu. Learn each planet’s significance, signs ruled, exaltation, debilitation, and remedies.',
   '/planets/jupiter': "Guru (Jupiter), the great benefic of wisdom, dharma, and expansion. Mantras, gemstone (Yellow Sapphire), remedies, and Vedic traditions for awakening Guru's blessings in your life.",
+  '/planets/ketu': "Ketu, the South Node of the Moon and shadow lord of liberation, intuition, and spiritual release. Mantras, gemstone (Cat's Eye), remedies, and Vedic traditions for awakening Ketu's wisdom in your life.",
   '/planets/mars': "Mangala (Mars), the planet of courage, strength, and determination. Mantras, gemstone, remedies, and traditions for awakening Mangala's blessings in your life.",
   '/planets/mercury': "Budh (Mercury), the planet of intellect, communication, and adaptability. Mantras, gemstone, remedies, and traditions for awakening Budh's blessings in your life.",
   '/planets/sun': 'Surya (Sun) — karaka of the soul, authority, and father. Mantras, 12-house significations, exaltation in Aries, debilitation in Libra, Ruby (Manikya) gemstone guidance, and six-year Mahadasha themes.',
@@ -94,7 +95,7 @@ const SECTIONS = [
   },
   {
     heading: 'Learn',
-    routes: ['/planets', '/planets/jupiter', '/planets/mars', '/planets/mercury', '/planets/rahu', '/planets/saturn', '/planets/venus', '/zodiac', '/dosha'],
+    routes: ['/planets', '/planets/jupiter', '/planets/ketu', '/planets/mars', '/planets/mercury', '/planets/rahu', '/planets/saturn', '/planets/venus', '/zodiac', '/dosha'],
   },
   {
     heading: 'Content',
