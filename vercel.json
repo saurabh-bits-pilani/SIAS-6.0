@@ -54,6 +54,16 @@
       "source": "/planets/shanaishchara",
       "destination": "/planets/saturn",
       "permanent": true
+    },
+    {
+      "source": "/planets/shukra",
+      "destination": "/planets/venus",
+      "permanent": true
+    },
+    {
+      "source": "/planets/bhargava",
+      "destination": "/planets/venus",
+      "permanent": true
     }
   ],
   "headers": [

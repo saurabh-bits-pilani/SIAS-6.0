@@ -45,6 +45,7 @@ export const ROUTES = [
   '/planets/moon',
   '/planets/saturn',
   '/planets/sun',
+  '/planets/venus',
   '/zodiac',
   '/dosha',
   '/contact',
