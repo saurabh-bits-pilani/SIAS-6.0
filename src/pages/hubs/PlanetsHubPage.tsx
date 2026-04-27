@@ -232,6 +232,7 @@ const PLANETS: PlanetConfig[] = [
       'border-pink-300/70 shadow-[0_0_30px_rgba(244,114,182,0.22)] hover:shadow-[0_0_36px_rgba(244,114,182,0.38)]',
     symbolClass: 'text-pink-300',
     symbolStroke: '#f9a8d4',
+    href: '/planets/venus',
     heroPosition: { top: '43%', left: '14%', width: 'auto' },
     orbit: {
       radius: 190,
