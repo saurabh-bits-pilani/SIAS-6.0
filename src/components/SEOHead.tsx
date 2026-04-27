@@ -30,7 +30,7 @@ interface SEOHeadProps {
 const DEFAULT_ROBOTS =
   'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const NOINDEX_ROBOTS = 'noindex, follow';
-// Staging environment blanket directive — applied to every route regardless
+// Staging environment blanket directive, applied to every route regardless
 // of per-page `robots`/`noindex` props. Keeps staging out of every crawler
 // index, including archives and snippets.
 const STAGING_ROBOTS = 'noindex, nofollow, noarchive, nosnippet';
@@ -83,7 +83,6 @@ const SEOHead = ({
       <meta property="og:url" content={resolvedUrl} />
       <meta property="og:type" content={type} />
       <meta property="og:locale" content="en_IN" />
-      <meta property="og:locale:alternate" content="hi_IN" />
 
       {/* Twitter */}
       <meta name="twitter:card" content={twitterCard} />
