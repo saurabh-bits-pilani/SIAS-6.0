@@ -16,6 +16,12 @@
       "permanent": true
     },
     {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "soulinfinity.space" }],
+      "destination": "https://www.soulinfinity.space/$1",
+      "permanent": true
+    },
+    {
       "source": "/planets/surya",
       "destination": "/planets/sun",
       "permanent": true
