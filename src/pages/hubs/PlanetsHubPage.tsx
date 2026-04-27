@@ -287,6 +287,7 @@ const PLANETS: PlanetConfig[] = [
       'border-violet-500/70 shadow-[0_0_30px_rgba(124,58,237,0.28)] hover:shadow-[0_0_40px_rgba(124,58,237,0.44)]',
     symbolClass: 'text-violet-300',
     symbolStroke: '#c4b5fd',
+    href: '/planets/rahu',
     heroPosition: { bottom: '32%', left: '30%', width: 'auto' },
     orbit: {
       radius: 460,
