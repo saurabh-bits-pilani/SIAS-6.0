@@ -40,6 +40,7 @@ export const ROUTES = [
   '/panchang',
   '/planets',
   '/planets/jupiter',
+  '/planets/ketu',
   '/planets/mars',
   '/planets/mercury',
   '/planets/moon',
