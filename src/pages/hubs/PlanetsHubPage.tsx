@@ -316,6 +316,7 @@ const PLANETS: PlanetConfig[] = [
       'border-gray-300/70 shadow-[0_0_30px_rgba(156,163,175,0.22)] hover:shadow-[0_0_40px_rgba(156,163,175,0.36)]',
     symbolClass: 'text-gray-300',
     symbolStroke: '#d1d5db',
+    href: '/planets/ketu',
     heroPosition: { bottom: '24%', right: '13%', width: 'auto' },
     orbit: {
       radius: 460,
