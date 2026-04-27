@@ -78,8 +78,8 @@ const Home = () => {
   return (
     <>
       <SEOHead
-        title="Best Vedic Astrologer in Ahmedabad | Saurabh Jain - Soul Infinity"
-        description="Vedic astrology, tarot & Reiki healing by certified astrologer Saurabh Jain in Ahmedabad. 200+ happy clients, 4.9★ rated. Book online or in-person consultation today."
+        title="Best Vedic Astrologer in Ahmedabad | Soul Infinity"
+        description="Vedic astrology, tarot and Reiki by certified astrologer Saurabh Jain in Ahmedabad. 200+ clients, 4.9-star rated. Book consultation today."
         keywords="vedic astrologer ahmedabad, best astrologer ahmedabad, saurabh jain astrologer, kundli consultation ahmedabad, tarot reader ahmedabad, reiki healer ahmedabad"
         omitDefaultSchema
       />
@@ -92,7 +92,7 @@ const Home = () => {
           {heroImages.map((image, index) => {
             // Only the first (LCP) slide mounts on initial paint. The
             // remaining three mount after idle so they never compete with
-            // the hero for bandwidth — `loading="lazy"` is not sufficient
+            // the hero for bandwidth, since `loading="lazy"` is not sufficient
             // because all four slides share the same viewport.
             if (index !== 0 && !mountRestOfHero) return null;
             return (
@@ -350,7 +350,7 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Google Reviews — data baked in at build time from the Places API,
+          {/* Google Reviews: data baked in at build time from the Places API,
               served from the prerendered HTML (no client-side fetch). */}
           <GoogleReviewsWidget />
         </div>
