@@ -579,12 +579,14 @@ export default function MoonPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#eed49a]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat text-[5.8rem] leading-[0.88] text-[#c5d8ff] drop-shadow-[0_0_34px_rgba(166,194,255,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                  Chandra
+                <h1 className="font-caveat leading-[0.88]">
+                  <span className="block text-[5.8rem] text-[#c5d8ff] drop-shadow-[0_0_34px_rgba(166,194,255,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
+                    Chandra
+                  </span>
+                  <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
+                    The Divine Mind
+                  </span>
                 </h1>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                  The Divine Mind
-                </h2>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
                   <p>Cool, calm and compassionate.</p>
@@ -634,6 +636,21 @@ export default function MoonPage() {
             </div>
           </div>
         </section>
+
+        <aside
+          aria-label="Quick summary of Chandra"
+          className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-10"
+        >
+          <div
+            className="rounded-[24px] border border-[#8c6e47]/25 px-6 py-5 shadow-[0_10px_30px_rgba(64,40,18,0.10)] sm:px-8 sm:py-6"
+            style={cardTextureStyle}
+          >
+            <div className="mb-2 font-caveat text-2xl leading-none text-[#1e3a8a]">In Brief</div>
+            <p className="font-kalam text-[1.2rem] leading-relaxed text-[#2a190f] sm:text-[1.35rem]">
+              Chandra is the Vedic significator of the mind, emotions, and the mother. It governs intuition, memory, comfort, and the inner world. Devotees seek Chandra&apos;s blessings for emotional balance, mental peace, and nurturing relationships.
+            </p>
+          </div>
+        </aside>
 
         <section
           className="relative overflow-hidden"
@@ -1075,7 +1092,7 @@ export default function MoonPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className="mt-1 text-[#24447e]">{iconSvg('faq', 'h-6 w-6')}</div>
-                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</div>
+                        <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#24447e]">
                         <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">

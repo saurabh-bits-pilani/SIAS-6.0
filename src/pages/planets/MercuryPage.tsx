@@ -778,16 +778,18 @@ export default function MercuryPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#d7f9df] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat text-[6.3rem] leading-[0.84] text-[#4ade80] drop-shadow-[0_0_34px_rgba(34,197,94,0.6)] sm:text-[7.9rem] lg:text-[9.1rem] xl:text-[9.8rem]">
-                  Budh
+                <h1 className="font-caveat leading-[0.84]">
+                  <span className="block text-[6.3rem] text-[#4ade80] drop-shadow-[0_0_34px_rgba(34,197,94,0.6)] sm:text-[7.9rem] lg:text-[9.1rem] xl:text-[9.8rem]">
+                    Budh
+                  </span>
+                  <span className="mt-4 block text-4xl leading-none text-[#fff6de] drop-shadow-[0_3px_12px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-[4rem]">
+                    The Awakened Intelligence
+                  </span>
                 </h1>
                 <div className="mt-3 flex flex-wrap items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fff6de] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:text-4xl">बुध</div>
                   <div className="font-kalam text-2xl text-[#d7f9df] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:text-3xl">(Mercury)</div>
                 </div>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-[#fff6de] drop-shadow-[0_3px_12px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-[4rem]">
-                  the awakened intelligence
-                </h2>
 
                 <div className="mt-8 max-w-[34rem] space-y-3 font-kalam text-[1.75rem] leading-relaxed text-[#fff6de] drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-[2rem]">
                   <p>
@@ -836,6 +838,21 @@ export default function MercuryPage() {
             </div>
           </div>
         </section>
+
+        <aside
+          aria-label="Quick summary of Budh"
+          className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-10"
+        >
+          <div
+            className="rounded-[24px] border border-[#1f6a40]/20 px-6 py-5 shadow-[0_10px_30px_rgba(20,80,40,0.10)] sm:px-8 sm:py-6"
+            style={notebookStyle}
+          >
+            <div className="mb-2 font-caveat text-2xl leading-none text-[#166534]">In Brief</div>
+            <p className="font-kalam text-[1.2rem] leading-relaxed text-[#2a190f] sm:text-[1.35rem]">
+              Budh is the Vedic significator of intellect, communication, and discernment. It governs learning, speech, commerce, and analytical thought. Devotees seek Budh&apos;s blessings for sharper intelligence, clear expression, and success in study and trade.
+            </p>
+          </div>
+        </aside>
 
         <section className="relative overflow-hidden">
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
@@ -1400,34 +1417,23 @@ export default function MercuryPage() {
                       Budh&apos;s Friends and Enemies
                     </h3>
                     <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#166534] via-[#4ade80] to-transparent" />
-                    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <div className="font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#166534]">
-                          Friendly
-                        </div>
-                        <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#2a190f]">
-                          <li>Surya (Sun)</li>
-                          <li>Shukra (Venus)</li>
-                          <li>Rahu (North Node)</li>
-                        </ul>
-                        <div className="mt-3 font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#b45309]">
-                          Enemy
-                        </div>
-                        <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#2a190f]">
-                          <li>Chandra (Moon)</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <div className="font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#3a271a]/70">
-                          Neutral
-                        </div>
-                        <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#2a190f]">
-                          <li>Mangala (Mars)</li>
-                          <li>Guru (Jupiter)</li>
-                          <li>Shani (Saturn)</li>
-                        </ul>
-                      </div>
-                    </div>
+                    <table className="mt-4 w-full border-collapse font-kalam text-base leading-snug text-[#2a190f]">
+                      <caption className="sr-only">Planetary relationships of Budh in Vedic astrology</caption>
+                      <tbody>
+                        <tr>
+                          <th scope="row" className="py-1.5 pr-3 text-left align-top text-[0.95rem] font-semibold uppercase tracking-wide text-[#166534]">Friendly</th>
+                          <td className="py-1.5 align-top">Surya (Sun), Shukra (Venus), Rahu (North Node)</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="py-1.5 pr-3 text-left align-top text-[0.95rem] font-semibold uppercase tracking-wide text-[#b45309]">Enemy</th>
+                          <td className="py-1.5 align-top">Chandra (Moon)</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="py-1.5 pr-3 text-left align-top text-[0.95rem] font-semibold uppercase tracking-wide text-[#3a271a]/70">Neutral</th>
+                          <td className="py-1.5 align-top">Mangala (Mars), Guru (Jupiter), Shani (Saturn)</td>
+                        </tr>
+                      </tbody>
+                    </table>
                     <p className="mt-4 font-caveat text-lg leading-snug text-[#3a271a]/80">
                       These relationships shape how Budh behaves in conjunction with other planets.
                     </p>
@@ -1828,9 +1834,9 @@ export default function MercuryPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className="mt-1 text-[#166534]">{iconSvg('faq', 'h-6 w-6')}</div>
-                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">
+                        <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">
                           {faq.question}
-                        </div>
+                        </h3>
                       </div>
                       <div className="text-[#166534]">
                         <svg

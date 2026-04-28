@@ -661,39 +661,27 @@ function EditorialSidebar() {
           </h3>
         </div>
         <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#b45309] via-[#facc15] to-transparent" />
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <div className="font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#b45309]">
-              Friendly
-            </div>
-            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
-              <li>Chandra (Moon)</li>
-              <li>Mangala (Mars)</li>
-              <li>Guru (Jupiter)</li>
-            </ul>
-            <div className="mt-3 font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#7c1d1d]">
-              Enemy
-            </div>
-            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
-              <li>Shukra (Venus)</li>
-              <li>Shani (Saturn)</li>
-            </ul>
-          </div>
-          <div>
-            <div className="font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#3b2414]/70">
-              Neutral
-            </div>
-            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
-              <li>Budh (Mercury)</li>
-            </ul>
-            <div className="mt-3 font-kalam text-[0.95rem] font-semibold uppercase tracking-wide text-[#3b2414]/70">
-              Eclipse-makers
-            </div>
-            <ul className="mt-1 space-y-1 font-kalam text-base leading-snug text-[#3b2414]">
-              <li>Rahu and Ketu can shadow Surya</li>
-            </ul>
-          </div>
-        </div>
+        <table className="mt-4 w-full border-collapse font-kalam text-base leading-snug text-[#3b2414]">
+          <caption className="sr-only">Planetary relationships of Surya in Vedic astrology</caption>
+          <tbody>
+            <tr>
+              <th scope="row" className="py-1.5 pr-3 text-left align-top text-[0.95rem] font-semibold uppercase tracking-wide text-[#b45309]">Friendly</th>
+              <td className="py-1.5 align-top">Chandra (Moon), Mangala (Mars), Guru (Jupiter)</td>
+            </tr>
+            <tr>
+              <th scope="row" className="py-1.5 pr-3 text-left align-top text-[0.95rem] font-semibold uppercase tracking-wide text-[#7c1d1d]">Enemy</th>
+              <td className="py-1.5 align-top">Shukra (Venus), Shani (Saturn)</td>
+            </tr>
+            <tr>
+              <th scope="row" className="py-1.5 pr-3 text-left align-top text-[0.95rem] font-semibold uppercase tracking-wide text-[#3b2414]/70">Neutral</th>
+              <td className="py-1.5 align-top">Budh (Mercury)</td>
+            </tr>
+            <tr>
+              <th scope="row" className="py-1.5 pr-3 text-left align-top text-[0.95rem] font-semibold uppercase tracking-wide text-[#3b2414]/70">Eclipse-makers</th>
+              <td className="py-1.5 align-top">Rahu and Ketu can shadow Surya</td>
+            </tr>
+          </tbody>
+        </table>
         <p className="mt-4 font-caveat text-lg leading-snug text-[#3b2414]/80">
           These relationships shape how Surya behaves in conjunction with other planets.
         </p>
@@ -904,14 +892,16 @@ export default function SunPage() {
                   Planetary Wisdom
                 </div>
                 <div className="relative inline-block">
-                  <h1 className="font-caveat text-[6rem] leading-[0.86] text-[#facc15] drop-shadow-[0_0_34px_rgba(250,204,21,0.58)] sm:text-[7.6rem] lg:text-[9rem] xl:text-[9.8rem]">
-                    Surya
+                  <h1 className="font-caveat leading-[0.86]">
+                    <span className="block text-[6rem] text-[#facc15] drop-shadow-[0_0_34px_rgba(250,204,21,0.58)] sm:text-[7.6rem] lg:text-[9rem] xl:text-[9.8rem]">
+                      Surya
+                    </span>
+                    <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
+                      The Radiant Sun
+                    </span>
                   </h1>
                   <SunMandala className="absolute -right-14 -top-3 hidden h-12 w-12 text-[#facc15] sm:block" />
                 </div>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                  The Radiant Soul
-                </h2>
 
                 <div className="mt-8 max-w-2xl font-kalam text-[1.75rem] leading-relaxed text-[#fff3d0] sm:text-[2.05rem]">
                   The source of light, life, and consciousness. Surya illuminates our{' '}
@@ -951,6 +941,21 @@ export default function SunPage() {
             </div>
           </div>
         </section>
+
+        <aside
+          aria-label="Quick summary of Surya"
+          className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-10"
+        >
+          <div
+            className="rounded-[24px] border border-[#8c6e47]/25 px-6 py-5 shadow-[0_10px_30px_rgba(64,40,18,0.10)] sm:px-8 sm:py-6"
+            style={cardTextureStyle}
+          >
+            <div className="mb-2 font-caveat text-2xl leading-none text-[#b45309]">In Brief</div>
+            <p className="font-kalam text-[1.2rem] leading-relaxed text-[#2a190f] sm:text-[1.35rem]">
+              Surya is the Vedic significator of the soul, vitality, and the father. It governs leadership, willpower, recognition, and the heart. Devotees seek Surya&apos;s blessings for confidence, clarity of purpose, and dharmic authority in their lives.
+            </p>
+          </div>
+        </aside>
 
         <section
           className="relative overflow-hidden"
@@ -1288,7 +1293,7 @@ export default function SunPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className="mt-1 text-[#b45309]">{iconSvg('faq', 'h-6 w-6')}</div>
-                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</div>
+                        <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#b45309]">
                         <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">
