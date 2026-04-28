@@ -669,16 +669,18 @@ export default function RahuPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#ddd6fe]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat text-[5.8rem] leading-[0.88] text-[#c4b5fd] drop-shadow-[0_0_34px_rgba(196,181,253,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                  Rahu
+                <h1 className="font-caveat leading-[0.88]">
+                  <span className="block text-[5.8rem] text-[#c4b5fd] drop-shadow-[0_0_34px_rgba(196,181,253,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
+                    Rahu
+                  </span>
+                  <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
+                    The Shadow of Desire
+                  </span>
                 </h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#ede9fe] sm:text-4xl">राहु</div>
                   <div className="font-kalam text-2xl text-[#ddd6fe] sm:text-3xl">(North Node)</div>
                 </div>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                  The Shadow of Desire
-                </h2>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
                   <p>Rahu drives our <Highlight>ambition</Highlight>, <Highlight>illusion</Highlight></p>
@@ -724,6 +726,21 @@ export default function RahuPage() {
             </div>
           </div>
         </section>
+
+        <aside
+          aria-label="Quick summary of Rahu"
+          className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-10"
+        >
+          <div
+            className="rounded-[24px] border border-[#8c6e47]/25 px-6 py-5 shadow-[0_10px_30px_rgba(64,40,18,0.10)] sm:px-8 sm:py-6"
+            style={cardTextureStyle}
+          >
+            <div className="mb-2 font-caveat text-2xl leading-none text-[#5b21b6]">In Brief</div>
+            <p className="font-kalam text-[1.2rem] leading-relaxed text-[#2a190f] sm:text-[1.35rem]">
+              Rahu is the North Node of the Moon, the shadow lord of ambition, illusion, and transformation. It governs foreign influence, technology, fame, and unconventional success. Devotees seek Rahu&apos;s blessings for worldly mastery and discernment of illusion from truth.
+            </p>
+          </div>
+        </aside>
 
         <section
           className="relative overflow-hidden"
@@ -1014,14 +1031,26 @@ export default function RahuPage() {
                 <ParchmentCard rotate="lg:rotate-[0.4deg]">
                   <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Friends and Enemies</h3>
                   <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#5b21b6] via-[#a78bfa] to-transparent" />
-                  <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#2a190f]">
-                    <div><span className="font-semibold text-[#5b21b6]">Friends:</span> Saturn (Shani), Venus (Shukra), Mercury (Budh)</div>
-                    <div><span className="font-semibold text-[#5b21b6]">Enemies:</span> Sun (Surya), Moon (Chandra), Mars (Mangala)</div>
-                    <div><span className="font-semibold text-[#5b21b6]">Neutral:</span> Jupiter (Guru)</div>
-                    <div className="pt-1 italic text-[#2a190f]/80">
-                      Friendships shape how planets cooperate or compete. Rahu&apos;s relationships vary across lineages.
-                    </div>
-                  </div>
+                  <table className="mt-4 w-full border-collapse font-kalam text-lg leading-relaxed text-[#2a190f]">
+                    <caption className="sr-only">Planetary relationships of Rahu in Vedic astrology</caption>
+                    <tbody>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#5b21b6]">Friends</th>
+                        <td className="py-1 align-top">Saturn (Shani), Venus (Shukra), Mercury (Budh)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#5b21b6]">Enemies</th>
+                        <td className="py-1 align-top">Sun (Surya), Moon (Chandra), Mars (Mangala)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#5b21b6]">Neutral</th>
+                        <td className="py-1 align-top">Jupiter (Guru)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p className="mt-3 font-kalam text-lg italic leading-relaxed text-[#2a190f]/80">
+                    Friendships shape how planets cooperate or compete. Rahu&apos;s relationships vary across lineages.
+                  </p>
                 </ParchmentCard>
 
                 <ParchmentCard rotate="lg:-rotate-[0.35deg]">
@@ -1159,7 +1188,7 @@ export default function RahuPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className="mt-1 text-[#5b21b6]">{iconSvg('faq', 'h-6 w-6')}</div>
-                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</div>
+                        <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#5b21b6]">
                         <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">

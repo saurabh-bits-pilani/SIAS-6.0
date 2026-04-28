@@ -30,7 +30,7 @@ const PAGE_PARCHMENT_URL =
 
 const PAGE_TITLE = 'Ketu, The Light of Detachment | Soul Infinity';
 const PAGE_DESCRIPTION =
-  "Discover Ketu, the South Node of the Moon and shadow lord of liberation, intuition, and spiritual release. Mantras, gemstone (Cat's Eye), remedies, and Vedic traditions for awakening Ketu's wisdom in your life.";
+  "Discover Ketu, the South Node of the Moon and shadow lord of liberation, moksha, and intuition. Mantras, gemstone (Cat's Eye), and Vedic remedies.";
 const PAGE_KEYWORDS =
   "ketu, south node, vedic astrology, ketu mantra, ketu remedies, cat's eye, lehsunia, vaiduryam, chhaya graha, shadow planet, moksha, soul infinity";
 const PAGE_URL = `${SITE_ORIGIN}/planets/ketu`;
@@ -671,16 +671,18 @@ export default function KetuPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#e5e7eb]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat text-[5.8rem] leading-[0.88] text-[#d1d5db] drop-shadow-[0_0_34px_rgba(209,213,219,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                  Ketu
+                <h1 className="font-caveat leading-[0.88]">
+                  <span className="block text-[5.8rem] text-[#d1d5db] drop-shadow-[0_0_34px_rgba(209,213,219,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
+                    Ketu
+                  </span>
+                  <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
+                    The Light of Detachment
+                  </span>
                 </h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#f3f4f6] sm:text-4xl">केतु</div>
                   <div className="font-kalam text-2xl text-[#e5e7eb] sm:text-3xl">(South Node)</div>
                 </div>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                  The Light of Detachment
-                </h2>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
                   <p>Ketu reveals our <Highlight>liberation</Highlight>, <Highlight>detachment</Highlight></p>
@@ -726,6 +728,21 @@ export default function KetuPage() {
             </div>
           </div>
         </section>
+
+        <aside
+          aria-label="Quick summary of Ketu"
+          className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-10"
+        >
+          <div
+            className="rounded-[24px] border border-[#8c6e47]/25 px-6 py-5 shadow-[0_10px_30px_rgba(64,40,18,0.10)] sm:px-8 sm:py-6"
+            style={cardTextureStyle}
+          >
+            <div className="mb-2 font-caveat text-2xl leading-none text-[#4b5563]">In Brief</div>
+            <p className="font-kalam text-[1.2rem] leading-relaxed text-[#2a190f] sm:text-[1.35rem]">
+              Ketu is the South Node of the Moon, the shadow lord of liberation, intuition, and detachment. It governs spirituality, moksha, past-life mastery, and sudden release. Devotees seek Ketu&apos;s blessings for awakening, freedom, and spiritual depth.
+            </p>
+          </div>
+        </aside>
 
         <section
           className="relative overflow-hidden"
@@ -1016,14 +1033,26 @@ export default function KetuPage() {
                 <ParchmentCard rotate="lg:rotate-[0.4deg]">
                   <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Friends and Enemies</h3>
                   <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#4b5563] via-[#9ca3af] to-transparent" />
-                  <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#2a190f]">
-                    <div><span className="font-semibold text-[#4b5563]">Friends:</span> Mars (Mangala), Jupiter (Guru)</div>
-                    <div><span className="font-semibold text-[#4b5563]">Enemies:</span> Sun (Surya), Moon (Chandra), Mercury (Budh)</div>
-                    <div><span className="font-semibold text-[#4b5563]">Neutral:</span> Venus (Shukra), Saturn (Shani)</div>
-                    <div className="pt-1 italic text-[#2a190f]/80">
-                      Friendships shape how planets cooperate. Ketu&apos;s relationships vary across lineages.
-                    </div>
-                  </div>
+                  <table className="mt-4 w-full border-collapse font-kalam text-lg leading-relaxed text-[#2a190f]">
+                    <caption className="sr-only">Planetary relationships of Ketu in Vedic astrology</caption>
+                    <tbody>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#4b5563]">Friends</th>
+                        <td className="py-1 align-top">Mars (Mangala), Jupiter (Guru)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#4b5563]">Enemies</th>
+                        <td className="py-1 align-top">Sun (Surya), Moon (Chandra), Mercury (Budh)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#4b5563]">Neutral</th>
+                        <td className="py-1 align-top">Venus (Shukra), Saturn (Shani)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p className="mt-3 font-kalam text-lg italic leading-relaxed text-[#2a190f]/80">
+                    Friendships shape how planets cooperate. Ketu&apos;s relationships vary across lineages.
+                  </p>
                 </ParchmentCard>
 
                 <ParchmentCard rotate="lg:-rotate-[0.35deg]">
@@ -1161,7 +1190,7 @@ export default function KetuPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className="mt-1 text-[#4b5563]">{iconSvg('faq', 'h-6 w-6')}</div>
-                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</div>
+                        <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#4b5563]">
                         <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">

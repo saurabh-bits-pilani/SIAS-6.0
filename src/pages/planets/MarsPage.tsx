@@ -708,16 +708,18 @@ export default function MarsPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#f3c9a6]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat text-[5.8rem] leading-[0.98] text-[#ef4444] drop-shadow-[0_0_34px_rgba(220,38,38,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                  Mangala
+                <h1 className="font-caveat leading-[0.98]">
+                  <span className="block text-[5.8rem] text-[#ef4444] drop-shadow-[0_0_34px_rgba(220,38,38,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
+                    Mangala
+                  </span>
+                  <span className="mt-4 block text-4xl leading-none text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[4rem]">
+                    The Warrior of Energy
+                  </span>
                 </h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fef2f2] sm:text-4xl">मङ्गल</div>
                   <div className="font-kalam text-2xl text-[#fecaca] sm:text-3xl">(Mars)</div>
                 </div>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[4rem]">
-                  the warrior of energy
-                </h2>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] [text-shadow:0_3px_10px_rgba(0,0,0,0.34)] sm:text-[2.15rem]">
                   <p>Mangala fuels our <Highlight>courage</Highlight>, <Highlight>strength</Highlight></p>
@@ -764,6 +766,21 @@ export default function MarsPage() {
             </div>
           </div>
         </section>
+
+        <aside
+          aria-label="Quick summary of Mangala"
+          className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-10"
+        >
+          <div
+            className="rounded-[24px] border border-[#8c6e47]/25 px-6 py-5 shadow-[0_10px_30px_rgba(64,40,18,0.10)] sm:px-8 sm:py-6"
+            style={cardTextureStyle}
+          >
+            <div className="mb-2 font-caveat text-2xl leading-none text-[#991b1b]">In Brief</div>
+            <p className="font-kalam text-[1.2rem] leading-relaxed text-[#2a190f] sm:text-[1.35rem]">
+              Mangala is the Vedic significator of courage, energy, and action. It governs discipline, warrior spirit, real estate, and physical strength. Devotees seek Mangala&apos;s blessings for bravery, victory over enemies, and decisive momentum.
+            </p>
+          </div>
+        </aside>
 
         <section
           className="relative overflow-hidden"
@@ -1013,14 +1030,26 @@ export default function MarsPage() {
                 <ParchmentCard rotate="lg:rotate-[0.4deg]">
                   <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Friends and Enemies</h3>
                   <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#991b1b] via-[#ef4444] to-transparent" />
-                  <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#2a190f]">
-                    <div><span className="font-semibold text-[#991b1b]">Friends:</span> Sun (Surya), Moon (Chandra), Jupiter (Guru)</div>
-                    <div><span className="font-semibold text-[#991b1b]">Enemy:</span> Mercury (Budh)</div>
-                    <div><span className="font-semibold text-[#991b1b]">Neutral:</span> Venus (Shukra), Saturn (Shani)</div>
-                    <div className="pt-1 italic text-[#2a190f]/80">
-                      Friendships shape how planets cooperate or compete in the chart.
-                    </div>
-                  </div>
+                  <table className="mt-4 w-full border-collapse font-kalam text-lg leading-relaxed text-[#2a190f]">
+                    <caption className="sr-only">Planetary relationships of Mangala in Vedic astrology</caption>
+                    <tbody>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#991b1b]">Friends</th>
+                        <td className="py-1 align-top">Sun (Surya), Moon (Chandra), Jupiter (Guru)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#991b1b]">Enemy</th>
+                        <td className="py-1 align-top">Mercury (Budh)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#991b1b]">Neutral</th>
+                        <td className="py-1 align-top">Venus (Shukra), Saturn (Shani)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p className="mt-3 font-kalam text-lg italic leading-relaxed text-[#2a190f]/80">
+                    Friendships shape how planets cooperate or compete in the chart.
+                  </p>
                 </ParchmentCard>
 
                 <ParchmentCard rotate="lg:-rotate-[0.35deg]">
@@ -1213,7 +1242,7 @@ export default function MarsPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className="mt-1 text-[#991b1b]">{iconSvg('faq', 'h-6 w-6')}</div>
-                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</div>
+                        <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#991b1b]">
                         <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">
