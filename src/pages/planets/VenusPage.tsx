@@ -672,16 +672,18 @@ export default function VenusPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#fbcfe8]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat text-[5.8rem] leading-[0.88] text-[#fbcfe8] drop-shadow-[0_0_34px_rgba(249,168,212,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                  Shukra
+                <h1 className="font-caveat leading-[0.88]">
+                  <span className="block text-[5.8rem] text-[#fbcfe8] drop-shadow-[0_0_34px_rgba(249,168,212,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
+                    Shukra
+                  </span>
+                  <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
+                    The Lord of Beauty and Refinement
+                  </span>
                 </h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fdf2f8] sm:text-4xl">शुक्र</div>
                   <div className="font-kalam text-2xl text-[#fbcfe8] sm:text-3xl">(Venus)</div>
                 </div>
-                <h2 className="mt-4 font-caveat text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                  The Lord of Beauty and Refinement
-                </h2>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
                   <p>Shukra blesses our <Highlight>love</Highlight>, <Highlight>beauty</Highlight></p>
@@ -727,6 +729,21 @@ export default function VenusPage() {
             </div>
           </div>
         </section>
+
+        <aside
+          aria-label="Quick summary of Shukra"
+          className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-10"
+        >
+          <div
+            className="rounded-[24px] border border-[#8c6e47]/25 px-6 py-5 shadow-[0_10px_30px_rgba(64,40,18,0.10)] sm:px-8 sm:py-6"
+            style={cardTextureStyle}
+          >
+            <div className="mb-2 font-caveat text-2xl leading-none text-[#9d174d]">In Brief</div>
+            <p className="font-kalam text-[1.2rem] leading-relaxed text-[#2a190f] sm:text-[1.35rem]">
+              Shukra is the Vedic significator of love, beauty, art, and refinement. It governs marriage, luxury, creativity, and relationships. Devotees seek Shukra&apos;s blessings for harmonious partnerships, artistic talent, and refined living.
+            </p>
+          </div>
+        </aside>
 
         <section
           className="relative overflow-hidden"
@@ -1017,14 +1034,26 @@ export default function VenusPage() {
                 <ParchmentCard rotate="lg:rotate-[0.4deg]">
                   <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Friends and Enemies</h3>
                   <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
-                  <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#2a190f]">
-                    <div><span className="font-semibold text-[#9d174d]">Friends:</span> Mercury (Budh), Saturn (Shani)</div>
-                    <div><span className="font-semibold text-[#9d174d]">Enemies:</span> Sun (Surya), Moon (Chandra)</div>
-                    <div><span className="font-semibold text-[#9d174d]">Neutral:</span> Mars (Mangala), Jupiter (Guru)</div>
-                    <div className="pt-1 italic text-[#2a190f]/80">
-                      Friendships shape how planets cooperate or compete in the chart.
-                    </div>
-                  </div>
+                  <table className="mt-4 w-full border-collapse font-kalam text-lg leading-relaxed text-[#2a190f]">
+                    <caption className="sr-only">Planetary relationships of Shukra in Vedic astrology</caption>
+                    <tbody>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#9d174d]">Friends</th>
+                        <td className="py-1 align-top">Mercury (Budh), Saturn (Shani)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#9d174d]">Enemies</th>
+                        <td className="py-1 align-top">Sun (Surya), Moon (Chandra)</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#9d174d]">Neutral</th>
+                        <td className="py-1 align-top">Mars (Mangala), Jupiter (Guru)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p className="mt-3 font-kalam text-lg italic leading-relaxed text-[#2a190f]/80">
+                    Friendships shape how planets cooperate or compete in the chart.
+                  </p>
                 </ParchmentCard>
 
                 <ParchmentCard rotate="lg:-rotate-[0.35deg]">
@@ -1163,7 +1192,7 @@ export default function VenusPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className="mt-1 text-[#9d174d]">{iconSvg('faq', 'h-6 w-6')}</div>
-                        <div className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</div>
+                        <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#9d174d]">
                         <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">
