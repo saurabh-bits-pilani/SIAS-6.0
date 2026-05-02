@@ -43,7 +43,7 @@ interface SchemaMarkupProps {
   /**
    * Visible FAQ Q&A list. When passed on `service-detail`, a FAQPage schema
    * is emitted alongside the Service schema. Answers MUST be visibly
-   * rendered on the page (Google policy) — these are sourced from
+   * rendered on the page (Google policy), these are sourced from
    * services-content.ts and rendered in the accordion/FAQ section.
    */
   serviceFaqs?: ReadonlyArray<{ question: string; answer: string }>;
@@ -57,7 +57,7 @@ interface SchemaMarkupProps {
 
 /**
  * Base entities emitted on every page (so crawlers can resolve @id references
- * no matter which page they land on first). Keep this set minimal — just
+ * no matter which page they land on first). Keep this set minimal, just
  * the global identity graph. Page-specific schemas are appended per `type`.
  */
 function baseEntities(): JsonLd[] {
@@ -76,6 +76,11 @@ function schemasForType(props: SchemaMarkupProps): JsonLd[] {
     case 'home':
       // Home gets only the base identity graph + optional breadcrumbs.
       // (No BreadcrumbList for the root itself.)
+      // FAQPage is emitted only when serviceFaqs is passed, signalling the
+      // caller has visibly rendered the same Q&As on the page (Google policy).
+      if (props.serviceFaqs && props.serviceFaqs.length > 0) {
+        out.push(getFaqPageSchemaFromList(props.serviceFaqs));
+      }
       break;
 
     case 'services-list':
@@ -165,7 +170,7 @@ function schemasForType(props: SchemaMarkupProps): JsonLd[] {
 
     case 'contact':
       out.push(getContactPageSchema());
-      // FAQPage emitted only here — this is the only page where the 5 Q&As
+      // FAQPage emitted only here, this is the only page where the 5 Q&As
       // are visibly rendered (see Contact.tsx). Emitting FAQPage on pages
       // without visible Q&As risks a Google manual action.
       out.push(getFaqPageSchema());
@@ -194,7 +199,7 @@ function schemasForType(props: SchemaMarkupProps): JsonLd[] {
     case 'panchang':
       out.push(
         getWebPageSchema({
-          name: 'Daily Panchang — Tithi, Nakshatra, Yoga, Karana',
+          name: 'Daily Panchang, Tithi, Nakshatra, Yoga, Karana',
           description:
             'Daily Panchang with Tithi, Nakshatra, Yoga, Karana, sunrise and sunset timings. A traditional Hindu calendar reference for auspicious timing.',
           url: '/panchang',

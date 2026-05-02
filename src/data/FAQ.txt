@@ -18,7 +18,7 @@
     },
     {
       "question": "What kind of remedies can I expect?",
-      "answer": "Soul Infinity Astro Solution may recommend mantras, meditation practices, gem suggestions, rituals, or simple lifestyle changes—each tailored to your personal chart and needs."
+      "answer": "Soul Infinity Astro Solution may recommend mantras, meditation practices, gem suggestions, rituals, or simple lifestyle changes, each tailored to your personal chart and needs."
     },
     {
       "question": "What are the important mantras recommended by Soul Infinity Astro Solution?",

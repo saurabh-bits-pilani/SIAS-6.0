@@ -4,7 +4,7 @@ import reviewsData from '../data/google-reviews.json';
  * Renders the Google Reviews widget on the homepage. Data is read
  * statically from src/data/google-reviews.json at build time (regenerated
  * daily by scripts/fetch-google-reviews.mjs) so reviews are part of the
- * initial prerendered HTML — no client-side API calls, no hydration wait.
+ * initial prerendered HTML, no client-side API calls, no hydration wait.
  *
  * Display requirements per Google Places API TOS that this component
  * satisfies:
@@ -59,7 +59,7 @@ function avatarColor(name: string): string {
 }
 
 function GoogleGIcon({ className = 'w-4 h-4' }: { className?: string }) {
-  // Official Google G monogram — 4 brand colours.
+  // Official Google G monogram, 4 brand colours.
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
       <path
@@ -84,7 +84,7 @@ function GoogleGIcon({ className = 'w-4 h-4' }: { className?: string }) {
 
 function Stars({ rating, size = 'w-4 h-4' }: { rating: number; size?: string }) {
   // Render 5 stars, filling gold up to `rating`. Half-stars rounded for a
-  // clean visual — matches how Google's own widget displays ratings.
+  // clean visual, matches how Google's own widget displays ratings.
   const rounded = Math.round(rating);
   return (
     <span
@@ -114,7 +114,7 @@ interface AvatarProps {
 /**
  * Google Places API (New) `authorAttribution.photoUri` values are served
  * from lh3.googleusercontent.com with strict CORS that blocks cross-origin
- * <img> loads on most setups — browsers render a broken-image icon. We
+ * <img> loads on most setups, browsers render a broken-image icon. We
  * deliberately ignore `authorPhotoUrl` from the snapshot and always render
  * a coloured-initial circle. The JSON retains the field for forward-compat
  * if Google ever relaxes the policy.

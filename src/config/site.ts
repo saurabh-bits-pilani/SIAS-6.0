@@ -1,21 +1,15 @@
 /**
- * Central site configuration — single source of truth for canonical URL
+ * Central site configuration, single source of truth for canonical URL
  * and deploy environment.
  *
  * Env vars:
- *   VERCEL_ENV    = "production" | "preview" | "development"   — Vercel-injected,
- *                                                                 authoritative when
- *                                                                 present. Preview
- *                                                                 and development
- *                                                                 both mean staging.
- *   VITE_SITE_ENV = "staging" | "production"                  — legacy fallback
- *                                                                 for non-Vercel
- *                                                                 builds (local dev,
- *                                                                 CI previews).
- *   VITE_SITE_URL = canonical origin                            — used in all
- *                                                                 schemas, canonicals,
- *                                                                 OG URLs, and
- *                                                                 sitemap locs.
+ *   VERCEL_ENV    = "production" | "preview" | "development". Vercel-injected,
+ *                   authoritative when present. Preview and development both
+ *                   mean staging.
+ *   VITE_SITE_ENV = "staging" | "production". Legacy fallback for non-Vercel
+ *                   builds (local dev, CI previews).
+ *   VITE_SITE_URL = canonical origin. Used in all schemas, canonicals, OG
+ *                   URLs, and sitemap locs.
  *
  * Philosophy: SITE_URL is always the *canonical production origin* regardless
  * of which deployment is serving the request. Staging deploys point their
@@ -53,7 +47,7 @@ function readEnv(key: string): string | undefined {
 /**
  * Derive the deploy environment. VERCEL_ENV is authoritative when present;
  * VITE_SITE_ENV is the fallback for non-Vercel builds. The default is
- * 'staging' — safer to accidentally emit noindex than to accidentally
+ * 'staging', safer to accidentally emit noindex than to accidentally
  * index a staging deployment.
  */
 function deriveSiteEnv(): SiteEnv {
@@ -81,7 +75,7 @@ export const SITE_URL: string = (() => {
   return candidate.replace(/\/$/, '');
 })();
 
-/** True when the current deployment is staging — used to emit noindex. */
+/** True when the current deployment is staging, used to emit noindex. */
 export function shouldNoindex(): boolean {
   return IS_STAGING;
 }

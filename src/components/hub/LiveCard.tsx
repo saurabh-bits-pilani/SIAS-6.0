@@ -42,7 +42,7 @@ export default function LiveCard({
     <Link
       to={href}
       role="listitem"
-      aria-label={`${title} — now live`}
+      aria-label={`${title}, now live`}
       className={`group relative block rounded-2xl border-2 bg-white px-6 py-10 text-center cursor-pointer select-none transition-all duration-200 hover:-translate-y-1 ${accentClasses[accentColor]}`}
     >
       <span

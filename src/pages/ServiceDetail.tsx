@@ -88,7 +88,7 @@ const ServiceDetail = () => {
       'bnn': {
         title: 'BNN (Bhrigu Nandi Nadi)',
         description:
-          'Compact predictive stream from the Sage Bhrigu lineage — known for tight event timing.',
+          'Compact predictive stream from the Sage Bhrigu lineage, known for tight event timing.',
         longDescription:
           'Bhrigu Nandi Nadi reads planetary karakas and Jupiter as the timer for event-specific timing. Saurabh uses it alongside Parashari and KP for cross-verified forecasting.',
         duration: '90-120 minutes',
@@ -127,7 +127,7 @@ const ServiceDetail = () => {
       'kp-astrology': {
         title: 'KP Astrology',
         description:
-          'Krishnamurti Paddhati — scientific astrology with precise timing and yes/no clarity.',
+          'Krishnamurti Paddhati, scientific astrology with precise timing and yes/no clarity.',
         longDescription:
           'KP Astrology, developed by Prof. K.S. Krishnamurti, uses sub-lord theory and ruling planets for precise event timing and direct answers.',
         duration: '75-90 minutes',
@@ -219,7 +219,7 @@ const ServiceDetail = () => {
           'Clarity on primary and substitute stones',
           'Classical wearing instructions',
           'Planetary energisation mantras',
-          'No conflict of interest — we do not sell stones',
+          'No conflict of interest, we do not sell stones',
           'Honest recommendations including "no stone needed"',
           'Safe guidance on stones like Blue Sapphire',
         ],
@@ -248,7 +248,7 @@ const ServiceDetail = () => {
         description:
           'Intuitive card readings to reflect current dynamics and decisions with clarity.',
         longDescription:
-          'A Rider Waite-based tarot reading treats the cards as a mirror for the decision you are already making — focused, reflective, and actionable.',
+          'A Rider Waite-based tarot reading treats the cards as a mirror for the decision you are already making, focused, reflective, and actionable.',
         duration: '45-60 minutes',
         rating: 4.9,
         clients: 1500,
@@ -688,7 +688,7 @@ const ServiceDetail = () => {
             >
               <img
                 src={currentService.image}
-                alt={`${currentService.title} — ${content?.primaryKeyword ?? categoryNames[category]} by Saurabh Jain`}
+                alt={`${currentService.title}, ${content?.primaryKeyword ?? categoryNames[category]} by Saurabh Jain`}
                 width="1200"
                 height="384"
                 fetchpriority="high"
@@ -735,7 +735,7 @@ const ServiceDetail = () => {
                     </blockquote>
                     {content.whatIs.shloka.source && (
                       <figcaption className="text-xs text-gray-500 mt-2">
-                        — {content.whatIs.shloka.source}
+                        {content.whatIs.shloka.source}
                       </figcaption>
                     )}
                   </figure>
@@ -746,7 +746,7 @@ const ServiceDetail = () => {
                     <span lang="hi" className="font-semibold">
                       {content.whatIs.hindiPhrase.devanagari}
                     </span>{' '}
-                    ({content.whatIs.hindiPhrase.transliteration} —{' '}
+                    ({content.whatIs.hindiPhrase.transliteration},{' '}
                     {content.whatIs.hindiPhrase.english}).
                   </p>
                 )}
@@ -905,7 +905,7 @@ const ServiceDetail = () => {
           >
             <img
               src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
-              alt="Saurabh Jain — K.N. Rao Institute trained certified astrologer in Ahmedabad"
+              alt="Saurabh Jain, K.N. Rao Institute trained certified astrologer in Ahmedabad"
               width="96"
               height="96"
               loading="lazy"
@@ -932,7 +932,7 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* CTA Block — WhatsApp first */}
+      {/* CTA Block, WhatsApp first */}
       <section className="py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img
@@ -1095,7 +1095,7 @@ const ServiceDetail = () => {
                       <div className="relative h-48 overflow-hidden">
                         <img
                           src={image}
-                          alt={`${related.title} — ${related.categoryName} service`}
+                          alt={`${related.title}, ${related.categoryName} service`}
                           width="400"
                           height="192"
                           loading="lazy"

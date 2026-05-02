@@ -51,7 +51,7 @@ export const SCHEMA_IDS = {
   saurabhJain: `${SITE_ORIGIN}/#saurabh-jain`,
 } as const;
 
-/** Canonical NAP — update here if the business moves or rebrands. */
+/** Canonical NAP, update here if the business moves or rebrands. */
 export const BUSINESS_NAP = {
   legalName: 'Soul Infinity',
   tradingName: 'Soul Infinity Astro Solutions',
@@ -121,7 +121,7 @@ const openingHoursSpec = () => [
   },
 ];
 
-/** Person — Saurabh Jain. Referenced by LocalBusiness.founder & .employee. */
+/** Person, Saurabh Jain. Referenced by LocalBusiness.founder & .employee. */
 export function getPersonSaurabhSchema(): JsonLd {
   return {
     '@context': 'https://schema.org',
@@ -162,7 +162,7 @@ export function getPersonSaurabhSchema(): JsonLd {
       {
         '@type': 'EducationalOccupationalCredential',
         credentialCategory: 'certification',
-        name: 'Certified Professional Astrologer — K.N. Rao Institute',
+        name: 'Certified Professional Astrologer, K.N. Rao Institute',
       },
     ],
     knowsAbout: [
@@ -183,10 +183,17 @@ export function getPersonSaurabhSchema(): JsonLd {
     knowsLanguage: ['English', 'Hindi', 'Gujarati'],
     worksFor: { '@id': SCHEMA_IDS.localBusiness },
     address: postalAddress(),
+    sameAs: [
+      'https://www.soulinfinity.space',
+      'https://www.instagram.com/soulinfinity.astro',
+      'https://www.linkedin.com/in/saurabhjain-astrologer',
+      'https://www.youtube.com/@soulinfinity',
+      'https://g.page/soul-infinity-astro-solutions',
+    ],
   };
 }
 
-/** Organization — the umbrella brand entity. */
+/** Organization, the umbrella brand entity. */
 export function getOrganizationSchema(): JsonLd {
   return {
     '@context': 'https://schema.org',
@@ -369,7 +376,7 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
     categoryName: 'Vedic Astrology',
     title: 'Parashari Jyotish',
     description:
-      'Classical Vedic astrology based on the teachings of Sage Parashara — insights into life path, karma, and spiritual evolution.',
+      'Classical Vedic astrology based on the teachings of Sage Parashara, insights into life path, karma, and spiritual evolution.',
     longDescription:
       'The most comprehensive Vedic astrology system, derived from Sage Parashara. Birth-chart analysis for personality, relationships, career, health, and spiritual growth.',
     seoTitle: 'Parashari Jyotish Consultation in Ahmedabad | Birth Chart Analysis',
@@ -399,7 +406,7 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
     categoryName: 'Vedic Astrology',
     title: 'KP Astrology',
     description:
-      'Krishnamurti Paddhati — a precise, scientific approach to astrological timing and prediction.',
+      'Krishnamurti Paddhati, a precise, scientific approach to astrological timing and prediction.',
     longDescription:
       'Developed by Prof. K.S. Krishnamurti, KP removes ambiguity and provides clear, time-bound predictions using sub-lord theory.',
     seoTitle: 'KP Astrology Consultation in Ahmedabad | Krishnamurti Paddhati Expert',
@@ -462,7 +469,7 @@ export const SERVICES_CATALOG: readonly ServiceEntry[] = [
     description:
       'Deep dive into astrological and spiritual symbols and their meaning in your life.',
     longDescription:
-      'Interprets the symbolic language of the universe — the signs that recur across your chart and your lived experience.',
+      'Interprets the symbolic language of the universe, the signs that recur across your chart and your lived experience.',
     seoTitle: 'Astrological Symbol Analysis in Ahmedabad - Soul Infinity',
     seoDescription:
       'Deep dive into astrological symbols and their meaning in your life. 60-min personalized session by Saurabh Jain in Ahmedabad or online.',
@@ -618,7 +625,7 @@ export function getServicesItemListSchema(): JsonLd {
 /* --------------------------- FAQs ---------------------------- */
 
 /**
- * Authoritative FAQ content — rendered on /contact. Do NOT emit FAQPage
+ * Authoritative FAQ content, rendered on /contact. Do NOT emit FAQPage
  * schema on pages that don't visibly show these Q&As: Google's FAQPage
  * rich-result guidelines require the answers to be present on the page.
  */
@@ -723,7 +730,7 @@ export function getAboutPageSchema(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    name: 'Our Cosmic Guide — Saurabh Jain',
+    name: 'Our Cosmic Guide, Saurabh Jain',
     url: `${SITE_ORIGIN}/cosmic-guide`,
     mainEntity: { '@id': SCHEMA_IDS.saurabhJain },
   };
@@ -751,7 +758,7 @@ export function getBlogSchema(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'Soul Infinity — Cosmic Wisdom Blog',
+    name: 'Soul Infinity, Cosmic Wisdom Blog',
     url: `${SITE_ORIGIN}/blog`,
     description:
       'Articles on Vedic astrology, spiritual growth, planetary wisdom, and cosmic insights by Saurabh Jain.',

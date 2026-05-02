@@ -8,7 +8,7 @@
  * Content is original. Keywords are woven in naturally (primary in H1 +
  * first 100 words, long-tails distributed 2–3 times). One authentic
  * Sanskrit shloka (where relevant) + 1–2 Hindi phrases in Devanagari with
- * transliteration and translation per page. Prices are never shown — all
+ * transliteration and translation per page. Prices are never shown, all
  * CTAs route to WhatsApp or phone for personalised quotes.
  */
 
@@ -38,15 +38,15 @@ export interface ServiceFaq {
 }
 
 export interface ServiceContent {
-  /** SEO H1 for the page — primary keyword front-loaded. */
+  /** SEO H1 for the page, primary keyword front-loaded. */
   h1: string;
   /** Primary keyword used in CTA heading + fallback hero lede. */
   primaryKeyword: string;
   /** Short one-liner for the hero section (~20 words). */
   heroTagline: string;
-  /** Opening ~100-word paragraph — primary keyword in first 50 words. */
+  /** Opening ~100-word paragraph, primary keyword in first 50 words. */
   heroIntro: string;
-  /** "What is X?" section — origin + shloka + Hindi phrase (~180 words). */
+  /** "What is X?" section, origin + shloka + Hindi phrase (~180 words). */
   whatIs: {
     heading: string;
     paragraphs: readonly string[];
@@ -89,7 +89,7 @@ const PARASHARI: ServiceContent = {
   h1: 'Parashari Jyotish Consultation in Ahmedabad',
   primaryKeyword: 'Parashari Jyotish consultation Ahmedabad',
   heroTagline:
-    'Classical Vedic birth chart analysis rooted in Brihat Parashara Hora Shastra — precise, compassionate, and grounded in lived practice.',
+    'Classical Vedic birth chart analysis rooted in Brihat Parashara Hora Shastra, precise, compassionate, and grounded in lived practice.',
   heroIntro:
     "A Parashari Jyotish consultation in Ahmedabad with Saurabh Jain offers a full, classical reading of your Janma Kundli drawn from the Brihat Parashara Hora Shastra. As a K.N. Rao Institute trained Vedic astrologer in Ahmedabad, Saurabh brings a technical mind (M.Tech, MBA, M.Phil) and over fifteen years of disciplined study to every chart. Whether you are weighing a career shift, decoding a relationship, or trying to make sense of a dasha period that feels unusually heavy, this birth chart analysis in Ahmedabad is designed to translate cosmic patterns into decisions you can actually make. Online astrology consultation India-wide is available by video call.",
   whatIs: {
@@ -114,8 +114,8 @@ const PARASHARI: ServiceContent = {
   howItWorks: {
     heading: 'How a Parashari Jyotish Reading Works',
     paragraphs: [
-      "Your kundli reading in Ahmedabad begins with exact birth details — date, time, and place — used to cast the Rashi chart, Navamsa, and the relevant divisional charts. Saurabh then studies planetary positions by house and sign, examines aspects (drishti), identifies yoga formations such as Raja Yoga, Dhana Yoga, Gaja Kesari, and Neecha Bhanga, and weighs strengths using Shadbala and Ashtakavarga bindus.",
-      "Timing is analysed through the Vimshottari Dasha system — a 120-year cycle of planetary periods and sub-periods (antardasha, pratyantardasha) that reveal when a yoga or dosha is likely to deliver its result. Transits (gochara) overlay the dasha picture for fine-grained forecasting. Remedies, when suggested, are drawn from classical texts: mantra, charity (daan), temple visits, or gemstone — never fear-based.",
+      "Your kundli reading in Ahmedabad begins with exact birth details, date, time, and place, used to cast the Rashi chart, Navamsa, and the relevant divisional charts. Saurabh then studies planetary positions by house and sign, examines aspects (drishti), identifies yoga formations such as Raja Yoga, Dhana Yoga, Gaja Kesari, and Neecha Bhanga, and weighs strengths using Shadbala and Ashtakavarga bindus.",
+      "Timing is analysed through the Vimshottari Dasha system, a 120-year cycle of planetary periods and sub-periods (antardasha, pratyantardasha) that reveal when a yoga or dosha is likely to deliver its result. Transits (gochara) overlay the dasha picture for fine-grained forecasting. Remedies, when suggested, are drawn from classical texts: mantra, charity (daan), temple visits, or gemstone, never fear-based.",
     ],
   },
   problemsAddressed: {
@@ -137,13 +137,13 @@ const PARASHARI: ServiceContent = {
     heading: 'Your Session with Saurabh Jain',
     paragraphs: [
       "Sessions run 60–90 minutes. Please share exact birth date, time (hour and minute), and birth place (city and country) at least 24 hours in advance so your chart can be prepared with care. Consultations are offered in English and Hindi.",
-      "You can consult in person at our Ahmedabad centre in Adani Shantigram, Khodiyar, or online via video call anywhere in India or worldwide. Birth details and written notes can be shared over WhatsApp for convenience. A follow-up window of about thirty days is held open for clarifying questions — because a reading often makes more sense after you have lived with it for a few weeks.",
+      "You can consult in person at our Ahmedabad centre in Adani Shantigram, Khodiyar, or online via video call anywhere in India or worldwide. Birth details and written notes can be shared over WhatsApp for convenience. A follow-up window of about thirty days is held open for clarifying questions, because a reading often makes more sense after you have lived with it for a few weeks.",
     ],
   },
   whySoulInfinity: {
     heading: 'Why Soul Infinity for Parashari Jyotish',
     paragraphs: [
-      "Saurabh Jain is a certified astrologer in Ahmedabad, trained at the K.N. Rao Institute — one of India's most respected schools of classical Jyotish. Over 200 clients have sat across from him with questions about career, marriage, health, and meaning, and the practice maintains a 4.9★ average across Google reviews. His approach blends classical rigour with the clarity of a technical mind; he will tell you what the chart shows and, importantly, what it does not. No fear-based pressure, no upsells on expensive rituals, no guarantees that astrology cannot honestly make.",
+      "Saurabh Jain is a certified astrologer in Ahmedabad, trained at the K.N. Rao Institute, one of India's most respected schools of classical Jyotish. Over 200 clients have sat across from him with questions about career, marriage, health, and meaning, and the practice maintains a 4.9★ average across Google reviews. His approach blends classical rigour with the clarity of a technical mind; he will tell you what the chart shows and, importantly, what it does not. No fear-based pressure, no upsells on expensive rituals, no guarantees that astrology cannot honestly make.",
     ],
   },
   cta: {
@@ -155,7 +155,7 @@ const PARASHARI: ServiceContent = {
     {
       question: 'What is Parashari Jyotish and how does it differ from Sun-sign astrology?',
       answer:
-        "Parashari Jyotish is the classical Vedic system from the Brihat Parashara Hora Shastra. It reads your entire birth chart — ascendant, nine planets across twelve houses, nakshatras, divisional charts, and dashas — rather than relying on a single Sun-sign column. This gives a far more specific and personal reading.",
+        "Parashari Jyotish is the classical Vedic system from the Brihat Parashara Hora Shastra. It reads your entire birth chart, ascendant, nine planets across twelve houses, nakshatras, divisional charts, and dashas, rather than relying on a single Sun-sign column. This gives a far more specific and personal reading.",
     },
     {
       question: 'How long is a typical Parashari Jyotish consultation in Ahmedabad?',
@@ -170,22 +170,22 @@ const PARASHARI: ServiceContent = {
     {
       question: 'What birth details do I need for a kundli reading?',
       answer:
-        "Exact date of birth, time of birth down to the minute, and place of birth (city, state, country). If your time is approximate, share the best available estimate — a brief rectification can often narrow it during the session.",
+        "Exact date of birth, time of birth down to the minute, and place of birth (city, state, country). If your time is approximate, share the best available estimate, a brief rectification can often narrow it during the session.",
     },
     {
       question: 'How accurate are predictions from Parashari Jyotish?',
       answer:
-        "Parashari Jyotish is probabilistic, not deterministic. With clean birth data and disciplined technique — especially Vimshottari Dasha analysis combined with transits — timing predictions can be strikingly accurate. Free will and effort remain the wildcard, as the classical texts themselves acknowledge.",
+        "Parashari Jyotish is probabilistic, not deterministic. With clean birth data and disciplined technique, especially Vimshottari Dasha analysis combined with transits, timing predictions can be strikingly accurate. Free will and effort remain the wildcard, as the classical texts themselves acknowledge.",
     },
     {
       question: 'Is Parashari Jyotish suitable for career and marriage timing?',
       answer:
-        "Yes — these are among the most common reasons clients book. The Dasamsa (D10) for career and Navamsa (D9) for marriage, read alongside the running dasha, give a reliable window for decisions like job changes or the right year for matrimonial search.",
+        "Yes, these are among the most common reasons clients book. The Dasamsa (D10) for career and Navamsa (D9) for marriage, read alongside the running dasha, give a reliable window for decisions like job changes or the right year for matrimonial search.",
     },
     {
       question: "How is Saurabh Jain's approach to Parashari Jyotish different?",
       answer:
-        "Saurabh combines K.N. Rao Institute training with an engineering and management background. That means classical technique delivered with structured clarity — no vague mysticism, no scare tactics, and a strong bias toward practical next steps you can actually act on.",
+        "Saurabh combines K.N. Rao Institute training with an engineering and management background. That means classical technique delivered with structured clarity, no vague mysticism, no scare tactics, and a strong bias toward practical next steps you can actually act on.",
     },
   ],
 };
@@ -194,14 +194,14 @@ const BNN: ServiceContent = {
   h1: 'Bhrigu Nandi Nadi (BNN) Astrology Consultation',
   primaryKeyword: 'Bhrigu Nandi Nadi astrology',
   heroTagline:
-    'Rare predictive stream from the Sage Bhrigu lineage — known for tight event timing and clear karmic pattern reading.',
+    'Rare predictive stream from the Sage Bhrigu lineage, known for tight event timing and clear karmic pattern reading.',
   heroIntro:
-    "Bhrigu Nandi Nadi astrology is a specialised predictive stream traditionally traced to Sage Bhrigu and preserved through nadi astrology consultation lineages. A BNN astrology online session with Saurabh Jain, a K.N. Rao Institute trained Vedic astrologer in Ahmedabad, uses a simplified yet remarkably precise method of reading planetary placements to surface BNN predictions timing for career, marriage, finance, and health events. As a certified astrologer Ahmedabad clients return to for second opinions on timing, Saurabh approaches BNN with the care it deserves — a tool of last clarity, not first spectacle.",
+    "Bhrigu Nandi Nadi astrology is a specialised predictive stream traditionally traced to Sage Bhrigu and preserved through nadi astrology consultation lineages. A BNN astrology online session with Saurabh Jain, a K.N. Rao Institute trained Vedic astrologer in Ahmedabad, uses a simplified yet remarkably precise method of reading planetary placements to surface BNN predictions timing for career, marriage, finance, and health events. As a certified astrologer Ahmedabad clients return to for second opinions on timing, Saurabh approaches BNN with the care it deserves, a tool of last clarity, not first spectacle.",
   whatIs: {
     heading: 'What is Bhrigu Nandi Nadi?',
     paragraphs: [
-      "Bhrigu Nandi Nadi (BNN) belongs to the wider Nadi astrology family, whose roots lie in the palm-leaf manuscripts authored by ancient seers — Sage Bhrigu being the one credited here. Unlike the classic palm-leaf readings at Tamil Nadi temples, BNN is a portable, chart-based technique: the astrologer works directly from your birth chart using a small set of rules around Jupiter and Ketu, dispositors, and planetary connections to indicate events and their approximate timing.",
-      "The system treats each planet as a karaka (significator) of specific life themes and reads their interaction with Jupiter — the timer — to say when an event matures. For the Bhrigu Nandi Nadi astrologer India community, this method is valued precisely because it is compact, reproducible, and event-oriented.",
+      "Bhrigu Nandi Nadi (BNN) belongs to the wider Nadi astrology family, whose roots lie in the palm-leaf manuscripts authored by ancient seers, Sage Bhrigu being the one credited here. Unlike the classic palm-leaf readings at Tamil Nadi temples, BNN is a portable, chart-based technique: the astrologer works directly from your birth chart using a small set of rules around Jupiter and Ketu, dispositors, and planetary connections to indicate events and their approximate timing.",
+      "The system treats each planet as a karaka (significator) of specific life themes and reads their interaction with Jupiter, the timer, to say when an event matures. For the Bhrigu Nandi Nadi astrologer India community, this method is valued precisely because it is compact, reproducible, and event-oriented.",
     ],
     shloka: {
       sanskrit: 'भृगुः सर्वज्ञो वेदवेदाङ्गपारगः।',
@@ -219,7 +219,7 @@ const BNN: ServiceContent = {
   howItWorks: {
     heading: 'How Bhrigu Nandi Nadi Works',
     paragraphs: [
-      "Saurabh casts your Rashi chart and identifies the karaka planet for each theme — marriage (Venus or Jupiter depending on gender), career (Saturn, Sun, Mars), children (Jupiter), and so on. He then examines Jupiter's position and aspects, Ketu's signal role, and the dispositors in play.",
+      "Saurabh casts your Rashi chart and identifies the karaka planet for each theme, marriage (Venus or Jupiter depending on gender), career (Saturn, Sun, Mars), children (Jupiter), and so on. He then examines Jupiter's position and aspects, Ketu's signal role, and the dispositors in play.",
       "Timing in BNN often reads from Jupiter's transit over specific points plus the running Vimshottari Dasha. An event matures when a planet meets its karaka through conjunction, aspect, or strong dispositor linkage, with Jupiter signalling the year. Remedies, if indicated, stay close to classical instructions: specific mantras, charity on designated weekdays, and simple temple practices. BNN is not treated as a party trick; when the chart does not speak clearly on a question, Saurabh will say so.",
     ],
   },
@@ -228,7 +228,7 @@ const BNN: ServiceContent = {
     intro: 'BNN predictions timing is most useful when you need a decision window, not a vague forecast:',
     items: [
       'Marriage timing and partner-type indications',
-      'Career turning points — job changes, promotions, entrepreneurship',
+      'Career turning points, job changes, promotions, entrepreneurship',
       'Business launch windows and expansion readiness',
       'Financial upswings, property acquisition, and loss periods',
       'Health themes and preventive awareness',
@@ -240,14 +240,14 @@ const BNN: ServiceContent = {
   session: {
     heading: 'Your Session with Saurabh Jain',
     paragraphs: [
-      "A BNN session runs around 90 minutes. Please provide exact birth date, time, and place. Unlike temple-based palm-leaf readings, no thumb impression or printed leaf is involved — BNN here is a chart-based Sage Bhrigu astrology reading, done live with you so every conclusion can be questioned and tested.",
+      "A BNN session runs around 90 minutes. Please provide exact birth date, time, and place. Unlike temple-based palm-leaf readings, no thumb impression or printed leaf is involved, BNN here is a chart-based Sage Bhrigu astrology reading, done live with you so every conclusion can be questioned and tested.",
       "Sessions are available in person in Ahmedabad or online via video call for clients anywhere in India and abroad. English and Hindi are both fine. A written summary of key timing windows is shared on WhatsApp after the call so you can return to it over the months the predictions unfold.",
     ],
   },
   whySoulInfinity: {
     heading: 'Why Soul Infinity for BNN',
     paragraphs: [
-      "BNN is often mis-sold as mysterious or miraculous. Saurabh Jain's approach is deliberately the opposite: a calm, step-by-step walk through the chart where you can see why the reading says what it says. Saurabh is K.N. Rao Institute trained and cross-checks BNN readings against Parashari and KP frameworks where relevant — so a timing prediction is not a single-method gamble. With a 4.9★ Google rating and 200+ consultations behind the practice, the work at Soul Infinity stays honest, pragmatic, and rooted in classical sources.",
+      "BNN is often mis-sold as mysterious or miraculous. Saurabh Jain's approach is deliberately the opposite: a calm, step-by-step walk through the chart where you can see why the reading says what it says. Saurabh is K.N. Rao Institute trained and cross-checks BNN readings against Parashari and KP frameworks where relevant, so a timing prediction is not a single-method gamble. With a 4.9★ Google rating and 200+ consultations behind the practice, the work at Soul Infinity stays honest, pragmatic, and rooted in classical sources.",
     ],
   },
   cta: {
@@ -274,22 +274,22 @@ const BNN: ServiceContent = {
     {
       question: 'What birth details are needed for BNN predictions timing?',
       answer:
-        "Exact date, time, and place of birth. If the birth time is unclear, share the closest estimate and an event history — Saurabh can do a short rectification where the chart supports it.",
+        "Exact date, time, and place of birth. If the birth time is unclear, share the closest estimate and an event history, Saurabh can do a short rectification where the chart supports it.",
     },
     {
       question: 'Is BNN suitable for marriage timing and career decisions?',
       answer:
-        "These are among the strongest applications. BNN reads the Jupiter and karaka signals to name a probable year — sometimes a narrower window — which is exactly what a big decision usually needs.",
+        "These are among the strongest applications. BNN reads the Jupiter and karaka signals to name a probable year, sometimes a narrower window, which is exactly what a big decision usually needs.",
     },
     {
       question: 'How is BNN different from palm-leaf Nadi astrology?',
       answer:
-        "Classical palm-leaf readings require you to visit a Nadi centre, provide a thumbprint, and have your leaf located. BNN is chart-based — the method attributed to the Sage Bhrigu tradition, but applied to your live birth chart in a consultation.",
+        "Classical palm-leaf readings require you to visit a Nadi centre, provide a thumbprint, and have your leaf located. BNN is chart-based, the method attributed to the Sage Bhrigu tradition, but applied to your live birth chart in a consultation.",
     },
     {
       question: "What makes a Bhrigu Nandi Nadi astrologer in India reliable?",
       answer:
-        "Transparency. A reliable BNN astrologer explains the reasoning, cross-checks against Parashari and transits, and does not hide behind mystique. Saurabh follows exactly this standard — trained at K.N. Rao Institute and visible in his reasoning throughout the session.",
+        "Transparency. A reliable BNN astrologer explains the reasoning, cross-checks against Parashari and transits, and does not hide behind mystique. Saurabh follows exactly this standard, trained at K.N. Rao Institute and visible in his reasoning throughout the session.",
     },
   ],
 };
@@ -298,14 +298,14 @@ const KP: ServiceContent = {
   h1: 'KP Astrology Consultation in Ahmedabad',
   primaryKeyword: 'KP astrology consultation Ahmedabad',
   heroTagline:
-    "Krishnamurti Paddhati — precise timing astrology built for yes/no questions, event dates, and clean decisions.",
+    "Krishnamurti Paddhati, precise timing astrology built for yes/no questions, event dates, and clean decisions.",
   heroIntro:
     "A KP astrology consultation in Ahmedabad with Saurabh Jain uses Krishnamurti Paddhati, the twentieth-century refinement developed by Prof. K.S. Krishnamurti, to deliver precise timing astrology on real questions. As a Krishnamurti Paddhati expert and K.N. Rao Institute trained certified astrologer Ahmedabad residents trust, Saurabh applies the KP astrology sub-lord theory and ruling planets prediction method to produce direct, date-stamped answers. Whether in person at our Adani Shantigram centre or through online astrology consultation India-wide, KP is the method to choose when you want clarity rather than poetry.",
   whatIs: {
     heading: 'What is KP Astrology?',
     paragraphs: [
       "Krishnamurti Paddhati, developed by K.S. Krishnamurti in the 1960s, is an Indian adaptation that adopts the Placidus house system and Krishnamurti's own ayanamsa, and then introduces its defining innovation: the sub-lord. Each of the twenty-seven nakshatras is divided into nine uneven sub-divisions based on the Vimshottari Dasha proportions, and each sub is ruled by a planet whose tendencies override surface-level sign and house placements.",
-      "This K.S. Krishnamurti method produces a much finer grid than traditional systems. A house cusp sub-lord tells you whether a house will 'deliver' the matters it rules; a question's significators are filtered through their sub-lords to weigh yes or no; and timing is read via the Dasha-Bhukti-Antara sub-lord chain plus transits. The result is an astrology that makes falsifiable claims — and usually gets them right.",
+      "This K.S. Krishnamurti method produces a much finer grid than traditional systems. A house cusp sub-lord tells you whether a house will 'deliver' the matters it rules; a question's significators are filtered through their sub-lords to weigh yes or no; and timing is read via the Dasha-Bhukti-Antara sub-lord chain plus transits. The result is an astrology that makes falsifiable claims, and usually gets them right.",
     ],
     hindiPhrase: {
       devanagari: 'स्पष्ट उत्तर',
@@ -316,8 +316,8 @@ const KP: ServiceContent = {
   howItWorks: {
     heading: 'How KP Astrology Works',
     paragraphs: [
-      "For a life-long reading, Saurabh prepares your natal KP chart and reads significators for the houses governing your question. For a Horary (Prashna) KP chart, a random number between 1 and 249 is provided by the querent, and the chart is cast from that number's KP sub-lord — extraordinarily useful when birth time is unknown.",
-      "The sub-lord of the relevant cusp plus the significators decide yes or no. Timing is then derived from the ruling planets at the moment of question and the running Dasha-Bhukti-Antara chain. Because KP has a precise yes/no theory and a precise timing theory, its answers can be measured against reality — which is why the method has a serious research-oriented following across India.",
+      "For a life-long reading, Saurabh prepares your natal KP chart and reads significators for the houses governing your question. For a Horary (Prashna) KP chart, a random number between 1 and 249 is provided by the querent, and the chart is cast from that number's KP sub-lord, extraordinarily useful when birth time is unknown.",
+      "The sub-lord of the relevant cusp plus the significators decide yes or no. Timing is then derived from the ruling planets at the moment of question and the running Dasha-Bhukti-Antara chain. Because KP has a precise yes/no theory and a precise timing theory, its answers can be measured against reality, which is why the method has a serious research-oriented following across India.",
     ],
   },
   problemsAddressed: {
@@ -344,7 +344,7 @@ const KP: ServiceContent = {
   whySoulInfinity: {
     heading: 'Why Soul Infinity for KP Astrology',
     paragraphs: [
-      "Many astrologers mention KP; few apply the full sub-lord framework with discipline. Saurabh Jain is trained at K.N. Rao Institute, has fifteen-plus years of focused practice, and treats KP as a precise instrument — not a brand label. With over 200 clients and a 4.9★ Google rating, the practice stays grounded in what KP can and cannot do. No pressure rituals, no magical guarantees, and no confusion between the KP sub-lord theory and loose 'Krishnamurti-inspired' readings that skip the hard calculations.",
+      "Many astrologers mention KP; few apply the full sub-lord framework with discipline. Saurabh Jain is trained at K.N. Rao Institute, has fifteen-plus years of focused practice, and treats KP as a precise instrument, not a brand label. With over 200 clients and a 4.9★ Google rating, the practice stays grounded in what KP can and cannot do. No pressure rituals, no magical guarantees, and no confusion between the KP sub-lord theory and loose 'Krishnamurti-inspired' readings that skip the hard calculations.",
     ],
   },
   cta: {
@@ -371,7 +371,7 @@ const KP: ServiceContent = {
     {
       question: 'What if I do not know my exact birth time for KP?',
       answer:
-        "KP Horary solves precisely this problem. You pick a number from 1 to 249 at the start of the session and the chart is cast from that — no birth time required for that specific question.",
+        "KP Horary solves precisely this problem. You pick a number from 1 to 249 at the start of the session and the chart is cast from that, no birth time required for that specific question.",
     },
     {
       question: 'How accurate is precise timing astrology in KP?',
@@ -381,12 +381,12 @@ const KP: ServiceContent = {
     {
       question: 'Is KP suitable for career and marriage timing?',
       answer:
-        "Yes — these are core KP use-cases. Houses 6, 10, and 11 are read for career; houses 2, 7, and 11 for marriage. Sub-lords of these cusps and of the significators determine outcome and timing.",
+        "Yes, these are core KP use-cases. Houses 6, 10, and 11 are read for career; houses 2, 7, and 11 for marriage. Sub-lords of these cusps and of the significators determine outcome and timing.",
     },
     {
       question: "How is Saurabh Jain's approach to Krishnamurti Paddhati different?",
       answer:
-        "Saurabh stays close to K.S. Krishnamurti's original method and its ruling planets prediction rules, and cross-verifies with Parashari. You will see the working — significators, sub-lords, Dasha-Bhukti-Antara chain — not just the conclusion.",
+        "Saurabh stays close to K.S. Krishnamurti's original method and its ruling planets prediction rules, and cross-verifies with Parashari. You will see the working, significators, sub-lords, Dasha-Bhukti-Antara chain, not just the conclusion.",
     },
   ],
 };
@@ -395,7 +395,7 @@ const ASTRO_VASTU: ServiceContent = {
   h1: 'Astro Vastu Consultation in Ahmedabad',
   primaryKeyword: 'Astro Vastu consultation Ahmedabad',
   heroTagline:
-    'Your birth chart meets the architecture of your home — a dual diagnostic for prosperity, harmony, and health.',
+    'Your birth chart meets the architecture of your home, a dual diagnostic for prosperity, harmony, and health.',
   heroIntro:
     "An Astro Vastu consultation in Ahmedabad combines your Vedic birth chart with the ancient science of Vastu Shastra to deliver guidance rooted in both the cosmic and the built environment. Saurabh Jain, a K.N. Rao Institute trained Vastu Shastra astrologer and certified astrologer Ahmedabad families consult for home Vastu analysis Gujarat-wide, studies your chart alongside the planetary directions Vastu prescribes for your property. The result is an office Vastu consultation or home review that respects both your individual karma and the universal energetic rules of space. Online astrology consultation India-wide is also available through floor plan review.",
   whatIs: {
@@ -427,7 +427,7 @@ const ASTRO_VASTU: ServiceContent = {
       'Marital friction and harmony in the relationship corner',
       'Career stagnation and business-office dip in productivity',
       'Child-study and concentration zones',
-      'Property selection — whether a plot or flat suits your chart',
+      'Property selection, whether a plot or flat suits your chart',
       'Pre-construction planning for a new home or office',
     ],
   },
@@ -473,7 +473,7 @@ const ASTRO_VASTU: ServiceContent = {
     {
       question: 'Do I always need to break walls or do major renovation?',
       answer:
-        "Almost never. The majority of Vastu dosha remedies are non-structural — colour, placement, lighting, mirrors, plants, and specific yantras. Structural change is recommended only when a serious defect strongly aligns with a chart-level weakness.",
+        "Almost never. The majority of Vastu dosha remedies are non-structural, colour, placement, lighting, mirrors, plants, and specific yantras. Structural change is recommended only when a serious defect strongly aligns with a chart-level weakness.",
     },
     {
       question: 'Is Astro Vastu suitable for office and business premises?',
@@ -483,7 +483,7 @@ const ASTRO_VASTU: ServiceContent = {
     {
       question: 'Can Astro Vastu help before buying a property?',
       answer:
-        "Absolutely — this is one of its strongest uses. A pre-purchase review can flag serious defects that would be expensive to fix later, and can also confirm when a property suits your chart particularly well.",
+        "Absolutely, this is one of its strongest uses. A pre-purchase review can flag serious defects that would be expensive to fix later, and can also confirm when a property suits your chart particularly well.",
     },
   ],
 };
@@ -492,13 +492,13 @@ const GEM_STONE: ServiceContent = {
   h1: 'Gemstone Consultation in Ahmedabad',
   primaryKeyword: 'gemstone consultation Ahmedabad',
   heroTagline:
-    'Birth-chart-based navratna guidance — authentic, cautious, and never one-size-fits-all.',
+    'Birth-chart-based navratna guidance, authentic, cautious, and never one-size-fits-all.',
   heroIntro:
-    "An astrological gemstone recommendation is one of the oldest remedial tools in Vedic astrology, and also one of the most misused. A gemstone consultation in Ahmedabad with Saurabh Jain begins with a full reading of your birth chart before any stone is suggested. As a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad clients return to for authentic gemstone advice, Saurabh follows the classical navratna gemstone guidance framework — the nine gems linked to the nine planets — and recommends only what your chart actually calls for. Online astrology consultation India-wide is available with the same care.",
+    "An astrological gemstone recommendation is one of the oldest remedial tools in Vedic astrology, and also one of the most misused. A gemstone consultation in Ahmedabad with Saurabh Jain begins with a full reading of your birth chart before any stone is suggested. As a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad clients return to for authentic gemstone advice, Saurabh follows the classical navratna gemstone guidance framework, the nine gems linked to the nine planets, and recommends only what your chart actually calls for. Online astrology consultation India-wide is available with the same care.",
   whatIs: {
     heading: 'What is Gemstone Astrology?',
     paragraphs: [
-      "Vedic gemstone therapy is grounded in the principle that the nine grahas (planets) each resonate with a specific gemstone — a correspondence codified in texts such as the Garuda Purana and Brihat Samhita. The nine ratnas are: Ruby (Manikya) for the Sun, Pearl (Moti) for the Moon, Red Coral (Moonga) for Mars, Emerald (Panna) for Mercury, Yellow Sapphire (Pukhraj) for Jupiter, Diamond (Heera) for Venus, Blue Sapphire (Neelam) for Saturn, Hessonite (Gomed) for Rahu, and Cat's Eye (Lehsunia) for Ketu.",
+      "Vedic gemstone therapy is grounded in the principle that the nine grahas (planets) each resonate with a specific gemstone, a correspondence codified in texts such as the Garuda Purana and Brihat Samhita. The nine ratnas are: Ruby (Manikya) for the Sun, Pearl (Moti) for the Moon, Red Coral (Moonga) for Mars, Emerald (Panna) for Mercury, Yellow Sapphire (Pukhraj) for Jupiter, Diamond (Heera) for Venus, Blue Sapphire (Neelam) for Saturn, Hessonite (Gomed) for Rahu, and Cat's Eye (Lehsunia) for Ketu.",
       "A planetary gemstone selection is not made from your Moon sign or Sun sign alone. The ascendant (lagna), the planet's functional nature as benefic or malefic for that lagna, its house lordships, dasha period, and chart-level strength all matter. A stone that strengthens a benefic planet for one lagna can be harmful for another.",
     ],
     shloka: {
@@ -516,8 +516,8 @@ const GEM_STONE: ServiceContent = {
   howItWorks: {
     heading: 'How Ruby, Pearl, Sapphire Astrology Works',
     paragraphs: [
-      "Saurabh begins with a complete chart analysis to identify the most supportive planet for your lagna — your life-lord or yoga-karaka. He then checks current and upcoming dasha periods, because a stone activates the planet during its own period most strongly. The ruby pearl sapphire astrology logic is straightforward: support benefics, never force malefics, and avoid stones whose planet is already strong and well-placed.",
-      "Guidance covers the recommended weight (carat range), mounting metal, finger and day of first wearing, the Mantra for energisation (pran-pratishtha), and a short trial window — usually 40 days — during which you observe the stone's effect. You are free to discontinue if anything feels off. Gem sourcing is your choice; Soul Infinity does not sell stones, which keeps the recommendation free from conflict of interest.",
+      "Saurabh begins with a complete chart analysis to identify the most supportive planet for your lagna, your life-lord or yoga-karaka. He then checks current and upcoming dasha periods, because a stone activates the planet during its own period most strongly. The ruby pearl sapphire astrology logic is straightforward: support benefics, never force malefics, and avoid stones whose planet is already strong and well-placed.",
+      "Guidance covers the recommended weight (carat range), mounting metal, finger and day of first wearing, the Mantra for energisation (pran-pratishtha), and a short trial window, usually 40 days, during which you observe the stone's effect. You are free to discontinue if anything feels off. Gem sourcing is your choice; Soul Infinity does not sell stones, which keeps the recommendation free from conflict of interest.",
     ],
   },
   problemsAddressed: {
@@ -538,7 +538,7 @@ const GEM_STONE: ServiceContent = {
     heading: 'Your Session with Saurabh Jain',
     paragraphs: [
       "A gemstone consultation runs 45–60 minutes. Please share exact birth details and any current health, career, or relationship questions so the analysis can orient the recommendation around what matters most.",
-      "Sessions are available in person at the Ahmedabad centre or online via video call across India and internationally, in English and Hindi. You receive a written note on WhatsApp afterwards with the recommended stone (and any acceptable substitutes — for instance, white sapphire for diamond), wearing instructions, and the pran-pratishtha mantra. Saurabh will also tell you, plainly, when no stone is needed — which happens more often than the industry would have you believe.",
+      "Sessions are available in person at the Ahmedabad centre or online via video call across India and internationally, in English and Hindi. You receive a written note on WhatsApp afterwards with the recommended stone (and any acceptable substitutes, for instance, white sapphire for diamond), wearing instructions, and the pran-pratishtha mantra. Saurabh will also tell you, plainly, when no stone is needed, which happens more often than the industry would have you believe.",
     ],
   },
   whySoulInfinity: {
@@ -556,7 +556,7 @@ const GEM_STONE: ServiceContent = {
     {
       question: 'What is an astrological gemstone recommendation based on?',
       answer:
-        "It is based on your ascendant (lagna), the functional nature of each planet for that lagna, your current dasha, and chart-level strengths and weaknesses — not on your Sun or Moon sign alone.",
+        "It is based on your ascendant (lagna), the functional nature of each planet for that lagna, your current dasha, and chart-level strengths and weaknesses, not on your Sun or Moon sign alone.",
     },
     {
       question: 'How long is a typical gemstone consultation in Ahmedabad?',
@@ -576,12 +576,12 @@ const GEM_STONE: ServiceContent = {
     {
       question: 'How quickly should a gemstone show results?',
       answer:
-        "Most stones show subtle effects within 40 days — the classical trial period. Stronger, more durable effects emerge over several months, particularly during the related dasha or antardasha.",
+        "Most stones show subtle effects within 40 days, the classical trial period. Stronger, more durable effects emerge over several months, particularly during the related dasha or antardasha.",
     },
     {
       question: 'Are substitute gemstones acceptable?',
       answer:
-        "Yes — classical texts allow upratnas (substitutes) such as red garnet for ruby, moonstone for pearl, and white sapphire for diamond. These are often a practical alternative when the primary stone is out of budget.",
+        "Yes, classical texts allow upratnas (substitutes) such as red garnet for ruby, moonstone for pearl, and white sapphire for diamond. These are often a practical alternative when the primary stone is out of budget.",
     },
     {
       question: 'Is a planetary gemstone selection safe for everyone?',
@@ -595,14 +595,14 @@ const TAROT: ServiceContent = {
   h1: 'Tarot Card Reading in Ahmedabad',
   primaryKeyword: 'tarot card reading Ahmedabad',
   heroTagline:
-    'A thoughtful, grounded tarot session — 78 archetypes read as a mirror for the decision you are already making.',
+    'A thoughtful, grounded tarot session, 78 archetypes read as a mirror for the decision you are already making.',
   heroIntro:
-    "A tarot card reading in Ahmedabad with Saurabh Jain is a calm, reflective session that treats the cards as a diagnostic mirror — not a fortune-telling trick. As a K.N. Rao Institute trained certified astrologer Ahmedabad clients know for depth and honesty, Saurabh uses Rider Waite tarot reading layouts alongside occasional Thoth and Marseille references to help you see the shape of your current situation clearly. Whether you are booking a career tarot reading, a love tarot reading Ahmedabad inquiry, or a general life question, the conversation stays anchored to what you can actually do next. Tarot reader India online sessions are available by video call.",
+    "A tarot card reading in Ahmedabad with Saurabh Jain is a calm, reflective session that treats the cards as a diagnostic mirror, not a fortune-telling trick. As a K.N. Rao Institute trained certified astrologer Ahmedabad clients know for depth and honesty, Saurabh uses Rider Waite tarot reading layouts alongside occasional Thoth and Marseille references to help you see the shape of your current situation clearly. Whether you are booking a career tarot reading, a love tarot reading Ahmedabad inquiry, or a general life question, the conversation stays anchored to what you can actually do next. Tarot reader India online sessions are available by video call.",
   whatIs: {
     heading: 'What is Tarot Card Reading?',
     paragraphs: [
-      "Tarot is a seventy-eight-card deck structured into two arcana. The twenty-two Major Arcana cards — from The Fool to The World — depict archetypal life stages and inner transformations. The fifty-six Minor Arcana, split across Cups (emotions), Pentacles (resources), Swords (thought), and Wands (action), cover the texture of everyday life.",
-      "The cards function as a projective tool. They do not decide your future; they reveal the patterns, beliefs, and energies already shaping it. Modern tarot reading grew out of the Rider Waite Smith deck (1909) and has been informed by psychology, symbolism, and decades of reflective practice. Saurabh reads tarot as an intuitive tool complementary to astrology — often answering immediate emotional and practical questions that a chart would not highlight.",
+      "Tarot is a seventy-eight-card deck structured into two arcana. The twenty-two Major Arcana cards, from The Fool to The World, depict archetypal life stages and inner transformations. The fifty-six Minor Arcana, split across Cups (emotions), Pentacles (resources), Swords (thought), and Wands (action), cover the texture of everyday life.",
+      "The cards function as a projective tool. They do not decide your future; they reveal the patterns, beliefs, and energies already shaping it. Modern tarot reading grew out of the Rider Waite Smith deck (1909) and has been informed by psychology, symbolism, and decades of reflective practice. Saurabh reads tarot as an intuitive tool complementary to astrology, often answering immediate emotional and practical questions that a chart would not highlight.",
     ],
     hindiPhrase: {
       devanagari: 'टैरो पढ़ाई',
@@ -613,35 +613,35 @@ const TAROT: ServiceContent = {
   howItWorks: {
     heading: 'How a Tarot Session Works',
     paragraphs: [
-      "You bring a specific question — the more focused, the better. Saurabh chooses a spread fitted to it: the three-card Past/Present/Future for a quick read, the Celtic Cross for a deep ten-card layout, or a custom five-card spread for decisions with multiple options on the table. Cards are shuffled and drawn by you.",
-      "Each card is interpreted in context — its position, its neighbours, upright or reversed orientation, and the emotional undercurrent you bring in. Saurabh avoids single-word 'meanings' in favour of a narrative reading that connects the cards to the life decision you are holding. You leave with one or two clear next steps rather than a list of prophecies.",
+      "You bring a specific question, the more focused, the better. Saurabh chooses a spread fitted to it: the three-card Past/Present/Future for a quick read, the Celtic Cross for a deep ten-card layout, or a custom five-card spread for decisions with multiple options on the table. Cards are shuffled and drawn by you.",
+      "Each card is interpreted in context, its position, its neighbours, upright or reversed orientation, and the emotional undercurrent you bring in. Saurabh avoids single-word 'meanings' in favour of a narrative reading that connects the cards to the life decision you are holding. You leave with one or two clear next steps rather than a list of prophecies.",
     ],
   },
   problemsAddressed: {
     heading: 'Good Tarot Consultation Questions',
     intro: 'Tarot is best suited to questions you are actively thinking through:',
     items: [
-      'Career decisions — should I take this offer, change roles, start a venture?',
-      'Relationships — what is the dynamic here, am I reading this clearly?',
-      'Family and friendship conflicts — where is the real tension?',
-      'Personal growth — what pattern keeps repeating for me?',
-      'Financial choices — which option feels right for this next quarter?',
-      'Study and exam preparation — what am I missing?',
-      'Emotional closure — what do I need to accept or let go?',
-      'Spiritual direction — what practice is calling me now?',
+      'Career decisions, should I take this offer, change roles, start a venture?',
+      'Relationships, what is the dynamic here, am I reading this clearly?',
+      'Family and friendship conflicts, where is the real tension?',
+      'Personal growth, what pattern keeps repeating for me?',
+      'Financial choices, which option feels right for this next quarter?',
+      'Study and exam preparation, what am I missing?',
+      'Emotional closure, what do I need to accept or let go?',
+      'Spiritual direction, what practice is calling me now?',
     ],
   },
   session: {
     heading: 'Your Session with Saurabh Jain',
     paragraphs: [
-      "A tarot session runs 45–60 minutes and covers one to three questions in depth. You do not need to share birth details — tarot works with the present moment. Please take a few minutes before the session to sit quietly and let your real question surface rather than the polite version.",
+      "A tarot session runs 45–60 minutes and covers one to three questions in depth. You do not need to share birth details, tarot works with the present moment. Please take a few minutes before the session to sit quietly and let your real question surface rather than the polite version.",
       "Sessions are available in person at the Ahmedabad centre or online via video call anywhere in India and internationally, in English and Hindi. The reading can be photographed at the table so you can revisit the spread later. A short summary of the key cards and the action points is sent on WhatsApp afterwards.",
     ],
   },
   whySoulInfinity: {
     heading: 'Why Soul Infinity for Tarot',
     paragraphs: [
-      "The tarot world ranges from deeply reflective to genuinely irresponsible. Saurabh Jain astrologer keeps the practice on the thoughtful end. K.N. Rao Institute training in Jyotish gives him a disciplined frame for symbolic reading; an M.Phil background gives him the habit of questioning easy answers. Tarot at Soul Infinity is never used to frighten — no curse narratives, no paid 'remedies' to avert disaster. Over 200 clients and a 4.9★ rating reflect a practice of tarot reader India online sessions that respect the querent's agency.",
+      "The tarot world ranges from deeply reflective to genuinely irresponsible. Saurabh Jain astrologer keeps the practice on the thoughtful end. K.N. Rao Institute training in Jyotish gives him a disciplined frame for symbolic reading; an M.Phil background gives him the habit of questioning easy answers. Tarot at Soul Infinity is never used to frighten, no curse narratives, no paid 'remedies' to avert disaster. Over 200 clients and a 4.9★ rating reflect a practice of tarot reader India online sessions that respect the querent's agency.",
     ],
   },
   cta: {
@@ -653,7 +653,7 @@ const TAROT: ServiceContent = {
     {
       question: 'What is tarot and how is it different from Vedic astrology?',
       answer:
-        "Tarot is a seventy-eight-card reflective tool that works with the present moment and a specific question. Vedic astrology maps your lifetime karma from a birth chart. Tarot gives a quick mirror; astrology gives a long map — they answer different questions.",
+        "Tarot is a seventy-eight-card reflective tool that works with the present moment and a specific question. Vedic astrology maps your lifetime karma from a birth chart. Tarot gives a quick mirror; astrology gives a long map, they answer different questions.",
     },
     {
       question: 'How long is a typical tarot card reading in Ahmedabad?',
@@ -668,7 +668,7 @@ const TAROT: ServiceContent = {
     {
       question: 'What tarot consultation questions work best?',
       answer:
-        "Open, self-oriented questions work best — 'what do I need to see about this?' rather than 'will he call me tomorrow?' Tarot reflects clearly when the question respects your own agency.",
+        "Open, self-oriented questions work best, 'what do I need to see about this?' rather than 'will he call me tomorrow?' Tarot reflects clearly when the question respects your own agency.",
     },
     {
       question: 'How accurate are tarot readings for a career tarot reading?',
@@ -678,7 +678,7 @@ const TAROT: ServiceContent = {
     {
       question: 'Is a love tarot reading Ahmedabad session suitable for relationship decisions?',
       answer:
-        "Yes — relationships are one of tarot's strongest areas. A good love reading surfaces the dynamic, the unspoken expectations, and the likely direction if nothing changes, so you can decide clearly.",
+        "Yes, relationships are one of tarot's strongest areas. A good love reading surfaces the dynamic, the unspoken expectations, and the likely direction if nothing changes, so you can decide clearly.",
     },
     {
       question: 'Do I need to believe in tarot for it to work?',
@@ -692,14 +692,14 @@ const SYMBOL: ServiceContent = {
   h1: 'Astrological Symbol Analysis Consultation',
   primaryKeyword: 'astrological symbol analysis',
   heroTagline:
-    'Archetypal reading of the recurring symbols — in your chart, your dreams, your life — and what they mean for you.',
+    'Archetypal reading of the recurring symbols, in your chart, your dreams, your life, and what they mean for you.',
   heroIntro:
-    "A symbolic astrology consultation Ahmedabad clients book when they want more than prediction — they want meaning. Astrological symbol analysis is the practice of reading the archetypes that keep appearing in your chart, your dreams, and the synchronicities of daily life, and understanding what they are pointing toward. Saurabh Jain, a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad residents consult for archetypal astrology reading, combines classical symbolism with psychological astrology India-style to offer a session that is reflective, literate, and grounded. Available in person or as online astrology consultation India-wide.",
+    "A symbolic astrology consultation Ahmedabad clients book when they want more than prediction, they want meaning. Astrological symbol analysis is the practice of reading the archetypes that keep appearing in your chart, your dreams, and the synchronicities of daily life, and understanding what they are pointing toward. Saurabh Jain, a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad residents consult for archetypal astrology reading, combines classical symbolism with psychological astrology India-style to offer a session that is reflective, literate, and grounded. Available in person or as online astrology consultation India-wide.",
   whatIs: {
     heading: 'What is Symbol Analysis?',
     paragraphs: [
-      "Every astrological system — Vedic, Western, Tarot, Jungian — speaks a language of symbols. Planets are not just points in space; they are archetypes: Saturn as structure and time, Venus as value and relation, Mars as will and edge, the Moon as receptive inner life. Houses are fields of experience; aspects are dialogues between parts of the psyche.",
-      "Symbolic chart interpretation treats the birth chart as a kind of inner map. The archetypal astrology reading tradition — influenced by C. G. Jung, James Hillman, and Richard Tarnas — sees your recurring life themes as symbolic teachings rather than mechanical fate. Saurabh reads your chart this way, noting which archetypes are under emphasis and which are silent, so that you can work with them consciously.",
+      "Every astrological system, Vedic, Western, Tarot, Jungian, speaks a language of symbols. Planets are not just points in space; they are archetypes: Saturn as structure and time, Venus as value and relation, Mars as will and edge, the Moon as receptive inner life. Houses are fields of experience; aspects are dialogues between parts of the psyche.",
+      "Symbolic chart interpretation treats the birth chart as a kind of inner map. The archetypal astrology reading tradition, influenced by C. G. Jung, James Hillman, and Richard Tarnas, sees your recurring life themes as symbolic teachings rather than mechanical fate. Saurabh reads your chart this way, noting which archetypes are under emphasis and which are silent, so that you can work with them consciously.",
     ],
     hindiPhrase: {
       devanagari: 'प्रतीक अर्थ',
@@ -710,8 +710,8 @@ const SYMBOL: ServiceContent = {
   howItWorks: {
     heading: 'How a Symbol Analysis Session Works',
     paragraphs: [
-      "You share your birth details and any recurring symbols you have noticed — dream images, animals that keep appearing, objects that hold strange emotional charge, numbers that follow you. Saurabh casts the chart and identifies the archetypal weights: which planetary principles dominate, which are missing, which are in creative tension.",
-      "The session then moves between chart and life. The Moon-Saturn aspect that appears in your 4th house is read as a symbolic pattern — an invitation to deepen rather than a predicted burden. A recurring dream about water is crossed against your Cancer or Pisces emphasis. The goal is not to decode the symbol as if it were a cipher, but to let you recognise it — the moment when an image clicks into place is the work.",
+      "You share your birth details and any recurring symbols you have noticed, dream images, animals that keep appearing, objects that hold strange emotional charge, numbers that follow you. Saurabh casts the chart and identifies the archetypal weights: which planetary principles dominate, which are missing, which are in creative tension.",
+      "The session then moves between chart and life. The Moon-Saturn aspect that appears in your 4th house is read as a symbolic pattern, an invitation to deepen rather than a predicted burden. A recurring dream about water is crossed against your Cancer or Pisces emphasis. The goal is not to decode the symbol as if it were a cipher, but to let you recognise it, the moment when an image clicks into place is the work.",
     ],
   },
   problemsAddressed: {
@@ -738,7 +738,7 @@ const SYMBOL: ServiceContent = {
   whySoulInfinity: {
     heading: 'Why Soul Infinity for Symbol Analysis',
     paragraphs: [
-      "This is a specialised service — not every astrologer is comfortable reading a chart symbolically. Saurabh Jain combines K.N. Rao Institute training with an M.Phil background and long personal reading in Jung, Hillman, and the Indian symbolic traditions. The approach at Soul Infinity stays respectful of the client's inner life — symbols are never imposed, only offered. The practice has served 200+ clients with a 4.9★ rating, and this is one of the quieter services people return to when life asks a deeper question.",
+      "This is a specialised service, not every astrologer is comfortable reading a chart symbolically. Saurabh Jain combines K.N. Rao Institute training with an M.Phil background and long personal reading in Jung, Hillman, and the Indian symbolic traditions. The approach at Soul Infinity stays respectful of the client's inner life, symbols are never imposed, only offered. The practice has served 200+ clients with a 4.9★ rating, and this is one of the quieter services people return to when life asks a deeper question.",
     ],
   },
   cta: {
@@ -750,12 +750,12 @@ const SYMBOL: ServiceContent = {
     {
       question: 'What is astrological symbol analysis?',
       answer:
-        "It is the practice of reading the planetary archetypes in your birth chart — and the recurring symbols in your life — as a meaningful pattern rather than a mechanical forecast. The approach draws on classical astrology and archetypal psychology.",
+        "It is the practice of reading the planetary archetypes in your birth chart, and the recurring symbols in your life, as a meaningful pattern rather than a mechanical forecast. The approach draws on classical astrology and archetypal psychology.",
     },
     {
       question: 'How is this different from a regular astrological reading?',
       answer:
-        "A regular reading focuses on events and timing. Symbolic astrology consultation focuses on meaning — what the chart and the recurring symbols in your life are teaching you, and how to work with them consciously.",
+        "A regular reading focuses on events and timing. Symbolic astrology consultation focuses on meaning, what the chart and the recurring symbols in your life are teaching you, and how to work with them consciously.",
     },
     {
       question: 'Can I get an archetypal astrology reading online?',
@@ -770,12 +770,12 @@ const SYMBOL: ServiceContent = {
     {
       question: 'Is psychological astrology India-based different from Western psychological astrology?',
       answer:
-        "The archetypal grammar is universal, but Indian symbolism carries its own texture — the Ashtama Rasa, the Devis and Devas, and the dharmic frame. Saurabh brings both lineages into the session where they help.",
+        "The archetypal grammar is universal, but Indian symbolism carries its own texture, the Ashtama Rasa, the Devis and Devas, and the dharmic frame. Saurabh brings both lineages into the session where they help.",
     },
     {
       question: 'Is this consultation suitable during major life transitions?',
       answer:
-        "Yes — Saturn returns, Jupiter cycles, midlife, grief, and vocational re-orientation are classic times for this work. The symbolic frame helps make sense of transitions that a purely predictive reading would flatten.",
+        "Yes, Saturn returns, Jupiter cycles, midlife, grief, and vocational re-orientation are classic times for this work. The symbolic frame helps make sense of transitions that a purely predictive reading would flatten.",
     },
     {
       question: 'How long does a symbolic chart interpretation usually take?',
@@ -796,7 +796,7 @@ const PLR: ServiceContent = {
     heading: 'What is Past Life Regression?',
     paragraphs: [
       "Past Life Regression (PLR) emerged in modern Western therapy largely through the work of Dr. Brian Weiss, a Yale-trained psychiatrist who documented cases in Many Lives, Many Masters. The technique uses guided hypnosis to induce a deeply relaxed state in which the conscious mind quietens and the subconscious surfaces impressions that often read as memories of previous lifetimes.",
-      "Classical Indian philosophy has long held that samskaras — deep impressions from past actions — travel across births and influence current behaviour. Whether you view PLR as literal memory, archetypal imagery, or a projective tool of the subconscious, the therapeutic effect is similar: recognising a pattern at its apparent source loosens its grip on the present. Past life memories regression is not entertainment; it is inner work with specific psychological benefits.",
+      "Classical Indian philosophy has long held that samskaras, deep impressions from past actions, travel across births and influence current behaviour. Whether you view PLR as literal memory, archetypal imagery, or a projective tool of the subconscious, the therapeutic effect is similar: recognising a pattern at its apparent source loosens its grip on the present. Past life memories regression is not entertainment; it is inner work with specific psychological benefits.",
     ],
     hindiPhrase: {
       devanagari: 'पूर्व जन्म',
@@ -807,8 +807,8 @@ const PLR: ServiceContent = {
   howItWorks: {
     heading: 'How a PLR Therapy Session Works',
     paragraphs: [
-      "The session opens with a pre-regression conversation — your intention, your history with similar work, any medical considerations, and the one or two patterns you most want to explore. Saurabh then guides a progressive relaxation that moves through the body, breath, and mind into a receptive theta-adjacent state.",
-      "From that state you are gently guided to an earlier time — sometimes within this life, sometimes to what surfaces as a prior life. You remain conscious and in control throughout; this is not unconsciousness. Saurabh asks open, neutral questions that let the material unfold without leading. After the regression, there is an integration conversation in which the imagery is connected to current-life patterns. Nothing is forced to be a past-life memory if it surfaces as something else.",
+      "The session opens with a pre-regression conversation, your intention, your history with similar work, any medical considerations, and the one or two patterns you most want to explore. Saurabh then guides a progressive relaxation that moves through the body, breath, and mind into a receptive theta-adjacent state.",
+      "From that state you are gently guided to an earlier time, sometimes within this life, sometimes to what surfaces as a prior life. You remain conscious and in control throughout; this is not unconsciousness. Saurabh asks open, neutral questions that let the material unfold without leading. After the regression, there is an integration conversation in which the imagery is connected to current-life patterns. Nothing is forced to be a past-life memory if it surfaces as something else.",
     ],
   },
   problemsAddressed: {
@@ -829,13 +829,13 @@ const PLR: ServiceContent = {
     heading: 'Your Session with Saurabh Jain',
     paragraphs: [
       "A full PLR session runs 120–150 minutes, longer than most consultations because the relaxation induction alone takes time. Please eat lightly beforehand, avoid caffeine in the two hours before, and come well rested. Wear comfortable clothes. The session is audio-recorded and the recording shared over WhatsApp afterwards so you can revisit the material.",
-      "Sessions are available in person at the Ahmedabad centre — often preferred for a first PLR — or online via video call for clients in India and worldwide who prefer the safety of their own space. English and Hindi are both fine. A follow-up integration conversation is included a week or two later.",
+      "Sessions are available in person at the Ahmedabad centre, often preferred for a first PLR, or online via video call for clients in India and worldwide who prefer the safety of their own space. English and Hindi are both fine. A follow-up integration conversation is included a week or two later.",
     ],
   },
   whySoulInfinity: {
     heading: 'Why Soul Infinity for Past Life Regression',
     paragraphs: [
-      "PLR can be mishandled — rushed inductions, leading questions, over-dramatised readings. Saurabh Jain astrologer's approach is deliberately slow and non-directive. K.N. Rao Institute training in classical jyotish, combined with years of personal meditative practice and study of the Dr. Brian Weiss method, keeps the work safe. 200+ client consultations and a 4.9★ Google rating support a practice built on trust. PLR is declined if there is active untreated trauma or serious mental health concerns — ethical boundaries matter here more than in any other service.",
+      "PLR can be mishandled, rushed inductions, leading questions, over-dramatised readings. Saurabh Jain astrologer's approach is deliberately slow and non-directive. K.N. Rao Institute training in classical jyotish, combined with years of personal meditative practice and study of the Dr. Brian Weiss method, keeps the work safe. 200+ client consultations and a 4.9★ Google rating support a practice built on trust. PLR is declined if there is active untreated trauma or serious mental health concerns, ethical boundaries matter here more than in any other service.",
     ],
   },
   cta: {
@@ -847,7 +847,7 @@ const PLR: ServiceContent = {
     {
       question: 'What is past life regression therapy?',
       answer:
-        "It is a guided hypnotic technique that uses deep relaxation to access imagery and impressions often interpreted as memories from previous lifetimes. The aim is therapeutic — recognising a pattern at its source so it loosens its grip on the present.",
+        "It is a guided hypnotic technique that uses deep relaxation to access imagery and impressions often interpreted as memories from previous lifetimes. The aim is therapeutic, recognising a pattern at its source so it loosens its grip on the present.",
     },
     {
       question: 'How long is a typical PLR session in Ahmedabad?',
@@ -867,7 +867,7 @@ const PLR: ServiceContent = {
     {
       question: 'Do I lose consciousness during past life memories regression?',
       answer:
-        "No. You remain awake and in control throughout. The state is closer to deep meditation than sleep — relaxed enough for the subconscious to surface material, but alert enough that you can speak and stop at any time.",
+        "No. You remain awake and in control throughout. The state is closer to deep meditation than sleep, relaxed enough for the subconscious to surface material, but alert enough that you can speak and stop at any time.",
     },
     {
       question: 'What if no past life surfaces during the session?',
@@ -877,7 +877,7 @@ const PLR: ServiceContent = {
     {
       question: 'Is PLR suitable for karmic pattern healing in relationships?',
       answer:
-        "Yes — repeating relationship dynamics are one of the strongest applications. Recognising the origin of a pattern, whether as literal past-life memory or as symbolic material, helps loosen it in current relationships.",
+        "Yes, repeating relationship dynamics are one of the strongest applications. Recognising the origin of a pattern, whether as literal past-life memory or as symbolic material, helps loosen it in current relationships.",
     },
   ],
 };
@@ -886,14 +886,14 @@ const REIKI: ServiceContent = {
   h1: 'Reiki Healing in Ahmedabad',
   primaryKeyword: 'Reiki healing Ahmedabad',
   heroTagline:
-    'Usui Reiki — gentle, hands-on or distance channelling of universal life force for stress, sleep, and inner calm.',
+    'Usui Reiki, gentle, hands-on or distance channelling of universal life force for stress, sleep, and inner calm.',
   heroIntro:
-    "A Reiki healing Ahmedabad session with Saurabh Jain is a calm, structured experience rooted in the Usui Reiki healing session lineage from Japan. As a certified Reiki practitioner and K.N. Rao Institute trained Vedic astrologer in Ahmedabad, Saurabh channels ki — the universal life force — through light-touch or hands-off contact to support nervous system regulation, sleep, and energetic clearing. Distance Reiki healing India-wide is equally available for clients unable to travel. Energy healing Ahmedabad seekers often begin here, because Reiki is gentle, adaptable, and a strong foundation for deeper healing work.",
+    "A Reiki healing Ahmedabad session with Saurabh Jain is a calm, structured experience rooted in the Usui Reiki healing session lineage from Japan. As a certified Reiki practitioner and K.N. Rao Institute trained Vedic astrologer in Ahmedabad, Saurabh channels ki, the universal life force, through light-touch or hands-off contact to support nervous system regulation, sleep, and energetic clearing. Distance Reiki healing India-wide is equally available for clients unable to travel. Energy healing Ahmedabad seekers often begin here, because Reiki is gentle, adaptable, and a strong foundation for deeper healing work.",
   whatIs: {
     heading: 'What is Reiki?',
     paragraphs: [
       "Reiki is a Japanese system of energy healing developed by Mikao Usui in the early twentieth century. The word combines 'rei' (universal, spiritual) and 'ki' (life force, equivalent to the Sanskrit prana). In practice, the practitioner acts as a conduit for ki, directing it to the recipient through the hands.",
-      "The recipient lies or sits, fully clothed, while the practitioner places hands lightly on or just above a series of positions — the head, the heart, the abdomen, the knees, the feet. No massage or manipulation is involved. The experience is usually warm, slow, and deeply relaxing. Reiki works alongside medical care; it is not a substitute for diagnosis or treatment. What it does reliably is settle the nervous system and create space for the body's own regulatory systems to function more fully.",
+      "The recipient lies or sits, fully clothed, while the practitioner places hands lightly on or just above a series of positions, the head, the heart, the abdomen, the knees, the feet. No massage or manipulation is involved. The experience is usually warm, slow, and deeply relaxing. Reiki works alongside medical care; it is not a substitute for diagnosis or treatment. What it does reliably is settle the nervous system and create space for the body's own regulatory systems to function more fully.",
     ],
     hindiPhrase: {
       devanagari: 'प्राण ऊर्जा',
@@ -904,8 +904,8 @@ const REIKI: ServiceContent = {
   howItWorks: {
     heading: 'How a Reiki Session Works',
     paragraphs: [
-      "A session opens with a short conversation about what you would like to focus on — sleep, stress, grief, a specific physical concern, or general maintenance. You then lie down or sit comfortably. Saurabh moves through a standard sequence of Reiki hand positions, pausing longer at places where the energy feels denser or more receptive.",
-      "Many clients fall into a deeply relaxed half-sleep; some feel warmth, mild tingling, or subtle movement. After the session there is a brief integration conversation about anything you noticed, plus simple after-care advice — hydration, rest, and often a quiet evening. A Reiki chakra balancing sweep is included at the end to seal the work.",
+      "A session opens with a short conversation about what you would like to focus on, sleep, stress, grief, a specific physical concern, or general maintenance. You then lie down or sit comfortably. Saurabh moves through a standard sequence of Reiki hand positions, pausing longer at places where the energy feels denser or more receptive.",
+      "Many clients fall into a deeply relaxed half-sleep; some feel warmth, mild tingling, or subtle movement. After the session there is a brief integration conversation about anything you noticed, plus simple after-care advice, hydration, rest, and often a quiet evening. A Reiki chakra balancing sweep is included at the end to seal the work.",
     ],
   },
   problemsAddressed: {
@@ -919,14 +919,14 @@ const REIKI: ServiceContent = {
       'Recovery support alongside medical treatment',
       'Creative block and burnout recovery',
       'Pre-procedure calm and post-procedure rest',
-      'Foundational energetic maintenance — self-care rhythm',
+      'Foundational energetic maintenance, self-care rhythm',
     ],
   },
   session: {
     heading: 'Your Session with Saurabh Jain',
     paragraphs: [
       "A Reiki session runs 60–75 minutes in person at the Ahmedabad centre. No preparation is needed beyond wearing loose, comfortable clothing. Shoes are removed; the session takes place on a low bed or reclining chair in a quiet room.",
-      "Distance Reiki healing India-wide is also offered — a pre-scheduled fifty-minute slot during which you rest quietly in your own space while the session is conducted remotely. Clients often report similar sensations to in-person work. A short follow-up conversation happens on WhatsApp afterwards. Sessions are available in English and Hindi.",
+      "Distance Reiki healing India-wide is also offered, a pre-scheduled fifty-minute slot during which you rest quietly in your own space while the session is conducted remotely. Clients often report similar sensations to in-person work. A short follow-up conversation happens on WhatsApp afterwards. Sessions are available in English and Hindi.",
     ],
   },
   whySoulInfinity: {
@@ -954,7 +954,7 @@ const REIKI: ServiceContent = {
     {
       question: 'Is distance Reiki healing India-wide really effective?',
       answer:
-        "Many clients report similar sensations — warmth, calm, deep rest — from distance sessions as from in-person work. Reiki is not limited by physical distance in the same way a massage is. You need a quiet space and an agreed time slot.",
+        "Many clients report similar sensations, warmth, calm, deep rest, from distance sessions as from in-person work. Reiki is not limited by physical distance in the same way a massage is. You need a quiet space and an agreed time slot.",
     },
     {
       question: 'Do I need to believe in Reiki for it to work?',
@@ -983,14 +983,14 @@ const PRANIC: ServiceContent = {
   h1: 'Pranic Healing in Ahmedabad',
   primaryKeyword: 'Pranic healing Ahmedabad',
   heroTagline:
-    'Master Choa Kok Sui Pranic Healing — a structured, no-touch energy therapy for physical and emotional wellbeing.',
+    'Master Choa Kok Sui Pranic Healing, a structured, no-touch energy therapy for physical and emotional wellbeing.',
   heroIntro:
     "Pranic healing Ahmedabad sessions with Saurabh Jain follow the Master Choa Kok Sui Pranic Healing system, a modern no-touch energy therapy that cleans and energises the human energy body through precise, teachable techniques. As a K.N. Rao Institute trained certified astrologer Ahmedabad residents consult, Saurabh offers pranic healing consultation India-wide in person and through distant pranic healing sessions by video call. The MCKS Pranic Healing method is especially well suited to clients who want an aura cleansing therapy rooted in a clearly codified system, with protocols that make the work reproducible from session to session.",
   whatIs: {
     heading: 'What is Pranic Healing?',
     paragraphs: [
       "Pranic Healing was systematised by Grand Master Choa Kok Sui in the 1980s after years of research into the human energy body and across healing traditions. The practice works on two principles: first, the body has an innate capacity to heal itself; second, the process can be accelerated by removing dirty or congested prana and projecting fresh prana into the affected chakras and organs.",
-      "Unlike Reiki, which channels energy in a more open way, Pranic Healing follows precise step-by-step protocols — scanning the aura, sweeping diseased energy away, energising with clean prana, and stabilising. Each chakra has specific colours and frequencies of prana associated with it. The system is strictly no-touch: the practitioner's hands work in the aura, typically a few inches from the body.",
+      "Unlike Reiki, which channels energy in a more open way, Pranic Healing follows precise step-by-step protocols, scanning the aura, sweeping diseased energy away, energising with clean prana, and stabilising. Each chakra has specific colours and frequencies of prana associated with it. The system is strictly no-touch: the practitioner's hands work in the aura, typically a few inches from the body.",
     ],
     hindiPhrase: {
       devanagari: 'आभा मंडल',
@@ -1001,8 +1001,8 @@ const PRANIC: ServiceContent = {
   howItWorks: {
     heading: 'How a Pranic Healing Session Works',
     paragraphs: [
-      "A session opens with a brief conversation about the current concern — physical, emotional, or both — followed by a scan of your aura to identify congested or depleted chakras and organs. You remain fully clothed, seated or standing, as the practitioner works in the space around your body.",
-      "The main work is a sequence of cleansing sweeps — where dirty energy is removed and disposed of into a salt-water container — alternated with energising passes that direct fresh prana into the chakras and organs that need it. Saurabh closes with stabilisation and a short shielding protocol to protect the gains. You may notice lightness, warmth, tingling, or simply quiet. After-care advice is given: hydration, salt-water bath on the same day, and rest.",
+      "A session opens with a brief conversation about the current concern, physical, emotional, or both, followed by a scan of your aura to identify congested or depleted chakras and organs. You remain fully clothed, seated or standing, as the practitioner works in the space around your body.",
+      "The main work is a sequence of cleansing sweeps, where dirty energy is removed and disposed of into a salt-water container, alternated with energising passes that direct fresh prana into the chakras and organs that need it. Saurabh closes with stabilisation and a short shielding protocol to protect the gains. You may notice lightness, warmth, tingling, or simply quiet. After-care advice is given: hydration, salt-water bath on the same day, and rest.",
     ],
   },
   problemsAddressed: {
@@ -1029,7 +1029,7 @@ const PRANIC: ServiceContent = {
   whySoulInfinity: {
     heading: 'Why Soul Infinity for Pranic Healing',
     paragraphs: [
-      "Pranic Healing works best when it is practised in a disciplined, protocol-faithful way. Saurabh Jain has trained in the MCKS lineage and keeps each session close to the system's standards rather than improvising around them. Combined with K.N. Rao Institute training in Vedic astrology, this gives him a dual read on the client — energetic and karmic — where the chart adds useful context. With 200+ clients and a 4.9★ Google rating, the practice keeps its boundaries clear: pranic healing is a supportive therapy, not a medical replacement, and that honesty is part of why it works.",
+      "Pranic Healing works best when it is practised in a disciplined, protocol-faithful way. Saurabh Jain has trained in the MCKS lineage and keeps each session close to the system's standards rather than improvising around them. Combined with K.N. Rao Institute training in Vedic astrology, this gives him a dual read on the client, energetic and karmic, where the chart adds useful context. With 200+ clients and a 4.9★ Google rating, the practice keeps its boundaries clear: pranic healing is a supportive therapy, not a medical replacement, and that honesty is part of why it works.",
     ],
   },
   cta: {
@@ -1041,7 +1041,7 @@ const PRANIC: ServiceContent = {
     {
       question: 'What is Pranic Healing and how does it differ from Reiki?',
       answer:
-        "Both work with life-force energy. Pranic Healing follows precise, codified protocols developed by Master Choa Kok Sui — scanning, cleansing, energising, and stabilising in a defined sequence. Reiki is a more open channelling system. Many practitioners (including Saurabh) are trained in both.",
+        "Both work with life-force energy. Pranic Healing follows precise, codified protocols developed by Master Choa Kok Sui, scanning, cleansing, energising, and stabilising in a defined sequence. Reiki is a more open channelling system. Many practitioners (including Saurabh) are trained in both.",
     },
     {
       question: 'How long is a typical pranic healing consultation India session?',
@@ -1080,13 +1080,13 @@ const THETA: ServiceContent = {
   h1: 'Theta Healing in Ahmedabad',
   primaryKeyword: 'Theta Healing Ahmedabad',
   heroTagline:
-    'Vianna Stibal Theta Healing — subconscious belief work at the theta brainwave level, for lasting change at the root.',
+    'Vianna Stibal Theta Healing, subconscious belief work at the theta brainwave level, for lasting change at the root.',
   heroIntro:
-    "Theta Healing Ahmedabad sessions with Saurabh Jain work at the subconscious level — the place where limiting beliefs are actually stored. Rooted in the Vianna Stibal Theta Healing system, this subconscious healing technique uses a light theta brainwave meditation therapy state to identify, question, and replace the beliefs holding a pattern in place. Saurabh, a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad clients return to for deeper transformational work, offers Theta Healing India online by video call as well as in person. Belief work healing is especially useful when surface-level change keeps failing because the root belief has not shifted.",
+    "Theta Healing Ahmedabad sessions with Saurabh Jain work at the subconscious level, the place where limiting beliefs are actually stored. Rooted in the Vianna Stibal Theta Healing system, this subconscious healing technique uses a light theta brainwave meditation therapy state to identify, question, and replace the beliefs holding a pattern in place. Saurabh, a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad clients return to for deeper transformational work, offers Theta Healing India online by video call as well as in person. Belief work healing is especially useful when surface-level change keeps failing because the root belief has not shifted.",
   whatIs: {
     heading: 'What is Theta Healing?',
     paragraphs: [
-      "Theta Healing was developed in the mid-1990s by Vianna Stibal, a naturopath and intuitive healer in the United States, following her own reported healing from a serious illness. The technique uses a guided meditation to access the theta brainwave state — the same state the brain enters just before sleep or during deep meditation — in which beliefs and subconscious material become more accessible to conscious change.",
+      "Theta Healing was developed in the mid-1990s by Vianna Stibal, a naturopath and intuitive healer in the United States, following her own reported healing from a serious illness. The technique uses a guided meditation to access the theta brainwave state, the same state the brain enters just before sleep or during deep meditation, in which beliefs and subconscious material become more accessible to conscious change.",
       "Belief work healing, the core technique of Theta Healing, is a structured conversation. The practitioner and client identify a limiting belief (for example, 'I have to struggle to be worthy of money'), trace it to its source (childhood, ancestral, past-life, or genetic, according to the system), and through a simple muscle-testing and witnessing process, replace it with a healthier belief. The theta state makes this shift more receptive than ordinary waking consciousness would allow.",
     ],
     hindiPhrase: {
@@ -1098,8 +1098,8 @@ const THETA: ServiceContent = {
   howItWorks: {
     heading: 'How a Theta Healing Session Works',
     paragraphs: [
-      "Your session opens with a conversation to identify one or two core issues — often a recurring self-sabotaging pattern, a stuck relationship dynamic, or a goal that somehow never materialises. Saurabh then guides you into a short theta brainwave meditation therapy state and begins the belief work.",
-      "Through gentle questioning and muscle-testing, you surface the beliefs underneath the surface problem. Each belief is examined, consented to, released, and replaced with one that better serves the life you are building. The process is collaborative — the client is never overridden; you always confirm before any replacement belief is installed. The session closes with integration advice and a short written list of the beliefs worked on, so you can observe the shifts in the days that follow.",
+      "Your session opens with a conversation to identify one or two core issues, often a recurring self-sabotaging pattern, a stuck relationship dynamic, or a goal that somehow never materialises. Saurabh then guides you into a short theta brainwave meditation therapy state and begins the belief work.",
+      "Through gentle questioning and muscle-testing, you surface the beliefs underneath the surface problem. Each belief is examined, consented to, released, and replaced with one that better serves the life you are building. The process is collaborative, the client is never overridden; you always confirm before any replacement belief is installed. The session closes with integration advice and a short written list of the beliefs worked on, so you can observe the shifts in the days that follow.",
     ],
   },
   problemsAddressed: {
@@ -1126,7 +1126,7 @@ const THETA: ServiceContent = {
   whySoulInfinity: {
     heading: 'Why Soul Infinity for Theta Healing',
     paragraphs: [
-      "Theta Healing can be powerful — and that means it should be practised with care. Saurabh Jain has trained in the Vianna Stibal lineage and combines the work with K.N. Rao Institute classical astrology training, which helps him spot belief patterns that align with specific chart signatures. The practice maintains firm ethical boundaries — no belief is installed without clear consent, and sessions are declined when a medical or psychiatric concern needs a clinician first. 200+ clients and a 4.9★ Google rating reflect this commitment.",
+      "Theta Healing can be powerful, and that means it should be practised with care. Saurabh Jain has trained in the Vianna Stibal lineage and combines the work with K.N. Rao Institute classical astrology training, which helps him spot belief patterns that align with specific chart signatures. The practice maintains firm ethical boundaries, no belief is installed without clear consent, and sessions are declined when a medical or psychiatric concern needs a clinician first. 200+ clients and a 4.9★ Google rating reflect this commitment.",
     ],
   },
   cta: {
@@ -1153,7 +1153,7 @@ const THETA: ServiceContent = {
     {
       question: 'Is belief work healing safe?',
       answer:
-        "Yes — when practised with consent and with awareness of when to refer out. No belief is installed without your clear approval. If a medical or psychiatric concern surfaces, Saurabh will refer you to a clinician rather than continue alone.",
+        "Yes, when practised with consent and with awareness of when to refer out. No belief is installed without your clear approval. If a medical or psychiatric concern surfaces, Saurabh will refer you to a clinician rather than continue alone.",
     },
     {
       question: 'How is Theta Healing different from hypnotherapy?',
@@ -1168,7 +1168,7 @@ const THETA: ServiceContent = {
     {
       question: 'Do I stay conscious during the theta brainwave meditation therapy?',
       answer:
-        "Yes. You remain awake and in clear conversation throughout. The state is a relaxed, receptive one — closer to deep meditation than to sleep.",
+        "Yes. You remain awake and in clear conversation throughout. The state is a relaxed, receptive one, closer to deep meditation than to sleep.",
     },
   ],
 };
@@ -1177,13 +1177,13 @@ const CRYSTAL: ServiceContent = {
   h1: 'Crystal Healing in Ahmedabad',
   primaryKeyword: 'crystal healing Ahmedabad',
   heroTagline:
-    'Crystals placed with intent on chakra points — a gentle vibrational therapy for subtle-body alignment.',
+    'Crystals placed with intent on chakra points, a gentle vibrational therapy for subtle-body alignment.',
   heroIntro:
-    "A crystal healing Ahmedabad session with Saurabh Jain uses the vibrational qualities of specific healing crystals India has long revered — quartz, amethyst, citrine, rose quartz, black tourmaline, lapis lazuli — placed on or near the body's chakra points to support chakras crystals consultation goals. As a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad clients trust for gemstone energy healing work, Saurabh approaches crystal therapy chakra balancing as a gentle, complementary practice. Crystal grid therapy is also offered for home or workspace activation. Sessions are available in person and online.",
+    "A crystal healing Ahmedabad session with Saurabh Jain uses the vibrational qualities of specific healing crystals India has long revered, quartz, amethyst, citrine, rose quartz, black tourmaline, lapis lazuli, placed on or near the body's chakra points to support chakras crystals consultation goals. As a K.N. Rao Institute trained Vedic astrologer in Ahmedabad and certified astrologer Ahmedabad clients trust for gemstone energy healing work, Saurabh approaches crystal therapy chakra balancing as a gentle, complementary practice. Crystal grid therapy is also offered for home or workspace activation. Sessions are available in person and online.",
   whatIs: {
     heading: 'What is Crystal Healing?',
     paragraphs: [
-      "Crystal healing is a vibrational therapy that uses crystals and gemstones placed in specific configurations on or near the body to influence the energy field and the chakras. The practice draws on the mineralogical fact that crystals have a highly ordered atomic lattice and piezoelectric properties — qualities that have long been interpreted, across traditions from Ayurveda to Native American medicine, as having an effect on subtle energy.",
+      "Crystal healing is a vibrational therapy that uses crystals and gemstones placed in specific configurations on or near the body to influence the energy field and the chakras. The practice draws on the mineralogical fact that crystals have a highly ordered atomic lattice and piezoelectric properties, qualities that have long been interpreted, across traditions from Ayurveda to Native American medicine, as having an effect on subtle energy.",
       "Each chakra is associated with specific crystals: amethyst for the crown, lapis lazuli for the third eye, blue lace agate for the throat, rose quartz and green aventurine for the heart, citrine for the solar plexus, carnelian for the sacral, and red jasper or black tourmaline for the root. A chakras crystals consultation begins by identifying which chakras need support and selecting the stones that resonate most helpfully.",
     ],
     hindiPhrase: {
@@ -1195,8 +1195,8 @@ const CRYSTAL: ServiceContent = {
   howItWorks: {
     heading: 'How a Crystal Healing Session Works',
     paragraphs: [
-      "You lie down fully clothed on a therapy bed. Saurabh begins with a brief chakra scan — sometimes through pendulum work, sometimes by hand — to identify which centres are depleted, congested, or over-active. Crystals are then placed on or around each chakra point in a pattern chosen for your specific needs.",
-      "You rest for 25–30 minutes while the crystals work. Soft music, gentle incense, and a silent room support the relaxation. A closing sequence grounds the energy and removes the crystals in a specific order. Post-session, you receive suggestions for a small personal stone or two you can carry with you, and simple care instructions — cleansing with running water, moonlight, or a short smoke cleanse.",
+      "You lie down fully clothed on a therapy bed. Saurabh begins with a brief chakra scan, sometimes through pendulum work, sometimes by hand, to identify which centres are depleted, congested, or over-active. Crystals are then placed on or around each chakra point in a pattern chosen for your specific needs.",
+      "You rest for 25–30 minutes while the crystals work. Soft music, gentle incense, and a silent room support the relaxation. A closing sequence grounds the energy and removes the crystals in a specific order. Post-session, you receive suggestions for a small personal stone or two you can carry with you, and simple care instructions, cleansing with running water, moonlight, or a short smoke cleanse.",
     ],
   },
   problemsAddressed: {
@@ -1217,13 +1217,13 @@ const CRYSTAL: ServiceContent = {
     heading: 'Your Session with Saurabh Jain',
     paragraphs: [
       "A crystal healing session runs 60–75 minutes. Wear comfortable clothes; remove metal jewellery for the session itself. Please hydrate before and after, and plan for a slower hour afterwards if possible.",
-      "Sessions are available in person at the Ahmedabad centre — crystal healing is particularly rich in person because of the sensory layer — and a distance version is also offered by video call, in which Saurabh guides you through placing your own set of stones with clear instructions. Crystal grid therapy for home, office, or altar can be designed remotely. English and Hindi are both welcome.",
+      "Sessions are available in person at the Ahmedabad centre, crystal healing is particularly rich in person because of the sensory layer, and a distance version is also offered by video call, in which Saurabh guides you through placing your own set of stones with clear instructions. Crystal grid therapy for home, office, or altar can be designed remotely. English and Hindi are both welcome.",
     ],
   },
   whySoulInfinity: {
     heading: 'Why Soul Infinity for Crystal Healing',
     paragraphs: [
-      "The crystal market is cluttered with dubious sales pitches. Saurabh Jain's practice keeps crystal work simple, grounded, and free of fear-based upselling. K.N. Rao Institute training in classical Vedic astrology adds useful context — for instance, when a gemstone prescription overlaps usefully with a healing crystal choice, the two practices can support each other without confusion. The practice has served 200+ clients with a 4.9★ Google rating, and crystals are never presented as a replacement for medical care or for substantive astrological remedies.",
+      "The crystal market is cluttered with dubious sales pitches. Saurabh Jain's practice keeps crystal work simple, grounded, and free of fear-based upselling. K.N. Rao Institute training in classical Vedic astrology adds useful context, for instance, when a gemstone prescription overlaps usefully with a healing crystal choice, the two practices can support each other without confusion. The practice has served 200+ clients with a 4.9★ Google rating, and crystals are never presented as a replacement for medical care or for substantive astrological remedies.",
     ],
   },
   cta: {
@@ -1250,12 +1250,12 @@ const CRYSTAL: ServiceContent = {
     {
       question: 'Do I need to buy my own crystals?',
       answer:
-        "No — the studio has a working set for in-person sessions. For distance sessions, Saurabh can suggest a minimal starter set you can source locally from any reliable mineral shop.",
+        "No, the studio has a working set for in-person sessions. For distance sessions, Saurabh can suggest a minimal starter set you can source locally from any reliable mineral shop.",
     },
     {
       question: 'Can crystal grid therapy be done at home?',
       answer:
-        "Yes. A crystal grid is a patterned arrangement of stones designed for a specific intent — home protection, study focus, fertility support. Saurabh can design one remotely and share a simple layout diagram over WhatsApp.",
+        "Yes. A crystal grid is a patterned arrangement of stones designed for a specific intent, home protection, study focus, fertility support. Saurabh can design one remotely and share a simple layout diagram over WhatsApp.",
     },
     {
       question: 'Are healing crystals India clients can source locally reliable?',

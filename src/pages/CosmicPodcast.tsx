@@ -126,7 +126,7 @@ const CosmicPodcast = () => {
       <SchemaMarkup
         type="webpage"
         webPage={{
-          name: 'Cosmic Podcast — Spiritual Wisdom & Astrology Insights',
+          name: 'Cosmic Podcast, Spiritual Wisdom & Astrology Insights',
           description:
             'Podcast episodes on Vedic astrology, energy healing, meditation, and cosmic wisdom by Saurabh Jain.',
           url: '/cosmic-podcast',
@@ -368,7 +368,7 @@ const CosmicPodcast = () => {
                     </a>
                   ) : (
                     <p className="text-sm text-gray-500 italic">
-                      Coming soon — subscribe for updates.
+                      Coming soon, subscribe for updates.
                     </p>
                   )}
                 </div>

@@ -65,7 +65,7 @@ const CosmicGuide = () => {
               transition={{ duration: 0.8 }}
               className="font-heading font-bold text-4xl md:text-5xl mb-6"
             >
-              Meet <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Saurabh Jain</span> — Your Cosmic Guide
+              Meet <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Saurabh Jain</span>, Your Cosmic Guide
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -112,7 +112,7 @@ const CosmicGuide = () => {
         </div>
       </section>
 
-      {/* Factual intro — neutral, encyclopedia-style summary written for
+      {/* Factual intro, neutral, encyclopedia-style summary written for
           AI assistants (ChatGPT, Perplexity, AI Overviews) as well as
           first-time human visitors. */}
       <section className="py-12 bg-white">

@@ -85,7 +85,7 @@ describe('initAnalytics', () => {
     expect(pageViewCall).toBeDefined();
   });
 
-  it('is idempotent — calling twice does not inject a second loader', async () => {
+  it('is idempotent, calling twice does not inject a second loader', async () => {
     vi.stubEnv('VITE_SITE_ENV', 'production');
     vi.stubEnv('VITE_GA_MEASUREMENT_ID', 'G-ABCDEF1234');
     const { initAnalytics } = await import('./analytics');

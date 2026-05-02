@@ -27,7 +27,7 @@ const GA_ID_PATTERN = /^G-[A-Z0-9]+$/;
  * Canonical production GA4 measurement ID.
  *
  * Hardcoded as a fallback because GA4 measurement IDs are public (they
- * appear in plaintext in every HTML that loads gtag.js — not a secret)
+ * appear in plaintext in every HTML that loads gtag.js, not a secret)
  * and because Vite statically replaces `import.meta.env.VITE_*` at build
  * time. If the env var is missing when Vercel builds the bundle, the
  * minifier dead-code-eliminates the entire loader. The hardcoded default
@@ -99,7 +99,7 @@ export function initAnalytics(): void {
   };
   window.gtag = gtag;
   gtag('js', new Date());
-  // `send_page_view: false` — SPA route tracking handles page_view via
+  // `send_page_view: false`, SPA route tracking handles page_view via
   // trackPageView() on route change. Letting gtag auto-fire here would
   // double-count the initial landing.
   gtag('config', measurementId, { send_page_view: false });
@@ -117,7 +117,7 @@ export type EventParams = Record<string, string | number | boolean | undefined>;
 
 /**
  * Send a GA4 event. Safe to call even when analytics is disabled (staging,
- * DNT, SSR) — it simply no-ops.
+ * DNT, SSR), it simply no-ops.
  */
 export function trackEvent(name: string, params: EventParams = {}): void {
   if (typeof window === 'undefined') return;

@@ -67,7 +67,7 @@ const Privacy = () => {
         webPage={{
           name: 'Privacy Policy & Cookie Policy',
           description:
-            "How Soul Infinity collects, uses, and protects personal information — including data from astrology consultations, contact forms, and site cookies.",
+            "How Soul Infinity collects, uses, and protects personal information, including data from astrology consultations, contact forms, and site cookies.",
           url: '/privacy',
         }}
         breadcrumbs={[

@@ -14,7 +14,7 @@ interface BreadcrumbsProps {
 
 /**
  * Accessible breadcrumb trail. The visual JSON-LD BreadcrumbList schema is
- * already emitted via <SchemaMarkup /> — this component is the visible UI
+ * already emitted via <SchemaMarkup />, this component is the visible UI
  * counterpart.
  *
  * Usage: every item except the last one must have `href`. The last item is

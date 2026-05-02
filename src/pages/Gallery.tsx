@@ -126,7 +126,7 @@ const Gallery = () => {
       <SchemaMarkup
         type="webpage"
         webPage={{
-          name: 'Gallery — Sacred Moments & Spiritual Sessions',
+          name: 'Gallery, Sacred Moments & Spiritual Sessions',
           description:
             'Photo gallery showcasing healing sessions, spiritual consultations, workshops, and sacred ceremonies at Soul Infinity.',
           url: '/gallery',

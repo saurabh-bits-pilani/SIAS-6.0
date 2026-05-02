@@ -161,7 +161,7 @@ const Services = () => {
 
   // Generate dynamic SEO content based on filtered categories.
   // Titles/descriptions match the SEO spec per category for search intent
-  // ("in Ahmedabad", method names, duration) — not auto-generated from data.
+  // ("in Ahmedabad", method names, duration), not auto-generated from data.
   const getSEOContent = () => {
     const categorySeo: Record<string, { title: string; description: string; keywords: string }> = {
       'vedic-astrology': {

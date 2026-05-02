@@ -132,7 +132,7 @@ const PitraDosh = () => {
       <SchemaMarkup
         type="webpage"
         webPage={{
-          name: 'Pitra Dosh — Causes, Symptoms & Remedies',
+          name: 'Pitra Dosh, Causes, Symptoms & Remedies',
           description:
             'Causes, symptoms, and remedies for Pitra Dosh (ancestral karma), including traditional Shraddha ceremonies and mantras.',
           url: '/gallery/pitra-dosh',
@@ -180,7 +180,7 @@ const PitraDosh = () => {
               transition={{ duration: 0.8 }}
               className="font-heading font-bold text-4xl md:text-5xl mb-6"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-red-300">Pitra Dosh</span> — Causes, Effects & Remedies
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-red-300">Pitra Dosh</span>, Causes, Effects & Remedies
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}

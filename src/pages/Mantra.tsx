@@ -265,7 +265,7 @@ const Mantra = () => {
       <SchemaMarkup
         type="blog-post"
         post={{
-          headline: 'Navagraha Mantras — Sacred Chants for the Nine Planets',
+          headline: 'Navagraha Mantras, Sacred Chants for the Nine Planets',
           description:
             'Complete guide to Navagraha mantras: Sanskrit text, meaning, benefits, and chanting methodology for each of the nine planets.',
           image:
@@ -335,7 +335,7 @@ const Mantra = () => {
         </div>
       </section>
 
-      {/* Author box + TL;DR + Key Takeaways — AI-friendly front-matter so
+      {/* Author box + TL;DR + Key Takeaways, AI-friendly front-matter so
           ChatGPT / Perplexity / Claude can extract the core answer without
           having to read the full article. */}
       <section className="py-10 bg-surface">
@@ -373,7 +373,7 @@ const Mantra = () => {
             </p>
             <p className="text-gray-800 leading-relaxed">
               <strong>Navagraha mantras</strong> are Sanskrit chants dedicated to the nine
-              planetary deities — Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu
+              planetary deities, Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu
               (north node), and Ketu (south node). Each mantra is traditionally chanted
               108 times on the planet&apos;s associated weekday (for example, Sun mantras on
               Sunday, Moon on Monday) using a rosary to balance that planet&apos;s influence

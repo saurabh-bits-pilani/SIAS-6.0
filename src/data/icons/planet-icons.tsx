@@ -2,7 +2,7 @@ import {
   Sun,
   Flame,
   // TODO: Swap CircleDot for `Mars` once lucide-react is bumped past the
-  // version that introduced it (not present in 0.344.0 — currently in the
+  // version that introduced it (not present in 0.344.0, currently in the
   // project). Upgrading lucide-react is deferred because 17 source files
   // import from it and major bumps rename commonly-used icons. When bumped,
   // replace CircleDot below with `Mars` and delete this TODO.
@@ -31,7 +31,7 @@ import {
  * cosmetic so the same map can be reused across Sun, Moon, Mars, etc.
  *
  * NOTE: Earlier placeholder SVGs at /Pillar/Planets/Sun/icon-*.svg (uploaded
- * to R2 during the asset pass) are now unused — Lucide icons are preferred
+ * to R2 during the asset pass) are now unused, Lucide icons are preferred
  * for the labelled rows. Those R2 objects can be safely deleted once all 29
  * pillar pages have been rebuilt against this map and nothing still
  * references the old URLs.

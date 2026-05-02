@@ -29,7 +29,7 @@ export interface RenderResult {
 /**
  * Render a route to static HTML. Uses renderToPipeableStream with onAllReady so
  * React.lazy()/Suspense boundaries fully resolve before the final HTML is
- * flushed — prerendered pages contain the real content, not loading fallbacks.
+ * flushed, prerendered pages contain the real content, not loading fallbacks.
  */
 export function render(url: string): Promise<RenderResult> {
   const helmetContext: FilledHelmetContext = {};

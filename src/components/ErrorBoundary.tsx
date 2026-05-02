@@ -39,7 +39,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               Something went wrong
             </h1>
             <p className="text-gray-600 mb-6">
-              We're sorry — an unexpected error occurred. Please try reloading the page.
+              We're sorry, an unexpected error occurred. Please try reloading the page.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button

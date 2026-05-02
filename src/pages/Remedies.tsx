@@ -218,7 +218,7 @@ const Remedies = () => {
       <SchemaMarkup
         type="webpage"
         webPage={{
-          name: 'Planetary Remedies — Ancient Healing Solutions',
+          name: 'Planetary Remedies, Ancient Healing Solutions',
           description:
             'Traditional planetary remedies for spiritual healing, aura cleansing, and balancing planetary influences.',
           url: '/gallery/remedies',

@@ -76,7 +76,7 @@ describe('SEOHead', () => {
     renderAt('/', <SEOHead omitDefaultSchema />);
     await waitFor(() => {
       // With no explicit schemas prop and omitDefaultSchema, SEOHead emits
-      // no JSON-LD — the page's <SchemaMarkup /> is expected to handle it.
+      // no JSON-LD, the page's <SchemaMarkup /> is expected to handle it.
       expect(
         document.querySelector('script[type="application/ld+json"]'),
       ).toBeNull();

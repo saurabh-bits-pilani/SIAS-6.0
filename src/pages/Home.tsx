@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Star, Calendar, Users, Heart, ArrowRight, Sparkles, Gift, Target } from 'lucide-react';
+import { Star, Calendar, Users, Heart, ArrowRight, Sparkles, Gift, Target, ChevronDown } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
 import GoogleReviewsWidget from '../components/GoogleReviewsWidget';
@@ -14,6 +14,36 @@ interface ServiceCard {
   href: string;
   color: string;
 }
+
+// Visible homepage FAQs. Mirrored to FAQPage JSON-LD via SchemaMarkup.
+// Answers MUST stay in sync with the rendered accordion (Google policy).
+const homeFaqs: ReadonlyArray<{ question: string; answer: string }> = [
+  {
+    question: 'What is Vedic astrology?',
+    answer:
+      'Vedic astrology, known as Jyotish in Sanskrit, is the ancient Indian system of astrology based on the sidereal zodiac. It uses the position of planets at the time of birth to reveal personality, life path, and future trends. Soul Infinity Astro Solutions offers authentic Vedic astrology consultations in Ahmedabad and online worldwide.',
+  },
+  {
+    question: 'How is Soul Infinity different from other astrologers in Ahmedabad?',
+    answer:
+      'Saurabh Jain at Soul Infinity Astro Solutions is certified by the K.N. Rao Institute and uses three classical systems simultaneously: Parashari Jyotish, Bhrigu Nandi Nadi (BNN), and KP Astrology. This multi-system approach, combined with M.Tech, MBA, and M.Phil academic credentials, is rare among Ahmedabad astrologers.',
+  },
+  {
+    question: 'How do I book a consultation with Soul Infinity?',
+    answer:
+      'You can book a consultation with Saurabh Jain at Soul Infinity Astro Solutions by contacting us on WhatsApp at +91 9079053840 or visiting soulinfinity.space. We offer both in-person sessions in Ahmedabad and online consultations via Zoom and Google Meet for clients across India and worldwide.',
+  },
+  {
+    question: 'What information do I need to provide for a Kundli reading?',
+    answer:
+      'For an accurate Kundli reading at Soul Infinity Astro Solutions, you will need your exact date of birth, time of birth, and place of birth. The time of birth is especially important as even a few minutes difference can change the ascendant and house placements.',
+  },
+  {
+    question: 'Does Soul Infinity offer online consultations?',
+    answer:
+      'Yes, Soul Infinity Astro Solutions offers online consultations via Zoom and Google Meet for clients across India, the USA, UK, Canada, Australia, UAE, and worldwide. Contact us on WhatsApp at +91 9079053840 to schedule your session.',
+  },
+] as const;
 
 const heroImages: readonly string[] = [
   'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp',
@@ -53,6 +83,7 @@ const Home = () => {
   // enough here because all four slides share the same viewport, so the
   // browser would eagerly fetch them otherwise.
   const [mountRestOfHero, setMountRestOfHero] = useState(false);
+  const [openHomeFaq, setOpenHomeFaq] = useState<number | null>(0);
 
   useEffect(() => {
     // Wait until after LCP and network idle before mounting slides 1-3.
@@ -83,7 +114,7 @@ const Home = () => {
         keywords="vedic astrologer ahmedabad, best astrologer ahmedabad, saurabh jain astrologer, kundli consultation ahmedabad, tarot reader ahmedabad, reiki healer ahmedabad"
         omitDefaultSchema
       />
-      <SchemaMarkup type="home" />
+      <SchemaMarkup type="home" serviceFaqs={homeFaqs} />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden" role="banner">
@@ -182,7 +213,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-heading font-bold text-3xl md:text-4xl mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Sacred Services</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">What We Offer at Soul Infinity Astro Solutions</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Choose from our comprehensive range of spiritual and astrological services,
@@ -397,7 +428,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-heading font-bold text-3xl mb-4">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Why Choose Soul Infinity?</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Why Choose Soul Infinity Astro Solutions</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Experience authentic spiritual guidance with our unique approach to cosmic wisdom and healing.
@@ -453,11 +484,58 @@ const Home = () => {
         </div>
       </section>
 
+      {/* FAQ Section, mirrored to FAQPage JSON-LD via SchemaMarkup. */}
+      <section id="faq" className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Frequently Asked Questions</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Common questions about Vedic astrology, consultations, and how to work with Soul Infinity Astro Solutions.
+            </p>
+          </div>
+          <div className="space-y-4">
+            {homeFaqs.map((faq, index) => {
+              const isOpen = openHomeFaq === index;
+              return (
+                <div
+                  key={faq.question}
+                  className="border border-gray-200 rounded-2xl bg-white shadow-sm overflow-hidden"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenHomeFaq(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    aria-controls={`home-faq-panel-${index}`}
+                    className="w-full flex items-center justify-between px-6 py-5 text-left text-gray-900 font-semibold hover:bg-gray-50 transition-colors"
+                  >
+                    <span className="font-heading text-lg pr-6">{faq.question}</span>
+                    <ChevronDown
+                      className={`w-5 h-5 flex-shrink-0 text-primary-600 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  {isOpen && (
+                    <div
+                      id={`home-faq-panel-${index}`}
+                      className="px-6 pb-6 text-gray-700 leading-relaxed"
+                    >
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-surface">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-gray-900 mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Ready to Begin Your Journey?</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">How to Book Your Consultation</span>
           </h2>
           <p className="text-xl text-gray-600 mb-8">
             Take the first step towards clarity, healing, and spiritual growth.

@@ -48,7 +48,7 @@ function reportMetric(metric: Metric): void {
 let started = false;
 
 /**
- * Start reporting Core Web Vitals. Safe to call multiple times — only the
+ * Start reporting Core Web Vitals. Safe to call multiple times, only the
  * first call registers observers. No-op on the server (typeof window === 'undefined').
  */
 export function initWebVitals(): void {
