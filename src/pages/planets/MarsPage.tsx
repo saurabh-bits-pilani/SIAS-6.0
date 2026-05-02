@@ -175,9 +175,9 @@ const connectPractices = [
 
 const insightSections: InsightSection[] = [
   {
-    title: 'What Is Mangala in Vedic Astrology?',
+    title: 'Who is Mangala in Vedic astrology?',
     paragraphs: [
-      'Mangala (मङ्गल, IAST Maṅgala) is the Sanskrit name of Mars, and the word translates literally as "the auspicious" or "the favorable". In the council of nine planetary deities known as the Navagraha, Mangala holds the seat of energy, courage, willpower, and protective action. He is also addressed as Bhauma, son of Bhumi the earth goddess, and as Angaraka (Aṅgāraka), meaning the burning ember. Each name highlights a slightly different shade of his nature, but together they describe a single force, the disciplined fire that allows a person to move from intention to result.',
+      "Mangala (Mars) is the most energetic Navagraha in Vedic astrology, governing courage, physical strength, drive, ambition, conflict, and the assertive force that propels a person to act on their convictions and defend their boundaries. As one of the inner classical planets, Mars transits each rashi (zodiac sign) in approximately forty-five days under normal motion, with retrograde periods that ask for restraint, review, and the patient redirection of energy. In the Brihat Parashara Hora Shastra, Mangala is described as the commander of the planetary army, ruler of Mesha (Aries) and Vrishchika (Scorpio), and the giver of valour, technical skill, and decisive action. Mars's placement in the natal chart reveals where a person feels driven to compete, defend, and achieve through sustained effort. At Soul Infinity Astro Solutions, Saurabh Jain analyses Mangala's house placement, sign dignity, aspects, and Mangal Dosha indications to provide precise guidance on action, energy, and Mangala Mahadasha periods.",
       'As a karaka, the significator of life themes, Mangala rules brothers and younger siblings, landed property, real estate, military and police service, athletic effort, the surgical hand, and the precision required by engineering and skilled manual work. In Vedic astrology he is the planet who supplies the will to begin and the stamina to finish. When jyotishis read a chart for drive, decisiveness, or capacity to defend what one loves, they are tracing the movement of Mars across signs and houses. His blessing is initiative; his lesson is restraint.',
       'The general role of Mars is to drive initiative outward and to protect what is precious from harm. He is the warrior who guards dharma, not the bully who picks the fight. Properly held, his fire becomes loyalty, dependability, and the steady backbone of righteous effort. Held poorly, the same fire turns into friction, accident, and impatient anger. The classical traditions therefore frame his worship not as a pursuit of power, but as the steady cultivation of courage, patience, and right action. [VERIFY: Brihat Parashara Hora Shastra and Phaladeepika order Mangala\'s primary karakatvas slightly differently.]',
     ],
@@ -215,7 +215,7 @@ const insightSections: InsightSection[] = [
     ],
   },
   {
-    title: 'Mangala Mahadasha and Antardasha',
+    title: 'What is Mangala Mahadasha and what does it bring?',
     paragraphs: [
       'In the Vimshottari dasha system, the Mahadasha of Mangala lasts seven years. When this period activates, the chart turns its focus towards action, conflict, achievement, and the testing of courage. Themes that have been quietly accumulating, especially around property, siblings, and the body, often come forward to be addressed during this seven-year window. The native is asked to act, and how that action is undertaken shapes the rest of the cycle.',
       'A favourable Mangala dasha is often experienced as career promotion through visible courage, gains through real estate, victory in disputes that have lingered, and a peak in physical strength. Some natives undertake major construction, others enter leadership roles in defense or sport, and many find that long-postponed projects finally complete themselves. The classical literature speaks of a kind of fearless competence that becomes the defining quality of the seven years.',
@@ -223,7 +223,7 @@ const insightSections: InsightSection[] = [
     ],
   },
   {
-    title: 'Vedic Remedies for Mangala',
+    title: 'What are the remedies for Mangal Dosha?',
     paragraphs: [
       'Tuesday (Mangalavara) is the day held sacred to Mars, and many traditional remedies begin there. A simple Tuesday observance includes a light fast, a visit to a temple of Mangala or Hanuman, and the offering of red cloth, jaggery, or red lentils (masoor dal) at the sanctum. The aim is not appeasement of an angry planet but a respectful turning of the inner attention towards the qualities Mars governs, courage, discipline, and protective service.',
       'Mantra recitation forms the spine of formal Mangala remedies. The Navagraha Mangala stotra and the Beej mantra are shown in the Sacred Mantras section above, and they remain the most widely chanted invocations across the South Asian traditions. Daily practice of a small number of repetitions, performed in a quiet hour with sincerity, is often considered more beneficial than long counts done in restlessness. The voice itself learns to settle along with the planet.',
@@ -603,7 +603,7 @@ function FooterStarfield() {
 
 function renderFactIcon(fact: QuickFact | DetailRow | Association, className = 'h-7 w-7') {
   if (fact.assetUrl) {
-    return <img src={fact.assetUrl} alt="" className={className} loading="lazy" />;
+    return <img src={fact.assetUrl} alt="" aria-hidden="true" className={className} loading="lazy" />;
   }
   if (fact.icon) {
     return iconSvg(fact.icon, className);
@@ -650,6 +650,20 @@ export default function MarsPage() {
         url: PAGE_URL,
       }),
       getFaqPageSchemaFromList(faqs),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Mars (Mangala) Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Mangala Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Mars (red).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing south on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: 'Use a Red Coral or red Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger.' },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Kraam Kreem Kraum Sah Bhaumaya Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Mangala deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -696,9 +710,9 @@ export default function MarsPage() {
             <EmberfieldDoodle className="absolute inset-0" />
           </div>
           <div className="pointer-events-none absolute inset-0 opacity-45">
-            <img src={SEAL_URL} alt="" className="absolute left-[8%] top-16 h-10 w-10" />
-            <img src={CRYSTAL_URL} alt="" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
-            <img src={FLAME_URL} alt="" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
+            <img src={SEAL_URL} alt="" aria-hidden="true" className="absolute left-[8%] top-16 h-10 w-10" />
+            <img src={CRYSTAL_URL} alt="" aria-hidden="true" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
+            <img src={FLAME_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
           </div>
 
           <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-6 sm:px-6 lg:px-10">
@@ -732,7 +746,7 @@ export default function MarsPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#f6c06d]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#f6c06d]/80" />
-                  <img src={SYMBOL_MARS_URL} alt="" className="h-9 w-9" />
+                  <img src={SYMBOL_MARS_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
 
@@ -742,7 +756,7 @@ export default function MarsPage() {
                 <div className="absolute left-[8%] top-[20%] text-[#f6c06d]/60">
                   <ScribbleAccent className="h-20 w-20" strokeClassName="text-[#f6c06d]/65" />
                 </div>
-                <img src={PLANET_SPHERE_URL} alt="" className="absolute left-[18%] top-[18%] h-[60%] w-[60%] object-contain opacity-18" />
+                <img src={PLANET_SPHERE_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[18%] h-[60%] w-[60%] object-contain opacity-18" />
               </div>
 
               <div className="relative z-10 mt-8 max-w-[18rem] sm:mt-10 sm:max-w-[30rem] lg:absolute lg:bottom-4 lg:left-0 lg:mt-0 lg:max-w-[38rem]">
@@ -803,8 +817,8 @@ export default function MarsPage() {
                     <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#991b1b] via-[#ef4444] to-transparent" />
                   </div>
                   <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SEAL_URL} alt="" className="h-14 w-14 opacity-70" />
-                    <img src={CRYSTAL_URL} alt="" className="h-6 w-6" />
+                    <img src={SEAL_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                    <img src={CRYSTAL_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -833,9 +847,23 @@ export default function MarsPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#b91c1c] sm:text-[2rem]">
+                    How to Chant the Mangala Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in red.</li>
+                    <li>Sit facing south on a clean mat with the spine straight.</li>
+                    <li>Hold a Red Coral or red Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Mangala with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -859,7 +887,7 @@ export default function MarsPage() {
                     ))}
                   </div>
                   <div className="pointer-events-none absolute right-4 top-4 text-[#2a1a10]/60">
-                    <img src={SPEAR_URL} alt="" className="h-20 w-10 opacity-70" />
+                    <img src={SPEAR_URL} alt="" aria-hidden="true" className="h-20 w-10 opacity-70" />
                   </div>
                 </ParchmentCard>
 
@@ -868,7 +896,7 @@ export default function MarsPage() {
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Benefits of Mangala Mantra
                     </h3>
-                    <img src={FLAME_URL} alt="" className="h-12 w-12 opacity-70" />
+                    <img src={FLAME_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                   </div>
                   <div className="mt-5 space-y-3">
                     {benefits.map((benefit) => (
@@ -891,7 +919,7 @@ export default function MarsPage() {
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Mangala
                   </h3>
-                  <img src={SYMBOL_MARS_URL} alt="" className="h-12 w-12 opacity-70" />
+                  <img src={SYMBOL_MARS_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
                   {connectPractices.map((practice) => (
@@ -923,7 +951,7 @@ export default function MarsPage() {
                     <CoralRingIllustration />
                     <img
                       src={CORAL_URL}
-                      alt=""
+                      alt="" aria-hidden="true"
                       className="pointer-events-none absolute left-3 top-3 h-10 w-10 opacity-0"
                     />
                   </div>
@@ -943,7 +971,7 @@ export default function MarsPage() {
                     Affirmation
                   </h3>
                   <div className="text-[#991b1b]">
-                    <img src={STICKY_NOTE_URL} alt="" className="h-8 w-20 opacity-80" />
+                    <img src={STICKY_NOTE_URL} alt="" aria-hidden="true" className="h-8 w-20 opacity-80" />
                   </div>
                 </div>
                 <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-[#dc2626]/25 bg-white/28 px-4 py-2 font-kalam text-sm uppercase tracking-[0.28em] text-[#991b1b]">
@@ -972,8 +1000,8 @@ export default function MarsPage() {
             }}
           />
 
-          <img src={QUILL_URL} alt="" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
-          <img src={SEAL_URL} alt="" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-15 lg:block" />
+          <img src={QUILL_URL} alt="" aria-hidden="true" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
+          <img src={SEAL_URL} alt="" aria-hidden="true" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-15 lg:block" />
 
           <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
@@ -1147,7 +1175,7 @@ export default function MarsPage() {
                         A small reminder for the disciplined warrior.
                       </div>
                     </div>
-                    <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                   </div>
                   <div className="mt-5 font-kalam text-xl leading-relaxed text-white/85">
                     When the fire is small and steady, it warms a home. When it is large and undisciplined, it burns one.

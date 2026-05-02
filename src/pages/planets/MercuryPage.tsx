@@ -194,9 +194,9 @@ const attributes: AttributeCard[] = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'What Is Budh in Vedic Astrology?',
+    title: 'Who is Budha in Vedic astrology?',
     paragraphs: [
-      'Budh occupies a unique seat in the Navagraha, the council of nine planetary deities revered in Vedic tradition. The name comes from the Sanskrit root budh, meaning to know or to be awake, and the planet personifies the awakened intellect, the discriminating faculty of mind that analyses, classifies, and translates raw experience into language. Where the Sun gives identity and the Moon gives feeling, Budh gives the ability to articulate both with precision.',
+      "Budha (Mercury) is the most intellectually significant Navagraha in Vedic astrology, governing communication, intellect, analytical thinking, learning, commerce, and the mental agility that shapes how a person processes information and exchanges ideas. As one of the faster-moving classical planets, Budha transits each rashi (zodiac sign) in approximately three to four weeks, though it goes retrograde three times a year, often coinciding with periods that ask for review and revision. In the Brihat Parashara Hora Shastra, Budha is described as the prince of the planets, ruler of Mithuna (Gemini) and Kanya (Virgo), and the giver of speech, intelligence, and skillful expression. Mercury's placement in the natal chart reveals where a person seeks understanding, expresses ideas, and builds skill through learning and practice. At Soul Infinity Astro Solutions, Saurabh Jain analyses Budha's house placement, sign dignity, aspects, and current transit position to provide guidance on communication, education, and Budha Mahadasha periods.",
       'Classical texts call Budh the kumara, the eternal youth, and the prince of wit. Puranic narrative describes him as the son of Chandra and Tara, born from the meeting of the Moon and a celestial mind, which is why his nature carries lunar reflectivity layered with sharp clarity. This origin gives him an adaptable intelligence rather than a fixed one, capable of mirroring whoever he keeps company with, learning quickly, and passing on what he has absorbed. [VERIFY: parentage detail varies between Bhagavata and other Puranic sources]',
       'In a birth chart Budh signifies speech, memory, learning, commerce, writing, communication, logical analysis, friendships in the intellectual sphere, and the ability to translate ideas into meaningful exchange. Astrologers read him to understand how a person processes information, makes deals, teaches, and adapts. His placement reveals the texture of a person’s mind and the quality of the bridge between thought and word.',
       'In modern Vedic practice, Budh is assessed not only through his sign and house, but through his nakshatra placement, his dispositors, and the company he keeps in conjunction. A chart with multiple planets clustered with Budh often shows an emphasis on intellectual life, while a Budh in isolation can give the steady focus of the lone scholar. These nuances make Budh one of the more revealing planets to read, because his interactions describe how a person actually thinks.',
@@ -228,7 +228,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Budh in Each House',
+    title: 'What is the significance of Mercury in the 12 houses?',
     paragraphs: [
       'Budh’s house placement colours the domain in which intellect, speech, and exchange most actively unfold. In the first house he shapes self-presentation through wit, youthful demeanour, and quick perception. In the second house he sharpens speech, learning, and family communication, while also influencing earnings tied to language or analysis.',
       'In the third house he enjoys natural strength, because this house mirrors his own communicative nature. Siblings, courage of expression, and short journeys gain texture and curiosity. In the fourth house he brings a thoughtful, well-stocked home environment and an early connection to study. In the fifth house, another of his natural homes, he flowers in creative intelligence, education, mantra practice, and well-considered investments.',
@@ -237,7 +237,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Budh Mahadasha and Antardasha',
+    title: 'What is Budha Mahadasha and what does it bring?',
     paragraphs: [
       'The Vimshottari dasha system, which allots planetary periods across one hundred and twenty years, gives Budh a span of seventeen years. When his mahadasha activates, the chart moves into a season where mind, message, and exchange become primary themes, regardless of the rest of the natal architecture.',
       'A favourable Budh mahadasha can bring formal education, writing achievements, business growth, gains through technology, fruitful negotiations, travel related to commerce, and an expansion of one’s professional voice. People often describe these years as mentally alive, productive, and full of new conversations. Career steps tied to language, trade, and analysis frequently land in this period, especially when Budh is well placed and supported by friendly aspects. Many practitioners use this period intentionally to launch creative or commercial projects that depend on language, presence, and timing.',
@@ -245,7 +245,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Vedic Remedies for Budh',
+    title: 'What are the remedies for a weak Mercury?',
     paragraphs: [
       'Wednesday is the day reserved for Budh in the Vedic calendar, and most traditional remedies anchor themselves there. Devotees rise early on Wednesdays, bathe, wear green or undyed cloth, light a simple ghee lamp, and chant Budh’s mantras with attention. The ambient simplicity matters, because Budh responds to clean signal more than ornate ritual.',
       'Among focused mantra practices, the Budh bija and the longer Navagraha shloka, both of which appear in the Sacred Mantras section above, are most widely used. The bija is suited to steady internal repetition, traditionally one hundred and eight times. The shloka is reserved for those who can pronounce it with care, and both deserve sincerity rather than speed. Charitable giving forms a second traditional pillar; offering green moong dal, fresh durva grass, books, stationery, or sponsoring the education of a child are all attributed to Budh’s support.',
@@ -728,6 +728,20 @@ export default function MercuryPage() {
         url: PAGE_URL,
       }),
       getFaqPageSchemaFromList(faqs.map((f) => ({ question: f.question, answer: f.answer }))),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Mercury (Budha) Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Budha Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Mercury (green).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing north on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: 'Use an Emerald or green Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger.' },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Braam Breem Braum Sah Budhaya Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Budha deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -751,13 +765,15 @@ export default function MercuryPage() {
         >
           <img
             src={HERO_URL}
-            alt="Budh deity artwork"
+            alt="Illustration of Budh, the Mercury planet, in Vedic astrology by Soul Infinity Astro Solutions"
+            width={1600}
+            height={900}
             fetchpriority="high"
             className="absolute inset-0 h-full w-full object-cover object-[center_22%]"
           />
           <img
             src={SACRED_GEOMETRY_URL}
-            alt=""
+            alt="" aria-hidden="true"
             className="pointer-events-none absolute right-[6%] top-[6%] hidden h-[78%] w-[42%] object-contain opacity-[0.06] lg:block"
           />
           <div className="absolute inset-0 opacity-[0.08]">
@@ -804,8 +820,8 @@ export default function MercuryPage() {
 
               <div className="pointer-events-none absolute inset-0 hidden lg:block">
                 <MercuryOrbitDoodle className="absolute inset-0 opacity-95" />
-                <img src={FEATHER_URL} alt="" className="absolute left-[7%] top-[12%] h-24 w-24 opacity-24" />
-                <img src={FEATHER_URL} alt="" className="absolute right-[10%] top-[18%] h-20 w-20 rotate-[20deg] opacity-18" />
+                <img src={FEATHER_URL} alt="" aria-hidden="true" className="absolute left-[7%] top-[12%] h-24 w-24 opacity-24" />
+                <img src={FEATHER_URL} alt="" aria-hidden="true" className="absolute right-[10%] top-[18%] h-20 w-20 rotate-[20deg] opacity-18" />
               </div>
 
               <div className="relative z-10 mt-10 lg:absolute lg:bottom-5 lg:left-1/2 lg:w-full lg:max-w-6xl lg:-translate-x-1/2">
@@ -872,7 +888,7 @@ export default function MercuryPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 text-[#1d402b]/75">
-                    <img src={FEATHER_URL} alt="" className="h-12 w-12 opacity-65" />
+                    <img src={FEATHER_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-65" />
                     {iconSvg('communication', 'h-8 w-8')}
                   </div>
                 </div>
@@ -905,6 +921,20 @@ export default function MercuryPage() {
                       </div>
                     </div>
                   ))}
+                </div>
+
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#15803d] sm:text-[2rem]">
+                    How to Chant the Budha Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in green.</li>
+                    <li>Sit facing north on a clean mat with the spine straight.</li>
+                    <li>Hold an Emerald or green Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Budha with gratitude.</li>
+                  </ol>
                 </div>
 
                 {/* Offerings section, added in Mercury, retrofit Sun/Moon in follow-up pass. */}
@@ -947,7 +977,7 @@ export default function MercuryPage() {
 
                   <div className="flex items-center justify-center gap-4">
                     <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#15803d]/45 to-transparent" />
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-10 w-10 opacity-65" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-10 w-10 opacity-65" />
                     <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#15803d]/45 to-transparent" />
                   </div>
 
@@ -960,7 +990,7 @@ export default function MercuryPage() {
 
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-40 w-auto opacity-80 lg:block"
                 />
               </NotebookCard>
@@ -986,7 +1016,7 @@ export default function MercuryPage() {
                       </div>
                     ))}
                   </div>
-                  <img src={FEATHER_URL} alt="" className="pointer-events-none absolute bottom-4 right-4 h-16 w-16 opacity-25" />
+                  <img src={FEATHER_URL} alt="" aria-hidden="true" className="pointer-events-none absolute bottom-4 right-4 h-16 w-16 opacity-25" />
                 </NotebookCard>
 
                 <NotebookCard rotate="xl:-rotate-[0.35deg]">
@@ -1033,7 +1063,7 @@ export default function MercuryPage() {
                         {index === 1 ? (
                           <OfferingIcon src={MOONG_URL} alt="Green moong offering" className="h-6 w-6" />
                         ) : null}
-                        {index === 2 ? <img src={RING_URL} alt="" className="h-6 w-6 rounded-full object-cover" /> : null}
+                        {index === 2 ? <img src={RING_URL} alt="" aria-hidden="true" className="h-6 w-6 rounded-full object-cover" /> : null}
                       </div>
                       <p className="font-kalam text-lg leading-relaxed text-[#2a190f]">{practice}</p>
                     </div>
@@ -1056,8 +1086,8 @@ export default function MercuryPage() {
                     </p>
                   </div>
                   <div className="relative mx-auto h-44 w-44 sm:h-52 sm:w-52">
-                    <img src={MANDALA_URL} alt="" className="absolute inset-0 h-full w-full rounded-full object-cover opacity-18 mix-blend-multiply" />
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="absolute inset-[12%] h-[76%] w-[76%] object-contain opacity-90" />
+                    <img src={MANDALA_URL} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full rounded-full object-cover opacity-18 mix-blend-multiply" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="absolute inset-[12%] h-[76%] w-[76%] object-contain opacity-90" />
                   </div>
                   <div className="space-y-4 text-center lg:text-right">
                     <div className="font-caveat text-3xl text-[#2b1a0f] sm:text-4xl">
@@ -1083,7 +1113,7 @@ export default function MercuryPage() {
                   <p className="mt-2 font-kalam text-xl text-[#166534]">Panna</p>
                 </div>
                 <div className="relative mx-auto mt-5 max-w-[360px]">
-                  <img src={OVAL_BORDER_URL} alt="" className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-85" />
+                  <img src={OVAL_BORDER_URL} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-85" />
                   <div className="rounded-[24px] bg-[#07140c] p-2 shadow-[0_14px_28px_rgba(0,0,0,0.3)]">
                     <img
                       src={RING_URL}
@@ -1099,7 +1129,7 @@ export default function MercuryPage() {
 
               <div className="relative overflow-hidden rounded-[28px] border border-[rgba(245,230,200,0.22)] bg-[linear-gradient(180deg,rgba(248,237,213,0.98),rgba(240,224,194,0.96))] p-6 text-[#1f130b] shadow-[0_24px_55px_rgba(0,0,0,0.34),0_10px_22px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,248,232,0.55)] sm:p-8 xl:rotate-[0.45deg]">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.38),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(106,71,34,0.14),transparent_28%)]" />
-                <img src={STICKY_NOTE_URL} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.12] mix-blend-multiply" />
+                <img src={STICKY_NOTE_URL} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-[0.12] mix-blend-multiply" />
                 <div className="tape-decoration hidden sm:block" />
                 <div className="relative z-10">
                   <div className="flex items-start justify-between gap-4">
@@ -1131,7 +1161,7 @@ export default function MercuryPage() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-3">
-                  <img src={SACRED_GEOMETRY_URL} alt="" className="h-16 w-16 opacity-70" />
+                  <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-16 w-16 opacity-70" />
                   <div className="h-px w-28 bg-gradient-to-r from-transparent via-[#22c55e]/50 to-transparent" />
                 </div>
 
@@ -1141,7 +1171,7 @@ export default function MercuryPage() {
                       Use your mind as a tool, not as a trap.
                     </div>
                   </div>
-                  <img src={DIYA_URL} alt="" className="h-16 w-16 shrink-0" />
+                  <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16 shrink-0" />
                 </div>
               </div>
 
@@ -1184,12 +1214,12 @@ export default function MercuryPage() {
 
           <img
             src={FEATHER_URL}
-            alt=""
+            alt="" aria-hidden="true"
             className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-15 lg:block"
           />
           <img
             src={SACRED_GEOMETRY_URL}
-            alt=""
+            alt="" aria-hidden="true"
             className="pointer-events-none absolute left-8 top-[36rem] hidden h-20 w-20 opacity-15 lg:block"
           />
 
@@ -1282,7 +1312,7 @@ export default function MercuryPage() {
                           A simple invocation to let the page settle.
                         </div>
                       </div>
-                      <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                      <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                     </div>
                     <div className="mt-5 font-caveat text-3xl text-[#bbf7d0]">
                       Speak less. Mean more.
@@ -1388,7 +1418,7 @@ export default function MercuryPage() {
                     <div className="relative">
                       <img
                         src={SACRED_GEOMETRY_URL}
-                        alt=""
+                        alt="" aria-hidden="true"
                         className="pointer-events-none absolute -right-2 -top-2 h-20 w-20 opacity-20"
                       />
                       <div className="font-caveat text-2xl italic leading-tight text-[#166534]/75">
@@ -1690,7 +1720,7 @@ export default function MercuryPage() {
 
                 <NotebookCard rotate="lg:-rotate-[0.25deg]">
                   <div className="flex items-start gap-3">
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-16 w-16 shrink-0 opacity-80" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-16 w-16 shrink-0 opacity-80" />
                     <div>
                       <h3 className="font-caveat text-[1.6rem] leading-tight text-[#1a110a]">
                         The Hexagonal Yantra
@@ -1756,7 +1786,7 @@ export default function MercuryPage() {
                   <div className="relative">
                     <img
                       src={FEATHER_URL}
-                      alt=""
+                      alt="" aria-hidden="true"
                       className="pointer-events-none absolute -right-3 -top-3 h-20 w-20 opacity-30"
                     />
                     <div className="font-caveat text-2xl italic leading-tight text-[#166534]/75">
@@ -1790,7 +1820,7 @@ export default function MercuryPage() {
 
                 <NotebookCard rotate="lg:rotate-[0.4deg]">
                   <div className="flex items-start gap-3">
-                    <img src={RING_URL} alt="" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
+                    <img src={RING_URL} alt="" aria-hidden="true" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
                     <div>
                       <h3 className="font-caveat text-[1.6rem] leading-tight text-[#1a110a]">
                         Emerald (Panna) at a Glance

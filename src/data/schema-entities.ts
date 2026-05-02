@@ -561,6 +561,9 @@ export function getServiceUrl(service: Pick<ServiceEntry, 'category' | 'slug'>):
 export interface ServiceOfferOpts {
   /** Numeric price (rupees). Pass the raw number, not a formatted string. */
   price?: number;
+  /** Human-readable price range, e.g. "Free to Rs. 2,100". Emitted on Offer
+   * when set. Use plain text, no em-dashes. */
+  priceRange?: string;
   priceCurrency?: string;
   /** Human-readable duration, e.g. "60-90 minutes". Emitted as termsOfService. */
   duration?: string;
@@ -580,15 +583,21 @@ export function getServiceSchema(service: ServiceEntry, opts: ServiceOfferOpts =
       '@type': name === 'Worldwide' ? 'Country' : 'Place',
       name,
     })),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Vedic Astrology and Spiritual Services',
+    },
   };
-  if (opts.price != null) {
-    base.offers = {
+  if (opts.price != null || opts.priceRange != null) {
+    const offer: JsonLd = {
       '@type': 'Offer',
-      price: opts.price,
       priceCurrency: opts.priceCurrency ?? 'INR',
       availability: 'https://schema.org/InStock',
-      url: getServiceUrl(service),
+      url: `${SITE_ORIGIN}/contact`,
     };
+    if (opts.price != null) offer.price = opts.price;
+    if (opts.priceRange != null) offer.priceRange = opts.priceRange;
+    base.offers = offer;
   }
   if (opts.duration) {
     base.termsOfService = `Consultation duration: ${opts.duration}`;

@@ -176,9 +176,9 @@ const associations: Association[] = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'What Is Ketu in Vedic Astrology?',
+    title: 'Who is Ketu in Vedic astrology?',
     paragraphs: [
-      'Ketu (केतु, IAST Ketu) is the Sanskrit name of the South Node of the Moon, the point where the Moon\'s orbit crosses the ecliptic from north to south. The word Ketu translates as "banner" or "flag", and also as "comet", a name that captures both the symbolism and the visible behaviour of the shadow planet. Like Rahu, Ketu is a chhaya graha, a calculated point in the sky rather than a body with surface and form. In the council of nine planetary deities known as the Navagraha, Ketu holds the seat of liberation, detachment, intuition, mysticism, past-life mastery, and the gentle wisdom of release.',
+      "Ketu is the spiritual shadow planet (Chhaya graha) in Vedic astrology, governing liberation, detachment, intuition, past life karma, mystical insight, and the dissolving force that draws a person away from material attachment toward inner realisation and moksha. As a lunar node rather than a physical planet, Ketu moves retrograde through the zodiac opposite Rahu, transiting each rashi (zodiac sign) in approximately eighteen months and completing the full cycle in roughly eighteen and a half years. In Vedic mythology, Ketu is the severed body of the asura Svarbhanu and rules no zodiac sign of its own, though it is most powerful in Dhanu (Sagittarius) and is associated with renunciation, occult knowledge, and spiritual practice. Ketu's placement in the natal chart reveals where a person carries inherited mastery, releases attachment, and seeks deeper meaning. At Soul Infinity Astro Solutions, Saurabh Jain analyses Ketu's house placement, sign association, aspects, and current transit to provide guidance on Ketu Mahadasha periods.",
       'The classical mythology pairs Ketu with Rahu in a single story. During the Samudra Manthan, the great churning of the cosmic ocean, the asura Svarbhanu drank some of the divine nectar (amrita) and was discovered. Vishnu severed him with the sudarshana chakra, but the nectar had already touched his throat, so neither head nor body could die. The head became Rahu and the body became Ketu, the two shadow points eternally linked across the chart. Where Rahu hungers outward for what is unmet, Ketu releases inward what has already been mastered.',
       'As a karaka, the significator of life themes, Ketu rules spirituality, healing, mantra, meditation, past lives, hidden knowledge, sudden gains and losses, surgery, astrology, psychic perception, and the sober art of letting go. He is always retrograde in motion, walking the zodiac backward in tandem with Rahu. The teaching is that the soul\'s freedom often arrives by way of release rather than acquisition. [VERIFY: classical karakatva ordering for Ketu varies between Brihat Parashara Hora Shastra, Phaladeepika, and the various Tantra traditions.]',
     ],
@@ -217,7 +217,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Ketu Mahadasha and Antardasha',
+    title: 'What is Ketu Mahadasha and what does it bring?',
     paragraphs: [
       'In the Vimshottari dasha system, the Mahadasha of Ketu lasts seven years, the shortest among the planetary periods. When this period activates, the chart turns its focus towards spiritual awakening, sudden release, withdrawal from worldly pursuits, and the completion of unfinished karmic threads. Themes of inner work, healing, mantra siddhi, and the quiet release of attachments often come forward to be lived through the seven-year window. Many natives describe a Ketu Mahadasha as the chapter in which something they had been carrying finally fell away.',
       'A favourable Ketu dasha is often experienced as spiritual breakthroughs, mastery in healing or astrology, mantra siddhi, freedom from old burdens, and a clear interior signal that an old chapter has closed cleanly. Long-postponed inner work suddenly becomes possible, contemplative practice deepens, and the native finds themselves quietly more themselves than before. The classical literature speaks of a brief but transformative window in which the soul gathers what it has actually learned and releases the rest.',
@@ -225,7 +225,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Vedic Remedies for Ketu',
+    title: 'What are the remedies for Ketu?',
     paragraphs: [
       'Tuesday (shared with Mangala) is the day held sacred to Ketu, and many traditional remedies begin there. A simple Tuesday observance includes wearing a touch of smoky grey, a light fast, the offering of multi-grain mixtures, sesame seeds, or incense smoke at a Ganesha or Subrahmanya temple, and a few minutes of mantra recitation in a quiet hour. The aim is not appeasement of an angry planet but a respectful turning of the inner attention towards the qualities Ketu governs, detachment, intuition, and the wisdom of letting go.',
       'Mantra recitation forms the spine of formal Ketu remedies. The Navagraha Ketu stotra and the Beej mantra are shown in the Sacred Mantras section above, and they remain the most widely chanted invocations across the South Asian traditions. Mantras dedicated to Ganesha, Subrahmanya, and the ancestors are popular adjacent practices, since Ganesha is held as Ketu\'s adhi-devata in many lineages. Pitri Tarpan, the offering of water to the ancestors, is a deeply traditional remedy that addresses the karmic threads Ketu often surfaces.',
@@ -610,6 +610,20 @@ export default function KetuPage() {
         description: PAGE_DESCRIPTION,
         url: PAGE_URL,
       }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Ketu Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Ketu Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Ketu (grey).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing northwest on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: "Use a Cat's Eye or Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger." },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Sraam Sreem Sraum Sah Ketave Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Ketu deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -659,9 +673,9 @@ export default function KetuPage() {
             <SmokeDoodle className="absolute left-0 top-0 h-full w-[55%]" />
           </div>
           <div className="pointer-events-none absolute inset-0 opacity-45">
-            <img src={CRYSTAL_URL} alt="" className="absolute left-[8%] top-16 h-10 w-10" />
-            <img src={NAMASTE_URL} alt="" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
-            <img src={FLAME_URL} alt="" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
+            <img src={CRYSTAL_URL} alt="" aria-hidden="true" className="absolute left-[8%] top-16 h-10 w-10" />
+            <img src={NAMASTE_URL} alt="" aria-hidden="true" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
+            <img src={FLAME_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
           </div>
 
           <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-6 sm:px-6 lg:px-10">
@@ -695,7 +709,7 @@ export default function KetuPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#d1d5db]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#d1d5db]/80" />
-                  <img src={CROWN_URL} alt="" className="h-9 w-9" />
+                  <img src={CROWN_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
 
@@ -765,8 +779,8 @@ export default function KetuPage() {
                     <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#4b5563] via-[#9ca3af] to-transparent" />
                   </div>
                   <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" className="h-6 w-6" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -795,9 +809,23 @@ export default function KetuPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#475569] sm:text-[2rem]">
+                    How to Chant the Ketu Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in grey.</li>
+                    <li>Sit facing northwest on a clean mat with the spine straight.</li>
+                    <li>Hold a Cat&apos;s Eye or Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Ketu with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -827,7 +855,7 @@ export default function KetuPage() {
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Benefits of Ketu Mantra
                     </h3>
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                   </div>
                   <div className="mt-5 space-y-3">
                     {benefits.map((benefit) => (
@@ -847,7 +875,7 @@ export default function KetuPage() {
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Ketu
                   </h3>
-                  <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                  <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
                   {connectPractices.map((practice) => (
@@ -970,10 +998,10 @@ export default function KetuPage() {
             }}
           />
 
-          <img src={SACRED_GEOMETRY_URL} alt="" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
+          <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
           <img
             src={SEAL_MARS_URL}
-            alt=""
+            alt="" aria-hidden="true"
             className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-12 lg:block"
             style={{ filter: 'grayscale(1) brightness(1.05)' }}
           />
@@ -1150,7 +1178,7 @@ export default function KetuPage() {
                         A small reminder for the soul that is ready to release.
                       </div>
                     </div>
-                    <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                   </div>
                   <div className="mt-5 font-kalam text-xl leading-relaxed text-white/85">
                     What the soul has already learned does not need to be carried forever. The chapter that closes cleanly is the one that has been honoured.

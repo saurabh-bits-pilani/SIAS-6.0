@@ -162,14 +162,14 @@ const phases = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'Chandra and the Reflective Mind',
+    title: 'Who is Chandra in Vedic astrology?',
     paragraphs: [
-      'Chandra in Vedic astrology is the keeper of manas, the reflective mind that receives impressions, colours them with feeling, and turns them into memory. The Moon does not behave like the will-driven Sun. It responds, absorbs, nourishes, and mirrors.',
+      "Chandra (Moon) is the most emotionally significant Navagraha in Vedic astrology, governing the mind, emotions, intuition, maternal influence, memory, and the inner emotional landscape that shapes how a person experiences and responds to the world. As the fastest-moving of the classical planets, Chandra transits each rashi (zodiac sign) in approximately two and a quarter days, completing the full zodiac cycle in roughly twenty-seven days and influencing daily mood and emotional rhythm. In the Brihat Parashara Hora Shastra, Chandra is described as the queen of the planets, ruler of Karka (Cancer), and the giver of comfort, nurturance, and psychological wellbeing. The Moon's placement in the natal chart reveals where a person seeks emotional security, expresses care, and finds inner peace. At Soul Infinity Astro Solutions, Saurabh Jain analyses Chandra's house placement, sign dignity, nakshatra position, and current transit to provide precise guidance on emotional balance and Chandra Mahadasha periods.",
       'When astrologers speak about emotional steadiness, intuition, softness, and the quality of one’s internal climate, they are reading the Moon. A strong Chandra helps a person feel life deeply without being ruled by every passing wave.',
     ],
   },
   {
-    title: 'Why the Moon Matters So Much in a Birth Chart',
+    title: 'What does the Moon represent in a birth chart?',
     paragraphs: [
       'In classical jyotish, the Moon is often treated as a second ascendant because lived experience is filtered through the mind. Two people can face the same outer circumstances, but the one with a stable Moon processes them with greater peace, resilience, and clarity.',
       'This is why Janma Rashi, the Moon sign, remains central in transit reading, dasha interpretation, matchmaking, and mental well-being analysis. Chandra shows how reality is felt, not just what reality appears to be.',
@@ -204,7 +204,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Traditional Remedies for a Disturbed Moon',
+    title: 'What are the remedies for a weak Moon?',
     paragraphs: [
       'Classical remedies for Chandra are cooling, devotional, and rhythmic. Monday observances, offering water to the Moon, mantra japa, white foods, moonlight meditation, and gratitude toward the mother principle all help restore lunar harmony.',
       'Pearl is the traditional gemstone of Chandra, but it should not be worn casually. A gemstone can amplify the planet, which is helpful only when amplification is appropriate for the individual chart.',
@@ -520,6 +520,20 @@ export default function MoonPage() {
         description: PAGE_DESCRIPTION,
         url: PAGE_URL,
       }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Moon (Chandra) Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Chandra Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Moon (white).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing northwest on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: 'Use a Pearl or white Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger.' },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Shraam Shreem Shraum Sah Chandraya Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Chandra deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -567,9 +581,9 @@ export default function MoonPage() {
             <MoonDustDoodle className="absolute left-0 top-0 h-full w-[48%]" />
           </div>
           <div className="pointer-events-none absolute inset-0 opacity-45">
-            <img src={STAR_ACCENT_URL} alt="" className="absolute left-[7%] top-16 h-10 w-10" />
-            <img src={STAR_ACCENT_URL} alt="" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
-            <img src={STAR_ACCENT_URL} alt="" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
+            <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="absolute left-[7%] top-16 h-10 w-10" />
+            <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
+            <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
           </div>
 
           <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-6 sm:px-6 lg:px-10">
@@ -603,7 +617,7 @@ export default function MoonPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#f0d79b]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#f0d79b]/80" />
-                  <img src={STAR_ACCENT_URL} alt="" className="h-9 w-9" />
+                  <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
 
@@ -673,8 +687,8 @@ export default function MoonPage() {
                     <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-blue-700 via-blue-400 to-transparent" />
                   </div>
                   <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={MOON_DOODLE_URL} alt="" className="h-14 w-14 opacity-70" />
-                    <img src={STAR_ACCENT_URL} alt="" className="h-6 w-6" />
+                    <img src={MOON_DOODLE_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                    <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -703,9 +717,23 @@ export default function MoonPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#2d569b] sm:text-[2rem]">
+                    How to Chant the Chandra Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in white.</li>
+                    <li>Sit facing northwest on a clean mat with the spine straight.</li>
+                    <li>Hold a Pearl or white Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Chandra with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -743,7 +771,7 @@ export default function MoonPage() {
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Benefits of Chandra Mantra
                     </h3>
-                    <img src={MOON_DOODLE_URL} alt="" className="h-12 w-12 opacity-70" />
+                    <img src={MOON_DOODLE_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                   </div>
                   <div className="mt-5 space-y-3">
                     {benefits.map((benefit) => (
@@ -763,7 +791,7 @@ export default function MoonPage() {
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Chandra
                   </h3>
-                  <img src={MOON_DOODLE_URL} alt="" className="h-12 w-12 opacity-70" />
+                  <img src={MOON_DOODLE_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 lg:grid-cols-5">
                   {connectPractices.map((practice) => (
@@ -843,7 +871,7 @@ export default function MoonPage() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-3">
-                  <img src={MOON_DOODLE_URL} alt="" className="h-16 w-16 opacity-85" />
+                  <img src={MOON_DOODLE_URL} alt="" aria-hidden="true" className="h-16 w-16 opacity-85" />
                   <div className="h-px w-28 bg-gradient-to-r from-transparent via-blue-200/60 to-transparent" />
                 </div>
 
@@ -883,8 +911,8 @@ export default function MoonPage() {
             }}
           />
 
-          <img src={MOON_DOODLE_URL} alt="" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
-          <img src={STAR_ACCENT_URL} alt="" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-15 lg:block" />
+          <img src={MOON_DOODLE_URL} alt="" aria-hidden="true" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
+          <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-15 lg:block" />
 
           <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
@@ -956,7 +984,7 @@ export default function MoonPage() {
                         A cooling lunar invocation to settle the page.
                       </div>
                     </div>
-                    <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                   </div>
                   <div className="mt-5 font-devanagari text-3xl text-[#dbe7ff]">चन्द्रमा मनसो जातः ।</div>
                   <div className="mt-2 font-kalam text-xl text-white/80">Candramā manaso jātaḥ.</div>

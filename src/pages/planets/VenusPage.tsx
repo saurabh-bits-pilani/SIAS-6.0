@@ -177,9 +177,9 @@ const associations: Association[] = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'What Is Shukra in Vedic Astrology?',
+    title: 'Who is Shukra in Vedic astrology?',
     paragraphs: [
-      'Shukra (शुक्र, IAST Śukra) is the Sanskrit name of Venus. The word translates literally as "the bright one" or "the radiant essence", referring to the luminous quality of vital energy from which beauty arises. In the council of nine planetary deities known as the Navagraha, Shukra holds the seat of love, beauty, art, refined taste, and the gentler abundance that softens the world. Together with Jupiter he is one of the two great benefics of Vedic astrology; where Jupiter ripens wisdom, Shukra ripens grace.',
+      "Shukra (Venus) is the most aesthetically significant Navagraha in Vedic astrology, governing love, beauty, relationships, artistic expression, comfort, sensual pleasure, and the harmonious qualities that shape a person's capacity for connection and creative refinement. As one of the inner classical planets, Shukra transits each rashi (zodiac sign) in approximately twenty-five to thirty days, though it goes retrograde once every eighteen months in periods that often ask for relational review. In the Brihat Parashara Hora Shastra, Shukra is described as the preceptor of the asuras, ruler of Vrishabha (Taurus) and Tula (Libra), and the giver of marital harmony, prosperity, and aesthetic sensibility. Venus's placement in the natal chart reveals where a person seeks beauty, expresses love, and finds fulfilment through partnership and creative work. At Soul Infinity Astro Solutions, Saurabh Jain analyses Shukra's house placement, sign dignity, aspects, and current transit position to provide guidance on relationships, marriage timing, and Shukra Mahadasha periods.",
       'He is also called Bhargava (भार्गव), the descendant of the great seer Bhṛgu, and Daityaguru, the teacher of the asuras, the one celestial counsel he could not refuse. As Kavi, the wise poet, he is said to hold the secret of Mṛta-Sañjīvanī, the verse that revives life. Each of these names carries a different shade. As Bhargava he is the inheritor of refined lineage; as Daityaguru he is the teacher who counsels even those the gods will not counsel; as Kavi he is the artist who hears the world as music.',
       'As a karaka, the significator of life themes, Shukra rules marriage, romance, the wife in a man\'s chart, vehicles, luxury, music, dance, poetry, fashion, hospitality, the reproductive system, and the diplomatic art of harmonious negotiation. When jyotishis read a chart for love, beauty, comfort, or refined creativity, they are tracing the movement of Venus across signs and houses. His blessing is felt as a softening, a sense that life has been made gentler and more beautiful for one\'s presence in it.',
     ],
@@ -209,7 +209,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Shukra in Each House (1 to 12)',
+    title: 'What is the significance of Venus in the 12 houses?',
     paragraphs: [
       'When Shukra occupies the first house (the lagna), he gives a charming personality, attractive features, a pleasant voice, and a refined sense of self-presentation. In the second house he supports wealth gathered through art or beauty, sweet and persuasive speech, and a family atmosphere of good taste. The third house carries his blessing into artistic siblings, courageous expression in romance, and a creative communication style that wins others without force.',
       'In the fourth house Shukra gives a comfortable home, fine vehicles, maternal blessings, and surroundings that visibly carry the native\'s aesthetic. The fifth produces love affairs, artistic children, creative intelligence, and a steady gift for romance and the performing arts. The sixth turns Venus\'s softness into competition through charm, supporting careers in hospitality, diplomacy, and beauty services, with the caveat that debt may accumulate through luxury if discipline is loose.',
@@ -218,7 +218,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Shukra Mahadasha and Antardasha',
+    title: 'What is Shukra Mahadasha and what does it bring?',
     paragraphs: [
       'In the Vimshottari dasha system, the Mahadasha of Shukra lasts twenty years, the longest among the planets. When this period activates, the chart turns its focus towards love, marriage, artistic expression, financial abundance, and the steady refinement of life. Themes that have been ripening, especially around relationship, comfort, and creative work, often come forward to be lived through this twenty-year window. For many natives, the Shukra Mahadasha overlaps with their most visible chapters of marriage, family, and material settling.',
       'A favourable Shukra dasha is often experienced as the right marriage at the right time, the birth of children, gains through vehicles or real estate, artistic recognition, and a financial comfort that is felt without ostentation. Long-postponed creative projects find their audience, partnerships deepen rather than strain, and the home itself becomes more beautiful as the years move. The classical literature speaks of a long period of dignified pleasure that supports both inner contentment and outer grace.',
@@ -226,7 +226,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Vedic Remedies for Shukra',
+    title: 'What are the remedies for a weak Venus?',
     paragraphs: [
       'Friday (Shukravara) is the day held sacred to Venus, and many traditional remedies begin there. A simple Friday observance includes wearing a touch of white, a light fast, the offering of sweet rice (kheer), curd, sugar, or perfume at a Lakshmi or Saraswati temple, and a few minutes of mantra recitation in a quiet hour. The aim is not appeasement of a difficult planet but a respectful turning of the inner attention towards the qualities Shukra governs, love, beauty, harmony, and the cultivation of refined taste.',
       'Mantra recitation forms the spine of formal Shukra remedies. The Navagraha Shukra stotra and the Beej mantra are shown in the Sacred Mantras section above, and they remain the most widely chanted invocations across the South Asian traditions. Mantras dedicated to Lakshmi, Saraswati, and Durga are popular adjacent practices, since the great feminine principle in Vedic philosophy is closely held with Venus. As with all japa, sincerity is weighted more heavily than haste or volume, and a small daily count practised faithfully usually outlasts an ambitious vow undertaken in restlessness.',
@@ -611,6 +611,20 @@ export default function VenusPage() {
         description: PAGE_DESCRIPTION,
         url: PAGE_URL,
       }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Venus (Shukra) Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Shukra Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Venus (white or pink).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing southeast on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: 'Use a White Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger.' },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Draam Dreem Draum Sah Shukraya Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Shukra deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -660,9 +674,9 @@ export default function VenusPage() {
             <PetalDoodle className="absolute left-0 top-0 h-full w-[55%]" />
           </div>
           <div className="pointer-events-none absolute inset-0 opacity-45">
-            <img src={CRYSTAL_URL} alt="" className="absolute left-[8%] top-16 h-10 w-10" />
-            <img src={NAMASTE_URL} alt="" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
-            <img src={FLAME_URL} alt="" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
+            <img src={CRYSTAL_URL} alt="" aria-hidden="true" className="absolute left-[8%] top-16 h-10 w-10" />
+            <img src={NAMASTE_URL} alt="" aria-hidden="true" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
+            <img src={FLAME_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
           </div>
 
           <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-6 sm:px-6 lg:px-10">
@@ -696,7 +710,7 @@ export default function VenusPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#f9a8d4]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#f9a8d4]/80" />
-                  <img src={CROWN_URL} alt="" className="h-9 w-9" />
+                  <img src={CROWN_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
 
@@ -766,8 +780,8 @@ export default function VenusPage() {
                     <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
                   </div>
                   <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" className="h-6 w-6" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -796,9 +810,23 @@ export default function VenusPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#be185d] sm:text-[2rem]">
+                    How to Chant the Shukra Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in white or pink.</li>
+                    <li>Sit facing southeast on a clean mat with the spine straight.</li>
+                    <li>Hold a White Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Shukra with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -828,7 +856,7 @@ export default function VenusPage() {
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Benefits of Shukra Mantra
                     </h3>
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                   </div>
                   <div className="mt-5 space-y-3">
                     {benefits.map((benefit) => (
@@ -848,7 +876,7 @@ export default function VenusPage() {
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Shukra
                   </h3>
-                  <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                  <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
                   {connectPractices.map((practice) => (
@@ -971,10 +999,10 @@ export default function VenusPage() {
             }}
           />
 
-          <img src={SACRED_GEOMETRY_URL} alt="" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
+          <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
           <img
             src={SEAL_MARS_URL}
-            alt=""
+            alt="" aria-hidden="true"
             className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-12 lg:block"
             style={{ filter: 'sepia(1) saturate(2.5) hue-rotate(280deg)' }}
           />
@@ -1152,7 +1180,7 @@ export default function VenusPage() {
                         A small reminder for the lifelong devotee of grace.
                       </div>
                     </div>
-                    <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                   </div>
                   <div className="mt-5 font-kalam text-xl leading-relaxed text-white/85">
                     What is beautiful is what teaches us to love. Love is what teaches us to belong.

@@ -176,9 +176,9 @@ const associations: Association[] = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'What Is Shani in Vedic Astrology?',
+    title: 'Who is Shani in Vedic astrology?',
     paragraphs: [
-      'Shani (शनि, IAST Śani) is the Sanskrit name of Saturn. The word derives from "śanaiścara", meaning "the slow-moving one", a reference to Saturn\'s elongated journey through each zodiac sign. In the council of nine planetary deities known as the Navagraha, Shani holds the seat of discipline, karma, justice, longevity, and the patient hand of cosmic accountability. He is the great teacher who arrives without applause and leaves only after a lesson has been firmly learned.',
+      "Shani (Saturn) is the most influential Navagraha in Vedic astrology, governing karma, discipline, longevity, and the lessons that shape the soul across lifetimes. As the slowest-moving of the classical planets, Saturn transits each rashi (zodiac sign) over approximately two and a half years, making its effects deep, lasting, and transformative. In the Brihat Parashara Hora Shastra, Shani is described as the son of Surya and the lord of Makara (Capricorn) and Kumbha (Aquarius). Saturn's placement in the natal chart reveals where a person must put in sustained effort, face delays with patience, and ultimately develop mastery. At Soul Infinity Astro Solutions, Saurabh Jain analyses Shani's house placement, sign dignity, aspects, and current transit position to provide precise guidance on navigating Saturn's influence, including Sade Sati and Shani Mahadasha periods.",
       'He is also called Shanaishchara (शनैश्चर), the slow-walker, and Yamagraja, the elder brother of Yama, the lord of death. As Suryaputra, he is the son of Surya and Chhaya, and the gravitas of his nature is sometimes traced to the cool detachment of his celestial mother. As Shanaishchara he is the patient walker; as Yamagraja he is the cosmic timekeeper who tallies action against intention; as Suryaputra he is the dutiful son whose quiet shadow lengthens across every chart.',
       'As a karaka, the significator of life themes, Shani rules hard work, longevity, old age, servitude and service, the underprivileged, iron and oil industries, manual labor, asceticism, detachment, and the slow ripening of merit through restraint. When jyotishis read a chart for endurance, fairness, or the felt quality of one\'s later decades, they are tracing the movement of Saturn across signs and houses. His teaching is not punishment but truth, returned at the pace at which the soul can absorb it. [VERIFY: classical karakatva ordering varies between Brihat Parashara Hora Shastra and Phaladeepika.]',
     ],
@@ -217,7 +217,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Shani Mahadasha and Antardasha',
+    title: 'What is Shani Mahadasha and what does it bring?',
     paragraphs: [
       'In the Vimshottari dasha system, the Mahadasha of Shani lasts nineteen years, the longest period given to any planet other than Venus. When this period activates, the chart turns its focus towards karma, structure, responsibility, and the long ripening of effort. Themes of work, longevity, family duty, and inner discipline often come forward to be fully met. Many natives who walk through a Shani Mahadasha emerge from it visibly older in temperament, even when only a few years have passed.',
       'Sade Sati is the famous seven-and-a-half-year window in which transit Saturn passes through the twelfth, first, and second houses from the natal Moon, considered one of the most karmically active periods in a life. Dhaiya, the smaller two-and-a-half-year transits through the fourth and eighth from the Moon, are similarly weighted. These transits are not designed to break the soul but to reveal which structures of the life can carry weight and which need to be quietly retired. Approached well, they often produce maturity and a more honest set of commitments.',
@@ -225,7 +225,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Vedic Remedies for Shani',
+    title: 'What are the remedies for Saturn and Sade Sati?',
     paragraphs: [
       'Saturday (Shanivara) is the day held sacred to Saturn, and many traditional remedies begin there. A simple Saturday observance includes wearing a touch of black or dark blue, a light fast, the offering of black sesame seeds, mustard oil, or iron items at a Shani temple, and a few minutes of mantra recitation in a quiet hour. The aim is not appeasement of an angry planet but a respectful turning of the inner attention towards the qualities Shani governs, patience, fairness, service, and the steady acceptance of one\'s portion of work.',
       'Mantra recitation forms the spine of formal Shani remedies. The Navagraha Shani stotra and the Beej mantra are shown in the Sacred Mantras section above, and they remain the most widely chanted invocations across the South Asian traditions. Worship of Hanuman, Shani\'s protector, is among the most loved adjacent practices; reading the Hanuman Chalisa on Saturdays and visiting Hanuman temples are widely held to soften the pressure of difficult Saturn transits. As with all japa, sincerity is weighted more heavily than haste or volume.',
@@ -600,6 +600,43 @@ export default function SaturnPage() {
         description: PAGE_DESCRIPTION,
         url: PAGE_URL,
       }),
+      // HowTo for Shani Beej mantra. Visible matching steps render in the
+      // Sacred Mantras card (see "How to Chant the Shani Beej Mantra"
+      // ordered list). Required by Google policy for HowTo rich results.
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Saturn (Shani) Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Shani Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          {
+            '@type': 'HowToStep',
+            name: 'Purification',
+            text: 'Bathe and wear clean clothes in the colour associated with Saturn (dark blue or black).',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Posture and direction',
+            text: 'Sit facing west on a clean mat. Keep the spine straight.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Mala selection',
+            text: 'Use a Blue Sapphire or iron mala of 108 beads. Hold in the right hand using thumb and middle finger.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Chanting',
+            text: 'Chant Om Praam Preem Praum Sah Shanaischaraya Namah 108 times per round with steady rhythm and clear pronunciation.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Completion',
+            text: 'Sit quietly after completing rounds. Offer merit to the Shani deity and conclude with gratitude.',
+          },
+        ],
+      },
     ],
     [],
   );
@@ -649,9 +686,9 @@ export default function SaturnPage() {
             <RaysDoodle className="absolute left-0 top-0 h-full w-[55%]" />
           </div>
           <div className="pointer-events-none absolute inset-0 opacity-45">
-            <img src={CRYSTAL_URL} alt="" className="absolute left-[8%] top-16 h-10 w-10" />
-            <img src={NAMASTE_URL} alt="" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
-            <img src={FLAME_URL} alt="" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
+            <img src={CRYSTAL_URL} alt="" aria-hidden="true" className="absolute left-[8%] top-16 h-10 w-10" />
+            <img src={NAMASTE_URL} alt="" aria-hidden="true" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
+            <img src={FLAME_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
           </div>
 
           <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-6 sm:px-6 lg:px-10">
@@ -685,7 +722,7 @@ export default function SaturnPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#a5b4fc]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#a5b4fc]/80" />
-                  <img src={CROWN_URL} alt="" className="h-9 w-9" />
+                  <img src={CROWN_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
 
@@ -755,8 +792,8 @@ export default function SaturnPage() {
                     <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
                   </div>
                   <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" className="h-6 w-6" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -785,9 +822,23 @@ export default function SaturnPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#1e3a8a] sm:text-[2rem]">
+                    How to Chant the Shani Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in dark blue or black.</li>
+                    <li>Sit facing west on a clean mat with the spine straight.</li>
+                    <li>Hold a Blue Sapphire or iron mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Shani with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -817,7 +868,7 @@ export default function SaturnPage() {
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Benefits of Shani Mantra
                     </h3>
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                   </div>
                   <div className="mt-5 space-y-3">
                     {benefits.map((benefit) => (
@@ -837,7 +888,7 @@ export default function SaturnPage() {
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Shani
                   </h3>
-                  <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                  <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
                   {connectPractices.map((practice) => (
@@ -960,10 +1011,10 @@ export default function SaturnPage() {
             }}
           />
 
-          <img src={SACRED_GEOMETRY_URL} alt="" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
+          <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
           <img
             src={SEAL_MARS_URL}
-            alt=""
+            alt="" aria-hidden="true"
             className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-12 lg:block"
             style={{ filter: 'sepia(1) saturate(2.5) hue-rotate(190deg) brightness(0.85)' }}
           />
@@ -1140,7 +1191,7 @@ export default function SaturnPage() {
                         A small reminder for the patient devotee of dharma.
                       </div>
                     </div>
-                    <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                   </div>
                   <div className="mt-5 font-kalam text-xl leading-relaxed text-white/85">
                     What is true does not need to be fast. What endures is what was built honestly.

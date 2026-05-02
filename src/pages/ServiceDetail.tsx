@@ -583,7 +583,10 @@ const ServiceDetail = () => {
         <SchemaMarkup
           type="service-detail"
           service={catalogEntry}
-          serviceOffer={{ duration: currentService.duration }}
+          serviceOffer={{
+            duration: currentService.duration,
+            priceRange: 'Free to Rs. 2,100',
+          }}
           serviceFaqs={content?.faqs}
         />
       )}

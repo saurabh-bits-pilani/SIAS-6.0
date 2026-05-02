@@ -187,15 +187,15 @@ const remedies = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'Surya: The Soul of Vedic Astrology',
+    title: 'Who is Surya in Vedic astrology?',
     paragraphs: [
-      'Surya is the visible heart of the sky and the inner heart of the horoscope. In Vedic astrology, the Sun is not only a marker of personality. It is the radiant witness, the Atma principle, and the flame of consciousness that gives direction to the rest of the chart. Where Chandra receives and reflects, Surya shines and organizes. It gives life a center.',
+      "Surya (Sun) is the most luminous Navagraha in Vedic astrology, governing the soul, vitality, ego, paternal influence, leadership, and the foundational sense of self that shapes a person's life direction. As the central star of the solar system, Surya completes its journey through the zodiac in approximately one year, transiting each rashi (zodiac sign) for about thirty days and casting strong influence on identity, authority, and recognition. In the Brihat Parashara Hora Shastra, Surya is described as the king of the planets, ruler of Simha (Leo), and the giver of dignity, courage, and dharmic purpose. The Sun's placement in the natal chart reveals where a person seeks visibility, expresses authority, and earns recognition through sustained personal effort. At Soul Infinity Astro Solutions, Saurabh Jain analyses Surya's house placement, sign dignity, aspects, and current transit position to provide precise guidance on building self-confidence, navigating career visibility, and strengthening Surya Mahadasha periods.",
       'A healthy Sun gives the courage to stand in truth without becoming harsh. It supports self-respect, clarity of purpose, vitality, and the ability to carry responsibility. When Surya is honored, a person does not need constant validation. Their life begins to move from inner authority rather than comparison.',
       'This is why Surya is studied carefully in every serious chart reading. The placement of the Sun by sign, house, nakshatra, dignity, aspect, and dasha reveals how the soul seeks expression. It also shows where the native must learn the difference between ego and essence.',
     ],
   },
   {
-    title: 'Significations of the Sun in a Birth Chart',
+    title: 'What does the Sun represent in a birth chart?',
     paragraphs: [
       'The Sun represents father, authority, government, leadership, fame, honor, bones, heart, right eye, confidence, immunity, and the power to command. It shows the quality of self-esteem and the way a person relates to visible responsibility. A strong Sun can make a person naturally dignified, decisive, and willing to lead.',
       'Surya also reveals how one handles recognition. Some people seek attention because the solar principle feels wounded. Others carry presence without effort because the Sun is stable. In consultation, this difference matters. A remedy for weak confidence is not the same as a remedy for inflated pride.',
@@ -203,7 +203,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Sun in the 12 Houses',
+    title: 'What is the significance of Sun in the 12 houses?',
     paragraphs: [
       'The house occupied by Surya shows where the soul seeks visibility and where life asks the person to develop authority. These summaries are starting points. Sign, aspects, combustion, conjunctions, nakshatra, divisional charts, and dasha timing must refine the final reading.',
     ],
@@ -217,7 +217,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Surya Mahadasha: The Six-Year Period',
+    title: 'What is Surya Mahadasha and what does it bring?',
     paragraphs: [
       'Surya Mahadasha lasts six years in the Vimshottari Dasha system. It is often a period of crystallization. Themes of authority, father, health, recognition, role clarity, career direction, and self-respect come forward. The person may feel called to stop hiding and make a more defined choice about life direction.',
       'If the Sun is strong and supportive, this period can bring promotion, leadership, public respect, clearer purpose, and a stronger relationship with discipline. If the Sun is weak or afflicted, the same period may surface ego wounds, conflicts with authority, vitality concerns, or pressure around father-related duties.',
@@ -225,7 +225,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Traditional Remedies for a Weak or Afflicted Sun',
+    title: 'What are the remedies for a weak Sun?',
     paragraphs: [
       'Surya remedies are simple, bright, and disciplined. They are not meant to force destiny. They help the person align with the healthy form of solar energy: truthfulness, punctuality, gratitude, vitality, and respect for rightful authority. The best remedies are repeated steadily rather than performed dramatically once.',
       'Mantra and sunrise practice are usually safer than gemstones. Ruby can amplify Surya power, which is useful only when the chart can receive that amplification. If the Sun is functionally difficult, afflicted, or tied to sensitive houses, gemstone use may intensify problems instead of solving them.',
@@ -550,7 +550,7 @@ function EditorialSidebar() {
               A solar reminder to choose clarity over confusion.
             </div>
           </div>
-          <img src={DIYA_URL} alt="" className="h-16 w-16" />
+          <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
         </div>
         <div className="mt-5 font-devanagari text-3xl text-[#facc15]">तमसो मा ज्योतिर्गमय ।</div>
         <div className="mt-2 font-kalam text-xl text-white/80">Lead me from darkness to light.</div>
@@ -841,6 +841,20 @@ export default function SunPage() {
         description: PAGE_DESCRIPTION,
         url: PAGE_URL,
       }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Sun (Surya) Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Surya Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Sun (orange).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing east on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: 'Use a Ruby or Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger.' },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Hraam Hreem Hraum Sah Suryaya Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Surya deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -911,7 +925,7 @@ export default function SunPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#facc15]">
                   <SunMandala className="h-14 w-14" />
-                  <img src={STAR_ACCENT_URL} alt="" className="h-9 w-9 drop-shadow-[0_0_18px_rgba(250,204,21,0.7)]" />
+                  <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-9 w-9 drop-shadow-[0_0_18px_rgba(250,204,21,0.7)]" />
                 </div>
               </div>
 
@@ -983,7 +997,7 @@ export default function SunPage() {
                   </div>
                   <div className="flex items-center gap-4 text-[#9a3412]/80">
                     <SunMandala className="h-14 w-14" />
-                    <img src={STAR_ACCENT_URL} alt="" className="h-6 w-6" />
+                    <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -1012,9 +1026,23 @@ export default function SunPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#b45309] sm:text-[2rem]">
+                    How to Chant the Surya Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in orange.</li>
+                    <li>Sit facing east on a clean mat with the spine straight.</li>
+                    <li>Hold a Ruby or Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Surya with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -1187,7 +1215,7 @@ export default function SunPage() {
           <div className="pointer-events-none absolute right-6 top-24 hidden text-[#b45309]/10 lg:block">
             <SunMandala className="h-28 w-28" />
           </div>
-          <img src={STAR_ACCENT_URL} alt="" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-20 lg:block" />
+          <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-20 lg:block" />
 
           <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">

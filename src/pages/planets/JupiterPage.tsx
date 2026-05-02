@@ -177,9 +177,9 @@ const associations: Association[] = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'What Is Guru in Vedic Astrology?',
+    title: 'Who is Guru in Vedic astrology?',
     paragraphs: [
-      'Guru (गुरु, IAST Guru) is the Sanskrit name of Jupiter. The etymology renders the word with quiet beauty, gu meaning darkness and ru meaning the remover, so a guru is literally the one who dispels darkness. In the council of nine planetary deities known as the Navagraha, Guru holds the seat of wisdom, dharma, expansion, and the inner illumination that makes life intelligible. He is the great benefic of Vedic astrology, and his blessing is unmistakable when he sits well in a chart.',
+      "Guru (Jupiter) is the most benevolent Navagraha in Vedic astrology, governing wisdom, dharma, expansion, knowledge, teachers, children, and the principled growth that shapes a person's ethical compass and life purpose. As the largest of the classical planets, Jupiter transits each rashi (zodiac sign) in approximately one year, completing the full zodiac cycle every twelve years and bringing themes of expansion, learning, and spiritual maturity. In the Brihat Parashara Hora Shastra, Guru is described as the teacher of the planetary council, ruler of Dhanu (Sagittarius) and Meena (Pisces), and the giver of wisdom, abundance, and dharmic guidance. Jupiter's placement in the natal chart reveals where a person seeks meaning, expresses generosity, and grows through learning, teaching, and faith. At Soul Infinity Astro Solutions, Saurabh Jain analyses Guru's house placement, sign dignity, aspects, and current transit position to provide precise guidance on wisdom, abundance, and Guru Mahadasha periods.",
       'He is also called Brihaspati (बृहस्पति, IAST Bṛhaspati), the lord of speech, and Devaguru, the teacher of the gods themselves. Each name reveals a different aspect of his role. As Brihaspati he is the master of mantra and counsel; as Devaguru he sits with the ṛṣis at the highest tier of cosmic intelligence; as Guru he is simply the one who hands the lamp to the next student in the long chain of teachers.',
       'As a karaka, the significator of life themes, Guru rules wisdom, higher learning, dharma, children, the husband in a woman\'s chart, philosophy, finance, religious practice, and the steady expansion of one\'s outer and inner life. When jyotishis read a chart for counsel, scholarship, faith, or the felt sense of being guided, they are tracing the movement of Jupiter across signs and houses. [VERIFY: classical karakatva ordering varies between Brihat Parashara Hora Shastra and Phaladeepika.]',
     ],
@@ -210,7 +210,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Guru in Each House (1 to 12)',
+    title: 'What is the significance of Jupiter in the 12 houses?',
     paragraphs: [
       'When Guru occupies the first house (the lagna), he gives a scholarly bearing, a generous outlook, and a face that ages gracefully into authority. In the second house he supports wealth gathered through knowledge, eloquent speech, and a pious family atmosphere. The third house carries his blessing into bold teaching, courageous expression, and gentle support from younger siblings.',
       'In the fourth house Guru gives maternal blessings, a comfortable home, a cultured environment, and gains through vehicles and property kept in service of family. The fifth produces educated children, creative wisdom, success with mantra and ritual, and a steady gift for advisory work. The sixth turns dharma into an instrument of victory, supporting careers in healing, teaching, law, and the patient clearing of debts.',
@@ -219,7 +219,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Guru Mahadasha and Antardasha',
+    title: 'What is Guru Mahadasha and what does it bring?',
     paragraphs: [
       'In the Vimshottari dasha system, the Mahadasha of Guru lasts sixteen years, the longest among the benefics. When this period activates, the chart turns its focus towards wisdom, learning, dharma, family milestones, and the careful expansion of life. Themes that have been ripening, especially around education, marriage, children, and faith, often come forward to be lived during this sixteen-year window.',
       'A favourable Guru dasha is often experienced as educational achievement, marriage at the right time, the birth of children, gains in real estate, and a deepening of spiritual practice. Long-postponed studies are completed, professional respect arrives without struggle, and friendships with elders and teachers grow stronger. The classical literature speaks of a long period of dignified expansion that strengthens the inner life along with the outer one.',
@@ -228,7 +228,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Vedic Remedies for Guru',
+    title: 'What are the remedies for a weak Jupiter?',
     paragraphs: [
       'Thursday (Guruvara) is the day held sacred to Jupiter, and many traditional remedies begin there. A simple Thursday observance includes wearing a touch of yellow, a light fast, the offering of bananas, ghee, or yellow flowers at a Vishnu or Brihaspati temple, and a few minutes of mantra recitation in a quiet hour. The aim is not appeasement of a difficult planet but a respectful turning of the inner attention towards the qualities Guru governs, wisdom, dharma, and patient growth.',
       'Mantra recitation forms the spine of formal Guru remedies. The Navagraha Brihaspati stotra and the Beej mantra are shown in the Sacred Mantras section above, and they remain the most widely chanted invocations across the South Asian traditions. The Guru Gayatri is a popular addition for those drawn to longer practice. As with all japa, sincerity is weighted more heavily than haste or volume; a small daily count practised faithfully usually outlasts an ambitious vow undertaken in restlessness.',
@@ -613,6 +613,20 @@ export default function JupiterPage() {
         description: PAGE_DESCRIPTION,
         url: PAGE_URL,
       }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Jupiter (Guru) Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Guru Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Jupiter (yellow).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing northeast on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: 'Use a Yellow Sapphire or Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger.' },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Graam Greem Graum Sah Gurave Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Guru deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -662,9 +676,9 @@ export default function JupiterPage() {
             <SunraysDoodle className="absolute left-0 top-0 h-full w-[55%]" />
           </div>
           <div className="pointer-events-none absolute inset-0 opacity-45">
-            <img src={CRYSTAL_URL} alt="" className="absolute left-[8%] top-16 h-10 w-10" />
-            <img src={NAMASTE_URL} alt="" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
-            <img src={FLAME_URL} alt="" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
+            <img src={CRYSTAL_URL} alt="" aria-hidden="true" className="absolute left-[8%] top-16 h-10 w-10" />
+            <img src={NAMASTE_URL} alt="" aria-hidden="true" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
+            <img src={FLAME_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
           </div>
 
           <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-6 sm:px-6 lg:px-10">
@@ -698,7 +712,7 @@ export default function JupiterPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#f6c06d]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#f6c06d]/80" />
-                  <img src={CROWN_URL} alt="" className="h-9 w-9" />
+                  <img src={CROWN_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
 
@@ -768,8 +782,8 @@ export default function JupiterPage() {
                     <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#b45309] via-[#fbbf24] to-transparent" />
                   </div>
                   <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" className="h-6 w-6" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -798,9 +812,23 @@ export default function JupiterPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#a16207] sm:text-[2rem]">
+                    How to Chant the Guru Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in yellow.</li>
+                    <li>Sit facing northeast on a clean mat with the spine straight.</li>
+                    <li>Hold a Yellow Sapphire or Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Guru with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -830,7 +858,7 @@ export default function JupiterPage() {
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Benefits of Guru Mantra
                     </h3>
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                   </div>
                   <div className="mt-5 space-y-3">
                     {benefits.map((benefit) => (
@@ -850,7 +878,7 @@ export default function JupiterPage() {
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Guru
                   </h3>
-                  <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                  <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
                   {connectPractices.map((practice) => (
@@ -968,8 +996,8 @@ export default function JupiterPage() {
             }}
           />
 
-          <img src={SACRED_GEOMETRY_URL} alt="" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
-          <img src={SEAL_MARS_URL} alt="" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-12 lg:block" style={{ filter: 'sepia(1) saturate(2) hue-rotate(-10deg)' }} />
+          <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
+          <img src={SEAL_MARS_URL} alt="" aria-hidden="true" className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-12 lg:block" style={{ filter: 'sepia(1) saturate(2) hue-rotate(-10deg)' }} />
 
           <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
@@ -1143,7 +1171,7 @@ export default function JupiterPage() {
                         A small reminder for the lifelong student.
                       </div>
                     </div>
-                    <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                   </div>
                   <div className="mt-5 font-kalam text-xl leading-relaxed text-white/85">
                     When the lamp is bright, the dark room remembers it was always a room. Knowledge does not create the truth; it only reveals what was already there.

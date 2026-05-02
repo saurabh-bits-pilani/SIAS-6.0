@@ -176,9 +176,9 @@ const associations: Association[] = [
 
 const editorialSections: EditorialSection[] = [
   {
-    title: 'What Is Rahu in Vedic Astrology?',
+    title: 'Who is Rahu in Vedic astrology?',
     paragraphs: [
-      'Rahu (राहु, IAST Rāhu) is the Sanskrit name of the North Node of the Moon, the point where the Moon\'s orbit crosses the ecliptic from south to north. The word Rahu derives from a root meaning "the seizer", a name that fits both the planet and the myth from which it was born. Unlike the seven luminaries with physical bodies, Rahu is a chhaya graha, a shadow planet, a calculated point in the sky rather than an object with surface and form. In the council of nine planetary deities known as the Navagraha, Rahu holds the seat of ambition, illusion, foreign influence, technology, mass appeal, and the disorienting hunger that propels the soul towards experiences it has not yet integrated.',
+      "Rahu is the karmic shadow planet (Chhaya graha) in Vedic astrology, governing material desire, ambition, foreign influences, sudden change, technology, and the obsessive force that pulls a person toward unconventional paths and unfulfilled karmic patterns from past lifetimes. As a lunar node rather than a physical planet, Rahu moves retrograde through the zodiac, transiting each rashi (zodiac sign) in approximately eighteen months and completing the full cycle in roughly eighteen and a half years. In Vedic mythology, Rahu is the severed head of the asura Svarbhanu and rules no zodiac sign of its own, though it is most powerful in Mithuna (Gemini) and is associated with foreign lands, technology, and intoxication. Rahu's placement in the natal chart reveals where a person experiences strong desire, illusion, and unexpected breakthroughs. At Soul Infinity Astro Solutions, Saurabh Jain analyses Rahu's house placement, sign association, aspects, and Kaal Sarp Dosha indications to provide guidance on Rahu Mahadasha periods.",
       'Classical mythology gives Rahu a face long before it gives him a calculation. During the Samudra Manthan, the great churning of the cosmic ocean, the asura Svarbhanu drank some of the divine nectar (amrita) and was reported to Vishnu by the Sun and Moon. Vishnu severed his head with the sudarshana chakra, but the nectar had already touched his throat, so neither head nor body could die. The head became Rahu and the body became Ketu, the two shadow points that periodically eclipse the Sun and Moon as a long-running revenge.',
       'As a karaka, the significator of life themes, Rahu rules foreign lands, mass communication, cinema, technology, photography, politics, fame, mysteries, snakes, poison, the unconventional, and the obsessive desire that does not know when to stop. He is always retrograde in motion, walking the zodiac backward, which suggests that the fulfilment he points towards is rarely linear and rarely arrives the way the mind first imagines it. [VERIFY: classical karakatva ordering varies between Brihat Parashara Hora Shastra, Phaladeepika, and the various Tantra traditions.]',
     ],
@@ -217,7 +217,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Rahu Mahadasha and Antardasha',
+    title: 'What is Rahu Mahadasha and what does it bring?',
     paragraphs: [
       'In the Vimshottari dasha system, the Mahadasha of Rahu lasts eighteen years. When this period activates, the chart turns its focus towards ambition, foreign opportunity, sudden change, technology, and the kind of mass recognition that arrives from unexpected directions. Themes of identity through achievement, foreign relocation, exposure to different cultures, and the testing of one\'s relationship with desire often come forward to be lived through the eighteen-year window. Many natives describe a Rahu Mahadasha as the chapter in which they became someone other people now recognise.',
       'A favourable Rahu dasha is often experienced as a rapid career leap, foreign relocation that finally feels like the right next step, fame in modern fields, unexpected gains, mastery in technology, photography, cinema, or politics, and the felt sense that the world has finally caught up with a quality the native already had. The classical literature speaks of an unmistakable elevation that does not always look conventional from the outside but that produces visible change in the native\'s life trajectory.',
@@ -225,7 +225,7 @@ const editorialSections: EditorialSection[] = [
     ],
   },
   {
-    title: 'Vedic Remedies for Rahu',
+    title: 'What are the remedies for Rahu?',
     paragraphs: [
       'Saturday (shared with Shani) is the day held sacred to Rahu, and many traditional remedies begin there. A simple Saturday observance includes wearing a touch of black or smoky grey, a light fast, the offering of black sesame seeds, blue flowers, mustard oil, or incense smoke at a Bhairava or Durga temple in the late afternoon or evening, and a few minutes of mantra recitation in a quiet hour. The aim is not appeasement of an angry planet but a respectful turning of the inner attention towards the qualities Rahu governs, ambition held with discernment, and desire steadied by self-awareness.',
       'Mantra recitation forms the spine of formal Rahu remedies. The Navagraha Rahu stotra and the Beej mantra are shown in the Sacred Mantras section above, and they remain the most widely chanted invocations across the South Asian traditions. Mantras dedicated to Bhairava, Durga, and the ancestors are popular adjacent practices, since the protector of time and the great mother both contain the very shadow Rahu projects outward. Pitri Tarpan, the offering of water to the ancestors, is a deeply traditional remedy that addresses the karmic line through which Rahu often moves.',
@@ -608,6 +608,20 @@ export default function RahuPage() {
         description: PAGE_DESCRIPTION,
         url: PAGE_URL,
       }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to chant the Rahu Beej mantra',
+        description:
+          'Classical Vedic method for chanting the Rahu Beej mantra as recommended by Soul Infinity Astro Solutions.',
+        step: [
+          { '@type': 'HowToStep', name: 'Purification', text: 'Bathe and wear clean clothes in the colour associated with Rahu (dark blue).' },
+          { '@type': 'HowToStep', name: 'Posture and direction', text: 'Sit facing southwest on a clean mat. Keep the spine straight.' },
+          { '@type': 'HowToStep', name: 'Mala selection', text: 'Use a Hessonite or Sphatik mala of 108 beads. Hold in the right hand using thumb and middle finger.' },
+          { '@type': 'HowToStep', name: 'Chanting', text: 'Chant Om Bhraam Bhreem Bhraum Sah Rahave Namah 108 times per round with steady rhythm and clear pronunciation.' },
+          { '@type': 'HowToStep', name: 'Completion', text: 'Sit quietly after completing rounds. Offer merit to the Rahu deity and conclude with gratitude.' },
+        ],
+      },
     ],
     [],
   );
@@ -657,9 +671,9 @@ export default function RahuPage() {
             <SmokeDoodle className="absolute left-0 top-0 h-full w-[55%]" />
           </div>
           <div className="pointer-events-none absolute inset-0 opacity-45">
-            <img src={CRYSTAL_URL} alt="" className="absolute left-[8%] top-16 h-10 w-10" />
-            <img src={NAMASTE_URL} alt="" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
-            <img src={FLAME_URL} alt="" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
+            <img src={CRYSTAL_URL} alt="" aria-hidden="true" className="absolute left-[8%] top-16 h-10 w-10" />
+            <img src={NAMASTE_URL} alt="" aria-hidden="true" className="absolute left-[30%] top-[18rem] h-7 w-7 -rotate-12" />
+            <img src={FLAME_URL} alt="" aria-hidden="true" className="absolute left-[18%] top-[34rem] h-5 w-5 rotate-12 opacity-55" />
           </div>
 
           <div className="mx-auto max-w-[1440px] px-4 pb-6 pt-6 sm:px-6 lg:px-10">
@@ -693,7 +707,7 @@ export default function RahuPage() {
 
                 <div className="mt-8 flex items-center gap-5 text-[#c4b5fd]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#c4b5fd]/80" />
-                  <img src={CROWN_URL} alt="" className="h-9 w-9" />
+                  <img src={CROWN_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
 
@@ -763,8 +777,8 @@ export default function RahuPage() {
                     <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#5b21b6] via-[#a78bfa] to-transparent" />
                   </div>
                   <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" className="h-6 w-6" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                   </div>
                 </div>
 
@@ -793,9 +807,23 @@ export default function RahuPage() {
                   ))}
                 </div>
 
+                {/* Visible matching content for HowTo schema (Google policy). */}
+                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                  <div className="font-caveat text-[1.7rem] leading-none text-[#3730a3] sm:text-[2rem]">
+                    How to Chant the Rahu Beej Mantra
+                  </div>
+                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                    <li>Bathe and wear clean clothes in dark blue.</li>
+                    <li>Sit facing southwest on a clean mat with the spine straight.</li>
+                    <li>Hold a Hessonite or Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                    <li>Sit quietly afterwards and offer the merit to Rahu with gratitude.</li>
+                  </ol>
+                </div>
+
                 <img
                   src={FEATHER_URL}
-                  alt=""
+                  alt="" aria-hidden="true"
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
@@ -825,7 +853,7 @@ export default function RahuPage() {
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Benefits of Rahu Mantra
                     </h3>
-                    <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                   </div>
                   <div className="mt-5 space-y-3">
                     {benefits.map((benefit) => (
@@ -845,7 +873,7 @@ export default function RahuPage() {
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Rahu
                   </h3>
-                  <img src={SACRED_GEOMETRY_URL} alt="" className="h-12 w-12 opacity-70" />
+                  <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
                   {connectPractices.map((practice) => (
@@ -968,10 +996,10 @@ export default function RahuPage() {
             }}
           />
 
-          <img src={SACRED_GEOMETRY_URL} alt="" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
+          <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="pointer-events-none absolute right-6 top-24 hidden h-24 w-24 opacity-10 lg:block" />
           <img
             src={SEAL_MARS_URL}
-            alt=""
+            alt="" aria-hidden="true"
             className="pointer-events-none absolute left-8 top-[34rem] hidden h-14 w-14 opacity-12 lg:block"
             style={{ filter: 'sepia(1) saturate(2.5) hue-rotate(220deg) brightness(0.85)' }}
           />
@@ -1148,7 +1176,7 @@ export default function RahuPage() {
                         A small reminder for the shadow-walker.
                       </div>
                     </div>
-                    <img src={DIYA_URL} alt="" className="h-16 w-16" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="h-16 w-16" />
                   </div>
                   <div className="mt-5 font-kalam text-xl leading-relaxed text-white/85">
                     What the shadow holds is not the enemy of the soul. It is the soul&apos;s instruction, waiting for the day it can finally be received.
