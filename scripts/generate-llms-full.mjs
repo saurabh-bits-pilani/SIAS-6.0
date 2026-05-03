@@ -41,6 +41,7 @@ const INCLUDE_ROUTES = [
   '/services/healing/theta-healing',
   '/services/healing/crystal-healing',
   '/blog/mantra',
+  '/zodiac/aries',
   '/gallery/pitra-dosh',
   '/contact',
 ];

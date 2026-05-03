@@ -59,6 +59,7 @@ const DESCRIPTIONS = {
   '/planets/saturn': "Shani (Saturn), the lord of karma, discipline, and dharmic maturity. Mantras, gemstone (Blue Sapphire), Sade Sati guidance, and Vedic remedies for awakening Shani's blessings in your life.",
   '/planets/venus': "Shukra (Venus), the lord of love, beauty, art, and refinement. Mantras, gemstone (Diamond), remedies, and Vedic traditions for awakening Shukra's blessings in your life.",
   '/zodiac': 'Zodiac Signs — the twelve zodiac signs (Rashi) in Vedic astrology: Aries through Pisces. Explore each sign’s ruling planet, element, nature, character traits, and life themes.',
+  '/zodiac/aries': 'Mesha Rashi (Aries) in Vedic astrology — detailed guide covering characteristics, planetary ruler Mangala (Mars), strengths, challenges, Mesha in 12 houses, classical remedies, mantras, and FAQ by Soul Infinity Astro Solutions Ahmedabad.',
   '/dosha': 'Doshas — common doshas in Vedic astrology: Mangal Dosha, Kaal Sarp Dosh, Sade Sati, Pitru Dosh, and Nadi Dosh. Understand what they mean, how they affect life, and their traditional remedies.',
   '/gallery': 'Photo gallery — consultations, healing sessions, and sacred spaces.',
   '/gallery/remedies': 'Vedic planetary remedies — mantras, gemstones, rituals.',
