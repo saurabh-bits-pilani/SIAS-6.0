@@ -30,6 +30,7 @@ const SaturnPage = lazy(() => import('./pages/planets/SaturnPage'));
 const VenusPage = lazy(() => import('./pages/planets/VenusPage'));
 const RahuPage = lazy(() => import('./pages/planets/RahuPage'));
 const KetuPage = lazy(() => import('./pages/planets/KetuPage'));
+const MeshaRashiPage = lazy(() => import('./pages/zodiac/MeshaRashiPage'));
 
 // Loading component for lazy-loaded pages
 const LoadingSpinner = () => (
@@ -70,6 +71,7 @@ function App() {
           <Route path="/planets/rahu" element={<RahuPage />} />
           <Route path="/planets/ketu" element={<KetuPage />} />
           <Route path="/zodiac" element={<ZodiacHubPage />} />
+          <Route path="/zodiac/aries" element={<MeshaRashiPage />} />
           <Route path="/dosha" element={<DoshaHubPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
