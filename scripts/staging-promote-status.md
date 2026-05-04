@@ -1,4 +1,4 @@
-# Staging Promote, STATUS = TASK 1 + 2 DONE, TASK 3 IN PROGRESS
+# Staging Promote, STATUS = ALL THREE TASKS DONE, STOPPED AT MAIN GATE
 
 **Branch:** `feature/schema-and-blog-architecture` (off `main` @ `6f78e0a`)
 **Date:** 2026-05-04
@@ -59,25 +59,39 @@ Clean. No untracked files.
 
 ---
 
-## Task 3, staging promote — IN PROGRESS
+## Task 3, staging promote — DONE
 
-Plan:
-1. `git checkout staging && git pull origin staging`
-2. `git merge feature/schema-and-blog-architecture --no-ff -m "merge: schema patch + blog MDX architecture into staging"`
-3. `git push origin staging`
-4. Capture Vercel preview URL
-5. Validation gates:
-   - Vercel preview build green
-   - Prerender count = 41 routes (40 static + zero blog posts since `_template.mdx` is the only MDX and is filtered as draft)
-   - Spot-check `/planets/jupiter`, `/services/vedic-astrology` render correctly
-   - `/blog/_template` must return 404 (route filter is working)
-   - `/sitemap.xml` must NOT contain `/blog/_template`
-6. STOP after preview URL captured. DO NOT touch main.
+**Merge commit:** `1536a80` — `merge: schema patch + blog MDX architecture into staging` (no-ff)
+**Pushed:** yes, `6f78e0a..1536a80 staging -> staging`
+**Files changed in merge:** 27 (4810 insertions, 23 deletions)
 
-Results to be appended below.
+### Vercel deployment
+- **Status:** ✓ success (state=success per GitHub `commits/.../statuses` API)
+- **Public preview URL:** https://soul-infinity-l7kgw92m8-saurabh-bits-pilanis-projects.vercel.app
+- **Branch alias:** https://soul-infinitycom-git-staging-saurabh-bits-pilanis-projects.vercel.app
+- **Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/FMr86XHCK4ijf55n9jgm27bb6eyx
+
+### Validation gates
+
+| Gate | Source | Result |
+|---|---|---|
+| Local `npm run build` green | this machine | ✓ exits 0 |
+| Prerender count = 41 routes | local build log | ✓ `Prerendered 41 routes.` (40 static + 1 `/zodiac/aries` from prior branch; `_template.mdx` filtered as draft → 0 blog posts) |
+| `/blog/_template` not prerendered | local `dist/blog/_template/` | ✓ absent |
+| `/blog/_template` not in `dist/sitemap.xml` | `grep -c '_template' dist/sitemap.xml` | ✓ 0 hits |
+| `/blog/_template` not in `dist/llms.txt` / `dist/llms-full.txt` | grep both | ✓ no hits |
+| `/planets/jupiter` HTML rendered | `dist/planets/jupiter/index.html` | ✓ 130156 bytes |
+| `/services/vedic-astrology` HTML rendered | `dist/services/vedic-astrology/index.html` | ✓ 46343 bytes |
+| Sitemap `<loc>` count | local `dist/sitemap.xml` | 40 (excludes `/404`, expected) |
+| Vercel build success | GitHub API `commits/1536a80/statuses` | ✓ state=success |
+
+### Why no remote spot-checks
+Vercel Authentication (project-level SSO) is enabled on this preview, so anonymous `curl` against `/planets/jupiter`, `/services/vedic-astrology`, `/blog/_template`, and `/sitemap.xml` all return HTTP 401 with the SSO login page. The local build runs the exact same `scripts/prerender.mjs` + `scripts/generate-sitemap.mjs` Vercel runs, so the local validation is dispositive for prerender content. Visual spot-checks require a logged-in browser session.
+
+If you want anonymous remote validation, either (a) disable Vercel Authentication on this project for previews, (b) generate a protection-bypass token under Project Settings → Deployment Protection, or (c) just open the URL above in a browser where you're already logged in.
 
 ---
 
-## Nothing pushed to main
+## Stopped here per instruction
 
-`main` untouched on `2cf2c80`. `staging` untouched until Task 3 step 3.
+`main` untouched on `2cf2c80`. `staging` is now at `1536a80` and Vercel-deployed. Awaiting your call to either (a) merge `staging → main` for production promote, or (b) park here for further review.
