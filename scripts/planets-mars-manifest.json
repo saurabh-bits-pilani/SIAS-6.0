@@ -1,0 +1,168 @@
+{
+  "mars": {
+    "heroMangala": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/hero-mangala.webp",
+      "key": "Pillar/Planets/Mars/hero-mangala.webp",
+      "bytes": 458028,
+      "sha256": "87736f1e46d0538074c527af8690885bda6e651d8a555d8e22cdc1c2b8db5c82",
+      "contentType": "image/webp"
+    },
+    "decorativeQuill": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/doodle-quill-inkpot-mars.svg",
+      "key": "Pillar/Planets/Mars/doodle-quill-inkpot-mars.svg",
+      "bytes": 69927,
+      "sha256": "d3f5d7e37269ef15e6cbc9ec7f480be4f045c946d205095393bf0129b4146e1c",
+      "contentType": "image/svg+xml"
+    },
+    "gemstoneCoral": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/gemstone-coral.svg",
+      "key": "Pillar/Planets/Mars/gemstone-coral.svg",
+      "bytes": 89400,
+      "sha256": "43749b9712efbcdf0aef049c3cf0c4eff4dd6df3ba9d0f5149c13b31690157e1",
+      "contentType": "image/svg+xml"
+    },
+    "glyphAries": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/glyph-aries.svg",
+      "key": "Pillar/Planets/Mars/glyph-aries.svg",
+      "bytes": 28515,
+      "sha256": "c6c33e77c5d28516cf238d1154c2806a1bd4f338e5ba0b182bacba0a3ee7e72c",
+      "contentType": "image/svg+xml"
+    },
+    "glyphScorpio": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/glyph-scorpio.svg",
+      "key": "Pillar/Planets/Mars/glyph-scorpio.svg",
+      "bytes": 28822,
+      "sha256": "54d38b779fdd6715b9500f6d6c5448074d45010cdf027a4a6c40306018758074",
+      "contentType": "image/svg+xml"
+    },
+    "chariot": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/mangal-chariot.svg",
+      "key": "Pillar/Planets/Mars/mangal-chariot.svg",
+      "bytes": 285591,
+      "sha256": "8de067b42699ca5d3e5b84dac09cf23eb92432ae1f520318cf39cb0f5bf178f6",
+      "contentType": "image/svg+xml"
+    },
+    "symbolCard": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/mars-symbol-card.svg",
+      "key": "Pillar/Planets/Mars/mars-symbol-card.svg",
+      "bytes": 261477,
+      "sha256": "180ff5530acc185351269d2b0f9a2fe8a8afaf5404df9985de8f004bbfc41b3d",
+      "contentType": "image/svg+xml"
+    },
+    "parchmentCard": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/parchment-card-mars.svg",
+      "key": "Pillar/Planets/Mars/parchment-card-mars.svg",
+      "bytes": 512077,
+      "sha256": "327aa7ad4b67f5a8ccdb72fb845684cb5e0029bbeee52c97e25d5b261e7430f2",
+      "contentType": "image/svg+xml"
+    },
+    "parchmentCardSquare": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/parchment-card-square-mars.svg",
+      "key": "Pillar/Planets/Mars/parchment-card-square-mars.svg",
+      "bytes": 137843,
+      "sha256": "56d9d121c725c826cef8797adcd38d08b0c59b9c0a9e17ace3e5ebec40d5bad8",
+      "contentType": "image/svg+xml"
+    },
+    "parchmentNoteSmall": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/parchment-note-small-mars.svg",
+      "key": "Pillar/Planets/Mars/parchment-note-small-mars.svg",
+      "bytes": 125130,
+      "sha256": "e2184348941582c6e08e55e4121b66fb6d903a33a9496335b0956d65bc34f2ca",
+      "contentType": "image/svg+xml"
+    },
+    "planetDot": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/planet-dot-mars.svg",
+      "key": "Pillar/Planets/Mars/planet-dot-mars.svg",
+      "bytes": 27834,
+      "sha256": "06191a8f62cd4f46bc24c1984b94fa0c1fb0c07cd1e8920c20003dad33690690",
+      "contentType": "image/svg+xml"
+    },
+    "planetSphere": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/planet-mars.svg",
+      "key": "Pillar/Planets/Mars/planet-mars.svg",
+      "bytes": 379799,
+      "sha256": "5611af7f36496a8a7b54356fb954c7a5857ba5d1bed6fcc3bb7b013178c0c42d",
+      "contentType": "image/svg+xml"
+    },
+    "seal": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/seal-mars.svg",
+      "key": "Pillar/Planets/Mars/seal-mars.svg",
+      "bytes": 39861,
+      "sha256": "4f140f5efb6434f7224947f773c50a6a7defb773c91192e8ffc2338593b9ef1d",
+      "contentType": "image/svg+xml"
+    },
+    "stripBg": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/strip-bg-mars.svg",
+      "key": "Pillar/Planets/Mars/strip-bg-mars.svg",
+      "bytes": 149641,
+      "sha256": "39f37c8f933492ab97b385f62f60a31ba34e9118e7b7356107db2cbada06f80e",
+      "contentType": "image/svg+xml"
+    },
+    "symbolMars": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/symbol-mars.svg",
+      "key": "Pillar/Planets/Mars/symbol-mars.svg",
+      "bytes": 28583,
+      "sha256": "c967acda78d81a2982cbe7c2c453645f78124ade21c953f9112a5b6db7031a9c",
+      "contentType": "image/svg+xml"
+    },
+    "yantra": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/yantra-mars.svg",
+      "key": "Pillar/Planets/Mars/yantra-mars.svg",
+      "bytes": 27687,
+      "sha256": "d415b16fa53617bb8fa5e3a335aa8fd3516448807981f57e089ff08eac27b24e",
+      "contentType": "image/svg+xml"
+    },
+    "yantraDetailed": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/yantra-mars-detailed.svg",
+      "key": "Pillar/Planets/Mars/yantra-mars-detailed.svg",
+      "bytes": 31958,
+      "sha256": "be16e5cc70c10b5d2c54d6c3a9fa2d07cd54b6889d54382f13143802bf06853e",
+      "contentType": "image/svg+xml"
+    },
+    "iconSpear": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Mars/icon-spear.svg",
+      "key": "Pillar/Planets/Mars/icon-spear.svg",
+      "bytes": 26766,
+      "sha256": "fb9ecd19060642e6fd42dc747df607955570ee201960f8d52f945031f2a28f45",
+      "contentType": "image/svg+xml"
+    }
+  },
+  "generatedAt": "2026-04-26T06:30:18.457Z",
+  "shared": {
+    "doodleCrystal": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Shared/doodle-crystal.svg",
+      "key": "Pillar/Planets/Shared/doodle-crystal.svg",
+      "bytes": 32950,
+      "sha256": "caa5c7375127184059d690ac38642e462fb862be813309fae110102729207f88",
+      "contentType": "image/svg+xml"
+    },
+    "doodleNamaste": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Shared/doodle-namaste.svg",
+      "key": "Pillar/Planets/Shared/doodle-namaste.svg",
+      "bytes": 29426,
+      "sha256": "83d5429797253f1e2996f7d44f02a618590818b7a96870945ae38e392941a9b9",
+      "contentType": "image/svg+xml"
+    },
+    "iconCrown": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Shared/icon-crown.svg",
+      "key": "Pillar/Planets/Shared/icon-crown.svg",
+      "bytes": 28931,
+      "sha256": "08c69e6534ff9cdd727e1570cc84c2f40d0a46743f9cfbef5e7e7a56b3df24ed",
+      "contentType": "image/svg+xml"
+    },
+    "iconFlame": {
+      "url": "https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Shared/icon-flame.svg",
+      "key": "Pillar/Planets/Shared/icon-flame.svg",
+      "bytes": 29106,
+      "sha256": "b4531aa22d570461f0f40d7d51469d336a4980a330ac8d71463b1008333fb012",
+      "contentType": "image/svg+xml"
+    }
+  },
+  "deferred": {
+    "note": "Slots not present in this batch; revisit during page build or next asset top-up.",
+    "items": [
+      "ovalBorderMars (mantraOval)",
+      "infoStripMars (infoStrip — composed from stripBg + icons at render time)"
+    ]
+  }
+}
