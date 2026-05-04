@@ -63,3 +63,7 @@ public/llms.txt
 # Local planning/memory notes, not site code
 Memory-files/
 
+# SEO audit / keyword-research HTML renders (regenerable from the .md sources).
+# Keep the markdown sources; the HTML versions are heavyweight build artifacts.
+scripts/*.html
+
