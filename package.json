@@ -13,6 +13,8 @@
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
     "build:prerender": "node scripts/prerender.mjs",
     "build:llms-full": "node scripts/generate-llms-full.mjs",
+    "build:blog-manifest": "node scripts/generate-blog-manifest.mjs",
+    "prebuild": "npm run build:blog-manifest",
     "build": "npm run build:reviews && npm run build:robots && npm run build:sitemap && npm run build:llms && npm run build:client && npm run build:ssr && npm run build:prerender && npm run build:llms-full",
     "postinstall": "node -e \"const fs=require('fs');const p='src/data/google-reviews.json';const e='src/data/google-reviews.example.json';if(!fs.existsSync(p)&&fs.existsSync(e))fs.copyFileSync(e,p);\"",
     "preview": "vite preview",
