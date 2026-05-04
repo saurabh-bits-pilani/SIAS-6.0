@@ -36,7 +36,7 @@ The remaining ~128 em-dashes live in code comments, log strings, and past-work `
 
 ## Task 2, working-tree triage — DONE
 
-**Commit:** `__TASK2_COMMIT__` — `chore: clean working tree, gitignore html audit renders, archive zodiac plan + status reports`
+**Commit:** `b48a94d` — `chore: clean working tree, gitignore html audit renders, archive zodiac plan + status reports`
 **Pushed:** yes, to `origin/feature/schema-and-blog-architecture`
 
 ### Decisions taken
