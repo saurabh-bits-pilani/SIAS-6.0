@@ -181,7 +181,7 @@ async function main() {
   const padRoute = Math.max(...results.map((r) => r.route.length));
   for (const r of results) {
     const tag = r.status === 'ok' ? '  ok' : 'FAIL';
-    const suffix = r.status === 'ok' ? '' : `  — ${r.error}`;
+    const suffix = r.status === 'ok' ? '' : `  - ${r.error}`;
     console.log(`${tag}  ${r.route.padEnd(padRoute)}  ${String(r.ms).padStart(4)}ms${suffix}`);
   }
 
