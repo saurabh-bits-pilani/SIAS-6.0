@@ -6,11 +6,14 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import matter from 'gray-matter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 const SSR_ENTRY = path.join(ROOT, 'dist-ssr', 'entry-server.js');
+const BLOG_DIR = path.join(ROOT, 'content', 'blog');
+const BLOG_TEMPLATE_FILENAME = '_template.mdx';
 
 export const ROUTES = [
   '/',
@@ -55,6 +58,39 @@ export const ROUTES = [
   '/privacy',
   '/404',
 ];
+
+/**
+ * Discover blog routes by globbing content/blog/*.mdx, parsing frontmatter
+ * with gray-matter, and skipping the template + drafts. Pushed into ROUTES
+ * at module load so the same array drives prerender, sitemap, and any
+ * other consumer that imports ROUTES.
+ */
+async function loadBlogRoutes() {
+  try {
+    const files = await fs.readdir(BLOG_DIR);
+    const slugs = [];
+    for (const file of files) {
+      if (!file.endsWith('.mdx')) continue;
+      if (file === BLOG_TEMPLATE_FILENAME) continue;
+      const filePath = path.join(BLOG_DIR, file);
+      const raw = await fs.readFile(filePath, 'utf-8');
+      const { data } = matter(raw);
+      if (data && data.draft) continue;
+      const slug = file.replace(/\.mdx$/, '');
+      slugs.push(`/blog/${slug}`);
+    }
+    return slugs;
+  } catch (err) {
+    if (err.code === 'ENOENT') return [];
+    throw err;
+  }
+}
+
+const blogRoutes = await loadBlogRoutes();
+ROUTES.push(...blogRoutes);
+if (blogRoutes.length > 0) {
+  console.log(`[prerender] discovered ${blogRoutes.length} blog route(s): ${blogRoutes.join(', ')}`);
+}
 
 /**
  * Strip SEO tags that react-helmet-async will re-emit. We keep them in the
