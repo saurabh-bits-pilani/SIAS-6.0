@@ -587,6 +587,7 @@ export function getServiceSchema(service: ServiceEntry, opts: ServiceOfferOpts =
       '@type': 'OfferCatalog',
       name: 'Vedic Astrology and Spiritual Services',
     },
+    inLanguage: 'en-IN',
   };
   if (opts.price != null || opts.priceRange != null) {
     const offer: JsonLd = {
