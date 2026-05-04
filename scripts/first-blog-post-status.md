@@ -1,4 +1,4 @@
-# First Blog Post — STATUS = SHIPPED TO FEATURE BRANCH, AWAITING PREVIEW URL
+# First Blog Post — STATUS = SHIPPED TO FEATURE BRANCH, PR OPEN, PREVIEW LIVE
 
 **Branch:** `feature/first-blog-post` (off `main` @ `ef8e7de`)
 **Date:** 2026-05-04
@@ -86,7 +86,7 @@ Added the new route + description to `scripts/generate-llms.mjs`:
 
 ## Commit + push (Phase 4 of original brief)
 
-**Commit:** `__FEATURE_COMMIT__` (will be filled after commit lands) — `feat(blog): publish first post — finding a vedic astrologer in ahmedabad`
+**Commit:** `b04f9c5` — `feat(blog): publish first post — finding a vedic astrologer in ahmedabad`
 
 Files committed (8):
 - `M .gitignore` (manifest + blog-images-folder rules)
@@ -104,9 +104,12 @@ Files committed (8):
 
 ## PR (Phase 5 of original brief)
 
-**PR:** `__PR_URL__` (filled after `gh pr create`) — `feature/first-blog-post → staging`
+**PR:** [#1 — feature/first-blog-post → staging](https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/1)
 
-**Vercel staging preview URL:** `__PREVIEW_URL__` (polled and captured after the PR triggers a build)
+**Vercel preview URL:** https://soul-infinity-b3r2eo5o4-saurabh-bits-pilanis-projects.vercel.app
+**Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/Bgwb5zmsUmQxtKJurhkm9FsPJv2U
+**Build status:** ✓ success (state=success per GitHub commit-status API)
+**Note:** preview is gated by Vercel SSO Auth. Anonymous `curl` returns HTTP 401 for all paths. Open the URL in a browser session that's already logged into the Vercel team to spot-check the rendered post.
 
 ---
 
@@ -121,4 +124,10 @@ Files committed (8):
 
 ## Stopped here per instruction
 
-`feature/first-blog-post` has the full feature commit and is pushed. PR opened against `staging`. **No merge to staging or main has happened.** Vercel preview URL polling is the only remaining step before final handoff.
+`feature/first-blog-post` has the full feature commit (`b04f9c5`) plus a docs follow-up (`__DOCS_COMMIT__` once this update is committed) and is pushed. PR #1 is open against `staging` with the Vercel preview build green. **No merge to staging or main has happened.**
+
+---
+
+## Follow-ups (parked, not actioned today)
+
+- Refactor `scripts/generate-llms.mjs` to auto-discover blog routes from `src/data/blog-manifest.json` and emit a "Blog" section automatically. Removes the manual two-line edit (DESCRIPTIONS + SECTIONS) for every future post. ~30 lines of script change.
