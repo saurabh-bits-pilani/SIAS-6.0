@@ -124,7 +124,7 @@ Files committed (8):
 
 ## Stopped here per instruction
 
-`feature/first-blog-post` has the full feature commit (`b04f9c5`) plus a docs follow-up (`__DOCS_COMMIT__` once this update is committed) and is pushed. PR #1 is open against `staging` with the Vercel preview build green. **No merge to staging or main has happened.**
+`feature/first-blog-post` has the full feature commit (`b04f9c5`) plus a docs follow-up (`5cf5d77`) and is pushed. PR #1 is open against `staging` with the Vercel preview build green. **No merge to staging or main has happened.**
 
 ---
 
