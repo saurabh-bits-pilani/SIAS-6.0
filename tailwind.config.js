@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -41,6 +43,19 @@ export default {
           900: '#78350f',
         },
         surface: '#F5F9FC',
+        // Blog detail page palette (additive, not used elsewhere on the site).
+        // Dark navy hero + cream content + gold accents + warm-red links.
+        blog: {
+          navy: '#111827',
+          'navy-light': '#1E293B',
+          gold: '#F59E0B',
+          'gold-bright': '#FBBF24',
+          'red-warm': '#B45309',
+          'red-deep': '#7C2D12',
+          cream: '#FDF6E3',
+          'cream-soft': '#FFF9EE',
+          ink: '#0F172A',
+        },
       },
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
@@ -59,12 +74,103 @@ export default {
         montez: ['Montez', 'cursive'],
         reenie: ['"Reenie Beanie"', 'cursive'],
         kristi: ['Kristi', 'cursive'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       boxShadow: {
         soft: '0 4px 20px rgba(79, 195, 247, 0.15)',
         'soft-lg': '0 8px 40px rgba(79, 195, 247, 0.2)',
       },
+      // Custom typography theme for the blog detail page. Activated via the
+      // `prose-blog` Tailwind class on the article wrapper. Keeps the default
+      // `prose` and `prose-lg` themes untouched so other parts of the site
+      // can adopt prose later without inheriting blog-specific styling.
+      typography: {
+        blog: {
+          css: {
+            '--tw-prose-body': '#0F172A',
+            '--tw-prose-headings': '#0F172A',
+            '--tw-prose-lead': '#1E293B',
+            '--tw-prose-links': '#B45309',
+            '--tw-prose-bold': '#0F172A',
+            '--tw-prose-counters': '#B45309',
+            '--tw-prose-bullets': '#F59E0B',
+            '--tw-prose-hr': '#F59E0B',
+            '--tw-prose-quotes': '#1E293B',
+            '--tw-prose-quote-borders': '#F59E0B',
+            '--tw-prose-captions': '#475569',
+            '--tw-prose-code': '#7C2D12',
+            '--tw-prose-pre-code': '#FDF6E3',
+            '--tw-prose-pre-bg': '#1E293B',
+            '--tw-prose-th-borders': '#F59E0B',
+            '--tw-prose-td-borders': '#FBBF24',
+            h1: {
+              fontFamily: 'Caveat, cursive',
+              fontWeight: '700',
+              fontSize: '3rem',
+              lineHeight: '1.1',
+              letterSpacing: '-0.01em',
+            },
+            h2: {
+              fontFamily: 'Kalam, cursive',
+              fontWeight: '700',
+              fontSize: '2rem',
+              lineHeight: '1.2',
+              marginTop: '3rem',
+              marginBottom: '1rem',
+              borderBottom: '2px solid #F59E0B',
+              paddingBottom: '0.5rem',
+              display: 'inline-block',
+            },
+            h3: {
+              fontFamily: 'Poppins, sans-serif',
+              fontWeight: '600',
+              fontSize: '1.25rem',
+              lineHeight: '1.4',
+              marginTop: '2rem',
+              marginBottom: '0.75rem',
+            },
+            p: {
+              fontFamily: 'Poppins, sans-serif',
+              fontWeight: '400',
+              fontSize: '1rem',
+              lineHeight: '1.75',
+            },
+            blockquote: {
+              fontStyle: 'italic',
+              fontFamily: 'Poppins, sans-serif',
+              backgroundColor: '#FFF9EE',
+              borderLeftWidth: '4px',
+              borderLeftColor: '#F59E0B',
+              padding: '1.25rem 1.5rem',
+              borderRadius: '0.5rem',
+              position: 'relative',
+            },
+            'blockquote p:first-of-type::before': { content: '""' },
+            'blockquote p:last-of-type::after': { content: '""' },
+            table: { fontSize: '0.95rem' },
+            thead: { backgroundColor: '#1E293B', color: '#FDF6E3' },
+            'thead th': {
+              color: '#FDF6E3',
+              fontWeight: '600',
+              padding: '0.75rem 1rem',
+            },
+            'tbody td': { padding: '0.75rem 1rem' },
+            'tbody tr:nth-child(odd)': { backgroundColor: '#FFF9EE' },
+            a: {
+              color: '#B45309',
+              textDecoration: 'underline',
+              textDecorationColor: '#F59E0B',
+              textUnderlineOffset: '3px',
+            },
+            'a:hover': { color: '#7C2D12' },
+            ul: { paddingLeft: '1.5rem' },
+            'ul > li::marker': { color: '#F59E0B' },
+            ol: { paddingLeft: '1.5rem' },
+            'ol > li::marker': { color: '#B45309', fontWeight: '600' },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };

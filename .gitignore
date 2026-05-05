@@ -67,3 +67,14 @@ Memory-files/
 # Keep the markdown sources; the HTML versions are heavyweight build artifacts.
 scripts/*.html
 
+# Blog frontmatter manifest — regenerated every build by
+# scripts/generate-blog-manifest.mjs from content/blog/*.mdx.
+# BlogPost.tsx imports this for runtime frontmatter lookup, bypassing the
+# @mdx-js/rollup ?raw query conflict.
+src/data/blog-manifest.json
+
+# Source images staged for R2 upload (see scripts/upload-*.mjs that reference
+# this folder as SRC). Originals are multi-MB; once uploaded to R2, R2 is the
+# canonical public store. Optimized output lives in blog-images-folder/optimized/.
+blog-images-folder/
+

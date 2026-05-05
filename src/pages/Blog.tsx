@@ -1,10 +1,11 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, ExternalLink } from 'lucide-react';
+import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
+import blogManifest from '../data/blog-manifest.json';
 
 interface BlogPost {
   id: string;
@@ -19,23 +20,34 @@ interface BlogPost {
   featured: boolean;
 }
 
-const mockPosts: readonly BlogPost[] = [
-  {
-    id: '1',
-    title: 'Ketu: The Hidden Power Within You',
-    description:
-      "Explore the profound significance of Ketu, the south lunar node, and its role in spiritual detachment, healing, and unlocking hidden powers within your astrological chart. Discover how embracing Ketu's energy can lead to self-realization and inner peace.",
-    image:
-      'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Blog%20Images-%20Ancient%20Wisdom/2_rahu_ketu_mysteries_prompt_twin_shadowy_serpents_coiling.jpeg',
-    publishedAt: new Date('2024-01-20'),
-    readTime: '6 min read',
-    category: 'Vedic Astrology',
-    url: 'https://medium.com/@saurabhiim/ketu-the-hidden-power-within-you-093cc5156747',
-    excerpt:
-      "Explore the profound significance of Ketu, the south lunar node, and its role in spiritual detachment, healing, and unlocking hidden powers within your astrological chart. Discover how embracing Ketu's energy can lead to self-realization and inner peace.",
-    featured: true,
-  },
-];
+interface ManifestEntry {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt?: string;
+  heroImage?: string;
+  category?: string;
+  featured?: boolean;
+  draft?: boolean;
+}
+
+// Build the post list from the build-time manifest. Defensive draft filter
+// (manifest already excludes drafts), then sort newest-first by date.
+const POSTS: readonly BlogPost[] = (Object.values(blogManifest) as ManifestEntry[])
+  .filter((entry) => entry.draft !== true)
+  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+  .map((entry) => ({
+    id: entry.slug,
+    title: entry.title,
+    description: entry.excerpt ?? '',
+    image: entry.heroImage ?? '',
+    publishedAt: new Date(entry.date),
+    readTime: '8 min read',
+    category: entry.category ?? 'Vedic Astrology',
+    url: `/blog/${entry.slug}`,
+    excerpt: entry.excerpt ?? '',
+    featured: entry.featured ?? false,
+  }));
 
 const categories: readonly string[] = [
   'All',
@@ -55,10 +67,10 @@ const Blog = () => {
 
   const filteredPosts =
     selectedCategory === 'All'
-      ? mockPosts
-      : mockPosts.filter((post) => post.category === selectedCategory);
+      ? POSTS
+      : POSTS.filter((post) => post.category === selectedCategory);
 
-  const featuredPost = mockPosts[0];
+  const featuredPost = POSTS[0];
 
   const handleSubscribe = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -81,7 +93,7 @@ const Blog = () => {
         title="Astrology Blog - Vedic Wisdom, Horoscopes & Spiritual Guidance | Soul Infinity"
         description="Explore Vedic astrology articles, rashifal, mantras, remedies & spiritual insights written by expert astrologer Saurabh Jain. Updated weekly."
         keywords="astrology blog, vedic astrology articles, rashifal, mantras, remedies, saurabh jain blog, spiritual insights, planetary wisdom"
-        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Blog%20Images-%20Ancient%20Wisdom/2_rahu_ketu_mysteries_prompt_twin_shadowy_serpents_coiling.jpeg"
+        image="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Blog/finding-a-vedic-astrologer-in-ahmedabad/hero.webp"
         omitDefaultSchema
       />
       <SchemaMarkup type="blog-list" />
@@ -191,15 +203,13 @@ const Blog = () => {
                       <span>{featuredPost.readTime}</span>
                     </div>
                   </div>
-                  <a
-                    href={featuredPost.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={featuredPost.url}
                     className="bg-primary-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-800 transition-colors inline-flex items-center w-fit"
                   >
                     Read Full Article
-                    <ExternalLink className="ml-2 w-4 h-4" />
-                  </a>
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -266,15 +276,13 @@ const Blog = () => {
                     </div>
                   </div>
 
-                  <a
-                    href={post.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={post.url}
                     className="inline-flex items-center text-primary-800 font-semibold hover:text-primary-700 transition-colors group"
                   >
                     Read Article
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  </Link>
                 </div>
               </motion.article>
             ))}
