@@ -159,6 +159,93 @@ PR #7 (`feature/blog-detail-fixes-v5`, the CredentialsSection PR) state on origi
 
 ---
 
-## STOPPED HERE
+## STOPPED HERE → RESUMED
 
-`main` untouched. `staging` advanced from `83613b3` to `ef6d7d3` (4 PRs merged in order, all clean, Vercel deploy green). Awaiting your spot-check + explicit "promote to main" message.
+`main` was untouched. Saurabh confirmed go for production promote (accepted the duplicate CTA visible bug as a known issue to be fixed in v6). Phase 5 executed below.
+
+---
+
+## Phase 5 — Main promote (executed 2026-05-05T08:30Z)
+
+### Pre-promote staging state verified
+`origin/staging` HEAD = `66e59e4` (last 8 commits include all 4 merge commits from earlier today: `f159a31` PR #3 → `52a239e` PR #4 → `f7521b9` PR #5 → `ef6d7d3` PR #6, plus the 2 docs commits `d1d12c0` and `66e59e4`).
+
+### PR opened + merged
+| Field | Value |
+|---|---|
+| PR # | **8** |
+| URL | https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/8 |
+| Title | `Promote: blog detail magazine redesign + first post live` |
+| Base | `main` |
+| Head | `staging` |
+| Merge type | `--merge --delete-branch=false` (kept staging branch alive) |
+| Merge commit on main | **`00933c3`** |
+| Main HEAD progression | `ef8e7de` → `00933c3` |
+
+### Vercel production build
+| Field | Value |
+|---|---|
+| Build status | ✓ `success` (state=success per GitHub commit-status API) |
+| Inspector | https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/7vNegBv2NBQ7tVkG7wFUgeuhLYoS |
+| Build polled | `00933c3` (the staging→main merge commit) |
+
+### Live verification (anonymous curl, public production)
+| Check | Result |
+|---|---|
+| `https://www.soulinfinity.space/` | ✓ HTTP 200, content-type `text/html; charset=utf-8`, age=0 (fresh) |
+| `https://www.soulinfinity.space/blog/finding-a-vedic-astrologer-in-ahmedabad` | ✓ HTTP 200, content-type `text/html; charset=utf-8`, age=0 |
+| Post HTML size | 92,638 bytes |
+
+### Schema verification on production HTML
+| Schema | Count |
+|---|---|
+| `"@type":"BlogPosting"` | ✓ 1 |
+| `"@type":"FAQPage"` | ✓ 1 |
+| `"@type":"Person"` | ✓ 1 |
+
+### Other production sanity checks
+| Check | Result |
+|---|---|
+| `hero-banner-v2.webp` in HTML (og:image + twitter:image + hero `<img>`) | ✓ 3 hits |
+| `Brand/Saurabh/author-portrait-256.webp` in HTML (Author card sidebar) | ✓ 1 hit |
+| `font-caveat` present in HTML | ✓ 6 hits |
+| `prose-blog` typography class present | ✓ 1 hit |
+| `/blog/_template` absent (draft filter intact) | ✓ 0 hits |
+
+### Known issue carried into production
+**Duplicate CTA banner at the bottom of the post.** The old inline "Want a Personalised Astrology Reading?" banner from the v3 redesign coexists with the new `FinalCTA` rendered inside `ClosingSection` from v4. Saurabh accepted this for now; will be fixed in PR #9 (v6) immediately after this promote.
+
+### Live URLs
+- **Production homepage:** https://www.soulinfinity.space/
+- **Production post (now live):** https://www.soulinfinity.space/blog/finding-a-vedic-astrologer-in-ahmedabad
+- **Vercel production inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/7vNegBv2NBQ7tVkG7wFUgeuhLYoS
+
+---
+
+## Phase 6 — Status (FINAL)
+
+### What is now live on www.soulinfinity.space
+- Blog detail page redesign (full magazine treatment from PRs #3, #4, #5, #6)
+- First real blog post: "How to Find a Genuine Vedic Astrologer in Ahmedabad"
+- Hero v2 (full-bleed, gradient overlay, Caveat-bold title), magazine intro components (WeakSignalsGrid + AuthorCallout + SanskritVerseCard + InsightCallout + WhatFollowsCards), QuestionsToAsk section, ClosingSection (ClosingThought + FAQSection + FinalCTA)
+- Schema stack: BlogPosting + FAQPage + Person all verified live
+- 42 routes total prerendered (was 41 pre-blog-post)
+
+### What is NOT live yet (carried in PR #7, awaiting separate cycle)
+- CredentialsSection magazine component — still on `feature/blog-detail-fixes-v5`. The credentials section currently renders as plain prose on production. PR #7 has 2 distinct commits to bring; mergeable, clean.
+
+### Followups parked
+1. **Duplicate CTA banner fix (v6 PR)** — top priority, will be addressed in next brief
+2. **CredentialsSection promote (v5/PR #7)** — clean cycle once v6 lands
+3. **`Specialisation` word collision** — when v5 lands, the word will appear 2× in production HTML (new card title + unchanged Saurabh bio prose); reword bio sentence if you want strict 1× count
+4. **PR title vs merge commit subject mismatch** — `--merge` uses GitHub's default subject `Merge pull request #N from <branch>`; switch to `--squash` if you want PR title carried into the commit subject (loses stacked branch history)
+5. **Vercel SSO on previews** — anonymous probes return 401; consider Deployment Protection bypass token if you want anonymous Lighthouse / curl validation against staging
+6. **`scripts/generate-llms.mjs` auto-discovery** — still requires manual two-line edit per new blog post (DESCRIPTIONS map + SECTIONS array). Tracked from earlier sessions.
+7. **TOC anchor extraction** — still client-side `useEffect`; should migrate to build-time remark plugin for SEO.
+8. **Read time** — still hardcoded "8 min read"; should compute from word count during prebuild manifest generation.
+
+### Working tree right now
+On `main` locally is `ef8e7de` (stale). I should `git pull` on next return to sync. No changes to commit or push for this phase.
+
+### Stopped here per brief
+**Do NOT start v6 fix in the same execution.** Awaiting Saurabh's v6 brief separately.
