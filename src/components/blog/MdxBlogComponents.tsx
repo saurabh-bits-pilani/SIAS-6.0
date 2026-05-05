@@ -18,6 +18,7 @@ import QuestionsToAsk from './QuestionsToAsk';
 import ClosingSection from './ClosingSection';
 import CredentialsSection from './CredentialsSection';
 import RedFlagsSection from './RedFlagsSection';
+import OnlineVsInPersonSection from './OnlineVsInPersonSection';
 
 export const mdxBlogComponents = {
   WeakSignalsGrid,
@@ -29,4 +30,5 @@ export const mdxBlogComponents = {
   ClosingSection,
   CredentialsSection,
   RedFlagsSection,
+  OnlineVsInPersonSection,
 };
