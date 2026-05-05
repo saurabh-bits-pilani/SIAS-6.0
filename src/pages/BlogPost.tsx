@@ -3,23 +3,35 @@
  *
  * Future blog posts are added by dropping an MDX file into content/blog/.
  * The filename (sans extension) becomes the URL slug. Frontmatter is parsed
- * with gray-matter from the raw file content; MDX body is compiled to a
- * React component by @mdx-js/rollup at build time.
+ * at build time by scripts/generate-blog-manifest.mjs and emitted to
+ * src/data/blog-manifest.json (gitignored, regenerated on every build via the
+ * `prebuild` npm lifecycle hook). The MDX body is compiled to a React
+ * component by @mdx-js/rollup at build time.
  *
- * Both globs use eager loading so content is bundled at build time and
- * available synchronously during SSR prerender. Once the post count grows
+ * Why a build-time manifest instead of `import.meta.glob('...mdx', { query: '?raw' })`:
+ *   @mdx-js/rollup's load hook intercepts the `?raw` query suffix and returns
+ *   the compiled MDXContent component instead of raw text, which makes a
+ *   runtime gray-matter call impossible. Pre-extracting frontmatter sidesteps
+ *   the conflict entirely.
+ *
+ * The eager glob below loads compiled MDX modules; once the post count grows
  * past ~30, switch to lazy loading per-route.
  */
 
 import { useParams, Link } from 'react-router-dom';
 import { type ComponentType } from 'react';
-import matter from 'gray-matter';
 import SEOHead from '../components/SEOHead';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { SITE_ORIGIN, type JsonLd } from '../data/schema-entities';
+import blogManifest from '../data/blog-manifest.json';
 
 interface MdxModule {
   default: ComponentType;
+}
+
+interface FaqEntry {
+  question: string;
+  answer: string;
 }
 
 interface PostFrontmatter {
@@ -35,18 +47,14 @@ interface PostFrontmatter {
   heroImageAlt?: string;
   featured?: boolean;
   draft?: boolean;
+  faqs?: readonly FaqEntry[];
 }
+
+const POST_FRONTMATTER = blogManifest as Record<string, PostFrontmatter>;
 
 // Eager glob compiled MDX modules (default export = body component).
 const POST_MODULES = import.meta.glob<MdxModule>('../../content/blog/*.mdx', {
   eager: true,
-});
-
-// Eager glob raw text (for gray-matter frontmatter parsing).
-const POST_RAW = import.meta.glob<string>('../../content/blog/*.mdx', {
-  eager: true,
-  query: '?raw',
-  import: 'default',
 });
 
 const TEMPLATE_FILENAME = '_template.mdx';
@@ -57,23 +65,66 @@ interface ResolvedPost {
   slug: string;
 }
 
-/** Map URL slug -> module path -> { Content, frontmatter }. */
+/**
+ * Resolve a slug into the compiled MDX component plus its frontmatter.
+ * Returns null if the slug is missing, the file isn't bundled, or the post
+ * isn't in the manifest (e.g. it's a draft or the template).
+ */
 function resolvePost(slug: string | undefined): ResolvedPost | null {
   if (!slug) return null;
+  const fm = POST_FRONTMATTER[slug];
+  if (!fm) return null;
+
   const targetBase = `${slug}.mdx`;
   for (const fullPath of Object.keys(POST_MODULES)) {
     const base = fullPath.split('/').pop() ?? '';
     if (base === TEMPLATE_FILENAME) continue;
     if (base !== targetBase) continue;
     const mod = POST_MODULES[fullPath];
-    const raw = POST_RAW[fullPath];
-    if (!mod || !raw) return null;
-    const { data } = matter(raw);
-    const fm = data as PostFrontmatter;
-    if (fm.draft) return null;
+    if (!mod) return null;
     return { Content: mod.default, fm, slug };
   }
   return null;
+}
+
+function buildFaqSchema(faqs: readonly FaqEntry[]): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
+  };
+}
+
+function buildSaurabhPersonSchema(heroImage: string | undefined): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Saurabh Jain',
+    url: 'https://www.soulinfinity.space/',
+    image: heroImage,
+    jobTitle: 'Vedic Astrologer',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Soul Infinity Astro Solutions',
+    },
+    alumniOf: {
+      '@type': 'EducationalOrganization',
+      name: 'K.N. Rao Institute of Vedic Astrology',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Ahmedabad',
+      addressRegion: 'Gujarat',
+      addressCountry: 'IN',
+    },
+  };
 }
 
 function buildArticleSchema(fm: PostFrontmatter, slug: string): JsonLd {
@@ -155,7 +206,13 @@ export default function BlogPost() {
   }
 
   const { Content, fm, slug: resolvedSlug } = resolved;
-  const articleSchema = buildArticleSchema(fm, resolvedSlug);
+  const schemas: JsonLd[] = [buildArticleSchema(fm, resolvedSlug)];
+  if (fm.faqs && fm.faqs.length > 0) {
+    schemas.push(buildFaqSchema(fm.faqs));
+  }
+  if (fm.author === 'Saurabh Jain') {
+    schemas.push(buildSaurabhPersonSchema(fm.heroImage));
+  }
 
   return (
     <div className="bg-white">
@@ -167,7 +224,7 @@ export default function BlogPost() {
         url={`${SITE_ORIGIN}/blog/${resolvedSlug}`}
         type="article"
         omitDefaultSchema
-        schemas={[articleSchema]}
+        schemas={schemas}
       />
 
       <Breadcrumbs
