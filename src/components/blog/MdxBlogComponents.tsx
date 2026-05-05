@@ -19,6 +19,7 @@ import ClosingSection from './ClosingSection';
 import CredentialsSection from './CredentialsSection';
 import RedFlagsSection from './RedFlagsSection';
 import OnlineVsInPersonSection from './OnlineVsInPersonSection';
+import WhatToExpectSection from './WhatToExpectSection';
 
 export const mdxBlogComponents = {
   WeakSignalsGrid,
@@ -31,4 +32,5 @@ export const mdxBlogComponents = {
   CredentialsSection,
   RedFlagsSection,
   OnlineVsInPersonSection,
+  WhatToExpectSection,
 };

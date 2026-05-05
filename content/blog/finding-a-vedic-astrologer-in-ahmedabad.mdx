@@ -210,19 +210,50 @@ import { BookOpen, Clock, Lightbulb, Sparkles as SparklesIcon, Heart, Compass } 
   closingNote="Good questions lead to clarity. Clarity leads to the right guidance."
 />
 
-## What to expect in a genuine Jyotish consultation
+import { Calendar as CalendarIconV10, Compass as CompassV10, Moon as MoonIconV10, Orbit, MessageCircle as MessageCircleV10, Flower2, Flame as FlameV10 } from 'lucide-react';
 
-A real Vedic consultation has structure. It is not a monologue, and it is not a tarot-style spread of vague themes. The shape is roughly as follows.
-
-It begins with birth detail collection: date, time, and place. Birth time matters down to the minute because it determines your Lagna (the rising sign at the moment of birth), which changes roughly every two hours and is the foundation of the entire chart. If your recorded birth time is uncertain, a trained astrologer can offer birth time rectification by working backwards from major past life events to narrow down the correct minute.
-
-The astrologer then casts the chart and verifies it against your reported events. This step is often skipped by less rigorous practitioners. A good reader will quietly check that the dasha periods of your past line up with what actually happened, and will adjust the time if the chart is inconsistent.
-
-The reading proper usually moves through your Lagna, then your Rashi (the Moon sign, which governs emotional and habitual patterns), then your Nakshatra (the lunar mansion, of which there are 27, each with its own qualities). After the natal foundation, the practitioner walks through the relevant divisional charts: D9 Navamsa for marriage and dharmic life direction, D10 Dasamsa for career and public reputation, and others depending on what you want to discuss.
-
-Only then does the conversation move to the current Mahadasha (the major planetary period running, which can last from six to twenty years) and Antardasha (the sub-period within it). This is where prediction becomes useful, because it grounds general chart themes in a specific timing window.
-
-A real consultation is a dialogue. You should be asking questions throughout, and the astrologer should be answering them in terms of specific houses, lords, aspects, and dasha periods rather than in vague themes. Most first consultations run 60 to 90 minutes, and most reputable practitioners send you a recording, a brief written summary, or the chart file so you can refer back to it.
+<WhatToExpectSection
+  titleLine1="What to expect in a"
+  titleLine2="genuine Jyotish consultation"
+  introIcon={Flower2}
+  introBody="A real Vedic consultation has structure. It is not a monologue, and it is not a tarot-style spread of vague themes."
+  introHighlight="The shape is roughly as follows."
+  items={[
+    {
+      number: "01",
+      icon: CalendarIconV10,
+      title: "It begins with birth detail collection: date, time, and place.",
+      body: "Birth time matters down to the minute because it determines your Lagna (the rising sign at the moment of birth), which changes roughly every two hours and is the foundation of the entire chart. If your recorded birth time is uncertain, a trained astrologer can offer birth time rectification by working backwards from major past life events to narrow down the correct minute."
+    },
+    {
+      number: "02",
+      icon: CompassV10,
+      title: "The astrologer then casts the chart and verifies it against your reported events.",
+      body: "This step is often skipped by less rigorous practitioners. A good reader will quietly check that the dasha periods of your past line up with what actually happened, and will adjust the time if the chart is inconsistent."
+    },
+    {
+      number: "03",
+      icon: MoonIconV10,
+      title: "The reading proper usually moves through your Lagna, then your Rashi",
+      body: "(the Moon sign), then your Nakshatra (the lunar mansion, of which there are 27, each with its own qualities). After the natal foundation, the practitioner walks through the relevant divisional charts: D9 Navamsa for marriage and dharmic life direction, D10 Dasamsa for career and public reputation, and others depending on what you want to discuss."
+    },
+    {
+      number: "04",
+      icon: Orbit,
+      title: "Only then does the conversation move to the current Mahadasha",
+      body: "(the major planetary period running, which can last from six to twenty years) and Antardasha (the sub-period within it). This is where prediction becomes useful, because it grounds general chart themes in a specific timing window."
+    },
+    {
+      number: "05",
+      icon: MessageCircleV10,
+      title: "A real consultation is a dialogue.",
+      body: "You should be asking questions throughout, and the astrologer should be answering them in terms of specific houses, lords, aspects, and dasha periods rather than in vague themes. Most first consultations run 60 to 90 minutes, and most reputable practitioners send you a recording, a brief written summary, or the chart file so you can refer back to it."
+    }
+  ]}
+  footerIcon={FlameV10}
+  footerLine1="Structure brings clarity. Clarity brings confidence."
+  footerLine2="That is the difference a genuine Jyotish consultation makes."
+/>
 
 import { ShieldAlert, BadgePercent, ShoppingBag, BookOpen as BookOpenIconV8, Flame, Puzzle, Users as UsersIconV8, ShieldCheck } from 'lucide-react';
 
