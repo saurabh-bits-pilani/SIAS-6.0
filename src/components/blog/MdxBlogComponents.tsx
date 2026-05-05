@@ -16,6 +16,7 @@ import InsightCallout from './InsightCallout';
 import WhatFollowsCards from './WhatFollowsCards';
 import QuestionsToAsk from './QuestionsToAsk';
 import ClosingSection from './ClosingSection';
+import CredentialsSection from './CredentialsSection';
 
 export const mdxBlogComponents = {
   WeakSignalsGrid,
@@ -25,4 +26,5 @@ export const mdxBlogComponents = {
   WhatFollowsCards,
   QuestionsToAsk,
   ClosingSection,
+  CredentialsSection,
 };
