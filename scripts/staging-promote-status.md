@@ -95,3 +95,38 @@ If you want anonymous remote validation, either (a) disable Vercel Authenticatio
 ## Stopped here per instruction
 
 `main` untouched on `2cf2c80`. `staging` is now at `1536a80` and Vercel-deployed. Awaiting your call to either (a) merge `staging → main` for production promote, or (b) park here for further review.
+
+---
+
+## Staging promote of PR #1 + PR #2 (May 5, 2026)
+
+**Trigger:** Saurabh authorised merging both open feature PRs into `staging` after spot-checking their individual previews. Goal: refresh the staging branch so the staging Vercel deployment reflects PR #1 + PR #2 combined. Production (`main`) explicitly NOT touched.
+
+### Sequence
+| Step | Detail |
+|---|---|
+| Pre-check | `gh pr list --state open --base staging` returned PR #1 (`feature/first-blog-post`) and PR #2 (`feature/blog-index-manifest`), both still open. |
+| Merge PR #1 | `gh pr merge 1 --merge --delete-branch=false` → state `MERGED`, merge commit `b199c2a` |
+| Merge PR #2 | `gh pr merge 2 --merge --delete-branch=false` → state `MERGED`, merge commit `2693356` |
+| Vercel build | Triggered automatically on staging branch advance. Polled `commits/2693356/statuses` until terminal: state `success` (~30s) |
+| Final HEAD | `origin/staging` = `2693356` (was `88cd8c9` pre-merge). |
+| Feature branches | Both retained per instruction (`--delete-branch=false`). `feature/first-blog-post` and `feature/blog-index-manifest` still on origin. |
+
+### Vercel deployment
+- **Preview URL (staging-branch alias):** https://soul-infinity-eel9pslu3-saurabh-bits-pilanis-projects.vercel.app
+- **Branch alias (stable):** https://soul-infinitycom-git-staging-saurabh-bits-pilanis-projects.vercel.app
+- **Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/GWVfb3EEifb1W9AnPNf5rdbtZE93
+- **Status:** ✓ success (state=success per GitHub commit-status API)
+- **Note:** preview gated by Vercel SSO Auth (HTTP 401 anonymous). Open in a browser session logged into the Vercel team to spot-check.
+
+### What's now on staging
+- Build-time blog manifest infrastructure (`scripts/generate-blog-manifest.mjs`, `prebuild` hook, BlogPost.tsx manifest import — fixes the @mdx-js/rollup `?raw` query crash)
+- First real blog post: `/blog/finding-a-vedic-astrologer-in-ahmedabad` with full schema stack (BlogPosting + FAQPage + Person)
+- Blog index page (`/blog`) wired to manifest, no more hardcoded mockPosts, no more external Medium link
+- 42 prerendered routes (was 41)
+- llms.txt, sitemap.xml updated to include the new post
+
+### Stopped here per instruction
+`main` is untouched on `ef8e7de`. No production promote. Both PRs are now merged into `staging` only. Branches retained.
+
+Brief at `scripts/blog-detail-redesign-brief.md` is unblocked for the next phase: redesign of `/blog/:slug` can now branch off the new `staging` (or off `main` once Saurabh authorises a `staging → main` promote).
