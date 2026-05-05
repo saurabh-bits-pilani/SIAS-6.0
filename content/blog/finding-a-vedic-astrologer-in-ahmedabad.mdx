@@ -121,33 +121,53 @@ Finally, consider specialisation. Some astrologers focus on marriage matching, o
 
 In our case at Soul Infinity, the practice is rooted in the Parashari tradition with K.N. Rao Institute training, focused on natal chart analysis and Vimshottari dasha (the 120-year planetary cycle that times major life events) timing.
 
-## Questions to ask before your first consultation
+import { BookOpen, Clock, Lightbulb, Sparkles as SparklesIcon, Heart, Compass } from 'lucide-react';
 
-Before you book, you are entitled to ask. A practitioner who treats these questions as intrusive is telling you something useful.
-
-### What classical texts do you reference in your readings?
-
-A trained astrologer will name Brihat Parashara Hora Shastra at minimum, and probably one or two more (Phaladeepika, Saravali, Jaimini Sutras, Hora Sara). A vague answer like "the ancient texts" without specifics is a signal that the training was thin.
-
-### How long have you been reading charts professionally?
-
-Years matter, but volume matters more. A practitioner who has spent ten years reading three charts a month has less practical depth than one who has spent four years reading three charts a day.
-
-### Will you explain the chart logic, or just give predictions?
-
-A genuine consultation teaches you something about your own chart. You should leave understanding why the astrologer said what they said, not just remembering a list of predictions. If the answer is "I will tell you what is going to happen, you don't need to understand the chart," look elsewhere.
-
-### What is your approach to remedies?
-
-The classical position is that remedies are recommended sparingly, are based on specific planetary indications in the chart, and are explained in terms of which planet and which house they address. A practitioner who recommends remedies as the headline of every consultation is probably running a remedies business with astrology as the lead generator.
-
-### Do you handle marriage matching with full ashtakoota and Mangal dosha analysis?
-
-Ashtakoota is the eight-point compatibility framework used in Vedic marriage matching. Mangal dosha is an affliction caused by Mars in certain houses that requires careful analysis rather than a blanket warning. A practitioner who handles marriage matching well will check both, plus the Navamsa (the ninth divisional chart, traditionally used to assess marriage in detail), rather than relying on the gun milan score alone.
-
-### How long is a consultation, and what does it cover?
-
-A first consultation should run 60 to 90 minutes. Anything significantly shorter is unlikely to allow proper chart walkthrough. Ask whether you get a recording, written notes, or the chart file itself, and whether follow-up questions over the next few weeks are included or charged separately.
+<QuestionsToAsk
+  titleLine1="Questions to ask"
+  titleLine2="before your first consultation"
+  introTitle="Before you book, you are entitled to ask."
+  introBody="A practitioner who treats these questions as intrusive is telling you something useful."
+  items={[
+    {
+      number: "01",
+      icon: BookOpen,
+      title: "What classical texts do you reference in your readings?",
+      body: "A trained astrologer will name Brihat Parashara Hora Shastra at minimum, and probably one or two more (Phaladeepika, Saravali, Jaimini Sutras, Hora Sara). A vague answer like \"the ancient texts\" without specifics is a signal that the training was thin."
+    },
+    {
+      number: "02",
+      icon: Clock,
+      title: "How long have you been reading charts professionally?",
+      body: "Years matter, but volume matters more. A practitioner who has spent ten years reading three charts a month has less practical depth than one who has spent four years reading three charts a day."
+    },
+    {
+      number: "03",
+      icon: Lightbulb,
+      title: "Will you explain the chart logic, or just give predictions?",
+      body: "A genuine consultation teaches you something about your own chart. You should leave understanding why the astrologer said what they said, not just remembering a list of predictions. If the answer is \"I will tell you what is going to happen, you don't need to understand the chart,\" look elsewhere."
+    },
+    {
+      number: "04",
+      icon: SparklesIcon,
+      title: "What is your approach to remedies?",
+      body: "The classical position is that remedies are recommended sparingly, are based on specific planetary indications in the chart, and are explained in terms of which planet and which house they address. A practitioner who recommends remedies as the headline of every consultation is probably running a remedies business with astrology as the lead generator."
+    },
+    {
+      number: "05",
+      icon: Heart,
+      title: "Do you handle marriage matching with full ashtakoota and Mangal dosha analysis?",
+      body: "If marriage is a reason for the consultation, the astrologer should walk you through ashtakoota guna milan (the eight-fold compatibility scoring system from Brihat Parashara) and assess Mangal dosha (Mars affliction) in both charts with proper cancellation rules. Anyone who skips this and gives a yes-or-no compatibility answer is not doing the work."
+    },
+    {
+      number: "06",
+      icon: Compass,
+      title: "How long is a consultation, and what does it cover?",
+      body: "A first reading worth doing is usually 60 to 90 minutes and covers Lagna, Rashi, Nakshatra, key divisional charts (D9 Navamsa for marriage, D10 for career), current Mahadasha-Antardasha, and the specific questions you came in with. Anything shorter is either a follow-up or a sales call."
+    }
+  ]}
+  closingNote="Good questions lead to clarity. Clarity leads to the right guidance."
+/>
 
 ## What to expect in a genuine Jyotish consultation
 
