@@ -1,4 +1,4 @@
-# Blog Detail Fixes v2 — STATUS = SHIPPED, PR OPEN, PREVIEW LIVE
+# Blog Detail Fixes v2 — STATUS = SHIPPED, PR #4 OPEN, PREVIEW LIVE
 
 **Branch:** `feature/blog-detail-fixes-v2` (off `feature/blog-detail-redesign` @ `4ac759f`, stacked on PR #3 which is still open against staging)
 **Date:** 2026-05-05
@@ -88,7 +88,14 @@ All 6 files: 0 em-dashes (`grep -c "—" src/components/blog/*.tsx` → 0 across
 
 ## 6. Vercel preview URL
 
-To be filled after PR opens.
+- **Branch:** `feature/blog-detail-fixes-v2`
+- **Commit:** `d6da273` — `feat(blog): full-bleed hero, Caveat title, magazine intro components` (12 files changed, 641 insertions, 125 deletions)
+- **Pushed:** ✓ to `origin/feature/blog-detail-fixes-v2`
+- **PR:** [#4 — feature/blog-detail-fixes-v2 → staging](https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/4) (stacked on PR #3)
+- **Preview URL:** https://soul-infinity-7wjsbd7xk-saurabh-bits-pilanis-projects.vercel.app
+- **Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/7ssJdkzcL7gmwo3HUbQBWdwkSEBF
+- **Build status:** ✓ success
+- **Note:** preview gated by Vercel SSO Auth. Open in a browser logged into the Vercel team to spot-check the visual gates from PR #4 description.
 
 ## 7. Follow-ups (parked, not actioned)
 
