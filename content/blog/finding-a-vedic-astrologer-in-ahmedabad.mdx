@@ -24,7 +24,7 @@ faqs:
   - question: "How accurate does my birth time need to be?"
     answer: "Birth time accuracy matters down to the minute because it determines your Lagna (rising sign), which changes roughly every two hours. An error of even ten minutes can shift the Lagna or move planets across house boundaries, which changes the chart interpretation. If your recorded time is uncertain, a trained astrologer can perform birth time rectification using past life events to narrow it down."
   - question: "How much should a Vedic astrology consultation cost in Ahmedabad?"
-    answer: "Vedic astrology consultation pricing in Ahmedabad varies widely based on the practitioner's training, consultation depth, and follow-up support. Our rates are listed on the [services page](/services/vedic-astrology)."
+    answer: "Vedic astrology consultation pricing in Ahmedabad varies widely based on the practitioner's training, consultation depth, and follow-up support. Our rates are listed on the services page."
   - question: "Are online Vedic astrology consultations as effective as in-person?"
     answer: "Yes, when the practitioner is well trained and the format is structured. A chart is a chart regardless of whether it is read across a desk or across a video call. What matters is birth detail accuracy, sufficient consultation time (usually 60 to 90 minutes for a first reading), and whether the astrologer walks you through the chart logic. Online consultations also make trained Jyotish practitioners from Delhi, Varanasi, and elsewhere accessible to Ahmedabad clients who could not otherwise reach them."
   - question: "What is the K.N. Rao Institute and why does it matter?"
@@ -235,32 +235,48 @@ Location: based in Ahmedabad, in the Khodiyar and Adani Shantigram area.
 
 If you would like to book a consultation, you can reach us through our [Vedic astrology services page](/services/vedic-astrology) or find us on Google.
 
-## Frequently asked questions
+import { Search, Moon, Clock as ClockIcon, IndianRupee, Laptop, Landmark as LandmarkIcon } from 'lucide-react';
 
-### How do I find a good Vedic astrologer in Ahmedabad?
-
-Look for a practitioner with formal training in classical Jyotish (Parashari Hora Shastra, Jaimini Sutras), a stated lineage from a recognised institute such as the K.N. Rao Institute or ICAS, several years of practice on real charts, and a willingness to explain the chart logic during the consultation. Avoid astrologers who guarantee outcomes, push expensive remedies, or refuse to name their teachers.
-
-### What is the difference between Vedic and Western astrology?
-
-Vedic astrology uses the sidereal zodiac, which is anchored to the actual positions of the constellations, while Western astrology uses the tropical zodiac, anchored to the seasons. Vedic astrology also leans heavily on the Moon and the Nakshatras, uses divisional charts such as the Navamsa for specific life areas, and times events through the Vimshottari dasha system.
-
-### How accurate does my birth time need to be?
-
-Birth time accuracy matters down to the minute because it determines your Lagna, which changes roughly every two hours. An error of even ten minutes can shift the Lagna or move planets across house boundaries, which changes the chart interpretation. If your recorded time is uncertain, a trained astrologer can perform birth time rectification using past life events to narrow it down.
-
-### How much should a Vedic astrology consultation cost in Ahmedabad?
-
-Vedic astrology consultation pricing in Ahmedabad varies widely based on the practitioner's training, consultation depth, and follow-up support. Our rates are listed on the [services page](/services/vedic-astrology).
-
-### Are online Vedic astrology consultations as effective as in-person?
-
-Yes, when the practitioner is well trained and the format is structured. A chart is a chart regardless of whether it is read across a desk or across a video call. What matters is birth detail accuracy, sufficient consultation time, and whether the astrologer walks you through the chart logic.
-
-### What is the K.N. Rao Institute and why does it matter?
-
-The K.N. Rao Institute refers to the school of Vedic astrology established under the late Shri K.N. Rao, one of the most respected Jyotish teachers of the modern era and a pioneer in formalising astrology education at the Bharatiya Vidya Bhavan in Delhi. Training in this lineage means rigorous grounding in Parashari classical texts, dasha analysis, and predictive techniques verified against real client charts over decades. The lineage matters because it tells you the practitioner studied under accountable teachers in a documented tradition rather than learning piecemeal from books and the internet.
-
-## A closing thought
-
-Choosing well matters. The criteria are knowable, and once you apply them the search becomes much shorter than the directory listings suggest. The wrong signals lead to disappointing readings; the right ones lead to consultations you remember and refer to for years.
+<ClosingSection
+  closingTitle="A Closing Thought"
+  closingBody="Choosing well matters. The criteria are knowable, and once you apply them the search becomes much shorter than the directory listings suggest."
+  closingHighlight="The wrong signals lead to disappointing readings; the right ones lead to consultations you remember and refer to for years."
+  faqTitle="Frequently Asked Questions"
+  faqs={[
+    {
+      question: "How do I find a good Vedic astrologer in Ahmedabad?",
+      answer: "Look for a practitioner with formal training in classical Jyotish (Parashari Hora Shastra, Jaimini Sutras), a stated lineage from a recognised institute such as the K.N. Rao Institute or ICAS, several years of practice on real charts, and a willingness to explain the chart logic during the consultation. Avoid astrologers who guarantee outcomes, push expensive remedies, or refuse to name their teachers.",
+      icon: <Search className="w-5 h-5 text-blog-gold" />
+    },
+    {
+      question: "What is the difference between Vedic and Western astrology?",
+      answer: "Vedic astrology (Jyotish) uses the sidereal zodiac, which is anchored to the actual positions of the constellations, while Western astrology uses the tropical zodiac, anchored to the seasons. Vedic astrology also leans heavily on the Moon and the Nakshatras (lunar mansions), uses divisional charts such as the Navamsa for specific life areas, and times events through the Vimshottari dasha system.",
+      icon: <Moon className="w-5 h-5 text-blog-gold" />
+    },
+    {
+      question: "How accurate does my birth time need to be?",
+      answer: "Birth time accuracy matters down to the minute because it determines your Lagna (rising sign), which changes roughly every two hours. An error of even ten minutes can shift the Lagna or move planets across house boundaries, which changes the chart interpretation. If your recorded time is uncertain, a trained astrologer can perform birth time rectification using past life events to narrow it down.",
+      icon: <ClockIcon className="w-5 h-5 text-blog-gold" />
+    },
+    {
+      question: "How much should a Vedic astrology consultation cost in Ahmedabad?",
+      answer: "Vedic astrology consultation pricing in Ahmedabad varies widely based on the practitioner's training, consultation depth, and follow-up support. Our rates are listed on the services page.",
+      icon: <IndianRupee className="w-5 h-5 text-blog-gold" />
+    },
+    {
+      question: "Are online Vedic astrology consultations as effective as in-person?",
+      answer: "Yes, when the practitioner is well trained and the format is structured. A chart is a chart regardless of whether it is read across a desk or across a video call. What matters is birth detail accuracy, sufficient consultation time (usually 60 to 90 minutes for a first reading), and whether the astrologer walks you through the chart logic. Online consultations also make trained Jyotish practitioners from Delhi, Varanasi, and elsewhere accessible to Ahmedabad clients who could not otherwise reach them.",
+      icon: <Laptop className="w-5 h-5 text-blog-gold" />
+    },
+    {
+      question: "What is the K.N. Rao Institute and why does it matter?",
+      answer: "The K.N. Rao Institute refers to the school of Vedic astrology established under the late Shri K.N. Rao, one of the most respected Jyotish teachers of the modern era and a pioneer in formalising astrology education at the Bharatiya Vidya Bhavan in Delhi. Training in this lineage means rigorous grounding in Parashari classical texts, dasha analysis, and predictive techniques verified against real client charts over decades. The lineage matters because it is a quality control mechanism: it tells you the practitioner studied under accountable teachers in a documented tradition rather than learning piecemeal from books and the internet.",
+      icon: <LandmarkIcon className="w-5 h-5 text-blog-gold" />
+    }
+  ]}
+  ctaClosingLine="Good questions bring clarity. Clarity leads to the right guidance. We're here to help you on that journey."
+  ctaTitle="We're here to help you on that journey"
+  ctaSubtitle="Get clarity on your life path, challenges, and opportunities."
+  ctaButtonText="Book a Consultation"
+  ctaButtonHref="/services/vedic-astrology"
+/>

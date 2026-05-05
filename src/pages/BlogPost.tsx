@@ -445,33 +445,6 @@ export default function BlogPost() {
                 </MDXProvider>
               </article>
 
-              {/* FAQ */}
-              {fm.faqs && fm.faqs.length > 0 && (
-                <section className="my-12">
-                  <h2 className="font-kalam font-bold text-3xl text-blog-ink mb-6 inline-block border-b-2 border-blog-gold pb-2">
-                    Frequently Asked Questions
-                  </h2>
-                  <div className="space-y-2">
-                    {fm.faqs.map((faq, i) => (
-                      <details key={i} className="group border-b border-blog-gold/30 py-4">
-                        <summary className="flex items-center justify-between cursor-pointer list-none">
-                          <span className="font-poppins font-semibold text-blog-ink text-lg pr-4">
-                            {faq.question}
-                          </span>
-                          <ChevronDown
-                            className="w-5 h-5 text-blog-gold flex-shrink-0 transition-transform group-open:rotate-180"
-                            aria-hidden="true"
-                          />
-                        </summary>
-                        <div className="mt-3 text-blog-ink/80 leading-relaxed font-poppins">
-                          {faq.answer}
-                        </div>
-                      </details>
-                    ))}
-                  </div>
-                </section>
-              )}
-
               {/* Bottom CTA banner */}
               <section className="my-12 bg-blog-navy rounded-2xl p-8 md:p-12 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-48 h-48 opacity-20 pointer-events-none">
