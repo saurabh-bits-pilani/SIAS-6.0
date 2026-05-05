@@ -107,19 +107,60 @@ These feel sensible, and they are how most service decisions get made. They are 
   ]}
 />
 
-## What credentials should a Vedic astrologer have?
+import { BookOpen as BookOpenIcon, Users as UsersIcon, Calendar as CalendarIcon, Target, AlertCircle, Award, GraduationCap, Sparkle, Flower } from 'lucide-react';
 
-Vedic astrology is a textual and oral tradition that has been transmitted through specific lineages for roughly two thousand years. Anyone who treats it as serious work can name where their training came from. If they cannot, that is information.
-
-The first thing to look for is formal training in classical Jyotish texts. The foundational treatise is Brihat Parashara Hora Shastra (the encyclopedic work attributed to Maharishi Parashara), and most practitioners trained in the dominant lineage today work primarily within this Parashari (Parashara-derived) framework. A smaller number specialise in Jaimini Sutras (an alternative classical system that emphasises different rules for prediction). Self-taught astrologers who have only read modern English summaries of these texts will give you very different readings from practitioners who have studied them in Sanskrit or in carefully translated commentaries.
-
-The second thing is lineage and parampara (the chain of teacher to student that carries the tradition forward). Named institutes worth knowing about include the K.N. Rao Institute, the Indian Council of Astrological Sciences (ICAS, founded by Dr. B.V. Raman), Bharatiya Vidya Bhavan in Delhi, and the Saptarishis Astrology school. Lineage is not snobbery. It is the same quality control mechanism that medicine, law, and classical music use. It tells you the practitioner studied under accountable teachers, was tested, and continues to be part of a community that audits its own work.
-
-The third is years of practice on real charts. Reading textbooks teaches you what Saturn in the seventh house traditionally signifies. Reading three thousand charts teaches you how that signature actually plays out across different yogas (planetary combinations), different dashas (planetary periods), and different life contexts. There is no substitute for time on the work.
-
-Finally, consider specialisation. Some astrologers focus on marriage matching, others on career timing, others on health, others on remedial measures, others on prashna (horary astrology, which answers a specific question from the chart of the moment the question is asked). A practitioner who claims to be equally expert in everything is usually exaggerating one of those areas.
-
-In our case at Soul Infinity, the practice is rooted in the Parashari tradition with K.N. Rao Institute training, focused on natal chart analysis and Vimshottari dasha (the 120-year planetary cycle that times major life events) timing.
+<CredentialsSection
+  titleLine1="What credentials should"
+  titleLine2="a Vedic astrologer have?"
+  introIcon={Landmark}
+  introBody="Vedic astrology is a textual and oral tradition that has been transmitted through specific lineages for roughly two thousand years. Anyone who treats it as serious work can name where their training came from. If they cannot, that is information."
+  items={[
+    {
+      number: "01",
+      icon: BookOpenIcon,
+      title: "Classical Training",
+      intro: "Look for formal training in classical Jyotish texts.",
+      bullets: [
+        "Brihat Parashara Hora Shastra (the foundational text)",
+        "Phaladeepika, Saravali, Jaimini Sutras (supporting texts)"
+      ],
+      warning: {
+        icon: AlertCircle,
+        text: "If someone says \"ancient texts\" without specifics, be cautious."
+      }
+    },
+    {
+      number: "02",
+      icon: UsersIcon,
+      title: "Lineage & Parampara",
+      intro: "The chain of teacher to student that carries the tradition forward.",
+      inlineList: [
+        { icon: Landmark, label: "K.N. Rao Institute" },
+        { icon: GraduationCap, label: "ICAS (founded by Dr. B.V. Raman)" },
+        { icon: Flower, label: "Bharatiya Vidya Bhavan" },
+        { icon: Sparkle, label: "Saptarishis Astrology School" }
+      ],
+      body: "Lineage is the same quality control mechanism used in medicine, law and classical music. It ensures the practitioner was taught, tested and continues to be part of a community that audits its own work."
+    },
+    {
+      number: "03",
+      icon: CalendarIcon,
+      title: "Years of Practice on Real Charts",
+      intro: "Learning is not just reading; it is seeing patterns play out in real life.",
+      body: "Experience across thousands of charts teaches how planetary combinations, dashas (planetary periods), and different life contexts actually manifest. There is no substitute for time on the work."
+    },
+    {
+      number: "04",
+      icon: Target,
+      title: "Specialisation",
+      intro: "Depth comes from focus.",
+      body: "Some astrologers specialise in marriage matching, some in career timing, some in health, some in remedial measures, or some in prashna (horary astrology). A practitioner who claims to be equally expert in everything is usually exaggerating one of those areas."
+    }
+  ]}
+  footerIcon={Award}
+  footerLine1="Credentials bring trust. Tradition brings depth. Experience brings clarity."
+  footerLine2="That is what makes guidance truly meaningful."
+/>
 
 import { BookOpen, Clock, Lightbulb, Sparkles as SparklesIcon, Heart, Compass } from 'lucide-react';
 
