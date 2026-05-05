@@ -91,14 +91,9 @@ Saurabh, please open the staging preview and walk through the checklist below be
 - [ ] InsightCallout: cream callout, gold left border, Eye icon
 - [ ] WhatFollowsCards: 4 navy cards with gold icon circles
 
-**Credentials section** (replaces the prose H2)
-- [ ] Title block: small sparkle + "What credentials should" Poppins-bold + "a Vedic astrologer have?" Caveat-italic-gold + Sun divider
-- [ ] Intro callout with Landmark icon
-- [ ] 4 numbered cards stacked with dotted vertical connectors
-- [ ] Card 01 (Classical Training): bullets + AlertCircle warning callout in gold-tinted box
-- [ ] Card 02 (Lineage & Parampara): 4 institute pills inline
-- [ ] Cards 03 (Years of Practice) and 04 (Specialisation): body paragraphs only
-- [ ] Footer banner: dark navy, Award icon, two-line gold-accented copy
+**Credentials section** — currently rendering as PLAIN PROSE (the H2 "What credentials should a Vedic astrologer have?" + 6 paragraphs about classical training / lineage / years of practice / specialisation). The magazine-style `CredentialsSection` component is in PR #7 (v5), which is excluded from this promote. So:
+- [ ] Plain-prose H2 + 6 paragraphs render via the typography theme (Kalam-bold gold-underlined H2, Poppins body)
+- [ ] No magazine cards, no Award icon footer banner — those will arrive in the next promote when PR #7 lands
 
 **Questions to ask section**
 - [ ] Title block with Sun divider, intro callout (HelpCircle in gold circle)
@@ -127,8 +122,8 @@ Saurabh, please open the staging preview and walk through the checklist below be
 - [ ] Card image = the new hero v2 (`hero-banner-v2.webp`)
 - [ ] og:image meta on /blog uses the new hero v2 URL
 
-**Soft "Specialisation" gate (heads-up)**
-- The word "Specialisation" appears 2 times in the rendered HTML — once in the Credentials Card 04 title (expected), once in the unchanged Saurabh bio paragraph in "How we work at Soul Infinity" ("Specialisation is in natal chart analysis..."). Not a duplicate of the new component, just a coincidental word reuse. Decide whether to ship as-is or follow up later by rewording the bio sentence.
+**Soft "Specialisation" gate (heads-up — applies to v5/PR #7, not this promote)**
+- When PR #7 lands, the word "Specialisation" will appear 2 times in the rendered HTML — once in the new Credentials Card 04 title, once in the unchanged Saurabh bio paragraph in "How we work at Soul Infinity" ("Specialisation is in natal chart analysis..."). Coincidental word reuse, not a duplicate. Decide whether to ship as-is or follow up later by rewording the bio sentence.
 
 ---
 
@@ -146,13 +141,13 @@ When you give the go, I will:
 
 ---
 
-## v5 status (excluded from this sequence)
+## v5 status (excluded from this sequence) — re-verified
 
-PR #7 (`feature/blog-detail-fixes-v5`, the CredentialsSection PR) is **OPEN, MERGEABLE, CLEAN** — same status it had at the start of today's promote. Per your brief, NOT included in this merge sequence. After the staging-and-main promote completes, PR #7 will need its own merge cycle (it stacks on what is now staging HEAD, so it should be a clean fast-forward).
-
-**Note:** v5 is the **CredentialsSection** PR — but that section is ALREADY visible on the staging preview above. That's because PR #6 (v4) merged commits that, while strictly being the v4 branch, included v5's changes as part of the stacked diff (because v5 was branched off v4 and rebased on top, and merging v4 into staging brought its full history). Verifying this: PR #7 against the new staging may now report state=`MERGED` automatically once GitHub recomputes, or it will still show as open with an empty diff. I'll check this and note it in the next status update.
-
-Actually re-checking: the v5 branch was branched off v4's HEAD. Merging v4 brought the v4 commits but NOT the v5 commits. So PR #7 is still active and bringing its own commits. I'll re-verify before the main promote.
+PR #7 (`feature/blog-detail-fixes-v5`, the CredentialsSection PR) state on origin **after** the 4-PR staging promote:
+- State: OPEN
+- Distinct commits to bring into staging: **2** (`e6743b8` feat + `b20e1d0` docs)
+- Mergeable: UNKNOWN (GitHub recomputing post-staging-update; will resolve to MERGEABLE shortly)
+- Per brief, NOT included in this merge sequence. Will need its own merge cycle to ship the CredentialsSection.
 
 ---
 
