@@ -14,6 +14,7 @@ import AuthorCallout from './AuthorCallout';
 import SanskritVerseCard from './SanskritVerseCard';
 import InsightCallout from './InsightCallout';
 import WhatFollowsCards from './WhatFollowsCards';
+import QuestionsToAsk from './QuestionsToAsk';
 
 export const mdxBlogComponents = {
   WeakSignalsGrid,
@@ -21,4 +22,5 @@ export const mdxBlogComponents = {
   SanskritVerseCard,
   InsightCallout,
   WhatFollowsCards,
+  QuestionsToAsk,
 };
