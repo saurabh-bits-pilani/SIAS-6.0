@@ -1,4 +1,4 @@
-# Blog Detail Fixes v4 — STATUS = SHIPPED, PR OPEN, PREVIEW LIVE
+# Blog Detail Fixes v4 — STATUS = SHIPPED, PR #6 OPEN, PREVIEW LIVE
 
 **Branch:** `feature/blog-detail-fixes-v4` (off `feature/blog-detail-fixes-v3` @ `6d8e8ab`, stacked on PR #5 → PR #4 → PR #3)
 **Date:** 2026-05-05
@@ -81,7 +81,14 @@ This guarantees: the FAQPage JSON-LD answer text and the visible accordion answe
 
 ## Vercel preview
 
-To be filled after PR opens.
+- **Branch:** `feature/blog-detail-fixes-v4`
+- **Commit:** `df289b4` — `feat(blog): closing section with interactive FAQ and CTA, deduplicate` (11 files changed, 685 insertions, 56 deletions)
+- **Pushed:** ✓ to `origin/feature/blog-detail-fixes-v4`
+- **PR:** [#6 — feature/blog-detail-fixes-v4 → staging](https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/6) (stacked on PR #5 → PR #4 → PR #3)
+- **Preview URL:** https://soul-infinity-o9q6dptd4-saurabh-bits-pilanis-projects.vercel.app
+- **Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/FcJ8WtNRXxXiMGog3pkfEtsBea3P
+- **Build status:** ✓ success
+- **Note:** preview gated by Vercel SSO Auth. Open in a logged-in browser to spot-check the visual gates from PR #6 description.
 
 ---
 
