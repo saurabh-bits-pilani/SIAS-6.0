@@ -32,8 +32,10 @@ import {
   ArrowRight,
   Sparkles,
 } from 'lucide-react';
+import { MDXProvider } from '@mdx-js/react';
 import SEOHead from '../components/SEOHead';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { mdxBlogComponents } from '../components/blog/MdxBlogComponents';
 import { SITE_ORIGIN, type JsonLd } from '../data/schema-entities';
 import blogManifest from '../data/blog-manifest.json';
 
@@ -250,37 +252,6 @@ export default function BlogPost() {
   const authorName = fm.author ?? 'Saurabh Jain';
   const category = fm.category ?? '';
 
-  // Decorative SVG, dark hero left side. Constellation pattern, low opacity.
-  const heroDecor = (
-    <svg
-      className="absolute top-1/2 -translate-y-1/2 left-0 w-[40%] h-[120%] opacity-30 pointer-events-none"
-      viewBox="0 0 400 600"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {Array.from({ length: 40 }).map((_, i) => {
-        const x = (i * 53) % 400;
-        const y = (i * 71) % 600;
-        const r = 1 + ((i * 7) % 10) / 10 * 1.5;
-        return <circle key={`s-${i}`} cx={x} cy={y} r={r} fill="#FBBF24" opacity={0.5 + ((i * 13) % 10) / 20} />;
-      })}
-      {[
-        [50, 80, 110, 130, 90, 200],
-        [220, 150, 280, 220, 320, 180],
-        [60, 350, 130, 410, 200, 380],
-        [250, 450, 320, 480, 360, 530],
-      ].map((line, i) => (
-        <polyline
-          key={`l-${i}`}
-          points={`${line[0]},${line[1]} ${line[2]},${line[3]} ${line[4]},${line[5]}`}
-          fill="none"
-          stroke="#F59E0B"
-          strokeWidth="0.4"
-          opacity="0.4"
-        />
-      ))}
-    </svg>
-  );
 
   // Decorative SVG, used in the bottom CTA banner (top-right corner).
   const ctaDecorLarge = (
@@ -341,95 +312,90 @@ export default function BlogPost() {
         schemas={schemas}
       />
 
-      {/* ─────────── Hero ─────────── */}
-      <section className="relative bg-blog-navy py-12 md:py-20 overflow-hidden">
-        {heroDecor}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-8 lg:gap-12 items-center">
-            {/* Left column: breadcrumb, pill, title, excerpt, meta, mobile hero */}
-            <div>
-              <nav aria-label="Breadcrumb" className="mb-6">
-                <ol className="flex flex-wrap items-center gap-2 text-sm text-blog-cream/70">
-                  <li>
-                    <Link to="/" className="hover:text-blog-gold transition-colors">
-                      Home
-                    </Link>
-                  </li>
-                  <li aria-hidden="true">/</li>
-                  <li>
-                    <Link to="/blog" className="hover:text-blog-gold transition-colors">
-                      Blog
-                    </Link>
-                  </li>
-                  <li aria-hidden="true">/</li>
-                  <li className="text-blog-gold">{category}</li>
-                  <li aria-hidden="true">/</li>
-                  <li className="text-blog-cream truncate max-w-xs" aria-current="page">
-                    {fm.title}
-                  </li>
-                </ol>
-              </nav>
+      {/* ─────────── Hero (full-bleed image + gradient overlay) ─────────── */}
+      <section className="relative bg-blog-navy overflow-hidden min-h-[600px] md:min-h-[700px] flex items-center">
+        {/* Full-bleed background image. The source already contains the
+            constellation/zodiac wheel decoration baked in, so no separate
+            inline SVG is needed. */}
+        {fm.heroImage && (
+          <img
+            src={fm.heroImage}
+            alt={fm.heroImageAlt ?? fm.title}
+            width={1600}
+            height={1000}
+            loading="eager"
+            fetchpriority="high"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+        )}
+        {/* Mobile gradient: dense vertical fade so all text remains readable
+            even without horizontal space to fade off-screen. */}
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-blog-navy/95 via-blog-navy/85 to-blog-navy/70 lg:hidden"
+          aria-hidden="true"
+        />
+        {/* Desktop gradient: dense on the left where text sits, fades to
+            transparent on the right where the portrait shows through. */}
+        <div
+          className="absolute inset-0 hidden lg:block bg-gradient-to-r from-blog-navy/90 via-blog-navy/70 to-transparent"
+          aria-hidden="true"
+        />
 
-              {category && (
-                <div className="inline-flex items-center gap-1.5 bg-blog-gold text-blog-navy px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
-                  <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>{category}</span>
-                </div>
-              )}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 md:py-20 w-full">
+          <div className="max-w-2xl">
+            <nav aria-label="Breadcrumb" className="mb-6">
+              <ol className="flex flex-wrap items-center gap-2 text-sm text-blog-cream/70">
+                <li>
+                  <Link to="/" className="hover:text-blog-gold transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li>
+                  <Link to="/blog" className="hover:text-blog-gold transition-colors">
+                    Blog
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li className="text-blog-gold">{category}</li>
+                <li aria-hidden="true">/</li>
+                <li className="text-blog-cream truncate max-w-xs" aria-current="page">
+                  {fm.title}
+                </li>
+              </ol>
+            </nav>
 
-              <h1 className="font-sacramento text-blog-cream text-5xl md:text-6xl lg:text-7xl leading-tight mb-4">
-                {fm.title}
-              </h1>
-
-              {fm.excerpt && (
-                <p className="font-poppins text-blog-cream/80 text-base md:text-lg leading-relaxed mb-6 max-w-2xl">
-                  {fm.excerpt}
-                </p>
-              )}
-
-              <div className="flex flex-wrap items-center gap-6 text-blog-cream/70 text-sm">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" aria-hidden="true" />
-                  <span>{formattedDate}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" aria-hidden="true" />
-                  <span>8 min read</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4" aria-hidden="true" />
-                  <span>{authorName}</span>
-                </div>
-              </div>
-
-              {/* Mobile-only hero image */}
-              {fm.heroImage && (
-                <img
-                  src={fm.heroImage}
-                  alt={fm.heroImageAlt ?? fm.title}
-                  width={1600}
-                  height={1000}
-                  loading="eager"
-                  fetchpriority="high"
-                  className="lg:hidden mt-8 w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-              )}
-            </div>
-
-            {/* Right column: desktop hero image */}
-            {fm.heroImage && (
-              <div className="hidden lg:block">
-                <img
-                  src={fm.heroImage}
-                  alt={fm.heroImageAlt ?? fm.title}
-                  width={1600}
-                  height={1000}
-                  loading="eager"
-                  fetchpriority="high"
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
+            {category && (
+              <div className="inline-flex items-center gap-1.5 bg-blog-gold text-blog-navy px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>{category}</span>
               </div>
             )}
+
+            <h1 className="font-caveat font-bold text-blog-cream text-6xl md:text-7xl lg:text-8xl leading-tight mb-4">
+              {fm.title}
+            </h1>
+
+            {fm.excerpt && (
+              <p className="font-poppins text-blog-cream/80 text-base md:text-lg leading-relaxed mb-6">
+                {fm.excerpt}
+              </p>
+            )}
+
+            <div className="flex flex-wrap items-center gap-6 text-blog-cream/70 text-sm">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" aria-hidden="true" />
+                <span>{formattedDate}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4" aria-hidden="true" />
+                <span>8 min read</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4" aria-hidden="true" />
+                <span>{authorName}</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -474,7 +440,9 @@ export default function BlogPost() {
 
               {/* Article body */}
               <article className="blog-content prose prose-blog max-w-none">
-                <Content />
+                <MDXProvider components={mdxBlogComponents}>
+                  <Content />
+                </MDXProvider>
               </article>
 
               {/* FAQ */}
@@ -510,7 +478,7 @@ export default function BlogPost() {
                   {ctaDecorLarge}
                 </div>
                 <div className="relative z-10">
-                  <h2 className="font-sacramento text-3xl md:text-4xl text-blog-cream mb-3">
+                  <h2 className="font-caveat font-bold text-4xl md:text-5xl text-blog-cream mb-3">
                     Want a Personalised Astrology Reading?
                   </h2>
                   <p className="text-blog-cream/80 mb-2 font-poppins">
@@ -622,7 +590,7 @@ export default function BlogPost() {
                   {ctaDecorSmall}
                 </div>
                 <div className="relative z-10">
-                  <h3 className="font-sacramento text-2xl text-blog-cream mb-2">
+                  <h3 className="font-caveat font-bold text-3xl text-blog-cream mb-2">
                     Want Personalised Astrology Guidance?
                   </h3>
                   <p className="text-blog-cream/70 text-sm mb-4 font-poppins">

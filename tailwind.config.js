@@ -104,8 +104,8 @@ export default {
             '--tw-prose-th-borders': '#F59E0B',
             '--tw-prose-td-borders': '#FBBF24',
             h1: {
-              fontFamily: 'Sacramento, cursive',
-              fontWeight: '400',
+              fontFamily: 'Caveat, cursive',
+              fontWeight: '700',
               fontSize: '3rem',
               lineHeight: '1.1',
               letterSpacing: '-0.01em',

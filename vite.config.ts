@@ -12,6 +12,10 @@ export default defineConfig({
     // for the schema/SEO metadata in BlogPost.tsx.
     mdx({
       remarkPlugins: [remarkFrontmatter],
+      // Lets compiled MDX read its components map from the nearest
+      // <MDXProvider> context (set up in src/pages/BlogPost.tsx). Without
+      // this, custom JSX tags used inside .mdx files would not resolve.
+      providerImportSource: '@mdx-js/react',
     }),
     react(),
   ],
