@@ -1,4 +1,4 @@
-# Blog Detail Page Redesign — STATUS = SHIPPED TO FEATURE BRANCH, AWAITING PREVIEW URL
+# Blog Detail Page Redesign — STATUS = SHIPPED, PR OPEN, PREVIEW LIVE
 
 **Branch:** `feature/blog-detail-redesign` (off `staging` @ `83613b3`, per Saurabh's revised base instruction; original brief said `main @ ef8e7de` but staging was promoted in the May 5 PR #1 + PR #2 merges so the redesign now branches off staging which has the manifest infrastructure).
 **Date:** 2026-05-05
@@ -166,7 +166,19 @@ Listed in PR body for human verification. Cannot be validated headlessly.
 
 ## Phase 5 — Commit, push, PR
 
-To be filled after the commit lands.
+**Branch:** `feature/blog-detail-redesign` (off `staging` @ `83613b3`)
+**Commit:** `4f8943a` — `feat(blog): redesign detail page with full visual treatment` (8 files changed, 1423 insertions, 94 deletions)
+**Pushed:** ✓ to `origin/feature/blog-detail-redesign`
+**PR:** [#3 — feature/blog-detail-redesign → staging](https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/3)
+
+### Vercel preview
+- **Preview URL:** https://soul-infinity-l3111hs1k-saurabh-bits-pilanis-projects.vercel.app
+- **Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/7Q8ptEmER89yAgk1Z6h8gDX1SjCk
+- **Build status:** ✓ success (state=success per GitHub commit-status API)
+- **Note:** preview gated by Vercel SSO Auth (HTTP 401 anonymous). Open in a browser logged into the Vercel team to spot-check the visual gates from PR #3 description.
+
+### Stopped here per instruction
+PR #3 is open against `staging`. **No merge to staging or main has happened.** Awaiting your visual spot-check on the preview URL, then a separate `staging` merge instruction.
 
 ---
 
