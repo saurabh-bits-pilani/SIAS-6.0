@@ -1,4 +1,4 @@
-# Blog Detail Fixes v3 — STATUS = SHIPPED, PR OPEN, PREVIEW LIVE
+# Blog Detail Fixes v3 — STATUS = SHIPPED, PR #5 OPEN, PREVIEW LIVE
 
 **Branch:** `feature/blog-detail-fixes-v3` (off `feature/blog-detail-fixes-v2` @ `b3c6470`, stacked on PR #4 which is still open against staging)
 **Date:** 2026-05-05
@@ -57,7 +57,14 @@ The brief noted "I am importing Sparkles as SparklesIcon to avoid conflict with 
 
 ## Vercel preview
 
-To be filled after PR opens.
+- **Branch:** `feature/blog-detail-fixes-v3`
+- **Commit:** `fba40fd` — `feat(blog): add QuestionsToAsk magazine component` (4 files changed, 276 insertions, 26 deletions)
+- **Pushed:** ✓ to `origin/feature/blog-detail-fixes-v3`
+- **PR:** [#5 — feature/blog-detail-fixes-v3 → staging](https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/5) (stacked on PR #4 → PR #3)
+- **Preview URL:** https://soul-infinity-5c8yyzzxd-saurabh-bits-pilanis-projects.vercel.app
+- **Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/3DCcyZgWSmV7TSnAXXEpqKRxdcdP
+- **Build status:** ✓ success
+- **Note:** preview gated by Vercel SSO Auth. Open in a logged-in browser to spot-check the visual gates from PR #5 description.
 
 ---
 
