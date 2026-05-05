@@ -17,6 +17,7 @@ import WhatFollowsCards from './WhatFollowsCards';
 import QuestionsToAsk from './QuestionsToAsk';
 import ClosingSection from './ClosingSection';
 import CredentialsSection from './CredentialsSection';
+import RedFlagsSection from './RedFlagsSection';
 
 export const mdxBlogComponents = {
   WeakSignalsGrid,
@@ -27,4 +28,5 @@ export const mdxBlogComponents = {
   QuestionsToAsk,
   ClosingSection,
   CredentialsSection,
+  RedFlagsSection,
 };
