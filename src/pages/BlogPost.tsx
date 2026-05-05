@@ -253,23 +253,6 @@ export default function BlogPost() {
   const category = fm.category ?? '';
 
 
-  // Decorative SVG, used in the bottom CTA banner (top-right corner).
-  const ctaDecorLarge = (
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
-      <circle cx="100" cy="100" r="80" fill="none" stroke="#F59E0B" strokeWidth="1" strokeDasharray="2 4" />
-      <circle cx="100" cy="100" r="60" fill="none" stroke="#F59E0B" strokeWidth="0.5" />
-      <circle cx="100" cy="100" r="40" fill="none" stroke="#F59E0B" strokeWidth="0.5" />
-      {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle, i) => {
-        const rad = (angle * Math.PI) / 180;
-        const x1 = 100 + Math.cos(rad) * 40;
-        const y1 = 100 + Math.sin(rad) * 40;
-        const x2 = 100 + Math.cos(rad) * 80;
-        const y2 = 100 + Math.sin(rad) * 80;
-        return <line key={`r-${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#F59E0B" strokeWidth="0.5" />;
-      })}
-    </svg>
-  );
-
   // Decorative SVG, sidebar dark CTA card.
   const ctaDecorSmall = (
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
@@ -445,30 +428,6 @@ export default function BlogPost() {
                 </MDXProvider>
               </article>
 
-              {/* Bottom CTA banner */}
-              <section className="my-12 bg-blog-navy rounded-2xl p-8 md:p-12 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-48 h-48 opacity-20 pointer-events-none">
-                  {ctaDecorLarge}
-                </div>
-                <div className="relative z-10">
-                  <h2 className="font-caveat font-bold text-4xl md:text-5xl text-blog-cream mb-3">
-                    Want a Personalised Astrology Reading?
-                  </h2>
-                  <p className="text-blog-cream/80 mb-2 font-poppins">
-                    Get clarity on your life path, challenges, and opportunities.
-                  </p>
-                  <p className="text-blog-cream/80 mb-6 font-poppins">
-                    Saurabh Jain, Soul Infinity, K.N. Rao Institute trained, based in Ahmedabad.
-                  </p>
-                  <Link
-                    to="/services/vedic-astrology"
-                    className="inline-flex items-center gap-2 bg-blog-gold hover:bg-blog-gold-bright text-blog-navy font-semibold px-6 py-3 rounded-full transition-colors"
-                  >
-                    Book a Consultation
-                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                  </Link>
-                </div>
-              </section>
             </div>
 
             {/* Right sidebar */}
