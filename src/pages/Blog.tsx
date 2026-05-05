@@ -1,362 +1,116 @@
-import { useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight } from 'lucide-react';
-import { format } from 'date-fns';
-import SEOHead from '../components/SEOHead';
-import SchemaMarkup from '../components/SchemaMarkup';
+import { useState, useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { BookOpen, Star, Sparkles, Users, Sun } from 'lucide-react';
 import blogManifest from '../data/blog-manifest.json';
+import BlogIndexHero from '../components/blog/BlogIndexHero';
+import BlogCategoryFilter from '../components/blog/BlogCategoryFilter';
+import BlogGrid from '../components/blog/BlogGrid';
+import BlogTrustCTA from '../components/blog/BlogTrustCTA';
 
-interface BlogPost {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  publishedAt: Date;
-  readTime: string;
-  category: string;
-  url: string;
-  excerpt: string;
-  featured: boolean;
-}
-
-interface ManifestEntry {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt?: string;
-  heroImage?: string;
-  category?: string;
-  featured?: boolean;
-  draft?: boolean;
-}
-
-// Build the post list from the build-time manifest. Defensive draft filter
-// (manifest already excludes drafts), then sort newest-first by date.
-const POSTS: readonly BlogPost[] = (Object.values(blogManifest) as ManifestEntry[])
-  .filter((entry) => entry.draft !== true)
-  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
-  .map((entry) => ({
-    id: entry.slug,
-    title: entry.title,
-    description: entry.excerpt ?? '',
-    image: entry.heroImage ?? '',
-    publishedAt: new Date(entry.date),
-    readTime: '8 min read',
-    category: entry.category ?? 'Vedic Astrology',
-    url: `/blog/${entry.slug}`,
-    excerpt: entry.excerpt ?? '',
-    featured: entry.featured ?? false,
-  }));
-
-const categories: readonly string[] = [
-  'All',
-  'Vedic Astrology',
-  'Planetary Wisdom',
-  'Spiritual Growth',
-  'Modern Applications',
-  'Remedial Measures',
+const FEATURE_PILLS = [
+  { icon: BookOpen, label: 'Authentic Knowledge' },
+  { icon: Star, label: 'Practical Guidance' },
+  { icon: Sparkles, label: 'Spiritual Growth' },
+  { icon: Users, label: 'Community Wisdom' }
 ];
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CATEGORIES = [
+  'All Articles',
+  'Vedic Astrology',
+  'Spirituality',
+  'Panchang & Muhurat',
+  'Remedies',
+  'Lifestyle'
+];
 
-const Blog = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [subscribeEmail, setSubscribeEmail] = useState('');
-  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'error' | 'success'>('idle');
+export default function Blog() {
+  const [activeCategory, setActiveCategory] = useState('All Articles');
 
-  const filteredPosts =
-    selectedCategory === 'All'
-      ? POSTS
-      : POSTS.filter((post) => post.category === selectedCategory);
-
-  const featuredPost = POSTS[0];
-
-  const handleSubscribe = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    if (!EMAIL_PATTERN.test(subscribeEmail)) {
-      setSubscribeStatus('error');
-      return;
-    }
-    const subject = encodeURIComponent('Subscribe to Soul Infinity updates');
-    const body = encodeURIComponent(
-      `Please add this email to your mailing list: ${subscribeEmail}`,
+  const sortedPosts = useMemo(() => {
+    const posts = (blogManifest as any).posts || [];
+    return [...posts].sort((a: any, b: any) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
     );
-    window.location.href = `mailto:soul.infinity.astro@gmail.com?subject=${subject}&body=${body}`;
-    setSubscribeStatus('success');
-    setSubscribeEmail('');
-  };
+  }, []);
+
+  const featuredPost = sortedPosts[0];
+
+  const remainingPosts = sortedPosts.length === 1
+    ? sortedPosts
+    : sortedPosts.slice(1);
+
+  const filteredPosts = useMemo(() => {
+    if (activeCategory === 'All Articles') return remainingPosts;
+    return remainingPosts.filter((p: any) => p.category === activeCategory);
+  }, [activeCategory, remainingPosts]);
+
+  if (!featuredPost) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center font-poppins">
+        <h1 className="text-3xl font-bold text-blog-ink mb-3">Blog</h1>
+        <p className="text-blog-ink/70">No posts published yet. Check back soon.</p>
+      </div>
+    );
+  }
 
   return (
     <>
-      <SEOHead
-        title="Astrology Blog - Vedic Wisdom, Horoscopes & Spiritual Guidance | Soul Infinity"
-        description="Explore Vedic astrology articles, rashifal, mantras, remedies & spiritual insights written by expert astrologer Saurabh Jain. Updated weekly."
-        keywords="astrology blog, vedic astrology articles, rashifal, mantras, remedies, saurabh jain blog, spiritual insights, planetary wisdom"
-        image="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Blog/finding-a-vedic-astrologer-in-ahmedabad/hero.webp"
-        omitDefaultSchema
+      <Helmet>
+        <title>Blog | Soul Infinity</title>
+        <meta name="description" content="Practical guides, timeless knowledge, and spiritual insights from Soul Infinity. Learn about Vedic astrology, spirituality, panchang, and remedies." />
+        <link rel="canonical" href="https://www.soulinfinity.space/blog" />
+        <meta property="og:title" content="Blog | Soul Infinity" />
+        <meta property="og:description" content="Vedic Wisdom for Modern Seekers." />
+        <meta property="og:image" content={featuredPost.heroImage} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.soulinfinity.space/blog" />
+      </Helmet>
+
+      <BlogIndexHero
+        eyebrow="Insights. Wisdom. Guidance."
+        titleLine1="Vedic Wisdom for"
+        titleLine2="Modern Seekers"
+        body="Practical guides, timeless knowledge, and spiritual insights to help you navigate life with clarity and purpose."
+        features={FEATURE_PILLS}
+        featuredPost={featuredPost}
       />
-      <SchemaMarkup type="blog-list" />
 
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/banner%2021.webp"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="font-heading font-bold text-4xl md:text-5xl text-white mb-6"
-            >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Astrology Blog</span> & Spiritual Insights
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-gray-200 max-w-3xl mx-auto"
-            >
-              शुभं करोति कल्याणं आरोग्यं धनसंपदा। शत्रुबुद्धिविनाशाय दीपज्योतिर्नमोऽस्तुते॥
-            </motion.p>
-          </div>
-        </div>
-      </section>
-
-      {/* Category Filter */}
-      <section className="py-8 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                onClick={() => setSelectedCategory(category)}
-                aria-pressed={selectedCategory === category}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedCategory === category
-                    ? 'bg-primary-500 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-primary-100 hover:text-primary-800'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Post */}
-      {featuredPost && selectedCategory === 'All' && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl overflow-hidden shadow-soft-lg"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                <div className="relative h-64 lg:h-auto">
-                  <img
-                    src={featuredPost.image}
-                    alt={featuredPost.title}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </span>
-                  </div>
-                </div>
-                <div className="p-8 lg:p-12 flex flex-col justify-center">
-                  <div className="mb-4">
-                    <span className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                      {featuredPost.category}
-                    </span>
-                  </div>
-                  <h2 className="font-heading font-bold text-2xl lg:text-3xl text-gray-900 mb-4">
-                    {featuredPost.title}
-                  </h2>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    {featuredPost.excerpt}
-                  </p>
-                  <div className="flex items-center space-x-4 mb-6 text-sm text-gray-500">
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>{format(featuredPost.publishedAt, 'MMM dd, yyyy')}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{featuredPost.readTime}</span>
-                    </div>
-                  </div>
-                  <Link
-                    to={featuredPost.url}
-                    className="bg-primary-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-800 transition-colors inline-flex items-center w-fit"
-                  >
-                    Read Full Article
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* Blog Posts Grid */}
-      <section className="py-20 bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-heading font-bold text-3xl mb-4">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">
-                {selectedCategory === 'All' ? 'Latest Articles' : `${selectedCategory} Articles`}
-              </span>
+      <section className="max-w-7xl mx-auto px-4 mt-12 md:mt-16">
+        <div className="text-center mb-2">
+          <Sparkles className="w-4 h-4 mx-auto text-blog-gold mb-2" />
+          <div className="flex items-center justify-center gap-3">
+            <Sparkles className="w-5 h-5 text-blog-gold" />
+            <h2 className="font-caveat italic text-3xl md:text-5xl text-blog-gold">
+              Latest Articles
             </h2>
-            <p className="text-gray-600">
-              Dive deeper into the world of spiritual wisdom and cosmic insights
-            </p>
+            <Sparkles className="w-5 h-5 text-blog-gold" />
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post, index) => (
-              <motion.article
-                key={post.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 transform hover:-translate-y-2"
-              >
-                <div className="relative">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    width="400"
-                    height="192"
-                    loading="lazy"
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-secondary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {post.category}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="font-heading font-bold text-xl text-gray-900 mb-3 line-clamp-2 hover:text-primary-800 transition-colors">
-                    {post.title}
-                  </h3>
-
-                  <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
-                    {post.excerpt}
-                  </p>
-
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>{format(post.publishedAt, 'MMM dd')}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{post.readTime}</span>
-                    </div>
-                  </div>
-
-                  <Link
-                    to={post.url}
-                    className="inline-flex items-center text-primary-800 font-semibold hover:text-primary-700 transition-colors group"
-                  >
-                    Read Article
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </motion.article>
-            ))}
+          <p className="font-poppins text-blog-ink/70 text-sm md:text-base mt-2">
+            Dive deeper into the world of spiritual wisdom and cosmic insights
+          </p>
+          <div className="flex items-center justify-center gap-4 mt-4">
+            <div className="h-px w-16 bg-blog-gold/40" />
+            <Sun className="w-4 h-4 text-blog-gold" />
+            <div className="h-px w-16 bg-blog-gold/40" />
           </div>
+        </div>
 
-          {filteredPosts.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No articles found in this category.</p>
-            </div>
-          )}
-        </div>
-      </section>
+        <BlogCategoryFilter
+          categories={CATEGORIES}
+          activeCategory={activeCategory}
+          onSelect={setActiveCategory}
+        />
 
-      {/* Newsletter Signup */}
-      <section className="py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img
-            src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Spritual/Cosmic%20Music%20-2.jpg"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300">Stay Connected to Cosmic Wisdom</span>
-          </h2>
-          <p className="text-xl text-primary-100 mb-8">
-            Get the latest spiritual insights, astrology updates, and healing wisdom delivered to your inbox.
-          </p>
-          <form
-            onSubmit={handleSubscribe}
-            className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto"
-            noValidate
-          >
-            <label htmlFor="subscribe-email" className="sr-only">Email address</label>
-            <input
-              id="subscribe-email"
-              type="email"
-              name="email"
-              value={subscribeEmail}
-              onChange={(e) => {
-                setSubscribeEmail(e.target.value);
-                if (subscribeStatus !== 'idle') setSubscribeStatus('idle');
-              }}
-              required
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-3 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-            <button
-              type="submit"
-              className="bg-white text-primary-600 px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-            >
-              Subscribe
-            </button>
-          </form>
-          {subscribeStatus === 'error' && (
-            <p role="alert" className="mt-3 text-sm text-red-100">
-              Please enter a valid email address.
-            </p>
-          )}
-          {subscribeStatus === 'success' && (
-            <p role="status" className="mt-3 text-sm text-primary-100">
-              Thanks! Your email client should open to send the subscription request.
-            </p>
-          )}
-          <p className="text-sm text-primary-100 mt-4">
-            We respect your privacy. Unsubscribe at any time.{' '}
-            <Link to="/privacy" className="underline hover:text-white">Privacy policy</Link>.
-          </p>
-        </div>
+        <BlogGrid posts={filteredPosts} />
+
+        <BlogTrustCTA
+          title="Looking for personalized guidance?"
+          body="Book a consultation with Saurabh Jain and get clarity on your life's journey."
+          buttonText="Book Your Consultation"
+          buttonHref="/services/vedic-astrology"
+          trustText="Trusted by 500+ seekers"
+        />
       </section>
     </>
   );
-};
-
-export default Blog;
+}
