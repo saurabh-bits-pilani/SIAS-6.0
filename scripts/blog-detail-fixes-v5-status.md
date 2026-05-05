@@ -1,4 +1,4 @@
-# Blog Detail Fixes v5 — STATUS = SHIPPED, PR OPEN, PREVIEW LIVE
+# Blog Detail Fixes v5 — STATUS = SHIPPED, PR #7 OPEN, PREVIEW LIVE
 
 **Branch:** `feature/blog-detail-fixes-v5` (off `feature/blog-detail-fixes-v4` @ `b0a5348`, stacked on PR #6 → PR #5 → PR #4 → PR #3)
 **Date:** 2026-05-05
@@ -76,7 +76,14 @@ The second occurrence is a legitimate organic prose use in a section the brief d
 
 ## Vercel preview
 
-To be filled after PR opens.
+- **Branch:** `feature/blog-detail-fixes-v5`
+- **Commit:** `e6743b8` — `feat(blog): add CredentialsSection magazine component` (5 files changed, 634 insertions, 12 deletions)
+- **Pushed:** ✓ to `origin/feature/blog-detail-fixes-v5`
+- **PR:** [#7 — feature/blog-detail-fixes-v5 → staging](https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/7) (stacked on PR #6 → PR #5 → PR #4 → PR #3)
+- **Preview URL:** https://soul-infinity-kh7xk7cw6-saurabh-bits-pilanis-projects.vercel.app
+- **Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/9StUbqK8wq9nJQDvBGipp2vGsMto
+- **Build status:** ✓ success
+- **Note:** preview gated by Vercel SSO Auth. Open in a logged-in browser to spot-check the visual gates from PR #7 description.
 
 ---
 
