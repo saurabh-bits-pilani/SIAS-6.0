@@ -275,13 +275,38 @@ import { ShieldAlert, BadgePercent, ShoppingBag, BookOpen as BookOpenIconV8, Fla
   closingLine2="Choose wisdom over worry."
 />
 
-## Online consultations vs meeting in person, does it matter?
+import { Users as UsersIconV9, Monitor, Globe, Video, Clock as ClockIconV9, Target as TargetV9, Handshake, Sun, Calendar as CalendarIconV9, Brain, Star } from 'lucide-react';
 
-The honest answer: a chart is a chart. The quality of the reading depends on the practitioner's training, the consultation time, and the structure of the dialogue, not on the medium.
-
-In-person consultations have a particular presence and a slower pace that some clients prefer, especially for emotionally heavy questions. Online consultations, conducted over video, make trained Jyotish practitioners from Delhi, Varanasi, and other long-established lineage cities accessible to Ahmedabad clients who could not otherwise travel to reach them. They also tend to come with clean recordings, easy follow-up by email, and lower scheduling friction.
-
-What actually matters in either format is birth detail accuracy, the time allocated for the reading, and whether the practitioner walks you through the chart logic step by step. We offer both formats at Soul Infinity, and most clients now choose online for the convenience.
+<OnlineVsInPersonSection
+  titleLine1="Online consultations vs meeting in person"
+  titleLine2="does it matter?"
+  highlightIntro="The honest answer: a chart is a chart."
+  highlightBody="The quality of the reading depends on the practitioner's training, the consultation time, and the structure of the dialogue, not on the medium."
+  inPersonIcon={UsersIconV9}
+  inPersonTitle="Meeting in Person"
+  inPersonTagline="Presence. Depth. Slower Pace."
+  inPersonItems={[
+    { icon: Sun, body: "A particular presence and slower pace that many clients prefer, especially for emotionally heavy questions." },
+    { icon: Handshake, body: "Allows deeper connection and space for natural dialogue." },
+    { icon: ClockIconV9, body: "Ideal when you want a calm, undistracted environment." }
+  ]}
+  onlineIcon={Monitor}
+  onlineTitle="Online Consultation"
+  onlineTagline="Accessible. Convenient. Efficient."
+  onlineItems={[
+    { icon: Globe, body: "Makes trained Jyotish practitioners from Delhi, Varanasi, and other lineage cities accessible to Ahmedabad clients." },
+    { icon: Video, body: "Comes with clean recordings, easy follow-up by email, and lower scheduling friction." },
+    { icon: CalendarIconV9, body: "Saves travel time and offers flexibility in busy schedules." }
+  ]}
+  mattersTitle="What actually matters in either format"
+  mattersItems={[
+    { icon: TargetV9, title: "Birth detail accuracy", body: "Correct information is the foundation." },
+    { icon: ClockIconV9, title: "Time allocated for the reading", body: "Depth comes from time and attention." },
+    { icon: Brain, title: "Chart logic step by step", body: "A good astrologer explains the why behind everything." }
+  ]}
+  footerIcon={Star}
+  footerText="We offer both formats at Soul Infinity, and most clients now choose online for the convenience."
+/>
 
 ## How we work at Soul Infinity
 
