@@ -12,7 +12,14 @@
  *   import normally.
  *
  * Output:
- *   src/data/blog-manifest.json with shape `{ [slug]: PostFrontmatter }`
+ *   src/data/blog-manifest.json with two coexisting shapes:
+ *     - `{ [slug]: PostFrontmatter }` — read by BlogPost.tsx (detail page)
+ *     - `posts: PostFrontmatter[]` — read by Blog.tsx (index page); each
+ *       entry carries a `publishedAt` alias for the `date` frontmatter field
+ *       so the index page can sort by date without renaming.
+ *
+ *   Both shapes share the same per-post objects (with `category` and
+ *   `readTime` defaults applied where the frontmatter omits them).
  *
  * Behaviour:
  *   - Skips `_template.mdx` explicitly (defensive — even though it has draft:true)
@@ -109,9 +116,24 @@ async function main() {
     }
 
     const slug = (fm && fm.slug) || file.replace(/\.mdx$/, '');
-    manifest[slug] = fm;
+    // Apply per-post defaults so consumer components don't have to.
+    const enriched = {
+      ...fm,
+      category: fm.category || 'Vedic Astrology',
+      readTime: fm.readTime || '8 min read',
+    };
+    manifest[slug] = enriched;
     included++;
   }
+
+  // Emit a `posts` array alongside the slug-keyed entries so Blog.tsx can
+  // sort/filter without re-shaping the object. Aliases `date` to
+  // `publishedAt` for the index-page contract.
+  const posts = Object.values(manifest).map((fm) => ({
+    ...fm,
+    publishedAt: fm.date,
+  }));
+  manifest.posts = posts;
 
   if (errors.length > 0) {
     console.error(`[blog-manifest] ${errors.length} parse error(s):`);
@@ -123,9 +145,10 @@ async function main() {
   await fs.mkdir(path.dirname(OUT_PATH), { recursive: true });
   await fs.writeFile(OUT_PATH, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
 
-  const slugs = Object.keys(manifest);
+  const slugs = Object.keys(manifest).filter((k) => k !== 'posts');
   console.log(`[blog-manifest] wrote ${path.relative(ROOT, OUT_PATH)}`);
   console.log(`[blog-manifest]   included: ${included} (${slugs.join(', ') || 'none'})`);
+  console.log(`[blog-manifest]   posts array: ${posts.length} entry(ies)`);
   console.log(`[blog-manifest]   skipped drafts: ${skippedDraft}`);
 }
 
