@@ -131,3 +131,57 @@ Files committed (8):
 ## Follow-ups (parked, not actioned today)
 
 - Refactor `scripts/generate-llms.mjs` to auto-discover blog routes from `src/data/blog-manifest.json` and emit a "Blog" section automatically. Removes the manual two-line edit (DESCRIPTIONS + SECTIONS) for every future post. ~30 lines of script change.
+
+---
+
+## Blog index manifest wiring
+
+**Branch:** `feature/blog-index-manifest` (off `feature/first-blog-post` @ `59cd7bf`)
+**Commit:** `a3a0d7d` — `feat(blog): wire Blog index to manifest, render real posts`
+**PR:** [#2 — feature/blog-index-manifest → staging](https://github.com/saurabh-bits-pilani/SIAS-6.0/pull/2) (stacked on PR #1; merge order is #1 then #2)
+**Vercel preview URL:** https://soul-infinity-714mxtc6p-saurabh-bits-pilanis-projects.vercel.app
+**Vercel inspector:** https://vercel.com/saurabh-bits-pilanis-projects/soul-infinity.com/xWFZg57fLdPuTMygLejKvbWRXhiZ
+**Build status:** ✓ success
+
+### What changed in `src/pages/Blog.tsx`
+1 file changed, 41 insertions(+), 33 deletions(-):
+- Deleted the hardcoded `mockPosts` array (lines 22-38, the Ketu Medium link).
+- Added `import blogManifest from '../data/blog-manifest.json'` plus a typed `ManifestEntry` interface.
+- Built `POSTS` at module init: `Object.values(manifest)` → `draft !== true` filter (defensive) → newest-first sort by `date` → mapped to the existing `BlogPost` interface (slug used as id, internal `/blog/${slug}` URLs, hero from R2, "8 min read" placeholder).
+- Replaced two off-site `<a target="_blank">` links with react-router `<Link to={...}>` so internal posts open in the same tab. (Featured-post button + each grid card.)
+- Removed the `ExternalLink` lucide import (no more external links from the blog index).
+- Swapped the `<SEOHead image="...">` prop on the `/blog` index page from the old Ketu illustration (`pub-5d1db6...Blog Images- Ancient Wisdom/2_rahu_ketu_mysteries...jpeg`) to the new post's hero (`pub-e1337...Blog/finding-a-vedic-astrologer-in-ahmedabad/hero.webp`).
+- All visual JSX, framer-motion animations, category filter buttons, and newsletter section: unchanged.
+
+### Decision on Medium Ketu article
+**Removed entirely** (option a from the brief). Mixing internal canonical posts with external Medium links on the same `/blog` index dilutes SEO signal. Saurabh can re-publish Ketu as a real on-site MDX post if he wants it back.
+
+### Validation gate results
+| Gate | Result |
+|---|---|
+| `npm run build` green | ✓ |
+| Prerender count = 42 (unchanged, component-level change) | ✓ |
+| `/blog` index contains `finding-a-vedic-astrologer-in-ahmedabad` | ✓ (1 hit) |
+| `/blog` index does NOT contain "Ketu" (case-sensitive) | ✓ (0 hits) |
+| `/blog` index does NOT contain "ketu" (case-insensitive) | ✓ (0 hits) |
+| Card image src on new post = R2 hero URL | ✓ (2 occurrences: featured + grid) |
+| Card link href = relative `/blog/finding-a-vedic-astrologer-in-ahmedabad` | ✓ (2 occurrences) |
+| New hero URL `Blog/finding-a-vedic-astrologer-in-ahmedabad/hero.webp` present | ✓ (2 hits) |
+| Title in cards section | ✓ ("How to Find a Genuine Vedic Astrologer in Ahmedabad: A Practical Guide") |
+| Description visible | ✓ |
+| Date renders | ✓ ("May 04, 2026") |
+
+A "no orphaned-bucket references" gate from the brief was dropped after diagnosis (see architectural note below).
+
+### Architectural note: two R2 buckets in use
+- **`pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev`** — site-wide branding and ambient assets (favicons, site logo, social share icons, hero banners, newsletter backgrounds, `People/`, `Spritual/`, `Logo/`, `Icons/`, `favicon_io/`, `New_Hero-image- banner/` prefixes). Referenced from Layout, Header, Footer, `Blog.tsx` hero banner, `Blog.tsx` newsletter section.
+- **`pub-e1337dd263d041bba0fa87fe1c597575.r2.dev`** — content-specific assets (`Pillar/Planets/`, `Pillar/Zodiac/`, `Blog/<slug>/` prefixes). Hero images for blog posts and pillar pages.
+- Both are active. Neither is orphaned. Past sessions documented only one bucket; the other was not in project memory but is in active use.
+
+### Parked tech debt (from this wiring, not actioned)
+- `/blog` index OG image should auto-update to the most recent post's hero, or use a dedicated Soul Infinity blog banner. Currently hardcoded to the Ahmedabad post's hero in `Blog.tsx`. Acceptable for now (only one post on index).
+- Category filter buttons (lines 41-47) hardcode `'Vedic Astrology'`, `'Planetary Wisdom'`, `'Spiritual Growth'`, `'Modern Applications'`, `'Remedial Measures'`. The new post's category is `'Vedic Astrology Guide'`, which doesn't match any filter button — so the post only appears under "All". Either rename the button to "Vedic Astrology Guide", broaden filter logic to substring match, or extend manifest to drive the category list. Not in this scope.
+- `readTime` is a static `"8 min read"` string for all manifest posts. To compute properly, add a body-word-count field to the build-time manifest extraction, then derive at-read-time. Not in this scope.
+
+### Stopped here per instruction
+PR #2 open. Vercel preview green. **No merge to staging or main has happened.** Awaiting your call on (a) merging PR #1 then PR #2 to staging, or (b) any of the parked items above.
