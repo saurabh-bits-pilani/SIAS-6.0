@@ -12,6 +12,26 @@ const ARIES_IMG =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Aries/aries-card.webp';
 const TAURUS_IMG =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Hub/preview/tarus-card-1-1-ratio-circular.webp';
+const GEMINI_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Gemini/mithuna-card.webp';
+const CANCER_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Cancer/karka-card.webp';
+const LEO_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Leo/simha-card.webp';
+const VIRGO_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Virgo/kanya-card.webp';
+const LIBRA_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Libra/tula-card.webp';
+const SCORPIO_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Scorpio/vrischika-card.webp';
+const SAGITTARIUS_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Sagittarius/dhanu-card.webp';
+const CAPRICORN_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Capricorn/makara-card.webp';
+const AQUARIUS_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Aquarius/kumbha-card.webp';
+const PISCES_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Pisces/meena-card.webp';
 
 type Element = 'Fire' | 'Earth' | 'Air' | 'Water';
 
@@ -111,7 +131,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'May 21 to Jun 20',
     desc: 'Mutable air sign of communication, curiosity, and the bridge between ideas.',
     elementColor: ELEMENT_PALETTE.Air,
-    image: null,
+    image: GEMINI_IMG,
   },
   {
     slug: 'cancer',
@@ -124,7 +144,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Jun 21 to Jul 22',
     desc: 'Cardinal water sign of nurturance, memory, and the protective embrace of family.',
     elementColor: ELEMENT_PALETTE.Water,
-    image: null,
+    image: CANCER_IMG,
   },
   {
     slug: 'leo',
@@ -137,7 +157,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Jul 23 to Aug 22',
     desc: 'Fixed fire sign of sovereignty, creative radiance, and benevolent self-expression.',
     elementColor: ELEMENT_PALETTE.Fire,
-    image: null,
+    image: LEO_IMG,
   },
   {
     slug: 'virgo',
@@ -150,7 +170,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Aug 23 to Sep 22',
     desc: 'Mutable earth sign of pragmatic intelligence, refinement, and devoted service.',
     elementColor: ELEMENT_PALETTE.Earth,
-    image: null,
+    image: VIRGO_IMG,
   },
   {
     slug: 'libra',
@@ -163,7 +183,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Sep 23 to Oct 22',
     desc: 'Cardinal air sign of harmony, partnership, and the impartial weighing of fairness.',
     elementColor: ELEMENT_PALETTE.Air,
-    image: null,
+    image: LIBRA_IMG,
   },
   {
     slug: 'scorpio',
@@ -176,7 +196,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Oct 23 to Nov 21',
     desc: 'Fixed water sign of depth, transformation, and the alchemy of unseen forces.',
     elementColor: ELEMENT_PALETTE.Water,
-    image: null,
+    image: SCORPIO_IMG,
   },
   {
     slug: 'sagittarius',
@@ -189,7 +209,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Nov 22 to Dec 21',
     desc: 'Mutable fire sign of dharma, philosophy, and the long arrow of higher purpose.',
     elementColor: ELEMENT_PALETTE.Fire,
-    image: null,
+    image: SAGITTARIUS_IMG,
   },
   {
     slug: 'capricorn',
@@ -202,7 +222,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Dec 22 to Jan 19',
     desc: 'Cardinal earth sign of discipline, ambition, and the patient ascent of mastery.',
     elementColor: ELEMENT_PALETTE.Earth,
-    image: null,
+    image: CAPRICORN_IMG,
   },
   {
     slug: 'aquarius',
@@ -215,7 +235,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Jan 20 to Feb 18',
     desc: 'Fixed air sign of vision, community, and the steady work of collective progress.',
     elementColor: ELEMENT_PALETTE.Air,
-    image: null,
+    image: AQUARIUS_IMG,
   },
   {
     slug: 'pisces',
@@ -228,7 +248,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Feb 19 to Mar 20',
     desc: 'Mutable water sign of compassion, intuition, and the dissolution into oneness.',
     elementColor: ELEMENT_PALETTE.Water,
-    image: null,
+    image: PISCES_IMG,
   },
 ];
 
