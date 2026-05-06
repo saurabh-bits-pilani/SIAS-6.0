@@ -324,11 +324,15 @@ function SquareCard({ rashi }: CardProps) {
 function CircularCard({ rashi }: CardProps) {
   // Aries gets a heavier red ring to visually separate the card from the
   // text area below, matching the brief.
-  const ariesRing = rashi.slug === 'aries' ? 'border-2 border-red-700' : 'border';
+  const liveRing = rashi.slug === 'aries'
+    ? 'border-2 border-red-700'
+    : rashi.slug === 'taurus'
+      ? 'border-2 border-green-700'
+      : 'border';
   return (
     <Link
       to={`/zodiac/${rashi.slug}`}
-      className={`group block rounded-2xl overflow-hidden p-6 text-center transition-all duration-300 transform hover:-translate-y-1 ${ariesRing} ${rashi.elementColor.bg} ${rashi.elementColor.border} hover:shadow-soft-lg h-full`}
+      className={`group block rounded-2xl overflow-hidden p-6 text-center transition-all duration-300 transform hover:-translate-y-1 ${liveRing} ${rashi.elementColor.bg} ${rashi.elementColor.border} hover:shadow-soft-lg h-full`}
     >
       <div className="flex justify-center mb-4">
         {rashi.image ? (
