@@ -56,6 +56,7 @@ export const ROUTES = [
   '/zodiac/taurus',
   '/zodiac/cancer',
   '/zodiac/gemini',
+  '/zodiac/leo',
   '/dosha',
   '/contact',
   '/privacy',
