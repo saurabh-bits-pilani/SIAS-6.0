@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
@@ -273,54 +272,6 @@ function RulerBadge({ rashi }: CardProps) {
   );
 }
 
-function SquareCard({ rashi }: CardProps) {
-  return (
-    <Link
-      to={`/zodiac/${rashi.slug}`}
-      className="group block bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 h-full"
-    >
-      <div className={`relative aspect-[4/3] overflow-hidden ${rashi.image ? '' : rashi.elementColor.placeholderBg}`}>
-        {rashi.image ? (
-          <img
-            src={rashi.image}
-            alt={`${rashi.english} (${rashi.sanskrit}) zodiac sign illustration`}
-            width={800}
-            height={600}
-            loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span
-              className={`text-7xl ${rashi.elementColor.placeholderText} drop-shadow-sm select-none`}
-              aria-hidden="true"
-            >
-              {rashi.symbol}
-            </span>
-          </div>
-        )}
-      </div>
-      <div className="p-5">
-        <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-devanagari text-xl text-gray-900">{rashi.devanagari}</span>
-          <span className="text-sm text-gray-500">{rashi.sanskrit}</span>
-        </div>
-        <div className="font-heading font-bold text-lg text-gray-900 mb-1">{rashi.english}</div>
-        <div className="text-xs text-gray-500 mb-3">{rashi.dates}</div>
-        <p className="text-sm text-gray-700 mb-4 leading-snug line-clamp-2">{rashi.desc}</p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          <ElementBadge rashi={rashi} />
-          <RulerBadge rashi={rashi} />
-        </div>
-        <span className={`inline-flex items-center text-sm font-semibold ${rashi.elementColor.text} group-hover:underline`}>
-          Explore {rashi.sanskrit}
-          <ArrowRight className="ml-1 w-4 h-4" />
-        </span>
-      </div>
-    </Link>
-  );
-}
-
 function CircularCard({ rashi }: CardProps) {
   // Aries gets a heavier red ring to visually separate the card from the
   // text area below, matching the brief.
@@ -395,7 +346,6 @@ function CircularCard({ rashi }: CardProps) {
 }
 
 export default function ZodiacHubPage() {
-  const [layout, setLayout] = useState<'square' | 'circular'>('square');
 
   return (
     <div className="bg-white">
@@ -482,56 +432,16 @@ export default function ZodiacHubPage() {
         </div>
       </section>
 
-      {/* Layout toggle */}
-      <section className="py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div
-            className="inline-flex bg-gray-100 rounded-full p-1 border border-gray-200"
-            role="group"
-            aria-label="Card layout style"
-          >
-            <button
-              type="button"
-              onClick={() => setLayout('square')}
-              aria-pressed={layout === 'square'}
-              className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
-                layout === 'square'
-                  ? 'bg-white shadow-sm text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Square Cards
-            </button>
-            <button
-              type="button"
-              onClick={() => setLayout('circular')}
-              aria-pressed={layout === 'circular'}
-              className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
-                layout === 'circular'
-                  ? 'bg-white shadow-sm text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Circular Cards
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* 4x3 grid of 12 rashi cards */}
-      <section className="pb-16">
+      <section className="pt-6 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             role="list"
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           >
-            {RASHIS.map((rashi) =>
-              layout === 'square' ? (
-                <SquareCard key={rashi.slug} rashi={rashi} />
-              ) : (
-                <CircularCard key={rashi.slug} rashi={rashi} />
-              ),
-            )}
+            {RASHIS.map((rashi) => (
+              <CircularCard key={rashi.slug} rashi={rashi} />
+            ))}
           </div>
         </div>
       </section>
