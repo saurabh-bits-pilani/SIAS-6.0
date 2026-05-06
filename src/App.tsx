@@ -33,6 +33,7 @@ const KetuPage = lazy(() => import('./pages/planets/KetuPage'));
 const MeshaRashiPage = lazy(() => import('./pages/zodiac/MeshaRashiPage'));
 const VrishabhaRashiPage = lazy(() => import('./pages/zodiac/VrishabhaRashiPage'));
 const KarkaRashiPage = lazy(() => import('./pages/zodiac/KarkaRashiPage'));
+const MithunaRashiPage = lazy(() => import('./pages/zodiac/MithunaRashiPage'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 
 // Loading component for lazy-loaded pages
@@ -78,6 +79,7 @@ function App() {
           <Route path="/zodiac/aries" element={<MeshaRashiPage />} />
           <Route path="/zodiac/taurus" element={<VrishabhaRashiPage />} />
           <Route path="/zodiac/cancer" element={<KarkaRashiPage />} />
+          <Route path="/zodiac/gemini" element={<MithunaRashiPage />} />
           <Route path="/dosha" element={<DoshaHubPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
