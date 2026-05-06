@@ -62,6 +62,7 @@ export const ROUTES = [
   '/zodiac/scorpio',
   '/zodiac/sagittarius',
   '/zodiac/capricorn',
+  '/zodiac/aquarius',
   '/dosha',
   '/contact',
   '/privacy',
