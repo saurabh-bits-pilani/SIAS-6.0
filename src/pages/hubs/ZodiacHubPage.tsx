@@ -340,7 +340,9 @@ function CircularCard({ rashi }: CardProps) {
                 ? 'border-2 border-violet-700'
                 : rashi.slug === 'scorpio'
                   ? 'border-2 border-rose-800'
-                  : 'border';
+                  : rashi.slug === 'sagittarius'
+                    ? 'border-2 border-amber-700'
+                    : 'border';
   return (
     <Link
       to={`/zodiac/${rashi.slug}`}
