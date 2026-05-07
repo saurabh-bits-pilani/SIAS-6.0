@@ -1,6 +1,26 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import useEmblaCarousel from 'embla-carousel-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  Brain,
+  CaretLeft,
+  CaretRight,
+  Compass,
+  Diamond,
+  HandsPraying,
+  Lightning,
+  Notebook,
+  Plant,
+  Question,
+  ShootingStar,
+  Wind,
+} from '@phosphor-icons/react';
 import SEOHead from '../../components/SEOHead';
+import CircleCallout from '../../components/doodles/CircleCallout';
+import CornerSpark from '../../components/doodles/CornerSpark';
+import HighlightStroke from '../../components/doodles/HighlightStroke';
+import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
   getArticleSchema,
   getBreadcrumbSchema,
@@ -125,6 +145,32 @@ type FaqItem = {
   question: string;
   answer: string;
 };
+
+type Navagraha = {
+  name: string;
+  sanskrit: string;
+  href: string;
+  img: string;
+  slug: string;
+  current?: boolean;
+};
+
+const PLANET_HUB_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets';
+
+const navagrahas: readonly Navagraha[] = [
+  { name: 'Surya', sanskrit: 'सूर्य', href: '/planets/sun', img: 'hero-surya.webp', slug: 'sun' },
+  { name: 'Chandra', sanskrit: 'चंद्र', href: '/planets/moon', img: 'hero-chandra.webp', slug: 'moon' },
+  { name: 'Mangal', sanskrit: 'मंगल', href: '/planets/mars', img: 'hero-mangala.webp', slug: 'mars' },
+  { name: 'Budha', sanskrit: 'बुध', href: '/planets/mercury', img: 'hero-budha.webp', slug: 'mercury', current: true },
+  { name: 'Guru', sanskrit: 'गुरु', href: '/planets/jupiter', img: 'hero-guru.webp', slug: 'jupiter' },
+  { name: 'Shukra', sanskrit: 'शुक्र', href: '/planets/venus', img: 'hero-shukra.webp', slug: 'venus' },
+  { name: 'Shani', sanskrit: 'शनि', href: '/planets/saturn', img: 'hero-shani.webp', slug: 'saturn' },
+  { name: 'Rahu', sanskrit: 'राहु', href: '/planets/rahu', img: 'hero-rahu.webp', slug: 'rahu' },
+  { name: 'Ketu', sanskrit: 'केतु', href: '/planets/ketu', img: 'hero-ketu.webp', slug: 'ketu' },
+];
+
+const navagrahaImage = (img: string) => `${PLANET_HUB_URL}/${img}`;
 
 const quickFacts: QuickFact[] = [
   { icon: 'planet', label: 'Planet', value: 'Budh' },
@@ -519,8 +565,33 @@ function iconSvg(name: IconName, className = 'h-6 w-6'): JSX.Element {
   }
 }
 
-function Highlight({ children }: { children: string }) {
-  return <span className="highlight-marker rounded px-1.5 py-0.5 text-slate-900">{children}</span>;
+function quickFactIcon(name: IconName): JSX.Element {
+  const className = 'h-7 w-7 sm:h-8 sm:w-8';
+  switch (name) {
+    case 'planet':
+      return <ShootingStar className={className} weight="duotone" />;
+    case 'air':
+      return <Wind className={className} weight="duotone" />;
+    case 'nature':
+      return <Plant className={className} weight="duotone" />;
+    case 'metal':
+      return <Diamond className={className} weight="duotone" />;
+    case 'day':
+      return <Notebook className={className} weight="duotone" />;
+    case 'direction':
+      return <Compass className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function connectIcon(): JSX.Element {
+  const className = 'h-6 w-6';
+  return <HandsPraying className={className} weight="duotone" />;
+}
+
+function sidebarFaqIcon(className = 'h-6 w-6'): JSX.Element {
+  return <Question className={className} weight="duotone" />;
 }
 
 function getOfferingFallback(src: string, className: string) {
@@ -693,6 +764,78 @@ function NotebookCard({
 
 export default function MercuryPage() {
   const [openFaq, setOpenFaq] = useState<number>(-1);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    skipSnaps: false,
+  });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  const syncEmblaButtons = useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    syncEmblaButtons();
+    emblaApi.on('select', syncEmblaButtons);
+    emblaApi.on('reInit', syncEmblaButtons);
+    return () => {
+      emblaApi.off('select', syncEmblaButtons);
+      emblaApi.off('reInit', syncEmblaButtons);
+    };
+  }, [emblaApi, syncEmblaButtons]);
+
+  const heroTitleMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 24 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, ease: 'easeOut' },
+      };
+
+  const staggerParent = (staggerChildren: number, delayChildren = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: 'hidden',
+          whileInView: 'show',
+          viewport: { once: true, amount: 0.2 },
+          variants: {
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren,
+                delayChildren,
+              },
+            },
+          },
+        };
+
+  const fadeUpItem = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 18 },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.45, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const affirmationMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, amount: 0.4 },
+        transition: { duration: 0.8, delay: 0.3, ease: 'easeOut' },
+      };
 
   const schemas = useMemo<JsonLd[]>(
     () => [
@@ -794,14 +937,14 @@ export default function MercuryPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#d7f9df] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat leading-[0.84]">
+                <motion.h1 className="font-caveat leading-[0.84]" {...heroTitleMotion}>
                   <span className="block text-[6.3rem] text-[#4ade80] drop-shadow-[0_0_34px_rgba(34,197,94,0.6)] sm:text-[7.9rem] lg:text-[9.1rem] xl:text-[9.8rem]">
                     Budh
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-[#fff6de] drop-shadow-[0_3px_12px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-[4rem]">
                     The Awakened Intelligence
                   </span>
-                </h1>
+                </motion.h1>
                 <div className="mt-3 flex flex-wrap items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fff6de] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:text-4xl">बुध</div>
                   <div className="font-kalam text-2xl text-[#d7f9df] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:text-3xl">(Mercury)</div>
@@ -809,11 +952,22 @@ export default function MercuryPage() {
 
                 <div className="mt-8 max-w-[34rem] space-y-3 font-kalam text-[1.75rem] leading-relaxed text-[#fff6de] drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-[2rem]">
                   <p>
-                    Budh refines <Highlight>intellect</Highlight> and <Highlight>communication</Highlight>.
+                    Budh refines{' '}
+                    <HighlightStroke color="#4CAF72" show={!prefersReducedMotion}>
+                      <span className="text-[#bef7c8]">intellect</span>
+                    </HighlightStroke>{' '}
+                    and{' '}
+                    <UnderlineScribble color="#4CAF72" show={!prefersReducedMotion}>
+                      <span className="text-[#bef7c8]">communication</span>
+                    </UnderlineScribble>
+                    .
                   </p>
                   <p>
-                    He sharpens <Highlight>logic</Highlight> and teaches graceful{' '}
-                    <Highlight>adaptability</Highlight>.
+                    He sharpens logic and teaches graceful{' '}
+                    <CircleCallout color="#4CAF72" show={!prefersReducedMotion}>
+                      <span className="text-[#bef7c8]">adaptability</span>
+                    </CircleCallout>
+                    .
                   </p>
                 </div>
               </div>
@@ -830,24 +984,28 @@ export default function MercuryPage() {
                     className="rounded-[20px] px-2 py-2"
                     style={stripeStyle}
                   >
-                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+                    <motion.div
+                      className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6"
+                      {...staggerParent(0.1)}
+                    >
                       {quickFacts.map((fact, index) => (
-                        <div
+                        <motion.div
                           key={fact.label}
                           className={`flex min-h-[98px] flex-col items-center justify-center px-2.5 py-2.5 text-center sm:min-h-[108px] ${
                             index < quickFacts.length - 1 ? 'lg:border-r lg:border-[#755632]/22' : ''
                           }`}
+                          {...fadeUpItem}
                         >
-                          <div className="text-[#173f28]">{iconSvg(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
+                          <div className="text-[#173f28]">{quickFactIcon(fact.icon)}</div>
                           <div className="mt-1.5 font-caveat text-[1.55rem] leading-none sm:text-[1.85rem]">
                             {fact.label}
                           </div>
                           <div className="mt-1 font-kalam text-[0.98rem] leading-tight text-[#166534] sm:text-[1.08rem]">
                             {fact.value}
                           </div>
-                        </div>
+                        </motion.div>
                       ))}
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -872,8 +1030,13 @@ export default function MercuryPage() {
 
         <section className="relative overflow-hidden">
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
-            <div className="mt-2 grid gap-5 xl:items-start xl:grid-cols-[1.18fr_0.82fr]">
-              <NotebookCard className="h-fit self-start" rotate="xl:-rotate-[0.5deg]">
+            <motion.div
+              className="mt-2 grid gap-5 xl:items-start xl:grid-cols-[1.18fr_0.82fr]"
+              {...staggerParent(0.15)}
+            >
+              <motion.div className="h-fit self-start" {...fadeUpItem}>
+              <NotebookCard className="relative" rotate="xl:-rotate-[0.5deg]">
+                <CornerSpark className="absolute right-3 top-3 h-8 w-8 text-[#4CAF72]" />
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="mb-3 inline-flex items-center gap-3 rounded-full border border-[#1f6a40]/15 bg-white/45 px-4 py-2 shadow-[0_8px_20px_rgba(0,0,0,0.08)]">
@@ -994,8 +1157,10 @@ export default function MercuryPage() {
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-40 w-auto opacity-80 lg:block"
                 />
               </NotebookCard>
+              </motion.div>
 
               <div className="grid gap-6">
+                <motion.div {...fadeUpItem}>
                 <NotebookCard rotate="xl:rotate-[0.35deg]">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -1018,7 +1183,9 @@ export default function MercuryPage() {
                   </div>
                   <img src={FEATHER_URL} alt="" aria-hidden="true" className="pointer-events-none absolute bottom-4 right-4 h-16 w-16 opacity-25" />
                 </NotebookCard>
+                </motion.div>
 
+                <motion.div {...fadeUpItem}>
                 <NotebookCard rotate="xl:-rotate-[0.35deg]">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -1038,11 +1205,13 @@ export default function MercuryPage() {
                     ))}
                   </div>
                 </NotebookCard>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             <div className="mt-6">
-              <NotebookCard rotate="lg:-rotate-[0.25deg]">
+              <NotebookCard className="relative" rotate="lg:-rotate-[0.25deg]">
+                <CornerSpark className="absolute right-3 top-3 h-8 w-8 text-[#4CAF72]" />
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Budh
@@ -1059,7 +1228,7 @@ export default function MercuryPage() {
                       className="rounded-2xl border border-[#7b603e]/20 bg-white/25 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]"
                     >
                       <div className="mb-3 flex items-center gap-2 text-[#166534]">
-                        {iconSvg('practice', 'h-6 w-6')}
+                        {connectIcon()}
                         {index === 1 ? (
                           <OfferingIcon src={MOONG_URL} alt="Green moong offering" className="h-6 w-6" />
                         ) : null}
@@ -1141,9 +1310,12 @@ export default function MercuryPage() {
                     </div>
                     <div className="rounded-full bg-[#ecfaef] p-2 text-[#166534] shadow-[0_10px_22px_rgba(34,197,94,0.12)]">{iconSvg('wit', 'h-8 w-8')}</div>
                   </div>
-                  <div className="mt-8 rounded-[22px] bg-white/24 px-4 py-5 font-kalam text-[2rem] leading-snug text-[#2b1a0f] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] sm:text-[2.35rem]">
+                  <motion.div
+                    className="mt-8 rounded-[22px] bg-white/24 px-4 py-5 font-kalam text-[2rem] leading-snug text-[#2b1a0f] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] sm:text-[2.35rem]"
+                    {...affirmationMotion}
+                  >
                     “I think clearly, I speak wisely, I learn constantly, and I create my own path.”
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -1267,7 +1439,7 @@ export default function MercuryPage() {
               <aside className="space-y-6 lg:sticky lg:top-24">
                   <NotebookCard rotate="lg:rotate-[0.35deg]">
                     <div className="flex items-start gap-3">
-                      <div className="text-[#166534]">{iconSvg('faq', 'h-7 w-7')}</div>
+                      <div className="text-[#166534]">{sidebarFaqIcon('h-7 w-7')}</div>
                       <div>
                         <h3 className="font-caveat text-4xl leading-none text-[#1a110a]">
                           Mercurial Notes
@@ -1836,6 +2008,160 @@ export default function MercuryPage() {
           </div>
         </section>
 
+        <section className="px-4 pb-6 pt-2 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-[1440px]">
+            <div
+              className="relative overflow-hidden rounded-[30px] border border-[#4CAF72]/30 px-5 py-8 shadow-[0_28px_70px_rgba(2,8,23,0.32)] sm:px-8 sm:py-10"
+              style={{
+                background:
+                  'radial-gradient(circle at center, rgba(76,175,114,0.18), transparent 65%), linear-gradient(135deg,#06231a 0%,#08332a 50%,#0b1a14 100%)',
+              }}
+            >
+              <CornerSpark className="absolute right-3 top-3 h-8 w-8 text-[#4CAF72]" />
+              <div className="pointer-events-none absolute -left-8 top-8 h-40 w-40 rounded-full bg-[#4CAF72]/12 blur-3xl" />
+              <div className="pointer-events-none absolute right-0 top-0 h-48 w-48 rounded-full bg-[#86efac]/10 blur-3xl" />
+
+              <div className="relative grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+                <div>
+                  <div className="flex items-center gap-3 text-[#bef7c8]">
+                    <Brain className="h-6 w-6" weight="duotone" />
+                    <Lightning className="h-6 w-6" weight="duotone" />
+                    <span className="font-poppins text-xs font-semibold uppercase tracking-[0.32em] text-[#bef7c8]/80">
+                      Awakened Intelligence
+                    </span>
+                  </div>
+                  <div className="mt-4 font-caveat text-[2.2rem] leading-tight text-[#bef7c8] sm:text-[2.7rem]">
+                    Let the{' '}
+                    <UnderlineScribble color="#4CAF72" show={!prefersReducedMotion}>
+                      <span className="inline-block">clarity within</span>
+                    </UnderlineScribble>{' '}
+                    you rise.
+                  </div>
+                  <p className="mt-3 max-w-xl font-kalam text-[1.1rem] leading-relaxed text-white/85">
+                    Embrace the energy of{' '}
+                    <CircleCallout color="#4CAF72" show={!prefersReducedMotion}>
+                      <span className="inline-block text-[#bef7c8]">Budh</span>
+                    </CircleCallout>{' '}
+                    and live with discernment, graceful speech, and steady learning.
+                  </p>
+                </div>
+
+                <div className="flex justify-start lg:justify-end">
+                  <motion.div
+                    animate={
+                      prefersReducedMotion
+                        ? { opacity: 1 }
+                        : {
+                            boxShadow: [
+                              '0 0 0 rgba(76,175,114,0)',
+                              '0 0 22px rgba(76,175,114,0.32)',
+                              '0 0 0 rgba(76,175,114,0)',
+                            ],
+                          }
+                    }
+                    transition={
+                      prefersReducedMotion
+                        ? undefined
+                        : { duration: 1.6, repeat: Infinity, ease: 'easeInOut' }
+                    }
+                    className="rounded-full"
+                  >
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#4CAF72]/60 bg-[#4CAF72]/10 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#bef7c8] transition hover:bg-[#4CAF72]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4CAF72]"
+                    >
+                      Explore Personalized Remedies <span aria-hidden="true">→</span>
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-[28px] border border-[#7c6746]/25 bg-[#f6ead0]/95 px-5 py-6 shadow-[0_16px_40px_rgba(57,31,10,0.10)]">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollPrev()}
+                  disabled={!canScrollPrev}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#4CAF72]/60 bg-white/70 text-[#166534] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4CAF72]"
+                  aria-label="Scroll planets left"
+                >
+                  <CaretLeft className="h-5 w-5" weight="regular" />
+                </button>
+                <div className="text-center">
+                  <div className="font-caveat text-3xl leading-none text-[#166534] sm:text-4xl">
+                    Explore All Navagrahas
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollNext()}
+                  disabled={!canScrollNext}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#4CAF72]/60 bg-white/70 text-[#166534] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4CAF72]"
+                  aria-label="Scroll planets right"
+                >
+                  <CaretRight className="h-5 w-5" weight="regular" />
+                </button>
+              </div>
+
+              <div className="mt-5 overflow-hidden" ref={emblaRef}>
+                <div className="-ml-4 flex">
+                  {navagrahas.map((planet) => {
+                    const card = (
+                      <Link
+                        to={planet.href}
+                        className={`block min-w-0 rounded-[22px] border px-4 py-4 text-center transition hover:-translate-y-0.5 ${
+                          planet.current
+                            ? 'border-[#4CAF72] bg-[#ecfaef] ring-2 ring-[#4CAF72]'
+                            : 'border-[#e7d7b0] bg-white/70'
+                        }`}
+                      >
+                        <img
+                          src={navagrahaImage(planet.img)}
+                          alt={`${planet.name} planet portrait`}
+                          className="mx-auto h-16 w-16 rounded-full object-cover shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+                        />
+                        <div className="mt-3 font-poppins text-sm font-semibold text-[#2f1b0d]">{planet.name}</div>
+                        <div className="font-devanagari text-lg text-[#166534]">{planet.sanskrit}</div>
+                      </Link>
+                    );
+
+                    return (
+                      <div key={planet.slug} className="min-w-0 flex-[0_0_120px] pl-4 sm:flex-[0_0_132px]">
+                        {planet.current ? (
+                          <motion.div
+                            animate={
+                              prefersReducedMotion
+                                ? { opacity: 1 }
+                                : {
+                                    boxShadow: [
+                                      '0 0 0 rgba(76,175,114,0)',
+                                      '0 0 24px rgba(76,175,114,0.32)',
+                                      '0 0 0 rgba(76,175,114,0)',
+                                    ],
+                                  }
+                            }
+                            transition={
+                              prefersReducedMotion
+                                ? undefined
+                                : { duration: 1.6, repeat: Infinity, ease: 'easeInOut' }
+                            }
+                            className="rounded-[22px]"
+                          >
+                            {card}
+                          </motion.div>
+                        ) : (
+                          card
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="mercury-faqs" className="bg-[#f1e7d1] py-20 text-[#26180d]">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 text-center">
@@ -1863,7 +2189,9 @@ export default function MercuryPage() {
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="mt-1 text-[#166534]">{iconSvg('faq', 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#166534]">
+                          <Question className="h-6 w-6" weight="regular" />
+                        </div>
                         <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">
                           {faq.question}
                         </h3>
