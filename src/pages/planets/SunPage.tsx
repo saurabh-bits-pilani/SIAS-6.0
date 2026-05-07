@@ -286,6 +286,9 @@ const darkCtaBgStyle = {
 const ariesCard =
   'bg-[#fdf6e9] border border-amber-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200';
 
+const ariesCardRich =
+  'bg-[#fdf6e9] border-2 border-amber-300/70 rounded-2xl p-6 shadow-md relative overflow-hidden';
+
 const ariesIconCircle =
   'w-10 h-10 rounded-full bg-amber-100 border border-amber-300/60 flex items-center justify-center mb-4 text-amber-700';
 
@@ -619,10 +622,11 @@ function SidebarAccordion({
   onToggle: () => void;
 }) {
   return (
-    <div className="bg-[#fdf6e9] border border-amber-200/60 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
+    <div className="bg-[#fdf6e9] border-2 border-amber-300/70 rounded-2xl shadow-md relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-bl from-amber-200/40 to-transparent pointer-events-none" />
       <button
         type="button"
-        className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left"
+        className="relative flex w-full items-center justify-between gap-3 px-4 py-4 text-left"
         onClick={onToggle}
         aria-expanded={open}
       >
@@ -807,8 +811,9 @@ export default function SunPage() {
           </div>
           <div className="relative mx-auto max-w-[1440px]">
             <div className="grid gap-6 xl:grid-cols-[1.12fr_0.82fr_0.78fr]">
-              <div className={ariesCard}>
-                <div className="flex items-start justify-between gap-4">
+              <div className={ariesCardRich}>
+                <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-bl from-amber-200/40 to-transparent pointer-events-none" />
+                <div className="relative flex items-start justify-between gap-4">
                   <div>
                     <div className={ariesIconCircle}>{iconSvg('lotus', 'h-5 w-5')}</div>
                     <h2 className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">Sacred Mantra</h2>
@@ -817,13 +822,20 @@ export default function SunPage() {
                   <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-8 w-8 opacity-75" />
                 </div>
 
-                <div className="mt-6 space-y-8">
-                  {suryaData.mantras.map((mantra) => (
+                <div className="relative mt-6">
+                  {suryaData.mantras.map((mantra, idx) => (
                     <div key={mantra.label}>
+                      {idx > 0 ? (
+                        <div className="flex items-center gap-3 my-6">
+                          <div className="flex-1 h-px bg-amber-300/40" />
+                          <span className="text-amber-500 text-xs tracking-widest uppercase">✦</span>
+                          <div className="flex-1 h-px bg-amber-300/40" />
+                        </div>
+                      ) : null}
                       <div className="font-caveat text-[1.95rem] leading-none text-[#ab5d15] sm:text-[2.25rem]">
                         {mantra.label}
                       </div>
-                      <div className="mt-4 rounded-[18px] border border-[#b7832d]/50 bg-[#0d1628] px-5 py-4 shadow-[inset_0_0_30px_rgba(250,204,21,0.08)]">
+                      <div className="border border-amber-500/60 border-l-4 border-l-amber-500 bg-[#0B1120] rounded-xl px-5 py-4 my-4 shadow-inner shadow-amber-900/20">
                         <div className="font-devanagari text-[1.7rem] leading-tight text-[#f7ebc7] sm:text-[2rem]">
                           {mantra.devanagari}
                         </div>
@@ -841,8 +853,9 @@ export default function SunPage() {
                 </div>
               </div>
 
-              <div className={ariesCard}>
-                <div className="flex items-start justify-between gap-4">
+              <div className={ariesCardRich}>
+                <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-bl from-amber-200/40 to-transparent pointer-events-none" />
+                <div className="relative flex items-start justify-between gap-4">
                   <div>
                     <div className={ariesIconCircle}>{iconSvg('sun', 'h-5 w-5')}</div>
                     <h2 className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">
@@ -852,7 +865,7 @@ export default function SunPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 space-y-3.5">
+                <div className="relative mt-6 space-y-3.5">
                   {suryaData.lifeAttributes.map((row) => (
                     <div key={row.key} className="flex gap-3 border-b border-[#d8bb75]/35 pb-3 last:border-b-0 last:pb-0">
                       <div className="mt-1 text-[#c58d19]">{iconSvg(row.icon, 'h-5.5 w-5.5')}</div>
