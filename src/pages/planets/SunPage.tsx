@@ -46,6 +46,12 @@ const cardTextureStyle = {
   backgroundPosition: 'center',
 };
 
+const cardWarmBgStyle = {
+  backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+};
+
 type IconName =
   | 'soul'
   | 'vitality'
@@ -617,6 +623,7 @@ function SidebarAccordion({
         'hover:shadow-[0_8px_32px_rgba(0,0,0,0.14)] ' +
         'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden'
       }
+      style={cardWarmBgStyle}
     >
       <button
         type="button"
@@ -628,11 +635,11 @@ function SidebarAccordion({
           <div className="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white">
             {iconSvg(card.icon, 'h-5 w-5')}
           </div>
-          <div className="font-caveat text-[1.8rem] leading-none text-[#8f5b12]">{card.title}</div>
+          <div className="font-caveat text-[1.8rem] leading-none text-amber-900">{card.title}</div>
         </div>
         <svg
           viewBox="0 0 24 24"
-          className={`h-5 w-5 text-[#8f5b12] transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`h-5 w-5 text-amber-900 transition-transform ${open ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="1.8"
@@ -641,7 +648,7 @@ function SidebarAccordion({
         </svg>
       </button>
       {open ? (
-        <div className="border-t border-amber-200/60 px-4 pb-4 pt-3 font-kalam text-[1.05rem] leading-relaxed text-[#3f2915]">
+        <div className="border-t border-amber-200/60 px-4 pb-4 pt-3 font-kalam text-[1.05rem] leading-relaxed text-gray-800">
           {card.content}
         </div>
       ) : null}
@@ -808,11 +815,11 @@ export default function SunPage() {
           </div>
           <div className="relative mx-auto max-w-[1440px]">
             <div className="grid gap-6 xl:grid-cols-[1.12fr_0.82fr_0.78fr]">
-              <div className={ariesCardRich}>
+              <div className={ariesCardRich} style={cardWarmBgStyle}>
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
                     <div className={ariesIconCircle}>{iconSvg('lotus', 'h-5 w-5')}</div>
-                    <h2 className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">Sacred Mantra</h2>
+                    <h2 className="font-caveat text-4xl leading-none text-amber-900 sm:text-5xl">Sacred Mantra</h2>
                     <div className="mt-3 h-[3px] w-44 rounded-full bg-gradient-to-r from-[#c98f1e] via-[#f5c255] to-transparent" />
                   </div>
                   <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-8 w-8 opacity-75" />
@@ -828,7 +835,7 @@ export default function SunPage() {
                           <div className="flex-1 h-px bg-amber-300/40" />
                         </div>
                       ) : null}
-                      <div className="font-caveat text-[1.95rem] leading-none text-[#ab5d15] sm:text-[2.25rem]">
+                      <div className="font-caveat text-[1.95rem] leading-none text-amber-800 font-semibold sm:text-[2.25rem]">
                         {mantra.label}
                       </div>
                       <div className="border border-amber-500/60 border-l-4 border-l-amber-500 bg-[#0B1120] rounded-xl px-5 py-4 my-4 shadow-inner shadow-amber-900/20">
@@ -836,12 +843,14 @@ export default function SunPage() {
                           {mantra.devanagari}
                         </div>
                       </div>
-                      <div className="mt-4 space-y-3 font-kalam text-[1.1rem] leading-relaxed text-[#3d2816]">
+                      <div className="mt-4 space-y-3 font-kalam text-[1.1rem] leading-relaxed text-gray-800">
                         <p>
-                          <span className="font-semibold text-[#a55d14]">IAST:</span> {mantra.iast}
+                          <span className="font-semibold text-amber-800">IAST:</span>{' '}
+                          <span className="text-gray-600 italic">{mantra.iast}</span>
                         </p>
                         <p>
-                          <span className="font-semibold text-[#a55d14]">Meaning:</span> {mantra.meaning}
+                          <span className="font-semibold text-amber-800">Meaning:</span>{' '}
+                          <span className="text-gray-700">{mantra.meaning}</span>
                         </p>
                       </div>
                     </div>
@@ -849,11 +858,11 @@ export default function SunPage() {
                 </div>
               </div>
 
-              <div className={ariesCardRich}>
+              <div className={ariesCardRich} style={cardWarmBgStyle}>
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
                     <div className={ariesIconCircle}>{iconSvg('sun', 'h-5 w-5')}</div>
-                    <h2 className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">
+                    <h2 className="font-caveat text-4xl leading-none text-amber-900 sm:text-5xl">
                       Surya in Our Life
                     </h2>
                     <div className="mt-3 h-[3px] w-36 rounded-full bg-gradient-to-r from-[#c98f1e] via-[#f5c255] to-transparent" />
@@ -862,10 +871,10 @@ export default function SunPage() {
 
                 <div className="relative mt-6 space-y-3.5">
                   {suryaData.lifeAttributes.map((row) => (
-                    <div key={row.key} className="flex gap-3 border-b border-[#d8bb75]/35 pb-3 last:border-b-0 last:pb-0">
-                      <div className="mt-1 text-[#c58d19]">{iconSvg(row.icon, 'h-5.5 w-5.5')}</div>
-                      <div className="font-kalam text-[1.03rem] leading-relaxed text-[#3f2915]">
-                        <span className="font-semibold text-[#a55d14]">{row.key}:</span> {row.value}
+                    <div key={row.key} className="flex gap-3 border-b border-amber-300/40 pb-3 last:border-b-0 last:pb-0">
+                      <div className="mt-1 text-amber-700">{iconSvg(row.icon, 'h-5.5 w-5.5')}</div>
+                      <div className="font-kalam text-[1.03rem] leading-relaxed text-gray-800">
+                        <span className="font-semibold text-amber-800">{row.key}:</span> {row.value}
                       </div>
                     </div>
                   ))}
