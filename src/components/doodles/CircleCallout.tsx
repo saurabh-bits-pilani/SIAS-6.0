@@ -1,16 +1,17 @@
-import { RoughNotation } from 'react-rough-notation'
+import type { ReactNode } from 'react';
+import { RoughNotation } from 'react-rough-notation';
 
-interface Props {
-  children: React.ReactNode
-  color?: string
-  show?: boolean
-}
+type CircleCalloutProps = {
+  children: ReactNode;
+  color?: string;
+  show?: boolean;
+};
 
 export default function CircleCallout({
   children,
   color = '#C9A84C',
   show = true,
-}: Props) {
+}: CircleCalloutProps) {
   return (
     <RoughNotation
       type="circle"
@@ -21,5 +22,5 @@ export default function CircleCallout({
     >
       {children}
     </RoughNotation>
-  )
+  );
 }

@@ -1,16 +1,17 @@
-import { RoughNotation } from 'react-rough-notation'
+import type { ReactNode } from 'react';
+import { RoughNotation } from 'react-rough-notation';
 
-interface Props {
-  children: React.ReactNode
-  color?: string
-  show?: boolean
-}
+type UnderlineScribbleProps = {
+  children: ReactNode;
+  color?: string;
+  show?: boolean;
+};
 
 export default function UnderlineScribble({
   children,
   color = '#C9A84C',
   show = true,
-}: Props) {
+}: UnderlineScribbleProps) {
   return (
     <RoughNotation
       type="underline"
@@ -21,5 +22,5 @@ export default function UnderlineScribble({
     >
       {children}
     </RoughNotation>
-  )
+  );
 }

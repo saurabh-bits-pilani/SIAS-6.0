@@ -1,18 +1,23 @@
-export default function CornerSpark({ className = '' }: { className?: string }) {
+type CornerSparkProps = {
+  className?: string;
+};
+
+export default function CornerSpark({ className = '' }: CornerSparkProps) {
   return (
     <svg
-      className={className}
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
+      viewBox="0 0 40 40"
       aria-hidden="true"
+      className={`pointer-events-none ${className}`}
+      fill="none"
     >
       <path
-        d="M16 2 L17.5 14 L28 8 L18.5 16 L28 24 L17.5 18 L16 30 L14.5 18 L4 24 L13.5 16 L4 8 L14.5 14 Z"
-        fill="#C9A84C"
-        opacity="0.8"
+        d="M20 4v9M20 27v9M4 20h9M27 20h9M9 9l6.5 6.5M24.5 24.5 31 31M31 9l-6.5 6.5M15.5 24.5 9 31"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        opacity="0.92"
       />
+      <circle cx="20" cy="20" r="3.2" fill="currentColor" opacity="0.88" />
     </svg>
-  )
+  );
 }
