@@ -791,18 +791,26 @@ export default function SunPage() {
         </section>
 
         <section className="-mt-5 relative z-10 px-4 sm:px-6 lg:px-10">
-          <div className={`mx-auto max-w-6xl ${darkPanel} px-4 py-4 sm:px-5`}>
+          <div
+            className="mx-auto max-w-6xl rounded-[28px] border border-amber-300/60 px-4 py-4 sm:px-5 shadow-[0_24px_60px_rgba(3,7,18,0.18)]"
+            style={{
+              backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {suryaData.attributes.map((item, index) => (
                 <div
                   key={item.label}
                   className={`flex min-h-[116px] flex-col items-center justify-center px-3 py-3 text-center ${
-                    index < suryaData.attributes.length - 1 ? 'lg:border-r lg:border-[#facc15]/15' : ''
+                    index < suryaData.attributes.length - 1 ? 'lg:border-r lg:border-amber-300/50' : ''
                   }`}
                 >
-                  <div className="text-[#f2c14d]">{iconSvg(item.icon, 'h-8 w-8')}</div>
-                  <div className="mt-3 font-poppins text-lg font-medium text-[#fff4d8]">{item.label}</div>
-                  <div className="font-kalam text-[1.03rem] text-[#ddb65a]">{item.sub}</div>
+                  <div className="text-amber-700">{iconSvg(item.icon, 'h-8 w-8')}</div>
+                  <div className="mt-3 font-poppins text-lg font-semibold text-gray-900">{item.label}</div>
+                  <div className="font-kalam text-[1.03rem] text-amber-800 italic">{item.sub}</div>
                 </div>
               ))}
             </div>
@@ -881,7 +889,15 @@ export default function SunPage() {
                 </div>
               </div>
 
-              <div className={`${darkPanel} relative overflow-hidden p-6`}>
+              <div
+                className="rounded-[28px] border border-amber-300/60 relative overflow-hidden p-6 shadow-[0_24px_60px_rgba(3,7,18,0.18)]"
+                style={{
+                  backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
                 <div className="absolute inset-0 opacity-75">
                   <SolarOrbitDoodle className="absolute inset-0 opacity-35" />
                 </div>
@@ -889,22 +905,22 @@ export default function SunPage() {
                   <div>
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h2 className="font-caveat text-4xl leading-none text-[#f6d27b] sm:text-[2.9rem]">
+                        <h2 className="font-caveat text-4xl leading-none text-amber-900 sm:text-[2.9rem]">
                           Connect with Surya
                         </h2>
-                        <p className="mt-4 font-kalam text-[1.08rem] leading-relaxed text-[#f7ebc7]/86">
+                        <p className="mt-4 font-kalam text-[1.08rem] leading-relaxed text-gray-800">
                           Invite the radiant energy of Surya into your life. Strengthen your will, clarity, and confidence.
                         </p>
                       </div>
-                      <div className="text-[#f2c14d]">{iconSvg('sunrise', 'h-9 w-9')}</div>
+                      <div className="text-amber-600">{iconSvg('sunrise', 'h-9 w-9')}</div>
                     </div>
                   </div>
 
                   <div className="mt-8 flex items-end justify-between gap-4">
-                    <div className="text-[#facc15]/75">{iconSvg('mountain', 'h-14 w-14')}</div>
+                    <div className="text-amber-600/75">{iconSvg('mountain', 'h-14 w-14')}</div>
                     <Link
                       to="/services"
-                      className="inline-flex items-center gap-2 rounded-full border border-[#facc15]/60 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.18em] text-[#f8e4a7] transition hover:bg-[#facc15]/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#facc15]"
+                      className="inline-flex items-center gap-2 rounded-full border-none bg-amber-700 hover:bg-amber-800 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.18em] text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-700"
                     >
                       Explore Surya Remedies <span aria-hidden="true">→</span>
                     </Link>
@@ -914,30 +930,38 @@ export default function SunPage() {
             </div>
 
             <div className="mt-6 grid gap-6 xl:grid-cols-[1.65fr_1fr]">
-              <div className={`${darkPanel} overflow-hidden p-6 sm:p-7`}>
+              <div
+                className="rounded-[28px] border border-amber-300/60 overflow-hidden p-6 sm:p-7 shadow-[0_24px_60px_rgba(3,7,18,0.18)]"
+                style={{
+                  backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="font-caveat text-4xl leading-none text-[#f8d985] sm:text-5xl">
+                    <h2 className="font-caveat text-4xl leading-none text-amber-900 sm:text-5xl">
                       How to Connect with Surya
                     </h2>
-                    <div className="mt-3 h-[3px] w-44 rounded-full bg-gradient-to-r from-[#facc15] via-[#f59e0b] to-transparent" />
+                    <div className="mt-3 h-[3px] w-44 rounded-full bg-amber-600" />
                   </div>
-                  <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-8 w-8 opacity-80" />
+                  <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-8 w-8 opacity-80 text-amber-600" />
                 </div>
 
                 <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
                   {suryaData.connectSteps.map((step) => (
                     <div
                       key={step.num}
-                      className="rounded-[22px] border border-[#facc15]/18 bg-white/5 px-4 py-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                      className="rounded-2xl border border-amber-200/60 bg-white/70 px-4 py-5 text-center"
                     >
-                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-[#facc15]/35 bg-[#facc15]/10 text-[#f2c14d]">
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 border border-amber-300 text-amber-700">
                         {iconSvg(step.icon, 'h-6 w-6')}
                       </div>
-                      <div className="mt-4 font-poppins text-sm font-semibold tracking-[0.22em] text-[#f8d985]">
+                      <div className="mt-4 font-poppins text-sm font-semibold tracking-[0.22em] text-amber-700">
                         {step.num}
                       </div>
-                      <div className="mt-2 whitespace-pre-line font-kalam text-[1.05rem] leading-relaxed text-[#fff3d0]">
+                      <div className="mt-2 whitespace-pre-line font-kalam text-[1.05rem] leading-relaxed text-gray-800">
                         {step.label}
                       </div>
                     </div>
