@@ -922,30 +922,38 @@ export default function SunPage() {
             </div>
 
             <div className="mt-6 grid gap-6 xl:grid-cols-[1.65fr_1fr]">
-              <div className={`${darkPanel} overflow-hidden p-6 sm:p-7`}>
+              <div
+                className="rounded-[28px] border border-amber-300/60 overflow-hidden p-6 sm:p-7 shadow-[0_24px_60px_rgba(3,7,18,0.18)]"
+                style={{
+                  backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="font-caveat text-4xl leading-none text-[#f8d985] sm:text-5xl">
+                    <h2 className="font-caveat text-4xl leading-none text-amber-900 sm:text-5xl">
                       How to Connect with Surya
                     </h2>
-                    <div className="mt-3 h-[3px] w-44 rounded-full bg-gradient-to-r from-[#facc15] via-[#f59e0b] to-transparent" />
+                    <div className="mt-3 h-[3px] w-44 rounded-full bg-amber-600" />
                   </div>
-                  <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-8 w-8 opacity-80" />
+                  <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-8 w-8 opacity-80 text-amber-600" />
                 </div>
 
                 <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
                   {suryaData.connectSteps.map((step) => (
                     <div
                       key={step.num}
-                      className="rounded-[22px] border border-[#facc15]/18 bg-white/5 px-4 py-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                      className="rounded-2xl border border-amber-200/60 bg-white/70 px-4 py-5 text-center"
                     >
-                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-[#facc15]/35 bg-[#facc15]/10 text-[#f2c14d]">
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 border border-amber-300 text-amber-700">
                         {iconSvg(step.icon, 'h-6 w-6')}
                       </div>
-                      <div className="mt-4 font-poppins text-sm font-semibold tracking-[0.22em] text-[#f8d985]">
+                      <div className="mt-4 font-poppins text-sm font-semibold tracking-[0.22em] text-amber-700">
                         {step.num}
                       </div>
-                      <div className="mt-2 whitespace-pre-line font-kalam text-[1.05rem] leading-relaxed text-[#fff3d0]">
+                      <div className="mt-2 whitespace-pre-line font-kalam text-[1.05rem] leading-relaxed text-gray-800">
                         {step.label}
                       </div>
                     </div>
