@@ -1,5 +1,6 @@
 import { type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import SEOHead from '../../components/SEOHead';
 import SchemaMarkup from '../../components/SchemaMarkup';
@@ -50,6 +51,13 @@ type AssetMap = {
 };
 
 const planetAssets = planetAssetsRaw as AssetMap;
+
+const HERO_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/hero-banner-planets-page.webp';
+const CARD_BG_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/planet-card-bg.webp';
+const MAIN_BG_URL =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/planet-main-page-bg.webp';
 
 type PlanetKey =
   | 'surya'
@@ -334,14 +342,11 @@ const PLANETS: PlanetConfig[] = [
 const HERO_IMAGE_PRIORITY = { fetchpriority: 'high' } as const;
 
 const cosmicShell: CSSProperties = {
-  backgroundColor: '#000',
-  backgroundImage: [
-    'radial-gradient(circle at top, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.6) 30%, rgba(42,15,15,0.78) 68%, rgba(0,0,0,0.96) 100%)',
-    `url(${planetAssets.backgrounds.nebula})`,
-    `url(${planetAssets.misc.main})`,
-  ].join(', '),
-  backgroundSize: 'cover, cover, cover',
-  backgroundPosition: 'center, center, center',
+  backgroundColor: '#0a0814',
+  backgroundImage: `url('${MAIN_BG_URL}')`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center top',
+  backgroundRepeat: 'no-repeat',
 };
 
 const parchmentStyle: CSSProperties = {
@@ -1008,9 +1013,14 @@ function PlanetGridCard({ planet }: { planet: PlanetConfig }) {
   const needsStrongGlow = ['budha', 'guru', 'shani', 'rahu', 'ketu'].includes(planet.key);
   const body = (
     <div
-      className={`group relative flex h-full min-h-[132px] flex-col overflow-visible rounded-[18px] border bg-[linear-gradient(145deg,rgba(20,12,7,0.96),rgba(5,4,4,0.92))] p-3.5 text-left transition-all duration-300 ${planet.cardClass}`}
+      className="group relative flex h-full min-h-[132px] flex-col overflow-visible rounded-[18px] border border-amber-300 p-3.5 text-left transition-all duration-300 hover:shadow-lg"
+      style={{
+        backgroundImage: `url('${CARD_BG_URL}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
-      <SparklesDoodle className="pointer-events-none absolute right-2 top-2 h-6 w-6 opacity-25" />
+      <SparklesDoodle className="pointer-events-none absolute right-2 top-2 h-6 w-6 opacity-25" stroke="#8b5e34" />
       <div className="flex items-start gap-3">
         <div
           className="relative h-16 w-16 shrink-0 rounded-full sm:h-[4.5rem] sm:w-[4.5rem]"
@@ -1022,7 +1032,7 @@ function PlanetGridCard({ planet }: { planet: PlanetConfig }) {
           <img
             src={planetAssets.planets[planet.key]}
             alt={`${planet.iast} card artwork`}
-            className={`relative z-10 h-full w-full rounded-full object-cover ${planet.glowClass || 'drop-shadow-[0_0_18px_rgba(255,255,255,0.14)]'}`}
+            className="relative z-10 h-full w-full rounded-full object-cover"
             style={{ filter: planet.imageTreatment }}
             loading="lazy"
           />
@@ -1030,29 +1040,26 @@ function PlanetGridCard({ planet }: { planet: PlanetConfig }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="font-caveat text-[1.45rem] leading-none text-white">{planet.iast}</p>
-              <p className="mt-1 font-devanagari text-sm leading-tight text-white/85">
-                {planet.devanagari}, {planet.meaning}
+              <p className="font-caveat text-[1.45rem] leading-none text-gray-900">{planet.iast}</p>
+              <p className="mt-1 font-devanagari text-sm leading-tight text-amber-800">
+                {planet.devanagari}, <span className="text-gray-900">{planet.meaning}</span>
               </p>
             </div>
             <PlanetSymbol planet={planet.key} className="mr-0.5 mt-0.5 h-6 w-6 shrink-0" />
           </div>
-          <p className="mt-2 font-poppins text-[12px] leading-relaxed text-white/78">{planet.trait}</p>
+          <p className="mt-2 font-poppins text-[12px] leading-relaxed text-gray-700">{planet.trait}</p>
         </div>
       </div>
-      <p className="mt-3 max-w-[24ch] font-poppins text-[11px] leading-relaxed text-white/64">
+      <p className="mt-3 max-w-[24ch] font-poppins text-[11px] leading-relaxed text-gray-600">
         {planet.cardBlurb}
       </p>
       <div className="mt-auto pt-3">
         {planet.href ? (
-          <span
-            className="font-poppins text-[13px] font-medium tracking-[0.4px]"
-            style={{ color: planet.accent }}
-          >
+          <span className="font-poppins text-[13px] font-medium tracking-[0.4px] text-amber-700 group-hover:text-amber-900">
             Explore →
           </span>
         ) : (
-          <span className="inline-flex rounded-full border border-white/15 bg-white/8 px-3 py-1 font-poppins text-xs font-semibold uppercase tracking-[1px] text-white/75">
+          <span className="inline-flex rounded-full border border-amber-300 bg-amber-50 px-3 py-1 font-poppins text-xs font-semibold uppercase tracking-[1px] text-amber-800">
             Coming Soon
           </span>
         )}
@@ -1098,63 +1105,47 @@ export default function PlanetsHubPage() {
         ]}
       />
 
+      {/* Hero banner, single full-width image, no text overlay */}
+      <section className="relative w-full">
+        <img
+          src={HERO_URL}
+          alt="The nine Navagraha planets of Vedic Astrology"
+          width={1600}
+          height={600}
+          fetchpriority="high"
+          className="w-full h-auto object-cover"
+        />
+      </section>
+
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Planets' }]} />
 
-      <section className="relative overflow-hidden px-4 pb-8 pt-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="relative min-h-[680px] overflow-hidden rounded-[30px] border border-amber-300/20 bg-black/35 px-4 py-5 shadow-[0_30px_90px_rgba(0,0,0,0.6)] backdrop-blur-[1px] sm:min-h-[740px] sm:px-8 lg:min-h-[820px]">
-            <img
-              src={planetAssets.backgrounds.nebula}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-screen"
-              loading="eager"
-              {...HERO_IMAGE_PRIORITY}
-            />
-            <CosmicDust className="opacity-80" />
-            <StarsDoodle className="pointer-events-none absolute left-4 top-24 hidden h-28 w-28 opacity-30 lg:block" />
-            <SparklesDoodle className="pointer-events-none absolute right-10 top-20 h-20 w-20 opacity-35" />
-            <img
-              src={planetAssets.misc.layer}
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none absolute bottom-0 left-0 h-auto w-full opacity-30"
-              loading="lazy"
-            />
-            <ArrowDoodle className="pointer-events-none absolute left-8 bottom-16 hidden h-20 w-28 -rotate-[10deg] opacity-35 lg:block" stroke="#facc15" />
-            <ArrowDoodle className="pointer-events-none absolute right-10 top-28 hidden h-20 w-28 rotate-[150deg] opacity-30 lg:block" stroke="#facc15" />
-            <OrbitAccentDoodle className="pointer-events-none absolute bottom-12 right-20 hidden h-24 w-36 opacity-40 lg:block" />
-            <div className="absolute left-1/2 top-1/2 h-[min(700px,calc(100%-5rem))] w-[min(1120px,calc(100%-2rem))] -translate-x-1/2 -translate-y-1/2">
-              <OrbitRings />
-              {PLANETS.filter((planet) => planet.key !== 'surya' && planet.key !== 'chandra').map((planet) => (
-                <OrbitingPlanet key={planet.key} planet={planet} />
-              ))}
-              <EarthMoonSystem />
-
-              <div className="cosmos-sun absolute left-1/2 top-1/2 z-20 h-[clamp(120px,13vw,185px)] w-[clamp(120px,13vw,185px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-amber-200/25 bg-amber-400 shadow-[0_0_64px_rgba(250,204,21,0.58)]">
-                <img
-                  src={planetAssets.planets.surya}
-                  alt="Surya, the center Sun"
-                  className="h-full w-full scale-[1.9] object-cover object-[49%_50%]"
-                  loading="eager"
-                  {...HERO_IMAGE_PRIORITY}
-                />
-              </div>
-
-              <div className="absolute left-1/2 top-1/2 z-30 w-[min(220px,44vw)] -translate-x-1/2 -translate-y-1/2 text-center">
-                <p className="font-caveat text-[clamp(2rem,3.25vw,3.55rem)] leading-[0.95] text-white [text-shadow:0_0_22px_rgba(255,190,64,0.45)]">
-                  The Cosmic Forces
-                </p>
-                <p className="mx-auto mt-2 max-w-[16ch] font-poppins text-[clamp(0.72rem,1.1vw,0.9rem)] leading-relaxed tracking-[0.35px] text-white/90 [text-shadow:0_0_10px_rgba(255,200,100,0.2)]">
-                  Explore the 9 planets that influence your destiny and shape your life.
-                </p>
-              </div>
-            </div>
-
-            <p className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap font-caveat text-[1.35rem] text-white/85">
-              Hover on a planet, click to explore
-            </p>
+      {/* Title strip in clean light section, below the banner */}
+      <section className="bg-white pt-2 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm md:text-base tracking-[0.25em] uppercase text-amber-700 font-semibold mb-2">
+            <span className="font-devanagari" lang="sa">नवग्रह</span>
+            <span className="mx-2 text-amber-700/60">·</span>
+            Navagraha
+          </p>
+          <h1 className="font-heading font-bold text-3xl md:text-5xl text-gray-900 mb-4 leading-tight">
+            The 9 Planets of Vedic Astrology
+          </h1>
+          <p className="text-base md:text-lg text-gray-700 mb-5 leading-relaxed">
+            Nine Grahas, the cosmic intelligences of the Vedic chart, govern karma, mind, and the soul&apos;s journey. Saurabh Jain at Soul Infinity Astro Solutions reads each Graha in the context of your full birth chart, current dasha, and active transits, then translates the reading into decisions you can actually act on.
+          </p>
+          <div className="font-devanagari text-xl md:text-2xl text-amber-700 mb-1" lang="sa">
+            ग्रहाधीनं जगत् सर्वम्
           </div>
+          <div className="text-sm italic text-amber-700/85 mb-6">
+            Grahādhīnaṃ jagat sarvam, the entire world is held by the planets.
+          </div>
+          <Link
+            to="/contact"
+            className="inline-flex items-center bg-amber-500 hover:bg-amber-400 text-gray-900 font-semibold px-6 py-3 rounded-full transition-colors shadow-md"
+          >
+            Book Your Planetary Reading
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Link>
         </div>
       </section>
 
