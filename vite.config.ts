@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import mdx from '@mdx-js/rollup';
 import remarkFrontmatter from 'remark-frontmatter';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
       providerImportSource: '@mdx-js/react',
     }),
     react(),
+    svgr(),
   ],
   // Expose VERCEL_ENV ("production" | "preview" | "development") to the
   // client + SSR bundle. Vite does not inline non-VITE_-prefixed env vars

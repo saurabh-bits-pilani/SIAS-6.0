@@ -33,7 +33,7 @@
     "date-fns": "^3.6.0",
     "doodle.css": "^0.0.2",
     "embla-carousel-react": "^8.6.0",
-    "framer-motion": "^11.5.4",
+    "framer-motion": "^11.18.2",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
@@ -46,6 +46,7 @@
     "remark-frontmatter": "^5.0.0",
     "rough-notation": "^0.5.1",
     "splitting": "^1.1.0",
+    "vite-plugin-svgr": "^5.2.0",
     "web-vitals": "^5.2.0"
   },
   "devDependencies": {
