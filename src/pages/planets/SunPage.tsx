@@ -889,7 +889,15 @@ export default function SunPage() {
                 </div>
               </div>
 
-              <div className={`${darkPanel} relative overflow-hidden p-6`}>
+              <div
+                className="rounded-[28px] border border-amber-300/60 relative overflow-hidden p-6 shadow-[0_24px_60px_rgba(3,7,18,0.18)]"
+                style={{
+                  backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
                 <div className="absolute inset-0 opacity-75">
                   <SolarOrbitDoodle className="absolute inset-0 opacity-35" />
                 </div>
@@ -897,22 +905,22 @@ export default function SunPage() {
                   <div>
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h2 className="font-caveat text-4xl leading-none text-[#f6d27b] sm:text-[2.9rem]">
+                        <h2 className="font-caveat text-4xl leading-none text-amber-900 sm:text-[2.9rem]">
                           Connect with Surya
                         </h2>
-                        <p className="mt-4 font-kalam text-[1.08rem] leading-relaxed text-[#f7ebc7]/86">
+                        <p className="mt-4 font-kalam text-[1.08rem] leading-relaxed text-gray-800">
                           Invite the radiant energy of Surya into your life. Strengthen your will, clarity, and confidence.
                         </p>
                       </div>
-                      <div className="text-[#f2c14d]">{iconSvg('sunrise', 'h-9 w-9')}</div>
+                      <div className="text-amber-600">{iconSvg('sunrise', 'h-9 w-9')}</div>
                     </div>
                   </div>
 
                   <div className="mt-8 flex items-end justify-between gap-4">
-                    <div className="text-[#facc15]/75">{iconSvg('mountain', 'h-14 w-14')}</div>
+                    <div className="text-amber-600/75">{iconSvg('mountain', 'h-14 w-14')}</div>
                     <Link
                       to="/services"
-                      className="inline-flex items-center gap-2 rounded-full border border-[#facc15]/60 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.18em] text-[#f8e4a7] transition hover:bg-[#facc15]/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#facc15]"
+                      className="inline-flex items-center gap-2 rounded-full border-none bg-amber-700 hover:bg-amber-800 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.18em] text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-700"
                     >
                       Explore Surya Remedies <span aria-hidden="true">→</span>
                     </Link>
