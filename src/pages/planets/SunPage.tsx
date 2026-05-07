@@ -34,9 +34,10 @@ const PAGE_KEYWORDS =
 const PAGE_URL = `${SITE_ORIGIN}/planets/sun`;
 
 const pageShellStyle = {
-  backgroundImage: `linear-gradient(rgba(245,230,200,0.95), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundImage: `url('${PLANET_SUN}/sun-strip-bg.webp')`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
 };
 
 const cardTextureStyle = {
@@ -267,33 +268,17 @@ const cardBorder =
 const darkPanel =
   'rounded-[28px] border border-[#facc15]/25 bg-[#0d1628] text-[#f9edcc] shadow-[0_24px_60px_rgba(3,7,18,0.42)]';
 
-const SUN_STRIP_BG_URL = `${PLANET_SUN}/sun-strip-bg.webp`;
-
-const darkPanelBgStyle = {
-  backgroundImage: `linear-gradient(rgba(11,17,32,0.55), rgba(11,17,32,0.55)), url('${SUN_STRIP_BG_URL}')`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-};
-
-const darkCtaBgStyle = {
-  backgroundImage: `linear-gradient(rgba(11,17,32,0.70), rgba(11,17,32,0.70)), url('${SUN_STRIP_BG_URL}')`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'right center',
-  backgroundRepeat: 'no-repeat',
-};
-
 const ariesCard =
   'bg-[#fdf6e9] border border-amber-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200';
 
 const ariesCardRich =
-  'bg-[#fdf6e9] border border-amber-200/50 rounded-2xl p-6 ' +
-  'shadow-[0_8px_32px_rgba(0,0,0,0.5),0_2px_8px_rgba(201,168,76,0.20)] ' +
-  'hover:shadow-[0_16px_48px_rgba(0,0,0,0.6),0_4px_16px_rgba(201,168,76,0.30)] ' +
-  'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden';
+  'bg-white border border-amber-100 rounded-2xl p-6 ' +
+  'shadow-[0_4px_24px_rgba(0,0,0,0.10),0_1px_4px_rgba(0,0,0,0.06)] ' +
+  'hover:shadow-[0_8px_32px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.08)] ' +
+  'hover:-translate-y-1 transition-all duration-300 ease-out relative';
 
 const ariesIconCircle =
-  'w-10 h-10 rounded-full bg-amber-100 border border-amber-300/60 flex items-center justify-center mb-4 text-amber-700';
+  'w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center mb-4 text-white';
 
 const breadcrumbItems = [
   { label: 'Home', href: '/' },
@@ -627,13 +612,12 @@ function SidebarAccordion({
   return (
     <div
       className={
-        'bg-[#fdf6e9] border border-amber-200/50 rounded-2xl ' +
-        'shadow-[0_8px_32px_rgba(0,0,0,0.35),0_2px_8px_rgba(201,168,76,0.15)] ' +
-        'hover:shadow-[0_16px_48px_rgba(0,0,0,0.45),0_4px_16px_rgba(201,168,76,0.25)] ' +
+        'bg-white border border-amber-100 rounded-2xl ' +
+        'shadow-[0_4px_24px_rgba(0,0,0,0.10),0_1px_4px_rgba(0,0,0,0.06)] ' +
+        'hover:shadow-[0_8px_32px_rgba(0,0,0,0.14)] ' +
         'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden'
       }
     >
-      <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-bl from-amber-200/40 to-transparent pointer-events-none" />
       <button
         type="button"
         className="relative flex w-full items-center justify-between gap-3 px-4 py-4 text-left"
@@ -641,7 +625,7 @@ function SidebarAccordion({
         aria-expanded={open}
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-amber-100 border border-amber-300/60 flex items-center justify-center text-amber-700">
+          <div className="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white">
             {iconSvg(card.icon, 'h-5 w-5')}
           </div>
           <div className="font-caveat text-[1.8rem] leading-none text-[#8f5b12]">{card.title}</div>
@@ -741,7 +725,10 @@ export default function SunPage() {
         schemas={schemas}
       />
 
-      <div className="min-h-screen text-[#2b1a0f]" style={pageShellStyle}>
+      <div
+        className="min-h-screen text-[#2b1a0f] [background-attachment:scroll] md:[background-attachment:fixed]"
+        style={pageShellStyle}
+      >
         <section
           className="relative overflow-hidden"
           style={{
@@ -797,7 +784,7 @@ export default function SunPage() {
         </section>
 
         <section className="-mt-5 relative z-10 px-4 sm:px-6 lg:px-10">
-          <div className={`mx-auto max-w-6xl ${darkPanel} px-4 py-4 sm:px-5`} style={darkPanelBgStyle}>
+          <div className={`mx-auto max-w-6xl ${darkPanel} px-4 py-4 sm:px-5`}>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {suryaData.attributes.map((item, index) => (
                 <div
@@ -822,7 +809,6 @@ export default function SunPage() {
           <div className="relative mx-auto max-w-[1440px]">
             <div className="grid gap-6 xl:grid-cols-[1.12fr_0.82fr_0.78fr]">
               <div className={ariesCardRich}>
-                <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-bl from-amber-200/40 to-transparent pointer-events-none" />
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
                     <div className={ariesIconCircle}>{iconSvg('lotus', 'h-5 w-5')}</div>
@@ -864,7 +850,6 @@ export default function SunPage() {
               </div>
 
               <div className={ariesCardRich}>
-                <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-bl from-amber-200/40 to-transparent pointer-events-none" />
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
                     <div className={ariesIconCircle}>{iconSvg('sun', 'h-5 w-5')}</div>
@@ -887,7 +872,7 @@ export default function SunPage() {
                 </div>
               </div>
 
-              <div className={`${darkPanel} relative overflow-hidden p-6`} style={darkCtaBgStyle}>
+              <div className={`${darkPanel} relative overflow-hidden p-6`}>
                 <div className="absolute inset-0 opacity-75">
                   <SolarOrbitDoodle className="absolute inset-0 opacity-35" />
                 </div>
@@ -920,7 +905,7 @@ export default function SunPage() {
             </div>
 
             <div className="mt-6 grid gap-6 xl:grid-cols-[1.65fr_1fr]">
-              <div className={`${darkPanel} overflow-hidden p-6 sm:p-7`} style={darkPanelBgStyle}>
+              <div className={`${darkPanel} overflow-hidden p-6 sm:p-7`}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h2 className="font-caveat text-4xl leading-none text-[#f8d985] sm:text-5xl">
@@ -989,7 +974,7 @@ export default function SunPage() {
               </ParchmentCard>
             </div>
 
-            <div className={`mt-6 ${darkPanel} overflow-hidden px-5 py-7 sm:px-8`} style={darkPanelBgStyle}>
+            <div className={`mt-6 ${darkPanel} overflow-hidden px-5 py-7 sm:px-8`}>
               <div className="grid gap-5 lg:grid-cols-[auto_1fr_auto] lg:items-center">
                 <div className="text-[#facc15]/85">
                   <SolarOrbitDoodle className="h-28 w-28" />
@@ -1148,7 +1133,7 @@ export default function SunPage() {
                   />
                 ))}
 
-                <div className={`${darkPanel} overflow-hidden px-6 py-8`} style={darkPanelBgStyle}>
+                <div className={`${darkPanel} overflow-hidden px-6 py-8`}>
                   <div className="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
                     <div className="text-left">
                       <div className="font-caveat text-[2.2rem] leading-tight text-[#f8d985]">
