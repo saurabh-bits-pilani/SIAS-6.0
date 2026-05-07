@@ -791,18 +791,26 @@ export default function SunPage() {
         </section>
 
         <section className="-mt-5 relative z-10 px-4 sm:px-6 lg:px-10">
-          <div className={`mx-auto max-w-6xl ${darkPanel} px-4 py-4 sm:px-5`}>
+          <div
+            className="mx-auto max-w-6xl rounded-[28px] border border-amber-300/60 px-4 py-4 sm:px-5 shadow-[0_24px_60px_rgba(3,7,18,0.18)]"
+            style={{
+              backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {suryaData.attributes.map((item, index) => (
                 <div
                   key={item.label}
                   className={`flex min-h-[116px] flex-col items-center justify-center px-3 py-3 text-center ${
-                    index < suryaData.attributes.length - 1 ? 'lg:border-r lg:border-[#facc15]/15' : ''
+                    index < suryaData.attributes.length - 1 ? 'lg:border-r lg:border-amber-300/50' : ''
                   }`}
                 >
-                  <div className="text-[#f2c14d]">{iconSvg(item.icon, 'h-8 w-8')}</div>
-                  <div className="mt-3 font-poppins text-lg font-medium text-[#fff4d8]">{item.label}</div>
-                  <div className="font-kalam text-[1.03rem] text-[#ddb65a]">{item.sub}</div>
+                  <div className="text-amber-700">{iconSvg(item.icon, 'h-8 w-8')}</div>
+                  <div className="mt-3 font-poppins text-lg font-semibold text-gray-900">{item.label}</div>
+                  <div className="font-kalam text-[1.03rem] text-amber-800 italic">{item.sub}</div>
                 </div>
               ))}
             </div>
