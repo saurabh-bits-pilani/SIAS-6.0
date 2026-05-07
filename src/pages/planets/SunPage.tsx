@@ -294,9 +294,6 @@ const howToSteps = [
 const cardBorder =
   'border border-amber-200/60 rounded-[26px] shadow-[0_16px_40px_rgba(57,31,10,0.14)]';
 
-const darkPanel =
-  'rounded-[28px] border border-[#facc15]/25 bg-[#0d1628] text-[#f9edcc] shadow-[0_24px_60px_rgba(3,7,18,0.42)]';
-
 const ariesCard =
   'bg-[#fdf6e9] border border-amber-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200';
 
@@ -1108,24 +1105,57 @@ export default function SunPage() {
               </ParchmentCard>
             </div>
 
-            <div className={`mt-6 ${darkPanel} overflow-hidden px-5 py-7 sm:px-8`}>
-              <div className="grid gap-5 lg:grid-cols-[auto_1fr_auto] lg:items-center">
-                <div className="text-[#facc15]/85">
-                  <SolarOrbitDoodle className="h-28 w-28" />
-                </div>
-                <div className="text-center">
-                  <div className="font-caveat text-3xl leading-none text-[#f8d985] sm:text-[2.6rem]">
-                    Affirmation
+            <div className="relative mt-6 overflow-hidden rounded-[30px] border border-[#facc15]/20 bg-[#08101f] px-5 py-8 shadow-[0_28px_70px_rgba(2,8,23,0.42)] sm:px-8 sm:py-9">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(251,191,36,0.22),transparent_24%),radial-gradient(circle_at_82%_22%,rgba(245,158,11,0.18),transparent_24%),linear-gradient(135deg,rgba(10,16,31,0.98),rgba(13,23,42,0.95)_45%,rgba(24,19,38,0.94))]" />
+              <div className="pointer-events-none absolute inset-0 opacity-60">
+                <SolarFieldDoodle className="absolute inset-0" />
+              </div>
+              <div className="pointer-events-none absolute -left-8 top-8 h-40 w-40 rounded-full bg-[#facc15]/10 blur-3xl" />
+              <div className="pointer-events-none absolute right-0 top-0 h-48 w-48 rounded-full bg-[#fb923c]/12 blur-3xl" />
+              <div className="pointer-events-none absolute bottom-0 left-1/2 h-28 w-[38rem] -translate-x-1/2 rounded-full bg-[#f59e0b]/10 blur-3xl" />
+
+              <div className="relative grid gap-6 lg:grid-cols-[1.1fr_1.8fr_1.1fr] lg:items-center">
+                <div className="flex items-center gap-4 lg:gap-5">
+                  <div className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-[#facc15]/30 bg-[#facc15]/8 text-[#f8d985] shadow-[0_0_28px_rgba(250,204,21,0.16)]">
+                    <Sun className="h-10 w-10" weight="duotone" />
+                    <div className="pointer-events-none absolute inset-0 rounded-full border border-[#facc15]/15" />
                   </div>
+                  <div>
+                    <div className="flex items-center gap-2 text-[#f8d985]">
+                      <Sparkle className="h-5 w-5" weight="duotone" />
+                      <span className="font-poppins text-xs font-semibold uppercase tracking-[0.35em] text-[#f8d985]/75">
+                        Solar Mantra
+                      </span>
+                    </div>
+                    <div className="mt-3 font-caveat text-3xl leading-none text-[#f8d985] sm:text-[2.7rem]">
+                      Affirmation
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center">
                   <motion.blockquote
-                    className="mt-4 font-caveat text-[2.2rem] leading-tight text-[#f4c35a] sm:text-[3rem]"
+                    className="font-caveat text-[2rem] leading-tight text-[#f4c35a] sm:text-[2.75rem] lg:text-[3.15rem]"
                     {...affirmationMotion}
                   >
                     “ I am a radiant being of light, filled with purpose and power. ”
                   </motion.blockquote>
+                  <div className="mx-auto mt-5 flex max-w-max items-center gap-3 rounded-full border border-[#facc15]/18 bg-white/5 px-4 py-2 text-[#f8d985]/80 backdrop-blur-sm">
+                    <SunHorizon className="h-5 w-5" weight="duotone" />
+                    <span className="font-poppins text-[0.68rem] font-semibold uppercase tracking-[0.3em]">
+                      Radiance · Clarity · Vitality
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-end text-[#facc15]/75">
-                  {iconSvg('mountain', 'h-20 w-20')}
+
+                <div className="flex items-center justify-center gap-4 lg:justify-end">
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-[20px] border border-[#facc15]/20 bg-[#f8d985]/6 text-[#f8d985]/80 shadow-[0_0_24px_rgba(250,204,21,0.08)]">
+                    <Sparkle className="h-8 w-8" weight="duotone" />
+                  </div>
+                  <div className="relative rounded-[28px] border border-[#facc15]/18 bg-[#facc15]/5 px-4 py-3 text-[#facc15]/80 shadow-[0_18px_36px_rgba(2,8,23,0.18)]">
+                    <Mountains className="h-14 w-14 sm:h-16 sm:w-16" weight="duotone" />
+                    <div className="pointer-events-none absolute inset-x-3 bottom-2 h-px bg-gradient-to-r from-transparent via-[#facc15]/40 to-transparent" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1307,24 +1337,98 @@ export default function SunPage() {
                   />
                 ))}
 
-                <div className={`${darkPanel} overflow-hidden px-6 py-8`}>
-                  <div className="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+                <div className="relative overflow-hidden rounded-[30px] border border-[#facc15]/35 px-6 py-8 shadow-[0_28px_70px_rgba(2,8,23,0.34)] sm:px-7 sm:py-9">
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_34%_46%,rgba(250,204,21,0.24),transparent_20%),radial-gradient(circle_at_74%_34%,rgba(251,146,60,0.18),transparent_28%),linear-gradient(135deg,#08101f_0%,#0b1730_42%,#19112b_100%)]" />
+                  <div className="pointer-events-none absolute inset-0 opacity-55 mix-blend-screen">
+                    <SolarFieldDoodle className="absolute inset-0" />
+                  </div>
+                  <div className="pointer-events-none absolute inset-y-0 right-[8%] hidden w-[44%] lg:block">
+                    <SolarOrbitDoodle className="absolute inset-0 opacity-35" />
+                  </div>
+                  <div className="pointer-events-none absolute left-0 top-0 h-44 w-44 rounded-full bg-[#facc15]/12 blur-3xl" />
+                  <div className="pointer-events-none absolute bottom-0 right-0 h-52 w-52 rounded-full bg-[#fb923c]/14 blur-3xl" />
+                  <CornerSpark className="absolute left-4 top-4 h-7 w-7 text-[#f8d985] opacity-55" />
+                  <CornerSpark className="absolute right-4 top-4 h-7 w-7 text-[#f8d985] opacity-55" />
+
+                  <div className="relative grid gap-6 lg:grid-cols-[1.3fr_auto_1fr] lg:items-center">
                     <div className="text-left">
-                      <div className="font-caveat text-[2.2rem] leading-tight text-[#f8d985]">
-                        Let the light within you rise.
+                      <div className="flex items-center gap-2 text-[#f8d985]/80">
+                        <Sun className="h-5 w-5" weight="duotone" />
+                        <Sparkle className="h-4.5 w-4.5" weight="duotone" />
                       </div>
-                      <p className="mt-2 font-kalam text-[1.05rem] leading-relaxed text-white/78">
-                        {footerCta.subheading}
+                      <div className="mt-3 font-caveat text-[2.2rem] leading-tight text-[#f8d985] sm:text-[2.7rem]">
+                        Let the{' '}
+                        <UnderlineScribble color="#C9A84C" show={!prefersReducedMotion}>
+                          <span className="inline-block">light within</span>
+                        </UnderlineScribble>{' '}
+                        you rise.
+                      </div>
+                      <p className="mt-3 font-kalam text-[1.05rem] leading-relaxed text-white/80">
+                        Embrace the energy of{' '}
+                        <CircleCallout color="#C9A84C" show={!prefersReducedMotion}>
+                          <span className="inline-block text-[#f8d985]">Surya</span>
+                        </CircleCallout>{' '}
+                        and live with clarity, purpose and power.
                       </p>
                     </div>
-                    <img src={DIYA_URL} alt="" aria-hidden="true" className="mx-auto h-20 w-20" />
-                    <div className="flex justify-start lg:justify-end">
-                      <Link
-                        to={footerCta.href}
-                        className="inline-flex items-center gap-2 rounded-full border border-[#facc15]/55 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#f8e4a7] transition hover:bg-[#facc15]/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#facc15]"
+
+                    <div className="flex justify-center">
+                      <motion.div
+                        animate={
+                          prefersReducedMotion
+                            ? { opacity: 1 }
+                            : {
+                                scale: [1, 1.04, 1],
+                                opacity: [0.92, 1, 0.92],
+                              }
+                        }
+                        transition={
+                          prefersReducedMotion
+                            ? undefined
+                            : {
+                                duration: 2.8,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                              }
+                        }
+                        className="relative"
                       >
-                        {footerCta.button}
-                      </Link>
+                        <div className="pointer-events-none absolute inset-0 rounded-full bg-[#facc15]/18 blur-2xl" />
+                        <img src={DIYA_URL} alt="" aria-hidden="true" className="relative mx-auto h-20 w-20 sm:h-24 sm:w-24" />
+                      </motion.div>
+                    </div>
+
+                    <div className="flex justify-start lg:justify-end">
+                      <motion.div
+                        animate={
+                          prefersReducedMotion
+                            ? { opacity: 1 }
+                            : {
+                                boxShadow: [
+                                  '0 0 0 rgba(250,204,21,0)',
+                                  '0 0 22px rgba(250,204,21,0.22)',
+                                  '0 0 0 rgba(250,204,21,0)',
+                                ],
+                              }
+                        }
+                        transition={
+                          prefersReducedMotion
+                            ? undefined
+                            : {
+                                duration: 2.6,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                              }
+                        }
+                        className="rounded-full"
+                      >
+                        <Link
+                          to={footerCta.href}
+                          className="inline-flex items-center gap-2 rounded-full border border-[#facc15]/60 bg-[#facc15]/6 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#f8e4a7] transition hover:bg-[#facc15]/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#facc15]"
+                        >
+                          {footerCta.button}
+                        </Link>
+                      </motion.div>
                     </div>
                   </div>
                 </div>
