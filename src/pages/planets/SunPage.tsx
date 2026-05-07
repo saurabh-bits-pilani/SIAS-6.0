@@ -267,6 +267,28 @@ const cardBorder =
 const darkPanel =
   'rounded-[28px] border border-[#facc15]/25 bg-[#0d1628] text-[#f9edcc] shadow-[0_24px_60px_rgba(3,7,18,0.42)]';
 
+const SUN_STRIP_BG_URL = `${PLANET_SUN}/sun-strip-bg.webp`;
+
+const darkPanelBgStyle = {
+  backgroundImage: `linear-gradient(rgba(11,17,32,0.55), rgba(11,17,32,0.55)), url('${SUN_STRIP_BG_URL}')`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+};
+
+const darkCtaBgStyle = {
+  backgroundImage: `linear-gradient(rgba(11,17,32,0.70), rgba(11,17,32,0.70)), url('${SUN_STRIP_BG_URL}')`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'right center',
+  backgroundRepeat: 'no-repeat',
+};
+
+const ariesCard =
+  'bg-[#fdf6e9] border border-amber-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200';
+
+const ariesIconCircle =
+  'w-10 h-10 rounded-full bg-amber-100 border border-amber-300/60 flex items-center justify-center mb-4 text-amber-700';
+
 const breadcrumbItems = [
   { label: 'Home', href: '/' },
   { label: 'Planets', href: '/planets' },
@@ -597,10 +619,7 @@ function SidebarAccordion({
   onToggle: () => void;
 }) {
   return (
-    <div
-      className="overflow-hidden rounded-[22px] border border-[#d8bb75]/45 bg-white/45 shadow-[0_12px_26px_rgba(84,52,18,0.08)]"
-      style={cardTextureStyle}
-    >
+    <div className="bg-[#fdf6e9] border border-amber-200/60 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
       <button
         type="button"
         className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left"
@@ -608,7 +627,9 @@ function SidebarAccordion({
         aria-expanded={open}
       >
         <div className="flex items-center gap-3">
-          <div className="text-[#c58d19]">{iconSvg(card.icon, 'h-6 w-6')}</div>
+          <div className="w-10 h-10 rounded-full bg-amber-100 border border-amber-300/60 flex items-center justify-center text-amber-700">
+            {iconSvg(card.icon, 'h-5 w-5')}
+          </div>
           <div className="font-caveat text-[1.8rem] leading-none text-[#8f5b12]">{card.title}</div>
         </div>
         <svg
@@ -622,7 +643,7 @@ function SidebarAccordion({
         </svg>
       </button>
       {open ? (
-        <div className="border-t border-[#d8bb75]/40 px-4 pb-4 pt-3 font-kalam text-[1.05rem] leading-relaxed text-[#3f2915]">
+        <div className="border-t border-amber-200/60 px-4 pb-4 pt-3 font-kalam text-[1.05rem] leading-relaxed text-[#3f2915]">
           {card.content}
         </div>
       ) : null}
@@ -762,7 +783,7 @@ export default function SunPage() {
         </section>
 
         <section className="-mt-5 relative z-10 px-4 sm:px-6 lg:px-10">
-          <div className={`mx-auto max-w-6xl ${darkPanel} px-4 py-4 sm:px-5`}>
+          <div className={`mx-auto max-w-6xl ${darkPanel} px-4 py-4 sm:px-5`} style={darkPanelBgStyle}>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {suryaData.attributes.map((item, index) => (
                 <div
@@ -786,13 +807,11 @@ export default function SunPage() {
           </div>
           <div className="relative mx-auto max-w-[1440px]">
             <div className="grid gap-6 xl:grid-cols-[1.12fr_0.82fr_0.78fr]">
-              <ParchmentCard rotate="xl:-rotate-[0.55deg]">
+              <div className={ariesCard}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-[#d2a44a]">{iconSvg('lotus', 'h-8 w-8')}</div>
-                      <h2 className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">Sacred Mantra</h2>
-                    </div>
+                    <div className={ariesIconCircle}>{iconSvg('lotus', 'h-5 w-5')}</div>
+                    <h2 className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">Sacred Mantra</h2>
                     <div className="mt-3 h-[3px] w-44 rounded-full bg-gradient-to-r from-[#c98f1e] via-[#f5c255] to-transparent" />
                   </div>
                   <img src={STAR_ACCENT_URL} alt="" aria-hidden="true" className="h-8 w-8 opacity-75" />
@@ -820,17 +839,17 @@ export default function SunPage() {
                     </div>
                   ))}
                 </div>
-              </ParchmentCard>
+              </div>
 
-              <ParchmentCard rotate="xl:rotate-[0.25deg]">
+              <div className={ariesCard}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
+                    <div className={ariesIconCircle}>{iconSvg('sun', 'h-5 w-5')}</div>
                     <h2 className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">
                       Surya in Our Life
                     </h2>
                     <div className="mt-3 h-[3px] w-36 rounded-full bg-gradient-to-r from-[#c98f1e] via-[#f5c255] to-transparent" />
                   </div>
-                  <div className="text-[#d2a44a]">{iconSvg('sun', 'h-9 w-9')}</div>
                 </div>
 
                 <div className="mt-6 space-y-3.5">
@@ -843,9 +862,9 @@ export default function SunPage() {
                     </div>
                   ))}
                 </div>
-              </ParchmentCard>
+              </div>
 
-              <div className={`${darkPanel} relative overflow-hidden p-6`}>
+              <div className={`${darkPanel} relative overflow-hidden p-6`} style={darkCtaBgStyle}>
                 <div className="absolute inset-0 opacity-75">
                   <SolarOrbitDoodle className="absolute inset-0 opacity-35" />
                 </div>
@@ -878,7 +897,7 @@ export default function SunPage() {
             </div>
 
             <div className="mt-6 grid gap-6 xl:grid-cols-[1.65fr_1fr]">
-              <div className={`${darkPanel} overflow-hidden p-6 sm:p-7`}>
+              <div className={`${darkPanel} overflow-hidden p-6 sm:p-7`} style={darkPanelBgStyle}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h2 className="font-caveat text-4xl leading-none text-[#f8d985] sm:text-5xl">
@@ -947,7 +966,7 @@ export default function SunPage() {
               </ParchmentCard>
             </div>
 
-            <div className={`mt-6 ${darkPanel} overflow-hidden px-5 py-7 sm:px-8`}>
+            <div className={`mt-6 ${darkPanel} overflow-hidden px-5 py-7 sm:px-8`} style={darkPanelBgStyle}>
               <div className="grid gap-5 lg:grid-cols-[auto_1fr_auto] lg:items-center">
                 <div className="text-[#facc15]/85">
                   <SolarOrbitDoodle className="h-28 w-28" />
@@ -1026,7 +1045,7 @@ export default function SunPage() {
                 {faqs.map((faq, index) => {
                   const isOpen = openFaq === index;
                   return (
-                    <ParchmentCard key={faq.question} rotate={index % 2 === 0 ? 'xl:-rotate-[0.2deg]' : 'xl:rotate-[0.15deg]'}>
+                    <div key={faq.question} className={ariesCard}>
                       <button
                         type="button"
                         onClick={() => setOpenFaq(isOpen ? -1 : index)}
@@ -1034,7 +1053,9 @@ export default function SunPage() {
                         aria-expanded={isOpen}
                       >
                         <div className="flex gap-3">
-                          <div className="mt-1 text-[#c58d19]">{iconSvg('faq', 'h-6 w-6')}</div>
+                          <div className="w-10 h-10 shrink-0 rounded-full bg-amber-100 border border-amber-300/60 flex items-center justify-center text-amber-700">
+                            {iconSvg('faq', 'h-5 w-5')}
+                          </div>
                           <div>
                             <h3 className="font-caveat text-[2rem] leading-tight text-[#3a2413] sm:text-[2.5rem]">
                               {faq.question}
@@ -1089,7 +1110,7 @@ export default function SunPage() {
                           ) : null}
                         </div>
                       ) : null}
-                    </ParchmentCard>
+                    </div>
                   );
                 })}
               </div>
@@ -1104,7 +1125,7 @@ export default function SunPage() {
                   />
                 ))}
 
-                <div className={`${darkPanel} overflow-hidden px-6 py-8`}>
+                <div className={`${darkPanel} overflow-hidden px-6 py-8`} style={darkPanelBgStyle}>
                   <div className="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
                     <div className="text-left">
                       <div className="font-caveat text-[2.2rem] leading-tight text-[#f8d985]">
