@@ -288,8 +288,8 @@ const ariesCard =
 
 const ariesCardRich =
   'bg-[#fdf6e9] border border-amber-200/50 rounded-2xl p-6 ' +
-  'shadow-[0_8px_32px_rgba(0,0,0,0.35),0_2px_8px_rgba(201,168,76,0.15)] ' +
-  'hover:shadow-[0_16px_48px_rgba(0,0,0,0.45),0_4px_16px_rgba(201,168,76,0.25)] ' +
+  'shadow-[0_8px_32px_rgba(0,0,0,0.5),0_2px_8px_rgba(201,168,76,0.20)] ' +
+  'hover:shadow-[0_16px_48px_rgba(0,0,0,0.6),0_4px_16px_rgba(201,168,76,0.30)] ' +
   'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden';
 
 const ariesIconCircle =
