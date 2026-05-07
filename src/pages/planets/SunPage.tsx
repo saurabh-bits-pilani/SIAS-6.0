@@ -287,7 +287,10 @@ const ariesCard =
   'bg-[#fdf6e9] border border-amber-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200';
 
 const ariesCardRich =
-  'bg-[#fdf6e9] border-2 border-amber-300/70 rounded-2xl p-6 shadow-md relative overflow-hidden';
+  'bg-[#fdf6e9] border border-amber-200/50 rounded-2xl p-6 ' +
+  'shadow-[0_8px_32px_rgba(0,0,0,0.35),0_2px_8px_rgba(201,168,76,0.15)] ' +
+  'hover:shadow-[0_16px_48px_rgba(0,0,0,0.45),0_4px_16px_rgba(201,168,76,0.25)] ' +
+  'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden';
 
 const ariesIconCircle =
   'w-10 h-10 rounded-full bg-amber-100 border border-amber-300/60 flex items-center justify-center mb-4 text-amber-700';
@@ -622,7 +625,14 @@ function SidebarAccordion({
   onToggle: () => void;
 }) {
   return (
-    <div className="bg-[#fdf6e9] border-2 border-amber-300/70 rounded-2xl shadow-md relative overflow-hidden">
+    <div
+      className={
+        'bg-[#fdf6e9] border border-amber-200/50 rounded-2xl ' +
+        'shadow-[0_8px_32px_rgba(0,0,0,0.35),0_2px_8px_rgba(201,168,76,0.15)] ' +
+        'hover:shadow-[0_16px_48px_rgba(0,0,0,0.45),0_4px_16px_rgba(201,168,76,0.25)] ' +
+        'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden'
+      }
+    >
       <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full bg-gradient-to-bl from-amber-200/40 to-transparent pointer-events-none" />
       <button
         type="button"
