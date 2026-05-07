@@ -40,13 +40,6 @@ const pageShellStyle = {
   backgroundRepeat: 'no-repeat',
 };
 
-const cardsSectionBgStyle = {
-  backgroundImage: `url('${PLANET_SUN}/sun-bg-for-cards.webp')`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-};
-
 const cardTextureStyle = {
   backgroundImage: `linear-gradient(rgba(245,230,200,0.96), rgba(245,230,200,0.95)), url(${PARCHMENT_URL})`,
   backgroundSize: 'cover',
@@ -279,7 +272,7 @@ const ariesCard =
   'bg-[#fdf6e9] border border-amber-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200';
 
 const ariesCardRich =
-  'bg-white/80 backdrop-blur-sm border border-amber-200/60 rounded-2xl p-6 ' +
+  'bg-white border border-amber-100 rounded-2xl p-6 ' +
   'shadow-[0_4px_24px_rgba(0,0,0,0.10),0_1px_4px_rgba(0,0,0,0.06)] ' +
   'hover:shadow-[0_8px_32px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.08)] ' +
   'hover:-translate-y-1 transition-all duration-300 ease-out relative';
@@ -619,7 +612,7 @@ function SidebarAccordion({
   return (
     <div
       className={
-        'bg-white/80 backdrop-blur-sm border border-amber-200/60 rounded-2xl ' +
+        'bg-white border border-amber-100 rounded-2xl ' +
         'shadow-[0_4px_24px_rgba(0,0,0,0.10),0_1px_4px_rgba(0,0,0,0.06)] ' +
         'hover:shadow-[0_8px_32px_rgba(0,0,0,0.14)] ' +
         'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden'
@@ -809,10 +802,7 @@ export default function SunPage() {
           </div>
         </section>
 
-        <section
-          className="relative px-4 pb-8 pt-8 sm:px-6 lg:px-10 [background-attachment:scroll] md:[background-attachment:fixed]"
-          style={cardsSectionBgStyle}
-        >
+        <section className="relative px-4 pb-8 pt-8 sm:px-6 lg:px-10">
           <div className="pointer-events-none absolute inset-0 opacity-15 mix-blend-multiply">
             <SolarFieldDoodle className="absolute inset-0" />
           </div>
@@ -946,7 +936,7 @@ export default function SunPage() {
                 </div>
               </div>
 
-              <div className={ariesCardRich}>
+              <ParchmentCard rotate="xl:rotate-[0.35deg]">
                 <div className="grid gap-4 md:grid-cols-[0.88fr_1.12fr] md:items-center">
                   <div>
                     <div className="font-caveat text-4xl leading-none text-[#3a2413] sm:text-5xl">
@@ -981,7 +971,7 @@ export default function SunPage() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </ParchmentCard>
             </div>
 
             <div className={`mt-6 ${darkPanel} overflow-hidden px-5 py-7 sm:px-8`}>
@@ -1056,10 +1046,7 @@ export default function SunPage() {
           </div>
         </section>
 
-        <section
-          className="px-4 pb-10 pt-3 sm:px-6 lg:px-10 [background-attachment:scroll] md:[background-attachment:fixed]"
-          style={cardsSectionBgStyle}
-        >
+        <section className="px-4 pb-10 pt-3 sm:px-6 lg:px-10">
           <div className="mx-auto max-w-[1440px]">
             <div className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr] xl:items-start">
               <div className="space-y-5">
