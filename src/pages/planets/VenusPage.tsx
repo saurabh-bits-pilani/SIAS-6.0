@@ -1,6 +1,32 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import useEmblaCarousel from 'embla-carousel-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  CaretDown,
+  Compass,
+  Crown,
+  Diamond,
+  Drop,
+  Flower,
+  FlowerLotus,
+  GenderFemale,
+  HandsPraying,
+  Heart,
+  MusicNote,
+  Planet,
+  Question,
+  Sparkle,
+  Star,
+} from '@phosphor-icons/react';
 import SEOHead from '../../components/SEOHead';
+import CircleCallout from '../../components/doodles/CircleCallout';
+import CornerSpark from '../../components/doodles/CornerSpark';
+import HighlightStroke from '../../components/doodles/HighlightStroke';
+import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
   getArticleSchema,
   getBreadcrumbSchema,
@@ -11,6 +37,7 @@ import {
 } from '../../data/schema-entities';
 
 const VENUS_R2_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
+const PLANET_HUB = `${VENUS_R2_BASE}/Pillar/Hub/Planets`;
 
 const HERO_URL = `${VENUS_R2_BASE}/Pillar/Planets/Venus/hero-shukra.webp`;
 const CRYSTAL_URL = `${VENUS_R2_BASE}/Pillar/Planets/Shared/doodle-crystal.svg`;
@@ -27,6 +54,8 @@ const PARCHMENT_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/parchment-texture.webp';
 const PAGE_PARCHMENT_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets/bg-parchment-texture.webp';
+
+const VENUS_ACCENT = '#E86BA0';
 
 const PAGE_TITLE = 'Shukra (Venus), The Lord of Love and Refinement | Soul Infinity';
 const PAGE_DESCRIPTION =
@@ -68,7 +97,10 @@ type IconName =
   | 'lotus'
   | 'veena'
   | 'lakshmi'
-  | 'white';
+  | 'white'
+  | 'heart'
+  | 'sparkle'
+  | 'art';
 
 type QuickFact = {
   icon: IconName;
@@ -105,6 +137,21 @@ type Association = {
   icon: IconName;
 };
 
+type ConnectStep = {
+  num: string;
+  label: string;
+  icon: IconName;
+};
+
+type Navagraha = {
+  name: string;
+  sanskrit: string;
+  href: string;
+  img: string;
+  slug: string;
+  current?: boolean;
+};
+
 const quickFacts: QuickFact[] = [
   { icon: 'planet', label: 'Planet', value: 'Shukra' },
   { icon: 'water', label: 'Element', value: 'Water' },
@@ -112,6 +159,14 @@ const quickFacts: QuickFact[] = [
   { icon: 'silver', label: 'Metal', value: 'Silver' },
   { icon: 'day', label: 'Day', value: 'Friday' },
   { icon: 'direction', label: 'Direction', value: 'South-East' },
+];
+
+const heroAttributes: { icon: IconName; label: string; sub: string }[] = [
+  { icon: 'heart', label: 'Love', sub: 'Prema' },
+  { icon: 'lotus', label: 'Beauty', sub: 'Saundarya' },
+  { icon: 'art', label: 'Art', sub: 'Kala' },
+  { icon: 'feminine', label: 'Harmony', sub: 'Samanvaya' },
+  { icon: 'sparkle', label: 'Refinement', sub: 'Madhurya' },
 ];
 
 const mantras: MantraBlock[] = [
@@ -164,6 +219,14 @@ const connectPractices = [
   'Practice kindness, generosity, and beauty in daily life.',
 ];
 
+const connectSteps: ConnectStep[] = [
+  { num: '01', label: 'Offer white flowers\non Fridays', icon: 'lotus' },
+  { num: '02', label: 'Chant Shukra\nmantras', icon: 'connect' },
+  { num: '03', label: 'Wear Diamond\nin silver', icon: 'gem' },
+  { num: '04', label: 'Cultivate art,\nmusic, or dance', icon: 'art' },
+  { num: '05', label: 'Honor women and\npractice kindness', icon: 'heart' },
+];
+
 const associations: Association[] = [
   { title: 'Taurus', subtitle: 'Ruling Sign', icon: 'taurus' },
   { title: 'Libra', subtitle: 'Co-ruling Sign', icon: 'libra' },
@@ -174,6 +237,20 @@ const associations: Association[] = [
   { title: 'Lakshmi', subtitle: 'Divine Connection', icon: 'lakshmi' },
   { title: 'South-East', subtitle: 'Direction', icon: 'direction' },
 ];
+
+const navagrahas: Navagraha[] = [
+  { name: 'Surya', sanskrit: 'सूर्य', href: '/planets/sun', img: 'hero-surya.webp', slug: 'sun' },
+  { name: 'Chandra', sanskrit: 'चंद्र', href: '/planets/moon', img: 'hero-chandra.webp', slug: 'moon' },
+  { name: 'Mangal', sanskrit: 'मंगल', href: '/planets/mars', img: 'hero-mangala.webp', slug: 'mars' },
+  { name: 'Budha', sanskrit: 'बुध', href: '/planets/mercury', img: 'hero-budha.webp', slug: 'mercury' },
+  { name: 'Guru', sanskrit: 'गुरु', href: '/planets/jupiter', img: 'hero-guru.webp', slug: 'jupiter' },
+  { name: 'Shukra', sanskrit: 'शुक्र', href: '/planets/venus', img: 'hero-shukra.webp', slug: 'venus', current: true },
+  { name: 'Shani', sanskrit: 'शनि', href: '/planets/saturn', img: 'hero-shani.webp', slug: 'saturn' },
+  { name: 'Rahu', sanskrit: 'राहु', href: '/planets/rahu', img: 'hero-rahu.webp', slug: 'rahu' },
+  { name: 'Ketu', sanskrit: 'केतु', href: '/planets/ketu', img: 'hero-ketu.webp', slug: 'ketu' },
+];
+
+const navagrahaImage = (img: string) => `${PLANET_HUB}/${img}`;
 
 const editorialSections: EditorialSection[] = [
   {
@@ -483,6 +560,111 @@ function iconSvg(name: IconName, className = 'h-6 w-6'): JSX.Element {
           <path d="M6 18c2-2 4-3 6-3s4 1 6 3" strokeLinecap="round" />
         </svg>
       );
+    case 'heart':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.7">
+          <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
+        </svg>
+      );
+    case 'sparkle':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.7">
+          <path d="M12 3v6M12 15v6M3 12h6M15 12h6" strokeLinecap="round" />
+          <path d="M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3" strokeLinecap="round" />
+        </svg>
+      );
+    case 'art':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.6">
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="7" cy="10" r="1" />
+          <circle cx="12" cy="7" r="1" />
+          <circle cx="17" cy="10" r="1" />
+          <path d="M9 17c0-2 1.5-3 3-3s3 1 3 3" strokeLinecap="round" />
+        </svg>
+      );
+  }
+}
+
+function attributeIcon(name: IconName): JSX.Element {
+  const className = 'h-8 w-8';
+  switch (name) {
+    case 'heart':
+      return <Heart className={className} weight="duotone" />;
+    case 'lotus':
+      return <FlowerLotus className={className} weight="duotone" />;
+    case 'art':
+      return <MusicNote className={className} weight="duotone" />;
+    case 'feminine':
+      return <GenderFemale className={className} weight="duotone" />;
+    case 'sparkle':
+      return <Sparkle className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function quickFactIcon(name: IconName): JSX.Element {
+  const className = 'h-7 w-7 sm:h-8 sm:w-8';
+  switch (name) {
+    case 'planet':
+      return <Planet className={className} weight="duotone" />;
+    case 'water':
+      return <Drop className={className} weight="duotone" />;
+    case 'feminine':
+      return <GenderFemale className={className} weight="duotone" />;
+    case 'silver':
+      return <Sparkle className={className} weight="duotone" />;
+    case 'day':
+      return <Calendar className={className} weight="duotone" />;
+    case 'direction':
+      return <Compass className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function connectStepIcon(name: IconName): JSX.Element {
+  const className = 'h-6 w-6';
+  switch (name) {
+    case 'lotus':
+      return <FlowerLotus className={className} weight="duotone" />;
+    case 'connect':
+      return <HandsPraying className={className} weight="duotone" />;
+    case 'gem':
+      return <Diamond className={className} weight="duotone" />;
+    case 'art':
+      return <MusicNote className={className} weight="duotone" />;
+    case 'heart':
+      return <Heart className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function sidebarIcon(name: IconName): JSX.Element {
+  const className = 'h-5 w-5';
+  switch (name) {
+    case 'sign':
+      return <Planet className={className} weight="duotone" />;
+    case 'up':
+      return <Sparkle className={className} weight="duotone" />;
+    case 'down':
+      return <Drop className={className} weight="duotone" />;
+    case 'gem':
+      return <Diamond className={className} weight="duotone" />;
+    case 'heart':
+      return <Heart className={className} weight="duotone" />;
+    case 'lotus':
+      return <FlowerLotus className={className} weight="duotone" />;
+    case 'symbol':
+      return <Star className={className} weight="duotone" />;
+    case 'direction':
+      return <Compass className={className} weight="duotone" />;
+    case 'day':
+      return <Calendar className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
   }
 }
 
@@ -571,8 +753,85 @@ function DiamondRingIllustration() {
   );
 }
 
+const sidebarItems: { title: string; icon: IconName; content: string }[] = [
+  { title: 'Zodiac Signs', icon: 'sign', content: 'Rules Taurus (Vrishabha) and Libra (Tula).' },
+  { title: 'Exalted (Uchcha)', icon: 'up', content: 'Pisces (Meena), 27 degrees.' },
+  { title: 'Debilitated (Neecha)', icon: 'down', content: 'Virgo (Kanya).' },
+  { title: 'Best Time', icon: 'day', content: 'Friday (Shukravara), early morning, white-clothed practice.' },
+  { title: 'Sacred Symbol', icon: 'symbol', content: 'White lotus, veena, diamond, silver mala.' },
+  {
+    title: 'When Shukra is balanced',
+    icon: 'heart',
+    content:
+      'Quiet magnetism, refined taste, harmonious relationships, and an instinct for choosing the right colour, word, or gesture.',
+  },
+  {
+    title: 'When Shukra is afflicted',
+    icon: 'down',
+    content:
+      'Relationship struggles, marriage delays, reproductive concerns, or a tendency to overspend on luxury without contentment.',
+  },
+];
+
+function SidebarAccordion({
+  card,
+  open,
+  onToggle,
+}: {
+  card: { title: string; icon: IconName; content: string };
+  open: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div
+      className={
+        'bg-white border border-pink-100 rounded-2xl ' +
+        'shadow-[0_4px_24px_rgba(0,0,0,0.10),0_1px_4px_rgba(0,0,0,0.06)] ' +
+        'hover:shadow-[0_8px_32px_rgba(0,0,0,0.14)] ' +
+        'hover:-translate-y-1 transition-all duration-300 ease-out relative overflow-hidden'
+      }
+      style={cardTextureStyle}
+    >
+      <button
+        type="button"
+        className="relative flex w-full items-center justify-between gap-3 px-4 py-4 text-left"
+        onClick={onToggle}
+        aria-expanded={open}
+      >
+        <div className="flex items-center gap-3">
+          <div
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white"
+            style={{ backgroundColor: VENUS_ACCENT }}
+          >
+            {sidebarIcon(card.icon)}
+          </div>
+          <div className="font-caveat text-[1.8rem] leading-none text-[#9d174d]">{card.title}</div>
+        </div>
+        <CaretDown
+          className={`h-5 w-5 text-[#9d174d] transition-transform ${open ? 'rotate-180' : ''}`}
+          weight="regular"
+        />
+      </button>
+      {open ? (
+        <div className="border-t border-pink-200/60 px-4 pb-4 pt-3 font-kalam text-[1.05rem] leading-relaxed text-gray-800">
+          {card.content}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function VenusPage() {
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const [openSidebar, setOpenSidebar] = useState<number>(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    dragFree: true,
+    containScroll: 'trimSnaps',
+  });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const schemas = useMemo<JsonLd[]>(
     () => [
@@ -628,6 +887,71 @@ export default function VenusPage() {
     ],
     [],
   );
+
+  const syncEmblaButtons = useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    syncEmblaButtons();
+    emblaApi.on('select', syncEmblaButtons);
+    emblaApi.on('reInit', syncEmblaButtons);
+    return () => {
+      emblaApi.off('select', syncEmblaButtons);
+      emblaApi.off('reInit', syncEmblaButtons);
+    };
+  }, [emblaApi, syncEmblaButtons]);
+
+  const heroTitleMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 18 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, ease: 'easeOut' },
+      };
+
+  const staggerParent = (staggerChildren: number, delayChildren = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: 'hidden',
+          whileInView: 'show',
+          viewport: { once: true, amount: 0.2 },
+          variants: {
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren,
+                delayChildren,
+              },
+            },
+          },
+        };
+
+  const fadeUpItem = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 18 },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.45, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const affirmationMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, amount: 0.4 },
+        transition: { duration: 0.8, delay: 0.3, ease: 'easeOut' },
+      };
 
   return (
     <>
@@ -686,30 +1010,38 @@ export default function VenusPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#fbcfe8]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat leading-[0.88]">
+                <motion.h1 className="font-caveat leading-[0.88]" {...heroTitleMotion}>
                   <span className="block text-[5.8rem] text-[#fbcfe8] drop-shadow-[0_0_34px_rgba(249,168,212,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
                     Shukra
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
                     The Lord of Beauty and Refinement
                   </span>
-                </h1>
+                </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fdf2f8] sm:text-4xl">शुक्र</div>
                   <div className="font-kalam text-2xl text-[#fbcfe8] sm:text-3xl">(Venus)</div>
                 </div>
 
-                <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
-                  <p>Shukra blesses our <Highlight>love</Highlight>, <Highlight>beauty</Highlight></p>
-                  <p>and <Highlight>harmony</Highlight>.</p>
-                  <div className="flex items-center gap-3">
-                    <p>He teaches <Highlight>art</Highlight> and brings <Highlight>refinement</Highlight>.</p>
-                    <ScribbleLine />
-                  </div>
-                </div>
+                <p className="mt-8 max-w-2xl font-kalam text-[1.6rem] leading-relaxed text-[#f7efdc] sm:text-[1.95rem]">
+                  Shukra blesses our{' '}
+                  <HighlightStroke color={VENUS_ACCENT} show={!prefersReducedMotion}>
+                    <span className="text-[#fbcfe8]">love</span>
+                  </HighlightStroke>
+                  ,{' '}
+                  <UnderlineScribble color={VENUS_ACCENT} show={!prefersReducedMotion}>
+                    <span className="text-[#fbcfe8]">beauty</span>
+                  </UnderlineScribble>
+                  , and{' '}
+                  <CircleCallout color={VENUS_ACCENT} show={!prefersReducedMotion}>
+                    <span className="text-[#fbcfe8]">harmony</span>
+                  </CircleCallout>
+                  . He teaches <Highlight>art</Highlight> and brings <Highlight>refinement</Highlight>.
+                </p>
 
                 <div className="mt-8 flex items-center gap-5 text-[#f9a8d4]">
                   <ScribbleAccent className="h-14 w-14" strokeClassName="text-[#f9a8d4]/80" />
+                  <ScribbleLine />
                   <img src={CROWN_URL} alt="" aria-hidden="true" className="h-9 w-9" />
                 </div>
               </div>
@@ -732,7 +1064,7 @@ export default function VenusPage() {
                           index < quickFacts.length - 1 ? 'lg:border-r lg:border-[#755632]/30' : ''
                         }`}
                       >
-                        <div className="text-[#831843]">{iconSvg(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
+                        <div className="text-[#831843]">{quickFactIcon(fact.icon)}</div>
                         <div className="mt-1.5 font-caveat text-[1.55rem] leading-none sm:text-[1.9rem]">{fact.label}</div>
                         <div className="mt-1 font-kalam text-[0.95rem] leading-tight text-[#9d174d] sm:text-[1.08rem]">{fact.value}</div>
                       </div>
@@ -759,6 +1091,29 @@ export default function VenusPage() {
           </div>
         </aside>
 
+        <section className="-mt-1 relative z-10 px-4 pt-10 sm:px-6 lg:px-10">
+          <div
+            className="mx-auto max-w-6xl rounded-[28px] border border-pink-300/60 px-4 py-4 sm:px-5 shadow-[0_24px_60px_rgba(3,7,18,0.18)]"
+            style={cardTextureStyle}
+          >
+            <motion.div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5" {...staggerParent(0.1)}>
+              {heroAttributes.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  className={`flex min-h-[116px] flex-col items-center justify-center px-3 py-3 text-center ${
+                    index < heroAttributes.length - 1 ? 'lg:border-r lg:border-pink-300/50' : ''
+                  }`}
+                  {...fadeUpItem}
+                >
+                  <div className="text-[#be185d]">{attributeIcon(item.icon)}</div>
+                  <div className="mt-3 font-poppins text-lg font-semibold text-gray-900">{item.label}</div>
+                  <div className="font-kalam text-[1.03rem] italic" style={{ color: '#9d174d' }}>{item.sub}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={{
@@ -767,71 +1122,74 @@ export default function VenusPage() {
           }}
         >
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
-            <div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]">
-              <ParchmentCard className="min-h-full" rotate="xl:-rotate-[0.5deg]">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="mb-2 flex items-center gap-3">
-                      <span className="font-devanagari text-4xl text-[#1f140d]">ॐ</span>
-                      <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                        Sacred Mantras
-                      </h3>
+            <motion.div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]" {...staggerParent(0.15)}>
+              <motion.div {...fadeUpItem}>
+                <ParchmentCard className="relative min-h-full" rotate="xl:-rotate-[0.5deg]">
+                  <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#E86BA0]" />
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="mb-2 flex items-center gap-3">
+                        <span className="font-devanagari text-4xl text-[#1f140d]">ॐ</span>
+                        <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                          Sacred Mantras
+                        </h3>
+                      </div>
+                      <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
                     </div>
-                    <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
-                  </div>
-                  <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
-                  </div>
-                </div>
-
-                <div className="mt-6 space-y-10">
-                  {mantras.map((mantra, index) => (
-                    <div key={mantra.title}>
-                      <div className="font-caveat text-[2rem] leading-none text-[#9d174d] sm:text-[2.4rem]">
-                        {index + 1}. {mantra.title}
-                      </div>
-
-                      <div className="mt-4 rounded-[18px] border-2 border-[#be185d] bg-[#f6ebd6] px-5 py-4 shadow-[inset_0_0_20px_rgba(157,23,77,0.12)]">
-                        <div className="font-devanagari text-[1.8rem] leading-tight text-[#1e120c] sm:text-[2.15rem]">
-                          {mantra.devanagari}
-                        </div>
-                      </div>
-
-                      <div className="mt-5 space-y-3 font-kalam text-xl leading-relaxed text-[#2d1e13]">
-                        <div>
-                          <span className="font-semibold text-[#9d174d]">IAST:</span> {mantra.iast}
-                        </div>
-                        <div>
-                          <span className="font-semibold text-[#9d174d]">Meaning:</span> {mantra.meaning}
-                        </div>
-                      </div>
+                    <div className="flex items-center gap-4 text-[#2a1a10]/70">
+                      <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                      <Crown className="h-6 w-6 text-[#9d174d]" weight="duotone" />
                     </div>
-                  ))}
-                </div>
-
-                {/* Visible matching content for HowTo schema (Google policy). */}
-                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
-                  <div className="font-caveat text-[1.7rem] leading-none text-[#be185d] sm:text-[2rem]">
-                    How to Chant the Shukra Beej Mantra
                   </div>
-                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
-                    <li>Bathe and wear clean clothes in white or pink.</li>
-                    <li>Sit facing southeast on a clean mat with the spine straight.</li>
-                    <li>Hold a White Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
-                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
-                    <li>Sit quietly afterwards and offer the merit to Shukra with gratitude.</li>
-                  </ol>
-                </div>
 
-                <img
-                  src={FEATHER_URL}
-                  alt="" aria-hidden="true"
-                  className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
-                />
-              </ParchmentCard>
+                  <div className="mt-6 space-y-10">
+                    {mantras.map((mantra, index) => (
+                      <div key={mantra.title}>
+                        <div className="font-caveat text-[2rem] leading-none text-[#9d174d] sm:text-[2.4rem]">
+                          {index + 1}. {mantra.title}
+                        </div>
 
-              <div className="grid gap-6">
+                        <div className="mt-4 rounded-[18px] border-2 border-[#be185d] bg-[#f6ebd6] px-5 py-4 shadow-[inset_0_0_20px_rgba(157,23,77,0.12)]">
+                          <div className="font-devanagari text-[1.8rem] leading-tight text-[#1e120c] sm:text-[2.15rem]">
+                            {mantra.devanagari}
+                          </div>
+                        </div>
+
+                        <div className="mt-5 space-y-3 font-kalam text-xl leading-relaxed text-[#2d1e13]">
+                          <div>
+                            <span className="font-semibold text-[#9d174d]">IAST:</span> {mantra.iast}
+                          </div>
+                          <div>
+                            <span className="font-semibold text-[#9d174d]">Meaning:</span> {mantra.meaning}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Visible matching content for HowTo schema (Google policy). */}
+                  <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                    <div className="font-caveat text-[1.7rem] leading-none text-[#be185d] sm:text-[2rem]">
+                      How to Chant the Shukra Beej Mantra
+                    </div>
+                    <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                      <li>Bathe and wear clean clothes in white or pink.</li>
+                      <li>Sit facing southeast on a clean mat with the spine straight.</li>
+                      <li>Hold a White Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                      <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                      <li>Sit quietly afterwards and offer the merit to Shukra with gratitude.</li>
+                    </ol>
+                  </div>
+
+                  <img
+                    src={FEATHER_URL}
+                    alt="" aria-hidden="true"
+                    className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
+                  />
+                </ParchmentCard>
+              </motion.div>
+
+              <motion.div className="grid gap-6" {...fadeUpItem}>
                 <ParchmentCard rotate="xl:rotate-[0.4deg]">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
@@ -867,18 +1225,46 @@ export default function VenusPage() {
                     ))}
                   </div>
                 </ParchmentCard>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             <div className="mt-6">
-              <ParchmentCard rotate="lg:-rotate-[0.25deg]">
+              <ParchmentCard className="relative" rotate="lg:-rotate-[0.25deg]">
+                <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#E86BA0]" />
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                    How to Connect with Shukra
-                  </h3>
+                  <div>
+                    <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                      How to Connect with Shukra
+                    </h3>
+                    <p className="mt-3 font-kalam text-lg leading-relaxed text-[#2a190f]">
+                      Invite the gentle, beauty-loving energy of Shukra into daily life through these classical practices.
+                    </p>
+                  </div>
                   <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
-                <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
+                <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+                  {connectSteps.map((step) => (
+                    <div
+                      key={step.num}
+                      className="rounded-2xl border border-pink-200/60 bg-white/70 px-4 py-5 text-center"
+                    >
+                      <div
+                        className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border text-[#be185d]"
+                        style={{ backgroundColor: 'rgba(232,107,160,0.12)', borderColor: 'rgba(232,107,160,0.45)' }}
+                      >
+                        {connectStepIcon(step.icon)}
+                      </div>
+                      <div className="mt-4 font-poppins text-sm font-semibold tracking-[0.22em] text-[#9d174d]">
+                        {step.num}
+                      </div>
+                      <div className="mt-2 whitespace-pre-line font-kalam text-[1.05rem] leading-relaxed text-gray-800">
+                        {step.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {connectPractices.map((practice) => (
                     <div
                       key={practice}
@@ -922,14 +1308,15 @@ export default function VenusPage() {
                     Affirmation
                   </h3>
                   <div className="text-[#be185d]">
-                    <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current stroke-[1.8]">
-                      <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
-                    </svg>
+                    <Heart className="h-8 w-8" weight="duotone" />
                   </div>
                 </div>
-                <div className="mt-8 font-kalam text-[2rem] leading-snug text-[#831843] sm:text-[2.4rem]">
+                <motion.div
+                  className="mt-8 font-kalam text-[2rem] leading-snug text-[#831843] sm:text-[2.4rem]"
+                  {...affirmationMotion}
+                >
                   &ldquo;I am loved, I am beautiful, I attract harmony and grace into every relationship of my life.&rdquo;
-                </div>
+                </motion.div>
                 <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
                   This affirmation supports tenderness without dependence, beauty without vanity, and partnership held as sadhana.
                 </div>
@@ -986,6 +1373,95 @@ export default function VenusPage() {
                 </div>
               </div>
             </div>
+
+            {/* Navagraha hub carousel */}
+            <div className="mt-8 rounded-[28px] border border-[#d8a3c1]/45 bg-white/55 px-5 py-6 shadow-[0_16px_40px_rgba(57,31,72,0.10)]">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollPrev()}
+                  disabled={!canScrollPrev}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8a3c1] bg-white/70 text-[#9d174d] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E86BA0]"
+                  aria-label="Scroll planets left"
+                >
+                  <ArrowLeft className="h-5 w-5" weight="regular" />
+                </button>
+                <div className="text-center">
+                  <div className="font-caveat text-3xl leading-none text-[#9d174d] sm:text-4xl">
+                    Explore All Navagrahas
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollNext()}
+                  disabled={!canScrollNext}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8a3c1] bg-white/70 text-[#9d174d] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E86BA0]"
+                  aria-label="Scroll planets right"
+                >
+                  <ArrowRight className="h-5 w-5" weight="regular" />
+                </button>
+              </div>
+
+              <div className="mt-5 overflow-hidden" ref={emblaRef}>
+                <div className="-ml-4 flex">
+                  {navagrahas.map((planet) => {
+                    const isVenus = planet.slug === 'venus';
+                    const card = (
+                      <Link
+                        to={planet.href}
+                        className={`block min-w-0 rounded-[22px] border px-4 py-4 text-center transition hover:-translate-y-0.5 ${
+                          isVenus
+                            ? 'border-[#E86BA0] bg-[#fdf2f8] ring-2 ring-[#E86BA0]'
+                            : 'border-[#e7c7d8] bg-white/70'
+                        }`}
+                      >
+                        <img
+                          src={navagrahaImage(planet.img)}
+                          alt={`${planet.name} planet portrait`}
+                          className="mx-auto h-16 w-16 rounded-full object-cover shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+                        />
+                        <div className="mt-3 font-poppins text-sm font-semibold text-[#2f1b22]">{planet.name}</div>
+                        <div className="font-devanagari text-lg text-[#9d174d]">{planet.sanskrit}</div>
+                      </Link>
+                    );
+
+                    return (
+                      <div key={planet.name} className="min-w-0 flex-[0_0_120px] pl-4 sm:flex-[0_0_132px]">
+                        {isVenus ? (
+                          <motion.div
+                            animate={
+                              prefersReducedMotion
+                                ? { opacity: 1 }
+                                : {
+                                    boxShadow: [
+                                      '0 0 0 rgba(232,107,160,0)',
+                                      '0 0 26px rgba(232,107,160,0.45)',
+                                      '0 0 0 rgba(232,107,160,0)',
+                                    ],
+                                  }
+                            }
+                            transition={
+                              prefersReducedMotion
+                                ? undefined
+                                : {
+                                    duration: 1.6,
+                                    repeat: Infinity,
+                                    ease: 'easeInOut',
+                                  }
+                            }
+                            className="rounded-[22px]"
+                          >
+                            {card}
+                          </motion.div>
+                        ) : (
+                          card
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1033,7 +1509,16 @@ export default function VenusPage() {
                 ))}
               </div>
 
-              <div className="space-y-6 lg:sticky lg:top-24">
+              <div className="space-y-5 lg:sticky lg:top-24">
+                {sidebarItems.map((card, index) => (
+                  <SidebarAccordion
+                    key={card.title}
+                    card={card}
+                    open={openSidebar === index}
+                    onToggle={() => setOpenSidebar(openSidebar === index ? -1 : index)}
+                  />
+                ))}
+
                 <ParchmentCard rotate="lg:rotate-[0.35deg]">
                   <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Quick Facts</h3>
                   <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
@@ -1084,81 +1569,86 @@ export default function VenusPage() {
                   </p>
                 </ParchmentCard>
 
-                <ParchmentCard rotate="lg:-rotate-[0.35deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Signs of a Strong Shukra</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
-                  <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <li>Quiet magnetism rather than loud charm</li>
-                    <li>Refined voice and pleasing features</li>
-                    <li>Harmony in close relationships</li>
-                    <li>Aptitude for arts, music, design</li>
-                    <li>Financial comfort without ostentation</li>
-                    <li>Instinctive sense for the right colour or word</li>
-                    <li>Marriage that ripens into companionship</li>
-                  </ul>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:rotate-[0.3deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Signs of a Weakened Shukra</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
-                  <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <li>Persistent relationship disappointments</li>
-                    <li>Marriage delays or unstable partnerships</li>
-                    <li>Reproductive or hormonal concerns</li>
-                    <li>Overspending on luxury without contentment</li>
-                    <li>Difficulty appreciating everyday beauty</li>
-                    <li>Indulgence that consumes without satisfying</li>
-                  </ul>
-                  <p className="mt-3 font-kalam text-sm italic leading-relaxed text-[#2a190f]/75">
-                    Always best to verify with a full chart reading by a qualified jyotishi.
-                  </p>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:-rotate-[0.4deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Shukra in Houses at a Glance</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
-                  <div className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <div><span className="font-semibold text-[#9d174d]">1st:</span> Charming features, refined taste</div>
-                    <div><span className="font-semibold text-[#9d174d]">2nd:</span> Wealth through art, sweet speech</div>
-                    <div><span className="font-semibold text-[#9d174d]">4th:</span> Comfortable home, fine vehicles</div>
-                    <div><span className="font-semibold text-[#9d174d]">5th:</span> Love affairs, artistic children</div>
-                    <div><span className="font-semibold text-[#9d174d]">7th:</span> Charming spouse, partnership business</div>
-                    <div><span className="font-semibold text-[#9d174d]">9th:</span> Dharmic spouse, foreign love</div>
-                    <div><span className="font-semibold text-[#9d174d]">10th:</span> Career in arts, fashion, hospitality</div>
-                    <div><span className="font-semibold text-[#9d174d]">12th:</span> Foreign romance, spiritual love</div>
+                {/* Hero CTA Banner with radial gradient and pulsing button */}
+                <div
+                  className="relative overflow-hidden rounded-[30px] border border-[#E86BA0]/35 px-6 py-8 shadow-[0_28px_70px_rgba(40,8,30,0.34)] sm:px-7 sm:py-9"
+                  style={{
+                    background: 'radial-gradient(circle at center, rgba(232,107,160,0.18), transparent 65%)',
+                    backgroundColor: '#1a0a14',
+                  }}
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(232,107,160,0.22),transparent_28%),radial-gradient(circle_at_75%_30%,rgba(244,114,182,0.18),transparent_28%),linear-gradient(135deg,#1a0a14_0%,#28102b_42%,#3a1430_100%)]" />
+                  <div className="pointer-events-none absolute inset-0 opacity-50 mix-blend-screen">
+                    <NebulaDoodle className="absolute inset-0" />
                   </div>
-                  <p className="mt-3 font-kalam text-sm italic leading-relaxed text-[#2a190f]/75">
-                    Read as patterns, never as predictions.
-                  </p>
-                </ParchmentCard>
+                  <div className="pointer-events-none absolute inset-y-0 right-[8%] hidden w-[44%] lg:block">
+                    <PetalDoodle className="absolute inset-0 opacity-40" />
+                  </div>
+                  <div className="pointer-events-none absolute left-0 top-0 h-44 w-44 rounded-full bg-[#E86BA0]/14 blur-3xl" />
+                  <div className="pointer-events-none absolute bottom-0 right-0 h-52 w-52 rounded-full bg-[#f472b6]/16 blur-3xl" />
+                  <CornerSpark className="absolute left-4 top-4 w-7 h-7 text-[#fbcfe8] opacity-55" />
+                  <CornerSpark className="absolute right-4 top-4 w-7 h-7 text-[#fbcfe8] opacity-55" />
 
-                <ParchmentCard rotate="lg:rotate-[0.35deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Mahadasha at a Glance</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
-                  <div className="mt-4 space-y-2.5 font-kalam text-base leading-snug text-[#2a190f]">
-                    <div><span className="font-semibold text-[#9d174d]">Period:</span> 20 years (Vimshottari, longest of all planets)</div>
-                    <div><span className="font-semibold text-[#9d174d]">Themes:</span> Love, marriage, art, vehicles, refinement</div>
-                    <div><span className="font-semibold text-[#9d174d]">Favourable:</span> Marriage at the right time, childbirth, real estate, artistic recognition</div>
-                    <div><span className="font-semibold text-[#9d174d]">Challenging:</span> Relationship conflict, reproductive concerns, luxury overreach</div>
-                    <div className="pt-1 italic text-[#2a190f]/80">
-                      Antardasha sub-periods refine the year-by-year shape.
+                  <div className="relative">
+                    <div className="flex items-center gap-2 text-[#fbcfe8]">
+                      <Heart className="h-6 w-6 text-[#E86BA0]" weight="duotone" />
+                      <Flower className="h-5 w-5" weight="duotone" />
+                      <span className="font-poppins text-xs font-semibold uppercase tracking-[0.35em] text-[#fbcfe8]/80">
+                        Venus Blessing
+                      </span>
+                    </div>
+                    <div className="mt-3 font-caveat text-[2.2rem] leading-tight text-[#fbcfe8] sm:text-[2.7rem]">
+                      Let{' '}
+                      <UnderlineScribble color={VENUS_ACCENT} show={!prefersReducedMotion}>
+                        <span className="inline-block">love and beauty</span>
+                      </UnderlineScribble>{' '}
+                      bloom within you.
+                    </div>
+                    <p className="mt-3 font-kalam text-[1.05rem] leading-relaxed text-white/85">
+                      Embrace the gentle wisdom of{' '}
+                      <CircleCallout color={VENUS_ACCENT} show={!prefersReducedMotion}>
+                        <span className="inline-block text-[#fbcfe8]">Shukra</span>
+                      </CircleCallout>{' '}
+                      and live with grace, harmony, and refined devotion.
+                    </p>
+
+                    <div className="mt-6 flex flex-wrap items-center gap-4">
+                      <motion.div
+                        animate={
+                          prefersReducedMotion
+                            ? { opacity: 1 }
+                            : {
+                                boxShadow: [
+                                  '0 0 0 rgba(232,107,160,0.0)',
+                                  '0 0 28px rgba(232,107,160,0.55)',
+                                  '0 0 0 rgba(232,107,160,0.0)',
+                                ],
+                              }
+                        }
+                        transition={
+                          prefersReducedMotion
+                            ? undefined
+                            : {
+                                duration: 1.6,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                              }
+                        }
+                        className="rounded-full"
+                      >
+                        <Link
+                          to="/contact"
+                          className="inline-flex items-center gap-2 rounded-full border border-[#E86BA0]/70 bg-[#E86BA0]/10 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#fbcfe8] transition hover:bg-[#E86BA0]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E86BA0]"
+                        >
+                          Explore Personalized Remedies <span aria-hidden="true">→</span>
+                        </Link>
+                      </motion.div>
+                      <div className="text-[#fbcfe8]/70">
+                        <FlowerLotus className="h-10 w-10" weight="duotone" />
+                      </div>
                     </div>
                   </div>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:-rotate-[0.3deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Friday Practice</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#be185d] via-[#f472b6] to-transparent" />
-                  <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <li>Wear a touch of white on Fridays</li>
-                    <li>Light fast and visit a Lakshmi or Saraswati temple</li>
-                    <li>Offer sweet rice, curd, sugar, or perfume</li>
-                    <li>Donate sweets, white cloth, silver, or fund a wedding</li>
-                    <li>Tend to cleanliness and grace in speech</li>
-                    <li>Wear Diamond, White Sapphire, or Opal after consultation</li>
-                    <li>Recite the Beej mantra 108 times in a quiet hour</li>
-                  </ul>
-                </ParchmentCard>
+                </div>
 
                 <ParchmentCard rotate="lg:rotate-[0.25deg]">
                   <div className="font-caveat text-xl italic leading-tight text-[#9d174d]/85">
@@ -1219,7 +1709,9 @@ export default function VenusPage() {
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="mt-1 text-[#9d174d]">{iconSvg('faq', 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#9d174d]">
+                          <Question className="h-6 w-6" weight="regular" />
+                        </div>
                         <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#9d174d]">

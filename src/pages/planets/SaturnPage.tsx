@@ -1,6 +1,35 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import useEmblaCarousel from 'embla-carousel-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Hourglass,
+  Lock,
+  Scales,
+  Mountains,
+  HandsPraying,
+  Drop,
+  FlowerLotus,
+  Sparkle,
+  Question,
+  Wind,
+  Cube,
+  CalendarBlank,
+  Compass,
+  ArrowDown,
+  Crown,
+  Diamond,
+  Quotes,
+  Planet,
+  CircleHalf,
+} from '@phosphor-icons/react';
 import SEOHead from '../../components/SEOHead';
+import CircleCallout from '../../components/doodles/CircleCallout';
+import CornerSpark from '../../components/doodles/CornerSpark';
+import HighlightStroke from '../../components/doodles/HighlightStroke';
+import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
   getArticleSchema,
   getBreadcrumbSchema,
@@ -9,6 +38,8 @@ import {
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+
+const SATURN_ACCENT = '#4A6FA5';
 
 const SATURN_R2_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
 
@@ -22,6 +53,7 @@ const FEATHER_URL = `${SATURN_R2_BASE}/Pillar/Hub/Planets/Shared/feather-doodle.
 const SACRED_GEOMETRY_URL = `${SATURN_R2_BASE}/Pillar/Hub/Planets/Shared/sacred-geometry.svg`;
 const SEAL_MARS_URL = `${SATURN_R2_BASE}/Pillar/Planets/Mars/seal-mars.svg`;
 const YANTRA_URL = `${SATURN_R2_BASE}/Pillar/Planets/Mars/yantra-mars-detailed.svg`;
+const PLANET_HUB = `${SATURN_R2_BASE}/Pillar/Hub/Planets`;
 
 const PARCHMENT_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/parchment-texture.webp';
@@ -104,6 +136,21 @@ type Association = {
   icon: IconName;
 };
 
+type Navagraha = {
+  name: string;
+  sanskrit: string;
+  href: string;
+  img: string;
+  slug: string;
+  current?: boolean;
+};
+
+type ConnectStep = {
+  num: string;
+  label: string;
+  icon: IconName;
+};
+
 const quickFacts: QuickFact[] = [
   { icon: 'planet', label: 'Planet', value: 'Shani' },
   { icon: 'air', label: 'Element', value: 'Air' },
@@ -154,13 +201,13 @@ const benefits = [
   'Removes obstacles inherited from past karma',
 ];
 
-const connectPractices = [
-  'Chant Shani mantra on Saturdays.',
-  'Offer black sesame, mustard oil, and iron items.',
-  'Donate to laborers, the elderly, and the underprivileged.',
-  'Wear Blue Sapphire (Neelam) only after qualified consultation.',
-  'Visit Shani temples or Hanuman temples on Saturdays.',
-  'Practice service to elders, workers, and those in need.',
+const connectPractices: ConnectStep[] = [
+  { num: '01', label: 'Chant Shani mantra\non Saturdays', icon: 'connect' },
+  { num: '02', label: 'Offer black sesame,\nmustard oil, iron', icon: 'iron' },
+  { num: '03', label: 'Donate to laborers\nand the elderly', icon: 'hanuman' },
+  { num: '04', label: 'Wear Blue Sapphire\nafter consultation', icon: 'gem' },
+  { num: '05', label: 'Visit Shani or\nHanuman temples', icon: 'planet' },
+  { num: '06', label: 'Practice service\nto those in need', icon: 'connect' },
 ];
 
 const associations: Association[] = [
@@ -173,6 +220,20 @@ const associations: Association[] = [
   { title: 'Hanuman', subtitle: 'Divine Connection', icon: 'hanuman' },
   { title: 'West', subtitle: 'Direction', icon: 'direction' },
 ];
+
+const navagrahas: Navagraha[] = [
+  { name: 'Surya', sanskrit: 'सूर्य', href: '/planets/sun', slug: 'sun', img: 'hero-surya.webp' },
+  { name: 'Chandra', sanskrit: 'चंद्र', href: '/planets/moon', slug: 'moon', img: 'hero-chandra.webp' },
+  { name: 'Mangal', sanskrit: 'मंगल', href: '/planets/mars', slug: 'mars', img: 'hero-mangala.webp' },
+  { name: 'Budha', sanskrit: 'बुध', href: '/planets/mercury', slug: 'mercury', img: 'hero-budha.webp' },
+  { name: 'Guru', sanskrit: 'गुरु', href: '/planets/jupiter', slug: 'jupiter', img: 'hero-guru.webp' },
+  { name: 'Shukra', sanskrit: 'शुक्र', href: '/planets/venus', slug: 'venus', img: 'hero-shukra.webp' },
+  { name: 'Shani', sanskrit: 'शनि', href: '/planets/saturn', slug: 'saturn', img: 'hero-shani.webp', current: true },
+  { name: 'Rahu', sanskrit: 'राहु', href: '/planets/rahu', slug: 'rahu', img: 'hero-rahu.webp' },
+  { name: 'Ketu', sanskrit: 'केतु', href: '/planets/ketu', slug: 'ketu', img: 'hero-ketu.webp' },
+];
+
+const navagrahaImage = (img: string) => `${PLANET_HUB}/${img}`;
 
 const editorialSections: EditorialSection[] = [
   {
@@ -475,6 +536,65 @@ function iconSvg(name: IconName, className = 'h-6 w-6'): JSX.Element {
   }
 }
 
+function quickFactPhosphorIcon(name: IconName, className = 'h-7 w-7 sm:h-8 sm:w-8'): JSX.Element {
+  switch (name) {
+    case 'planet':
+      return <Planet className={className} weight="duotone" />;
+    case 'air':
+      return <Wind className={className} weight="duotone" />;
+    case 'neutral':
+      return <CircleHalf className={className} weight="duotone" />;
+    case 'iron':
+      return <Cube className={className} weight="duotone" />;
+    case 'day':
+      return <CalendarBlank className={className} weight="duotone" />;
+    case 'direction':
+      return <Compass className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function connectStepIcon(name: IconName, className = 'h-6 w-6'): JSX.Element {
+  switch (name) {
+    case 'connect':
+      return <HandsPraying className={className} weight="duotone" />;
+    case 'iron':
+      return <Drop className={className} weight="duotone" />;
+    case 'gem':
+      return <Diamond className={className} weight="duotone" />;
+    case 'planet':
+      return <FlowerLotus className={className} weight="duotone" />;
+    case 'hanuman':
+      return <Crown className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function sidebarPhosphorIcon(label: string, className = 'h-5 w-5'): JSX.Element {
+  switch (label) {
+    case 'Quick Facts':
+      return <Sparkle className={className} weight="duotone" />;
+    case 'Did You Know?':
+      return <Question className={className} weight="duotone" />;
+    case 'Friends and Enemies':
+      return <Scales className={className} weight="duotone" />;
+    case 'Signs of a Strong Shani':
+      return <Mountains className={className} weight="duotone" />;
+    case 'Signs of a Weakened Shani':
+      return <Hourglass className={className} weight="duotone" />;
+    case 'Shani in Houses at a Glance':
+      return <Planet className={className} weight="duotone" />;
+    case 'Mahadasha at a Glance':
+      return <Hourglass className={className} weight="duotone" />;
+    case 'Saturday Practice':
+      return <CalendarBlank className={className} weight="duotone" />;
+    default:
+      return <Sparkle className={className} weight="duotone" />;
+  }
+}
+
 function Highlight({ children }: { children: string }) {
   return <span className="highlight-marker rounded px-1.5 py-0.5 text-slate-900">{children}</span>;
 }
@@ -560,8 +680,18 @@ function SapphireRingIllustration() {
   );
 }
 
+
 export default function SaturnPage() {
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const [openSidebar, setOpenSidebar] = useState<number>(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    dragFree: true,
+    containScroll: 'trimSnaps',
+  });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const schemas = useMemo<JsonLd[]>(
     () => [
@@ -641,6 +771,71 @@ export default function SaturnPage() {
     [],
   );
 
+  const syncEmblaButtons = useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    syncEmblaButtons();
+    emblaApi.on('select', syncEmblaButtons);
+    emblaApi.on('reInit', syncEmblaButtons);
+    return () => {
+      emblaApi.off('select', syncEmblaButtons);
+      emblaApi.off('reInit', syncEmblaButtons);
+    };
+  }, [emblaApi, syncEmblaButtons]);
+
+  const heroTitleMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 18 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, ease: 'easeOut' },
+      };
+
+  const staggerParent = (staggerChildren: number, delayChildren = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: 'hidden',
+          whileInView: 'show',
+          viewport: { once: true, amount: 0.2 },
+          variants: {
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren,
+                delayChildren,
+              },
+            },
+          },
+        };
+
+  const fadeUpItem = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 18 },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.45, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const affirmationMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, amount: 0.4 },
+        transition: { duration: 0.8, delay: 0.3, ease: 'easeOut' },
+      };
+
   return (
     <>
       <SEOHead
@@ -698,24 +893,42 @@ export default function SaturnPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#c7d2fe]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat leading-[0.88]">
+                <motion.h1
+                  {...heroTitleMotion}
+                  className="font-caveat leading-[0.88]"
+                >
                   <span className="block text-[5.8rem] text-[#a5b4fc] drop-shadow-[0_0_34px_rgba(165,180,252,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
                     Shani
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
                     The Lord of Discipline
                   </span>
-                </h1>
+                </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#dbeafe] sm:text-4xl">शनि</div>
                   <div className="font-kalam text-2xl text-[#c7d2fe] sm:text-3xl">(Saturn)</div>
                 </div>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
-                  <p>Shani teaches our <Highlight>discipline</Highlight>, <Highlight>karma</Highlight></p>
+                  <p>
+                    Shani teaches our{' '}
+                    <HighlightStroke color={SATURN_ACCENT} show={!prefersReducedMotion}>
+                      <Highlight>discipline</Highlight>
+                    </HighlightStroke>
+                    ,{' '}
+                    <UnderlineScribble color={SATURN_ACCENT} show={!prefersReducedMotion}>
+                      <Highlight>karma</Highlight>
+                    </UnderlineScribble>
+                  </p>
                   <p>and <Highlight>patience</Highlight>.</p>
                   <div className="flex items-center gap-3">
-                    <p>He brings <Highlight>justice</Highlight> and <Highlight>maturity</Highlight>.</p>
+                    <p>
+                      He brings{' '}
+                      <CircleCallout color={SATURN_ACCENT} show={!prefersReducedMotion}>
+                        <Highlight>justice</Highlight>
+                      </CircleCallout>{' '}
+                      and <Highlight>maturity</Highlight>.
+                    </p>
                     <ScribbleLine />
                   </div>
                 </div>
@@ -736,20 +949,26 @@ export default function SaturnPage() {
 
               <div className="relative z-10 mt-8 max-w-[18rem] sm:mt-10 sm:max-w-[30rem] lg:absolute lg:bottom-4 lg:left-0 lg:mt-0 lg:max-w-[38rem]">
                 <ParchmentCard className="rounded-[24px] p-2.5 sm:p-3 shadow-[0_18px_40px_rgba(0,0,0,0.38)]" rotate="lg:-rotate-[0.55deg]">
-                  <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0">
+                  <motion.div
+                    className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0"
+                    {...staggerParent(0.1)}
+                  >
                     {quickFacts.map((fact, index) => (
-                      <div
+                      <motion.div
                         key={fact.label}
                         className={`flex min-h-[96px] flex-col items-center justify-center px-2.5 py-2.5 text-center sm:min-h-[110px] sm:px-3 ${
                           index < quickFacts.length - 1 ? 'lg:border-r lg:border-[#755632]/30' : ''
                         }`}
+                        {...fadeUpItem}
                       >
-                        <div className="text-[#1e293b]">{iconSvg(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
+                        <div className="text-[#1e293b]">
+                          {quickFactPhosphorIcon(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}
+                        </div>
                         <div className="mt-1.5 font-caveat text-[1.55rem] leading-none sm:text-[1.9rem]">{fact.label}</div>
                         <div className="mt-1 font-kalam text-[0.95rem] leading-tight text-[#1e3a8a] sm:text-[1.08rem]">{fact.value}</div>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </ParchmentCard>
               </div>
             </div>
@@ -779,125 +998,141 @@ export default function SaturnPage() {
           }}
         >
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
-            <div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]">
-              <ParchmentCard className="min-h-full" rotate="xl:-rotate-[0.5deg]">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="mb-2 flex items-center gap-3">
-                      <span className="font-devanagari text-4xl text-[#1f140d]">ॐ</span>
-                      <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                        Sacred Mantras
-                      </h3>
+            <motion.div
+              className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]"
+              {...staggerParent(0.15)}
+            >
+              <motion.div {...fadeUpItem}>
+                <ParchmentCard className="min-h-full" rotate="xl:-rotate-[0.5deg]">
+                  <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#4A6FA5]" />
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="mb-2 flex items-center gap-3">
+                        <span className="font-devanagari text-4xl text-[#1f140d]">ॐ</span>
+                        <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                          Sacred Mantras
+                        </h3>
+                      </div>
+                      <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
                     </div>
-                    <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  </div>
-                  <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
-                  </div>
-                </div>
-
-                <div className="mt-6 space-y-10">
-                  {mantras.map((mantra, index) => (
-                    <div key={mantra.title}>
-                      <div className="font-caveat text-[2rem] leading-none text-[#1e3a8a] sm:text-[2.4rem]">
-                        {index + 1}. {mantra.title}
-                      </div>
-
-                      <div className="mt-4 rounded-[18px] border-2 border-[#3730a3] bg-[#f6ebd6] px-5 py-4 shadow-[inset_0_0_20px_rgba(30,58,138,0.12)]">
-                        <div className="font-devanagari text-[1.8rem] leading-tight text-[#1e120c] sm:text-[2.15rem]">
-                          {mantra.devanagari}
-                        </div>
-                      </div>
-
-                      <div className="mt-5 space-y-3 font-kalam text-xl leading-relaxed text-[#2d1e13]">
-                        <div>
-                          <span className="font-semibold text-[#1e3a8a]">IAST:</span> {mantra.iast}
-                        </div>
-                        <div>
-                          <span className="font-semibold text-[#1e3a8a]">Meaning:</span> {mantra.meaning}
-                        </div>
-                      </div>
+                    <div className="flex items-center gap-4 text-[#2a1a10]/70">
+                      <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                      <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
                     </div>
-                  ))}
-                </div>
-
-                {/* Visible matching content for HowTo schema (Google policy). */}
-                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
-                  <div className="font-caveat text-[1.7rem] leading-none text-[#1e3a8a] sm:text-[2rem]">
-                    How to Chant the Shani Beej Mantra
                   </div>
-                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
-                    <li>Bathe and wear clean clothes in dark blue or black.</li>
-                    <li>Sit facing west on a clean mat with the spine straight.</li>
-                    <li>Hold a Blue Sapphire or iron mala of 108 beads in the right hand using thumb and middle finger.</li>
-                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
-                    <li>Sit quietly afterwards and offer the merit to Shani with gratitude.</li>
-                  </ol>
-                </div>
 
-                <img
-                  src={FEATHER_URL}
-                  alt="" aria-hidden="true"
-                  className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
-                />
-              </ParchmentCard>
+                  <div className="mt-6 space-y-10">
+                    {mantras.map((mantra, index) => (
+                      <div key={mantra.title}>
+                        <div className="font-caveat text-[2rem] leading-none text-[#1e3a8a] sm:text-[2.4rem]">
+                          {index + 1}. {mantra.title}
+                        </div>
+
+                        <div className="mt-4 rounded-[18px] border-2 border-[#3730a3] bg-[#f6ebd6] px-5 py-4 shadow-[inset_0_0_20px_rgba(30,58,138,0.12)]">
+                          <div className="font-devanagari text-[1.8rem] leading-tight text-[#1e120c] sm:text-[2.15rem]">
+                            {mantra.devanagari}
+                          </div>
+                        </div>
+
+                        <div className="mt-5 space-y-3 font-kalam text-xl leading-relaxed text-[#2d1e13]">
+                          <div>
+                            <span className="font-semibold text-[#1e3a8a]">IAST:</span> {mantra.iast}
+                          </div>
+                          <div>
+                            <span className="font-semibold text-[#1e3a8a]">Meaning:</span> {mantra.meaning}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Visible matching content for HowTo schema (Google policy). */}
+                  <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                    <div className="font-caveat text-[1.7rem] leading-none text-[#1e3a8a] sm:text-[2rem]">
+                      How to Chant the Shani Beej Mantra
+                    </div>
+                    <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                      <li>Bathe and wear clean clothes in dark blue or black.</li>
+                      <li>Sit facing west on a clean mat with the spine straight.</li>
+                      <li>Hold a Blue Sapphire or iron mala of 108 beads in the right hand using thumb and middle finger.</li>
+                      <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                      <li>Sit quietly afterwards and offer the merit to Shani with gratitude.</li>
+                    </ol>
+                  </div>
+
+                  <img
+                    src={FEATHER_URL}
+                    alt="" aria-hidden="true"
+                    className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
+                  />
+                </ParchmentCard>
+              </motion.div>
 
               <div className="grid gap-6">
-                <ParchmentCard rotate="xl:rotate-[0.4deg]">
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                      Shani in Our Life
-                    </h3>
-                    <div className="text-[#2a1a10]/70">{iconSvg('faq', 'h-12 w-12')}</div>
-                  </div>
-                  <div className="mt-4 space-y-3">
-                    {lifeRows.map((row) => (
-                      <div key={row.label} className="flex gap-3 border-b border-[#745834]/15 pb-3 last:border-b-0 last:pb-0">
-                        <div className="mt-1 text-[#1e3a8a]">{iconSvg(row.icon, 'h-6 w-6')}</div>
-                        <div className="font-kalam text-lg leading-relaxed text-[#2b1b10]">
-                          <span className="font-semibold text-[#1e293b]">{row.label}:</span> {row.value}
+                <motion.div {...fadeUpItem}>
+                  <ParchmentCard rotate="xl:rotate-[0.4deg]">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                        Shani in Our Life
+                      </h3>
+                      <div className="text-[#2a1a10]/70"><Question className="h-12 w-12" weight="duotone" /></div>
+                    </div>
+                    <div className="mt-4 space-y-3">
+                      {lifeRows.map((row) => (
+                        <div key={row.label} className="flex gap-3 border-b border-[#745834]/15 pb-3 last:border-b-0 last:pb-0">
+                          <div className="mt-1 text-[#1e3a8a]">{iconSvg(row.icon, 'h-6 w-6')}</div>
+                          <div className="font-kalam text-lg leading-relaxed text-[#2b1b10]">
+                            <span className="font-semibold text-[#1e293b]">{row.label}:</span> {row.value}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </ParchmentCard>
+                      ))}
+                    </div>
+                  </ParchmentCard>
+                </motion.div>
 
-                <ParchmentCard rotate="xl:-rotate-[0.35deg]">
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                      Benefits of Shani Mantra
-                    </h3>
-                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
-                  </div>
-                  <div className="mt-5 space-y-3">
-                    {benefits.map((benefit) => (
-                      <div key={benefit} className="flex gap-3">
-                        <div className="mt-0.5 text-[#3730a3]">{iconSvg('benefit', 'h-5 w-5')}</div>
-                        <p className="font-kalam text-xl leading-relaxed text-[#29190f]">{benefit}</p>
-                      </div>
-                    ))}
-                  </div>
-                </ParchmentCard>
+                <motion.div {...fadeUpItem}>
+                  <ParchmentCard rotate="xl:-rotate-[0.35deg]">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                        Benefits of Shani Mantra
+                      </h3>
+                      <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
+                    </div>
+                    <div className="mt-5 space-y-3">
+                      {benefits.map((benefit) => (
+                        <div key={benefit} className="flex gap-3">
+                          <div className="mt-0.5 text-[#3730a3]">{iconSvg('benefit', 'h-5 w-5')}</div>
+                          <p className="font-kalam text-xl leading-relaxed text-[#29190f]">{benefit}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </ParchmentCard>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             <div className="mt-6">
               <ParchmentCard rotate="lg:-rotate-[0.25deg]">
+                <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#4A6FA5]" />
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Shani
                   </h3>
                   <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
-                <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
-                  {connectPractices.map((practice) => (
+                <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+                  {connectPractices.map((step) => (
                     <div
-                      key={practice}
+                      key={step.num}
                       className="rounded-2xl border border-[#7b603e]/20 bg-white/25 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]"
                     >
-                      <div className="mb-3 text-[#1e3a8a]">{iconSvg('connect', 'h-6 w-6')}</div>
-                      <p className="font-kalam text-lg leading-relaxed text-[#2a190f]">{practice}</p>
+                      <div className="mb-3 text-[#1e3a8a]">{connectStepIcon(step.icon, 'h-6 w-6')}</div>
+                      <div className="font-poppins text-xs font-semibold tracking-[0.22em] text-[#1e3a8a]">
+                        {step.num}
+                      </div>
+                      <p className="mt-2 whitespace-pre-line font-kalam text-lg leading-relaxed text-[#2a190f]">
+                        {step.label}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -925,33 +1160,33 @@ export default function SaturnPage() {
                 </div>
               </ParchmentCard>
 
-              <ParchmentCard rotate="xl:rotate-[0.45deg]">
-                <div className="pointer-events-none absolute inset-0 opacity-20">
-                  <RaysDoodle className="absolute right-0 top-0 h-full w-full" />
-                </div>
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                    Affirmation
-                  </h3>
-                  <div className="text-[#3730a3]">
-                    <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current stroke-[1.8]">
-                      <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
-                    </svg>
+              <motion.div {...affirmationMotion}>
+                <ParchmentCard rotate="xl:rotate-[0.45deg]">
+                  <div className="pointer-events-none absolute inset-0 opacity-20">
+                    <RaysDoodle className="absolute right-0 top-0 h-full w-full" />
                   </div>
-                </div>
-                <div className="mt-8 font-kalam text-[2rem] leading-snug text-[#1e293b] sm:text-[2.4rem]">
-                  &ldquo;I accept what is, I work with patience, I trust the slow unfolding of my dharmic path.&rdquo;
-                </div>
-                <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
-                  This affirmation supports endurance without resignation, and discipline as the quiet ground of freedom.
-                </div>
-              </ParchmentCard>
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                      Affirmation
+                    </h3>
+                    <div className="text-[#3730a3]">
+                      <Sparkle className="h-8 w-8" weight="duotone" />
+                    </div>
+                  </div>
+                  <div className="mt-8 font-kalam text-[2rem] leading-snug text-[#1e293b] sm:text-[2.4rem]">
+                    &ldquo;I accept what is, I work with patience, I trust the slow unfolding of my dharmic path.&rdquo;
+                  </div>
+                  <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
+                    This affirmation supports endurance without resignation, and discipline as the quiet ground of freedom.
+                  </div>
+                </ParchmentCard>
+              </motion.div>
             </div>
 
             <div className="mt-8 rounded-[30px] border border-white/10 bg-[#0a0e22]/85 px-5 py-6 shadow-[0_20px_70px_rgba(0,0,0,0.42)] backdrop-blur sm:px-8">
               <div className="grid gap-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 text-[#dbeafe]">{iconSvg('quote', 'h-9 w-9')}</div>
+                  <div className="mt-1 text-[#dbeafe]"><Quotes className="h-9 w-9" weight="duotone" /></div>
                   <div>
                     <div className="font-caveat text-3xl text-[#dbeafe] sm:text-4xl">
                       Patience is the silent teacher
@@ -995,6 +1230,95 @@ export default function SaturnPage() {
                       <div className="mt-1 text-sm leading-snug text-[#c7d2fe]/80">{association.subtitle}</div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Navagraha carousel (embla) */}
+            <div className="mt-8 rounded-[28px] border border-[#8c6e47]/35 bg-white/55 px-5 py-6 shadow-[0_16px_40px_rgba(57,31,10,0.10)]">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollPrev()}
+                  disabled={!canScrollPrev}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#8c6e47]/45 bg-white/70 text-[#1e3a8a] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4A6FA5]"
+                  aria-label="Scroll planets left"
+                >
+                  <ArrowLeft className="h-5 w-5" weight="regular" />
+                </button>
+                <div className="text-center">
+                  <div className="font-caveat text-3xl leading-none text-[#1e3a8a] sm:text-4xl">
+                    Explore All Navagrahas
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollNext()}
+                  disabled={!canScrollNext}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#8c6e47]/45 bg-white/70 text-[#1e3a8a] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4A6FA5]"
+                  aria-label="Scroll planets right"
+                >
+                  <ArrowRight className="h-5 w-5" weight="regular" />
+                </button>
+              </div>
+
+              <div className="mt-5 overflow-hidden" ref={emblaRef}>
+                <div className="-ml-4 flex">
+                  {navagrahas.map((planet) => {
+                    const card = (
+                      <Link
+                        key={planet.name}
+                        to={planet.href}
+                        className={`block min-w-0 rounded-[22px] border px-4 py-4 text-center transition hover:-translate-y-0.5 ${
+                          planet.current
+                            ? 'border-[#4A6FA5] bg-[#eef2fb] ring-2 ring-[#4A6FA5]'
+                            : 'border-[#cdd5e2] bg-white/70'
+                        }`}
+                      >
+                        <img
+                          src={navagrahaImage(planet.img)}
+                          alt={`${planet.name} planet portrait`}
+                          className="mx-auto h-16 w-16 rounded-full object-cover shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+                        />
+                        <div className="mt-3 font-poppins text-sm font-semibold text-[#2f1b0d]">{planet.name}</div>
+                        <div className="font-devanagari text-lg text-[#1e3a8a]">{planet.sanskrit}</div>
+                      </Link>
+                    );
+
+                    return (
+                      <div key={planet.name} className="min-w-0 flex-[0_0_120px] pl-4 sm:flex-[0_0_132px]">
+                        {planet.slug === 'saturn' ? (
+                          <motion.div
+                            animate={
+                              prefersReducedMotion
+                                ? { opacity: 1 }
+                                : {
+                                    boxShadow: [
+                                      '0 0 0 rgba(74,111,165,0)',
+                                      '0 0 24px rgba(74,111,165,0.42)',
+                                      '0 0 0 rgba(74,111,165,0)',
+                                    ],
+                                  }
+                            }
+                            transition={
+                              prefersReducedMotion
+                                ? undefined
+                                : {
+                                    duration: 1.6,
+                                    repeat: Infinity,
+                                    ease: 'easeInOut',
+                                  }
+                            }
+                            className="rounded-[22px]"
+                          >
+                            {card}
+                          </motion.div>
+                        ) : (
+                          card
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -1046,130 +1370,164 @@ export default function SaturnPage() {
               </div>
 
               <div className="space-y-6 lg:sticky lg:top-24">
-                <ParchmentCard rotate="lg:rotate-[0.35deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Quick Facts</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#2a190f]">
-                    <div><span className="font-semibold text-[#1e3a8a]">Element:</span> Air (Vayu)</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Day:</span> Saturday (Shanivara)</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Direction:</span> West</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Metal:</span> Iron / Steel</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Gemstone:</span> Blue Sapphire (Neelam) - with caution</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Mahadasha:</span> 19 years</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Sacred Color:</span> Black, Dark Blue</div>
-                  </div>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:-rotate-[0.3deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Did You Know?</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <ul className="mt-4 space-y-3 font-kalam text-base leading-snug text-[#2a190f]">
-                    <li>Shani is the elder brother of Yama, the lord of death.</li>
-                    <li>His name &ldquo;Shanaishchara&rdquo; means the slow-walker, after Saturn&apos;s long transit through each sign.</li>
-                    <li>Hanuman is widely held to be the protector of devotees during Shani&apos;s difficult transits.</li>
-                    <li>Sade Sati, the seven-and-a-half-year transit of Saturn from the twelfth, first, and second from the natal Moon, is one of the most karmically active periods in a life.</li>
-                  </ul>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:rotate-[0.4deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Friends and Enemies</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <table className="mt-4 w-full border-collapse font-kalam text-lg leading-relaxed text-[#2a190f]">
-                    <caption className="sr-only">Planetary relationships of Shani in Vedic astrology</caption>
-                    <tbody>
-                      <tr>
-                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#1e3a8a]">Friends</th>
-                        <td className="py-1 align-top">Mercury (Budh), Venus (Shukra)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#1e3a8a]">Enemies</th>
-                        <td className="py-1 align-top">Sun (Surya), Moon (Chandra), Mars (Mangala)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#1e3a8a]">Neutral</th>
-                        <td className="py-1 align-top">Jupiter (Guru)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <p className="mt-3 font-kalam text-lg italic leading-relaxed text-[#2a190f]/80">
-                    Friendships shape how planets cooperate or compete in the chart.
-                  </p>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:-rotate-[0.35deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Signs of a Strong Shani</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <li>Quiet authority not insisted upon</li>
-                    <li>Patient endurance under pressure</li>
-                    <li>Mature judgment in difficult moments</li>
-                    <li>Steady relationships with elders and seniors</li>
-                    <li>Long-term work that ripens with time</li>
-                    <li>Comfort with simplicity and silence</li>
-                    <li>Willingness to do the unseen part</li>
-                  </ul>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:rotate-[0.3deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Signs of a Weakened Shani</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <li>Persistent delays without resolution</li>
-                    <li>Chronic joint or skeletal concerns</li>
-                    <li>Anxiety wrapped around responsibility</li>
-                    <li>Sense that effort never quite pays off</li>
-                    <li>Strained relationship with father or seniors</li>
-                    <li>Difficulty with commitment or follow-through</li>
-                  </ul>
-                  <p className="mt-3 font-kalam text-sm italic leading-relaxed text-[#2a190f]/75">
-                    Verify with a full chart reading and pay close attention to Sade Sati timing.
-                  </p>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:-rotate-[0.4deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Shani in Houses at a Glance</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <div className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <div><span className="font-semibold text-[#1e3a8a]">1st:</span> Serious bearing, mature features</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">3rd:</span> Perseverance, courage to continue</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">6th:</span> Legal services, civil work, debt-clearing</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">7th:</span> Mature spouse, late marriage often beneficial</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">10th:</span> Own house, respected career through service</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">11th:</span> Gains through patient networks</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">12th:</span> Monastic disposition, foreign settlement</div>
-                  </div>
-                  <p className="mt-3 font-kalam text-sm italic leading-relaxed text-[#2a190f]/75">
-                    Read as patterns, never as predictions.
-                  </p>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:rotate-[0.35deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Mahadasha at a Glance</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <div className="mt-4 space-y-2.5 font-kalam text-base leading-snug text-[#2a190f]">
-                    <div><span className="font-semibold text-[#1e3a8a]">Period:</span> 19 years (Vimshottari)</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Themes:</span> Work, longevity, structure, discipline, karma</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Favourable:</span> Career consolidation, real estate, recognition through service</div>
-                    <div><span className="font-semibold text-[#1e3a8a]">Challenging:</span> Job change, separation, chronic health concerns</div>
-                    <div className="pt-1 italic text-[#2a190f]/80">
-                      Sade Sati and Dhaiya transits intensify these themes.
-                    </div>
-                  </div>
-                </ParchmentCard>
-
-                <ParchmentCard rotate="lg:-rotate-[0.3deg]">
-                  <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">Saturday Practice</h3>
-                  <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
-                  <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
-                    <li>Wear a touch of black or dark blue</li>
-                    <li>Light fast and visit a Shani or Hanuman temple</li>
-                    <li>Offer sesame, mustard oil, or iron items</li>
-                    <li>Read the Hanuman Chalisa</li>
-                    <li>Donate to the elderly, laborers, the underprivileged</li>
-                    <li>Wear Blue Sapphire ONLY after qualified consultation</li>
-                    <li>Recite the Beej mantra 108 times in a quiet hour</li>
-                  </ul>
-                </ParchmentCard>
+                {[
+                  {
+                    title: 'Quick Facts',
+                    body: (
+                      <div className="mt-4 space-y-2.5 font-kalam text-lg leading-relaxed text-[#2a190f]">
+                        <div><span className="font-semibold text-[#1e3a8a]">Element:</span> Air (Vayu)</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Day:</span> Saturday (Shanivara)</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Direction:</span> West</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Metal:</span> Iron / Steel</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Gemstone:</span> Blue Sapphire (Neelam) - with caution</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Mahadasha:</span> 19 years</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Sacred Color:</span> Black, Dark Blue</div>
+                      </div>
+                    ),
+                  },
+                  {
+                    title: 'Did You Know?',
+                    body: (
+                      <ul className="mt-4 space-y-3 font-kalam text-base leading-snug text-[#2a190f]">
+                        <li>Shani is the elder brother of Yama, the lord of death.</li>
+                        <li>His name &ldquo;Shanaishchara&rdquo; means the slow-walker, after Saturn&apos;s long transit through each sign.</li>
+                        <li>Hanuman is widely held to be the protector of devotees during Shani&apos;s difficult transits.</li>
+                        <li>Sade Sati, the seven-and-a-half-year transit of Saturn from the twelfth, first, and second from the natal Moon, is one of the most karmically active periods in a life.</li>
+                      </ul>
+                    ),
+                  },
+                  {
+                    title: 'Friends and Enemies',
+                    body: (
+                      <>
+                        <table className="mt-4 w-full border-collapse font-kalam text-lg leading-relaxed text-[#2a190f]">
+                          <caption className="sr-only">Planetary relationships of Shani in Vedic astrology</caption>
+                          <tbody>
+                            <tr>
+                              <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#1e3a8a]">Friends</th>
+                              <td className="py-1 align-top">Mercury (Budh), Venus (Shukra)</td>
+                            </tr>
+                            <tr>
+                              <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#1e3a8a]">Enemies</th>
+                              <td className="py-1 align-top">Sun (Surya), Moon (Chandra), Mars (Mangala)</td>
+                            </tr>
+                            <tr>
+                              <th scope="row" className="py-1 pr-3 text-left align-top font-semibold text-[#1e3a8a]">Neutral</th>
+                              <td className="py-1 align-top">Jupiter (Guru)</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <p className="mt-3 font-kalam text-lg italic leading-relaxed text-[#2a190f]/80">
+                          Friendships shape how planets cooperate or compete in the chart.
+                        </p>
+                      </>
+                    ),
+                  },
+                  {
+                    title: 'Signs of a Strong Shani',
+                    body: (
+                      <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
+                        <li>Quiet authority not insisted upon</li>
+                        <li>Patient endurance under pressure</li>
+                        <li>Mature judgment in difficult moments</li>
+                        <li>Steady relationships with elders and seniors</li>
+                        <li>Long-term work that ripens with time</li>
+                        <li>Comfort with simplicity and silence</li>
+                        <li>Willingness to do the unseen part</li>
+                      </ul>
+                    ),
+                  },
+                  {
+                    title: 'Signs of a Weakened Shani',
+                    body: (
+                      <>
+                        <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
+                          <li>Persistent delays without resolution</li>
+                          <li>Chronic joint or skeletal concerns</li>
+                          <li>Anxiety wrapped around responsibility</li>
+                          <li>Sense that effort never quite pays off</li>
+                          <li>Strained relationship with father or seniors</li>
+                          <li>Difficulty with commitment or follow-through</li>
+                        </ul>
+                        <p className="mt-3 font-kalam text-sm italic leading-relaxed text-[#2a190f]/75">
+                          Verify with a full chart reading and pay close attention to Sade Sati timing.
+                        </p>
+                      </>
+                    ),
+                  },
+                  {
+                    title: 'Shani in Houses at a Glance',
+                    body: (
+                      <>
+                        <div className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
+                          <div><span className="font-semibold text-[#1e3a8a]">1st:</span> Serious bearing, mature features</div>
+                          <div><span className="font-semibold text-[#1e3a8a]">3rd:</span> Perseverance, courage to continue</div>
+                          <div><span className="font-semibold text-[#1e3a8a]">6th:</span> Legal services, civil work, debt-clearing</div>
+                          <div><span className="font-semibold text-[#1e3a8a]">7th:</span> Mature spouse, late marriage often beneficial</div>
+                          <div><span className="font-semibold text-[#1e3a8a]">10th:</span> Own house, respected career through service</div>
+                          <div><span className="font-semibold text-[#1e3a8a]">11th:</span> Gains through patient networks</div>
+                          <div><span className="font-semibold text-[#1e3a8a]">12th:</span> Monastic disposition, foreign settlement</div>
+                        </div>
+                        <p className="mt-3 font-kalam text-sm italic leading-relaxed text-[#2a190f]/75">
+                          Read as patterns, never as predictions.
+                        </p>
+                      </>
+                    ),
+                  },
+                  {
+                    title: 'Mahadasha at a Glance',
+                    body: (
+                      <div className="mt-4 space-y-2.5 font-kalam text-base leading-snug text-[#2a190f]">
+                        <div><span className="font-semibold text-[#1e3a8a]">Period:</span> 19 years (Vimshottari)</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Themes:</span> Work, longevity, structure, discipline, karma</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Favourable:</span> Career consolidation, real estate, recognition through service</div>
+                        <div><span className="font-semibold text-[#1e3a8a]">Challenging:</span> Job change, separation, chronic health concerns</div>
+                        <div className="pt-1 italic text-[#2a190f]/80">
+                          Sade Sati and Dhaiya transits intensify these themes.
+                        </div>
+                      </div>
+                    ),
+                  },
+                  {
+                    title: 'Saturday Practice',
+                    body: (
+                      <ul className="mt-4 space-y-2 font-kalam text-base leading-snug text-[#2a190f]">
+                        <li>Wear a touch of black or dark blue</li>
+                        <li>Light fast and visit a Shani or Hanuman temple</li>
+                        <li>Offer sesame, mustard oil, or iron items</li>
+                        <li>Read the Hanuman Chalisa</li>
+                        <li>Donate to the elderly, laborers, the underprivileged</li>
+                        <li>Wear Blue Sapphire ONLY after qualified consultation</li>
+                        <li>Recite the Beej mantra 108 times in a quiet hour</li>
+                      </ul>
+                    ),
+                  },
+                ].map((card, index) => {
+                  const isOpen = openSidebar === index;
+                  return (
+                    <ParchmentCard key={card.title} rotate={index % 2 === 0 ? 'lg:rotate-[0.35deg]' : 'lg:-rotate-[0.3deg]'}>
+                      <button
+                        type="button"
+                        className="flex w-full items-center justify-between gap-3 text-left"
+                        aria-expanded={isOpen}
+                        onClick={() => setOpenSidebar(isOpen ? -1 : index)}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#4A6FA5]/15 text-[#1e3a8a]">
+                            {sidebarPhosphorIcon(card.title)}
+                          </div>
+                          <h3 className="font-caveat text-[1.7rem] leading-tight text-[#1a110a]">{card.title}</h3>
+                        </div>
+                        <ArrowDown
+                          className={`h-5 w-5 text-[#1e3a8a] transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                          weight="regular"
+                        />
+                      </button>
+                      <div className="mt-1 h-[2px] w-24 rounded-full bg-gradient-to-r from-[#1e3a8a] via-[#6366f1] to-transparent" />
+                      {isOpen ? card.body : null}
+                    </ParchmentCard>
+                  );
+                })}
 
                 <ParchmentCard rotate="lg:rotate-[0.25deg]">
                   <div className="font-caveat text-xl italic leading-tight text-[#1e3a8a]/85">
@@ -1182,6 +1540,108 @@ export default function SaturnPage() {
                     A Shani teaching for a life that ripens slowly into truth.
                   </div>
                 </ParchmentCard>
+
+                {/* Hero CTA Banner with radial gradient + doodles + pulsing button */}
+                <div
+                  className="relative overflow-hidden rounded-[30px] border border-[#4A6FA5]/35 px-6 py-8 shadow-[0_28px_70px_rgba(2,8,23,0.34)] sm:px-7 sm:py-9"
+                  style={{
+                    background:
+                      'radial-gradient(circle at center, rgba(74,111,165,0.18), transparent 65%)',
+                  }}
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#08101f_0%,#0b1730_42%,#19112b_100%)] opacity-95" />
+                  <div className="pointer-events-none absolute inset-0 opacity-55 mix-blend-screen">
+                    <NebulaDoodle className="absolute inset-0" />
+                  </div>
+                  <div className="pointer-events-none absolute inset-y-0 right-[8%] hidden w-[44%] lg:block">
+                    <OrbitDoodle className="absolute inset-0 opacity-35" />
+                  </div>
+                  <div className="pointer-events-none absolute left-0 top-0 h-44 w-44 rounded-full bg-[#4A6FA5]/14 blur-3xl" />
+                  <div className="pointer-events-none absolute bottom-0 right-0 h-52 w-52 rounded-full bg-[#3730a3]/14 blur-3xl" />
+                  <CornerSpark className="absolute left-4 top-4 h-7 w-7 text-[#a5b4fc] opacity-65" />
+                  <CornerSpark className="absolute right-4 top-4 h-7 w-7 text-[#a5b4fc] opacity-65" />
+
+                  <div className="relative grid gap-6 lg:grid-cols-[1.3fr_auto_1fr] lg:items-center">
+                    <div className="text-left">
+                      <div className="flex items-center gap-2 text-[#a5b4fc]/85">
+                        <Hourglass className="h-6 w-6" weight="duotone" />
+                        <Lock className="h-5 w-5" weight="duotone" />
+                      </div>
+                      <div className="mt-3 font-caveat text-[2.2rem] leading-tight text-[#dbeafe] sm:text-[2.7rem]">
+                        Walk the{' '}
+                        <UnderlineScribble color={SATURN_ACCENT} show={!prefersReducedMotion}>
+                          <span className="inline-block">slow path</span>
+                        </UnderlineScribble>{' '}
+                        of dharma.
+                      </div>
+                      <p className="mt-3 font-kalam text-[1.05rem] leading-relaxed text-white/80">
+                        Embrace the discipline of{' '}
+                        <CircleCallout color={SATURN_ACCENT} show={!prefersReducedMotion}>
+                          <span className="inline-block text-[#a5b4fc]">Shani</span>
+                        </CircleCallout>{' '}
+                        and let patience ripen into freedom.
+                      </p>
+                    </div>
+
+                    <div className="flex justify-center">
+                      <motion.div
+                        animate={
+                          prefersReducedMotion
+                            ? { opacity: 1 }
+                            : {
+                                opacity: [0.92, 1, 0.92],
+                              }
+                        }
+                        transition={
+                          prefersReducedMotion
+                            ? undefined
+                            : {
+                                duration: 2.8,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                              }
+                        }
+                        className="relative"
+                      >
+                        <div className="pointer-events-none absolute inset-0 rounded-full bg-[#4A6FA5]/22 blur-2xl" />
+                        <img src={DIYA_URL} alt="" aria-hidden="true" className="relative mx-auto h-20 w-20 sm:h-24 sm:w-24" />
+                      </motion.div>
+                    </div>
+
+                    <div className="flex justify-start lg:justify-end">
+                      <motion.div
+                        animate={
+                          prefersReducedMotion
+                            ? { opacity: 1 }
+                            : {
+                                boxShadow: [
+                                  '0 0 0 rgba(74,111,165,0)',
+                                  '0 0 28px rgba(74,111,165,0.45)',
+                                  '0 0 0 rgba(74,111,165,0)',
+                                ],
+                              }
+                        }
+                        transition={
+                          prefersReducedMotion
+                            ? undefined
+                            : {
+                                duration: 1.6,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                              }
+                        }
+                        className="rounded-full"
+                      >
+                        <Link
+                          to="/contact"
+                          className="inline-flex items-center gap-2 rounded-full border border-[#4A6FA5]/60 bg-[#4A6FA5]/12 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#dbeafe] transition hover:bg-[#4A6FA5]/22 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4A6FA5]"
+                        >
+                          Explore Shani Remedies <span aria-hidden="true">→</span>
+                        </Link>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="rounded-[28px] border border-white/10 bg-[#0a0e22]/90 p-5 text-white shadow-[0_22px_55px_rgba(0,0,0,0.4)]">
                   <div className="flex items-center justify-between gap-4">
@@ -1230,7 +1690,9 @@ export default function SaturnPage() {
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="mt-1 text-[#1e3a8a]">{iconSvg('faq', 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#1e3a8a]">
+                          <Question className="h-6 w-6" weight="regular" />
+                        </div>
                         <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#1e3a8a]">

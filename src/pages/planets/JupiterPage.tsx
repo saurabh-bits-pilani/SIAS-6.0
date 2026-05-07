@@ -1,6 +1,29 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import useEmblaCarousel from 'embla-carousel-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Compass,
+  CaretDown,
+  Crown,
+  Diamond,
+  FlowerLotus,
+  HandsPraying,
+  Lightbulb,
+  Planet,
+  Question,
+  Sparkle,
+  Star,
+  Sun,
+} from '@phosphor-icons/react';
 import SEOHead from '../../components/SEOHead';
+import CircleCallout from '../../components/doodles/CircleCallout';
+import CornerSpark from '../../components/doodles/CornerSpark';
+import HighlightStroke from '../../components/doodles/HighlightStroke';
+import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
   getArticleSchema,
   getBreadcrumbSchema,
@@ -23,6 +46,8 @@ const SACRED_GEOMETRY_URL = `${JUPITER_R2_BASE}/Pillar/Hub/Planets/Shared/sacred
 const SEAL_MARS_URL = `${JUPITER_R2_BASE}/Pillar/Planets/Mars/seal-mars.svg`;
 const YANTRA_URL = `${JUPITER_R2_BASE}/Pillar/Planets/Mars/yantra-mars-detailed.svg`;
 
+const PLANET_HUB = `${JUPITER_R2_BASE}/Pillar/Hub/Planets`;
+
 const PARCHMENT_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Sun/parchment-texture.webp';
 const PAGE_PARCHMENT_URL =
@@ -34,6 +59,8 @@ const PAGE_DESCRIPTION =
 const PAGE_KEYWORDS =
   'guru, jupiter in vedic astrology, brihaspati, guru mantra, jupiter remedies, yellow sapphire, pukhraj, devaguru, soul infinity';
 const PAGE_URL = `${SITE_ORIGIN}/planets/jupiter`;
+
+const ACCENT = '#F5A623';
 
 const pageShellStyle = {
   backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
@@ -68,7 +95,8 @@ type IconName =
   | 'lotus'
   | 'book'
   | 'vishnu'
-  | 'yellow';
+  | 'yellow'
+  | 'crown';
 
 type QuickFact = {
   icon: IconName;
@@ -105,6 +133,14 @@ type Association = {
   icon: IconName;
 };
 
+type Navagraha = {
+  name: string;
+  sanskrit: string;
+  href: string;
+  img: string;
+  slug: string;
+};
+
 const quickFacts: QuickFact[] = [
   { icon: 'planet', label: 'Planet', value: 'Guru' },
   { icon: 'ether', label: 'Element', value: 'Ether' },
@@ -134,7 +170,7 @@ const mantras: MantraBlock[] = [
 const lifeRows: DetailRow[] = [
   { icon: 'book', label: 'Represents', value: 'Wisdom, Knowledge, Dharma, Expansion' },
   {
-    icon: 'crown' as IconName,
+    icon: 'crown',
     label: 'Governs',
     value: 'Education, Children, Higher learning, Finance, Religion, Counsel',
   },
@@ -174,6 +210,20 @@ const associations: Association[] = [
   { title: 'Vishnu', subtitle: 'Divine Connection', icon: 'vishnu' },
   { title: 'North-East', subtitle: 'Direction', icon: 'direction' },
 ];
+
+const navagrahas: Navagraha[] = [
+  { name: 'Surya', sanskrit: 'सूर्य', href: '/planets/sun', img: 'hero-surya.webp', slug: 'sun' },
+  { name: 'Chandra', sanskrit: 'चंद्र', href: '/planets/moon', img: 'hero-chandra.webp', slug: 'moon' },
+  { name: 'Mangal', sanskrit: 'मंगल', href: '/planets/mars', img: 'hero-mangala.webp', slug: 'mars' },
+  { name: 'Budha', sanskrit: 'बुध', href: '/planets/mercury', img: 'hero-budha.webp', slug: 'mercury' },
+  { name: 'Guru', sanskrit: 'गुरु', href: '/planets/jupiter', img: 'hero-guru.webp', slug: 'jupiter' },
+  { name: 'Shukra', sanskrit: 'शुक्र', href: '/planets/venus', img: 'hero-shukra.webp', slug: 'venus' },
+  { name: 'Shani', sanskrit: 'शनि', href: '/planets/saturn', img: 'hero-shani.webp', slug: 'saturn' },
+  { name: 'Rahu', sanskrit: 'राहु', href: '/planets/rahu', img: 'hero-rahu.webp', slug: 'rahu' },
+  { name: 'Ketu', sanskrit: 'केतु', href: '/planets/ketu', img: 'hero-ketu.webp', slug: 'ketu' },
+];
+
+const navagrahaImage = (img: string) => `${PLANET_HUB}/${img}`;
 
 const editorialSections: EditorialSection[] = [
   {
@@ -486,11 +536,85 @@ function iconSvg(name: IconName, className = 'h-6 w-6'): JSX.Element {
           <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6 7.7 7.7M16.3 16.3l2.1 2.1M5.6 18.4 7.7 16.3M16.3 7.7l2.1-2.1" strokeLinecap="round" />
         </svg>
       );
+    case 'crown':
+      return (
+        <svg viewBox="0 0 24 24" className={className} fill={base} stroke="currentColor" strokeWidth="1.7">
+          <path d="M3 8l4 5 5-7 5 7 4-5v10H3V8Z" strokeLinejoin="round" />
+        </svg>
+      );
   }
 }
 
-function Highlight({ children }: { children: string }) {
-  return <span className="highlight-marker rounded px-1.5 py-0.5 text-slate-900">{children}</span>;
+function quickFactIcon(name: IconName, className = 'h-7 w-7 sm:h-8 sm:w-8'): JSX.Element {
+  switch (name) {
+    case 'planet':
+      return <Planet className={className} weight="duotone" />;
+    case 'ether':
+      return <Sparkle className={className} weight="duotone" />;
+    case 'masculine':
+      return <Crown className={className} weight="duotone" />;
+    case 'gold':
+    case 'yellow':
+      return <Star className={className} weight="duotone" />;
+    case 'day':
+      return <Sun className={className} weight="duotone" />;
+    case 'direction':
+      return <Compass className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function connectStepIcon(name: IconName, className = 'h-6 w-6'): JSX.Element {
+  switch (name) {
+    case 'connect':
+      return <HandsPraying className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function sidebarAccordionIcon(name: IconName, className = 'h-5 w-5'): JSX.Element {
+  switch (name) {
+    case 'sign':
+      return <Planet className={className} weight="duotone" />;
+    case 'up':
+      return <ArrowTrendUpFallback className={className} />;
+    case 'down':
+      return <ArrowTrendDownFallback className={className} />;
+    case 'book':
+      return <BookOpen className={className} weight="duotone" />;
+    case 'crown':
+      return <Crown className={className} weight="duotone" />;
+    case 'gem':
+      return <Diamond className={className} weight="duotone" />;
+    case 'lotus':
+      return <FlowerLotus className={className} weight="duotone" />;
+    case 'faq':
+      return <Lightbulb className={className} weight="duotone" />;
+    case 'planet':
+      return <Planet className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function ArrowTrendUpFallback({ className }: { className: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.9">
+      <path d="M5 15 10 10l3 3 6-6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 7h4v4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ArrowTrendDownFallback({ className }: { className: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.9">
+      <path d="M5 9 10 14l3-3 6 6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 17h4v-4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
 }
 
 function ParchmentCard({
@@ -576,6 +700,14 @@ function PukhrajRingIllustration() {
 
 export default function JupiterPage() {
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    dragFree: true,
+    containScroll: 'trimSnaps',
+  });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const schemas = useMemo<JsonLd[]>(
     () => [
@@ -630,6 +762,84 @@ export default function JupiterPage() {
     ],
     [],
   );
+
+  const syncEmblaButtons = useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    syncEmblaButtons();
+    emblaApi.on('select', syncEmblaButtons);
+    emblaApi.on('reInit', syncEmblaButtons);
+    return () => {
+      emblaApi.off('select', syncEmblaButtons);
+      emblaApi.off('reInit', syncEmblaButtons);
+    };
+  }, [emblaApi, syncEmblaButtons]);
+
+  const heroTitleMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 18 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, ease: 'easeOut' },
+      };
+
+  const staggerParent = (staggerChildren: number, delayChildren = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: 'hidden',
+          whileInView: 'show',
+          viewport: { once: true, amount: 0.2 },
+          variants: {
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren,
+                delayChildren,
+              },
+            },
+          },
+        };
+
+  const fadeUpItem = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 18 },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.45, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const topCardsItem = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 18 },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.55, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const affirmationMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, amount: 0.4 },
+        transition: { duration: 0.8, delay: 0.3, ease: 'easeOut' },
+      };
 
   return (
     <>
@@ -688,24 +898,39 @@ export default function JupiterPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#f3c9a6]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat leading-[0.88]">
+                <motion.h1 className="font-caveat leading-[0.88]" {...heroTitleMotion}>
                   <span className="block text-[5.8rem] text-[#fcd34d] drop-shadow-[0_0_34px_rgba(252,211,77,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
                     Guru
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
                     The Guide and Teacher
                   </span>
-                </h1>
+                </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fef3c7] sm:text-4xl">गुरु</div>
                   <div className="font-kalam text-2xl text-[#fde68a] sm:text-3xl">(Jupiter)</div>
                 </div>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
-                  <p>Guru blesses our <Highlight>wisdom</Highlight>, <Highlight>knowledge</Highlight></p>
-                  <p>and <Highlight>growth</Highlight>.</p>
+                  <p>
+                    Guru blesses our{' '}
+                    <HighlightStroke color={ACCENT} show={!prefersReducedMotion}>
+                      <span className="text-[#fcd34d]">wisdom</span>
+                    </HighlightStroke>
+                    ,{' '}
+                    <UnderlineScribble color={ACCENT} show={!prefersReducedMotion}>
+                      <span className="text-[#fcd34d]">growth</span>
+                    </UnderlineScribble>
+                  </p>
+                  <p>
+                    and{' '}
+                    <CircleCallout color={ACCENT} show={!prefersReducedMotion}>
+                      <span className="text-[#fcd34d]">abundance</span>
+                    </CircleCallout>
+                    .
+                  </p>
                   <div className="flex items-center gap-3">
-                    <p>He teaches <Highlight>dharma</Highlight> and brings <Highlight>abundance</Highlight>.</p>
+                    <p>He teaches dharma and brings grace.</p>
                     <ScribbleLine />
                   </div>
                 </div>
@@ -726,20 +951,24 @@ export default function JupiterPage() {
 
               <div className="relative z-10 mt-8 max-w-[18rem] sm:mt-10 sm:max-w-[30rem] lg:absolute lg:bottom-4 lg:left-0 lg:mt-0 lg:max-w-[38rem]">
                 <ParchmentCard className="rounded-[24px] p-2.5 sm:p-3 shadow-[0_18px_40px_rgba(0,0,0,0.38)]" rotate="lg:-rotate-[0.55deg]">
-                  <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0">
+                  <motion.div
+                    className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0"
+                    {...staggerParent(0.1)}
+                  >
                     {quickFacts.map((fact, index) => (
-                      <div
+                      <motion.div
                         key={fact.label}
                         className={`flex min-h-[96px] flex-col items-center justify-center px-2.5 py-2.5 text-center sm:min-h-[110px] sm:px-3 ${
                           index < quickFacts.length - 1 ? 'lg:border-r lg:border-[#755632]/30' : ''
                         }`}
+                        {...fadeUpItem}
                       >
-                        <div className="text-[#7c2d12]">{iconSvg(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
+                        <div className="text-[#7c2d12]">{quickFactIcon(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
                         <div className="mt-1.5 font-caveat text-[1.55rem] leading-none sm:text-[1.9rem]">{fact.label}</div>
                         <div className="mt-1 font-kalam text-[0.95rem] leading-tight text-[#92400e] sm:text-[1.08rem]">{fact.value}</div>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </ParchmentCard>
               </div>
             </div>
@@ -769,82 +998,90 @@ export default function JupiterPage() {
           }}
         >
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
-            <div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]">
-              <ParchmentCard className="min-h-full" rotate="xl:-rotate-[0.5deg]">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="mb-2 flex items-center gap-3">
-                      <span className="font-devanagari text-4xl text-[#1f140d]">ॐ</span>
-                      <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                        Sacred Mantras
-                      </h3>
+            <motion.div
+              className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]"
+              {...staggerParent(0.15)}
+            >
+              <motion.div {...topCardsItem}>
+                <ParchmentCard className="min-h-full relative" rotate="xl:-rotate-[0.5deg]">
+                  <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#F5A623]" />
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="mb-2 flex items-center gap-3">
+                        <span className="font-devanagari text-4xl text-[#1f140d]">ॐ</span>
+                        <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                          Sacred Mantras
+                        </h3>
+                      </div>
+                      <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#b45309] via-[#fbbf24] to-transparent" />
                     </div>
-                    <div className="h-[3px] w-52 rounded-full bg-gradient-to-r from-[#b45309] via-[#fbbf24] to-transparent" />
-                  </div>
-                  <div className="flex items-center gap-4 text-[#2a1a10]/70">
-                    <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
-                    <img src={CROWN_URL} alt="" aria-hidden="true" className="h-6 w-6" />
-                  </div>
-                </div>
-
-                <div className="mt-6 space-y-10">
-                  {mantras.map((mantra, index) => (
-                    <div key={mantra.title}>
-                      <div className="font-caveat text-[2rem] leading-none text-[#92400e] sm:text-[2.4rem]">
-                        {index + 1}. {mantra.title}
-                      </div>
-
-                      <div className="mt-4 rounded-[18px] border-2 border-[#b45309] bg-[#f6ebd6] px-5 py-4 shadow-[inset_0_0_20px_rgba(146,64,14,0.12)]">
-                        <div className="font-devanagari text-[1.8rem] leading-tight text-[#1e120c] sm:text-[2.15rem]">
-                          {mantra.devanagari}
-                        </div>
-                      </div>
-
-                      <div className="mt-5 space-y-3 font-kalam text-xl leading-relaxed text-[#2d1e13]">
-                        <div>
-                          <span className="font-semibold text-[#92400e]">IAST:</span> {mantra.iast}
-                        </div>
-                        <div>
-                          <span className="font-semibold text-[#92400e]">Meaning:</span> {mantra.meaning}
-                        </div>
-                      </div>
+                    <div className="flex items-center gap-4 text-[#2a1a10]/70">
+                      <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-14 w-14 opacity-70" />
+                      <Crown className="h-6 w-6 text-[#7c2d12]" weight="duotone" />
                     </div>
-                  ))}
-                </div>
-
-                {/* Visible matching content for HowTo schema (Google policy). */}
-                <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
-                  <div className="font-caveat text-[1.7rem] leading-none text-[#a16207] sm:text-[2rem]">
-                    How to Chant the Guru Beej Mantra
                   </div>
-                  <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
-                    <li>Bathe and wear clean clothes in yellow.</li>
-                    <li>Sit facing northeast on a clean mat with the spine straight.</li>
-                    <li>Hold a Yellow Sapphire or Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
-                    <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
-                    <li>Sit quietly afterwards and offer the merit to Guru with gratitude.</li>
-                  </ol>
-                </div>
 
-                <img
-                  src={FEATHER_URL}
-                  alt="" aria-hidden="true"
-                  className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
-                />
-              </ParchmentCard>
+                  <div className="mt-6 space-y-10">
+                    {mantras.map((mantra, index) => (
+                      <div key={mantra.title}>
+                        <div className="font-caveat text-[2rem] leading-none text-[#92400e] sm:text-[2.4rem]">
+                          {index + 1}. {mantra.title}
+                        </div>
 
-              <div className="grid gap-6">
+                        <div className="mt-4 rounded-[18px] border-2 border-[#b45309] bg-[#f6ebd6] px-5 py-4 shadow-[inset_0_0_20px_rgba(146,64,14,0.12)]">
+                          <div className="font-devanagari text-[1.8rem] leading-tight text-[#1e120c] sm:text-[2.15rem]">
+                            {mantra.devanagari}
+                          </div>
+                        </div>
+
+                        <div className="mt-5 space-y-3 font-kalam text-xl leading-relaxed text-[#2d1e13]">
+                          <div>
+                            <span className="font-semibold text-[#92400e]">IAST:</span> {mantra.iast}
+                          </div>
+                          <div>
+                            <span className="font-semibold text-[#92400e]">Meaning:</span> {mantra.meaning}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Visible matching content for HowTo schema (Google policy). */}
+                  <div className="mt-8 rounded-[18px] border border-[#8c6e47]/30 bg-[#f6ebd6]/60 px-5 py-4">
+                    <div className="font-caveat text-[1.7rem] leading-none text-[#a16207] sm:text-[2rem]">
+                      How to Chant the Guru Beej Mantra
+                    </div>
+                    <ol className="mt-3 list-decimal space-y-1.5 pl-5 font-kalam text-lg leading-relaxed text-[#2d1e13]">
+                      <li>Bathe and wear clean clothes in yellow.</li>
+                      <li>Sit facing northeast on a clean mat with the spine straight.</li>
+                      <li>Hold a Yellow Sapphire or Sphatik mala of 108 beads in the right hand using thumb and middle finger.</li>
+                      <li>Chant the Beej mantra 108 times per round with steady rhythm.</li>
+                      <li>Sit quietly afterwards and offer the merit to Guru with gratitude.</li>
+                    </ol>
+                  </div>
+
+                  <img
+                    src={FEATHER_URL}
+                    alt="" aria-hidden="true"
+                    className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
+                  />
+                </ParchmentCard>
+              </motion.div>
+
+              <motion.div className="grid gap-6" {...topCardsItem}>
                 <ParchmentCard rotate="xl:rotate-[0.4deg]">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Guru in Our Life
                     </h3>
-                    <div className="text-[#2a1a10]/70">{iconSvg('faq', 'h-12 w-12')}</div>
+                    <div className="text-[#2a1a10]/70">
+                      <Lightbulb className="h-12 w-12" weight="duotone" />
+                    </div>
                   </div>
                   <div className="mt-4 space-y-3">
                     {lifeRows.map((row) => (
                       <div key={row.label} className="flex gap-3 border-b border-[#745834]/15 pb-3 last:border-b-0 last:pb-0">
-                        <div className="mt-1 text-[#92400e]">{iconSvg(row.icon, 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#92400e]">{sidebarAccordionIcon(row.icon, 'h-6 w-6')}</div>
                         <div className="font-kalam text-lg leading-relaxed text-[#2b1b10]">
                           <span className="font-semibold text-[#7c2d12]">{row.label}:</span> {row.value}
                         </div>
@@ -869,11 +1106,12 @@ export default function JupiterPage() {
                     ))}
                   </div>
                 </ParchmentCard>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             <div className="mt-6">
-              <ParchmentCard rotate="lg:-rotate-[0.25deg]">
+              <ParchmentCard rotate="lg:-rotate-[0.25deg]" className="relative">
+                <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#F5A623]" />
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Guru
@@ -886,7 +1124,7 @@ export default function JupiterPage() {
                       key={practice}
                       className="rounded-2xl border border-[#7b603e]/20 bg-white/25 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]"
                     >
-                      <div className="mb-3 text-[#92400e]">{iconSvg('connect', 'h-6 w-6')}</div>
+                      <div className="mb-3 text-[#92400e]">{connectStepIcon('connect', 'h-6 w-6')}</div>
                       <p className="font-kalam text-lg leading-relaxed text-[#2a190f]">{practice}</p>
                     </div>
                   ))}
@@ -915,27 +1153,29 @@ export default function JupiterPage() {
                 </div>
               </ParchmentCard>
 
-              <ParchmentCard rotate="xl:rotate-[0.45deg]">
-                <div className="pointer-events-none absolute inset-0 opacity-20">
-                  <SunraysDoodle className="absolute right-0 top-0 h-full w-full" />
-                </div>
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
-                    Affirmation
-                  </h3>
-                  <div className="text-[#b45309]">
-                    <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current stroke-[1.8]">
-                      <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
-                    </svg>
+              <motion.div {...affirmationMotion}>
+                <ParchmentCard rotate="xl:rotate-[0.45deg]">
+                  <div className="pointer-events-none absolute inset-0 opacity-20">
+                    <SunraysDoodle className="absolute right-0 top-0 h-full w-full" />
                   </div>
-                </div>
-                <div className="mt-8 font-kalam text-[2rem] leading-snug text-[#7c2d12] sm:text-[2.4rem]">
-                  &ldquo;I am wise, I am abundant, I welcome growth and grace into every part of my life.&rdquo;
-                </div>
-                <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
-                  This affirmation supports learning that ripens, faith that warms, and prosperity held with discernment.
-                </div>
-              </ParchmentCard>
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
+                      Affirmation
+                    </h3>
+                    <div className="text-[#b45309]">
+                      <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current stroke-[1.8]">
+                        <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="mt-8 font-kalam text-[2rem] leading-snug text-[#7c2d12] sm:text-[2.4rem]">
+                    &ldquo;I am wise, I am abundant, I welcome growth and grace into every part of my life.&rdquo;
+                  </div>
+                  <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
+                    This affirmation supports learning that ripens, faith that warms, and prosperity held with discernment.
+                  </div>
+                </ParchmentCard>
+              </motion.div>
             </div>
 
             <div className="mt-8 rounded-[30px] border border-white/10 bg-[#1a0d05]/85 px-5 py-6 shadow-[0_20px_70px_rgba(0,0,0,0.35)] backdrop-blur sm:px-8">
@@ -980,6 +1220,192 @@ export default function JupiterPage() {
                       <div className="mt-1 text-sm leading-snug text-[#fde68a]/80">{association.subtitle}</div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Navagraha carousel */}
+            <div className="mt-8 rounded-[28px] border border-[#d8bb75]/45 bg-white/55 px-5 py-6 shadow-[0_16px_40px_rgba(57,31,10,0.10)]">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollPrev()}
+                  disabled={!canScrollPrev}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8bb75] bg-white/70 text-[#9a5a12] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d39a2a]"
+                  aria-label="Scroll planets left"
+                >
+                  <ArrowLeft className="h-5 w-5" weight="regular" />
+                </button>
+                <div className="text-center">
+                  <div className="font-caveat text-3xl leading-none text-[#8f5b12] sm:text-4xl">
+                    Explore All Navagrahas
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollNext()}
+                  disabled={!canScrollNext}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8bb75] bg-white/70 text-[#9a5a12] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d39a2a]"
+                  aria-label="Scroll planets right"
+                >
+                  <ArrowRight className="h-5 w-5" weight="regular" />
+                </button>
+              </div>
+
+              <div className="mt-5 overflow-hidden" ref={emblaRef}>
+                <div className="-ml-4 flex">
+                  {navagrahas.map((planet) => {
+                    const isCurrent = planet.slug === 'jupiter';
+                    const card = (
+                      <Link
+                        key={planet.name}
+                        to={planet.href}
+                        className={`block min-w-0 rounded-[22px] border px-4 py-4 text-center transition hover:-translate-y-0.5 ${
+                          isCurrent
+                            ? 'border-[#F5A623] bg-[#fff8e8] ring-2 ring-[#F5A623]'
+                            : 'border-[#e7d7b0] bg-white/70'
+                        }`}
+                      >
+                        <img
+                          src={navagrahaImage(planet.img)}
+                          alt={`${planet.name} planet portrait`}
+                          className="mx-auto h-16 w-16 rounded-full object-cover shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+                        />
+                        <div className="mt-3 font-poppins text-sm font-semibold text-[#2f1b0d]">{planet.name}</div>
+                        <div className="font-devanagari text-lg text-[#9a5a12]">{planet.sanskrit}</div>
+                      </Link>
+                    );
+
+                    return (
+                      <div key={planet.name} className="min-w-0 flex-[0_0_120px] pl-4 sm:flex-[0_0_132px]">
+                        {isCurrent ? (
+                          <motion.div
+                            animate={
+                              prefersReducedMotion
+                                ? { opacity: 1 }
+                                : {
+                                    boxShadow: [
+                                      '0 0 0 rgba(245,166,35,0)',
+                                      '0 0 24px rgba(245,166,35,0.32)',
+                                      '0 0 0 rgba(245,166,35,0)',
+                                    ],
+                                  }
+                            }
+                            transition={
+                              prefersReducedMotion
+                                ? undefined
+                                : {
+                                    duration: 1.6,
+                                    repeat: Infinity,
+                                    ease: 'easeInOut',
+                                  }
+                            }
+                            className="rounded-[22px]"
+                          >
+                            {card}
+                          </motion.div>
+                        ) : (
+                          card
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Hero CTA banner */}
+            <div
+              className="relative mt-8 overflow-hidden rounded-[30px] border border-[#F5A623]/35 bg-[#1a0d05]/90 px-5 py-8 shadow-[0_28px_70px_rgba(2,8,23,0.42)] sm:px-8 sm:py-9"
+              style={{ background: 'radial-gradient(circle at center, rgba(245,166,35,0.18), transparent 65%)' }}
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(10,16,31,0.92),rgba(13,23,42,0.85)_45%,rgba(24,19,38,0.88))]" />
+              <div className="pointer-events-none absolute inset-0 opacity-60">
+                <NebulaDoodle className="absolute inset-0" />
+              </div>
+
+              <div className="relative grid gap-6 lg:grid-cols-[1.3fr_auto_1fr] lg:items-center">
+                <div className="text-left">
+                  <div className="flex items-center gap-2 text-[#F5A623]">
+                    <Compass className="h-6 w-6" weight="duotone" />
+                    <Sparkle className="h-5 w-5" weight="duotone" />
+                    <span className="font-poppins text-xs font-semibold uppercase tracking-[0.35em] text-[#F5A623]/85">
+                      Guru&apos;s Blessing
+                    </span>
+                  </div>
+                  <div className="mt-3 font-caveat text-[2.2rem] leading-tight text-[#fef3c7] sm:text-[2.7rem]">
+                    Let{' '}
+                    <UnderlineScribble color={ACCENT} show={!prefersReducedMotion}>
+                      <span className="inline-block">wisdom guide</span>
+                    </UnderlineScribble>{' '}
+                    your path with{' '}
+                    <CircleCallout color={ACCENT} show={!prefersReducedMotion}>
+                      <span className="inline-block text-[#fcd34d]">Guru</span>
+                    </CircleCallout>
+                    .
+                  </div>
+                  <p className="mt-3 font-kalam text-[1.05rem] leading-relaxed text-white/80">
+                    Embrace the energy of Brihaspati and live with knowledge, abundance, and dharmic grace.
+                  </p>
+                </div>
+
+                <div className="flex justify-center">
+                  <motion.div
+                    animate={
+                      prefersReducedMotion
+                        ? { opacity: 1 }
+                        : {
+                            scale: [1, 1.04, 1],
+                            opacity: [0.92, 1, 0.92],
+                          }
+                    }
+                    transition={
+                      prefersReducedMotion
+                        ? undefined
+                        : {
+                            duration: 2.8,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }
+                    }
+                    className="relative"
+                  >
+                    <div className="pointer-events-none absolute inset-0 rounded-full bg-[#F5A623]/22 blur-2xl" />
+                    <img src={DIYA_URL} alt="" aria-hidden="true" className="relative mx-auto h-20 w-20 sm:h-24 sm:w-24" />
+                  </motion.div>
+                </div>
+
+                <div className="flex justify-start lg:justify-end">
+                  <motion.div
+                    animate={
+                      prefersReducedMotion
+                        ? { opacity: 1 }
+                        : {
+                            boxShadow: [
+                              '0 0 0 rgba(245,166,35,0)',
+                              '0 0 24px rgba(245,166,35,0.45)',
+                              '0 0 0 rgba(245,166,35,0)',
+                            ],
+                          }
+                    }
+                    transition={
+                      prefersReducedMotion
+                        ? undefined
+                        : {
+                            duration: 1.6,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }
+                    }
+                    className="rounded-full"
+                  >
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#F5A623]/60 bg-[#F5A623]/10 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#fef3c7] transition hover:bg-[#F5A623]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F5A623]"
+                    >
+                      Explore Personalized Remedies <span aria-hidden="true">→</span>
+                    </Link>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -1210,13 +1636,16 @@ export default function JupiterPage() {
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="mt-1 text-[#92400e]">{iconSvg('faq', 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#92400e]">
+                          <Question className="h-6 w-6" weight="regular" />
+                        </div>
                         <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#92400e]">
-                        <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">
-                          <path d="M12 5v14M5 12h14" />
-                        </svg>
+                        <CaretDown
+                          className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                          weight="regular"
+                        />
                       </div>
                     </button>
                     {isOpen ? (
