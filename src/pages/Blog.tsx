@@ -35,9 +35,10 @@ export default function Blog() {
 
   const featuredPost = sortedPosts[0];
 
-  const remainingPosts = sortedPosts.length === 1
-    ? sortedPosts
-    : sortedPosts.slice(1);
+  // Grid shows every post including the one promoted to the featured hero.
+  // Without this, a newly-published post disappears from "Latest Articles"
+  // the moment it becomes the newest (it gets pulled into the hero slot only).
+  const remainingPosts = sortedPosts;
 
   const filteredPosts = useMemo(() => {
     if (activeCategory === 'All Articles') return remainingPosts;
