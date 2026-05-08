@@ -19,13 +19,14 @@ import CornerSpark from '../../components/doodles/CornerSpark';
 import HighlightStroke from '../../components/doodles/HighlightStroke';
 import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
-  getArticleSchema,
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const MOON_HERO_URL =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Planets/Moon/hero-chandra.webp';
@@ -631,12 +632,12 @@ export default function MoonPage() {
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Chandra (Moon) in Vedic Astrology: Meaning, Mantras, Remedies, and FAQ',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('moon').h1,
         description: PAGE_DESCRIPTION,
         image: MOON_HERO_URL,
         datePublished: '2026-04-23',
-        dateModified: '2026-04-23',
+        dateModified: '2026-05-09',
         url: '/planets/moon',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -734,10 +735,10 @@ export default function MoonPage() {
                 </div>
                 <motion.h1 {...heroTitleMotion} className="font-caveat leading-[0.88]">
                   <span className="block text-[5.8rem] text-[#c5d8ff] drop-shadow-[0_0_34px_rgba(166,194,255,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                    Chandra
+                    Moon in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                    The Divine Mind
+                    Chandra&apos;s Influence on Mind and Emotions
                   </span>
                 </motion.h1>
 
@@ -1456,6 +1457,32 @@ export default function MoonPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#eef3ff] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#1d2f61] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('moon').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#1d2f61] shadow-[0_8px_20px_rgba(57,31,10,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1d2f61]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

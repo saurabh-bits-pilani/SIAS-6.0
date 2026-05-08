@@ -789,6 +789,53 @@ export interface BlogPostMeta {
   keywords?: readonly string[];
 }
 
+/**
+ * Planet pillar Article schema. Emits @type Article with Organization-as-author
+ * and Organization-as-publisher per the SoulInfinity SEO spec for Navagraha
+ * pillar pages. Distinct from getArticleSchema which emits BlogPosting.
+ */
+export function getPlanetArticleSchema(opts: {
+  headline: string;
+  description: string;
+  url: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  articleSection?: string;
+  keywords?: readonly string[];
+}): JsonLd {
+  const absUrl = opts.url.startsWith('http') ? opts.url : `${SITE_ORIGIN}${opts.url}`;
+  const schema: JsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: opts.headline,
+    description: opts.description,
+    author: {
+      '@type': 'Organization',
+      name: 'Soul Infinity',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Soul Infinity',
+      url: `${SITE_ORIGIN}/`,
+    },
+    url: absUrl,
+    inLanguage: 'en-IN',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': absUrl,
+    },
+  };
+  if (opts.image) schema.image = opts.image;
+  if (opts.datePublished) schema.datePublished = opts.datePublished;
+  if (opts.dateModified ?? opts.datePublished)
+    schema.dateModified = opts.dateModified ?? opts.datePublished;
+  if (opts.articleSection) schema.articleSection = opts.articleSection;
+  if (opts.keywords && opts.keywords.length > 0)
+    schema.keywords = opts.keywords.join(', ');
+  return schema;
+}
+
 export function getArticleSchema(post: BlogPostMeta): JsonLd {
   const absUrl = post.url.startsWith('http') ? post.url : `${SITE_ORIGIN}${post.url}`;
   return {

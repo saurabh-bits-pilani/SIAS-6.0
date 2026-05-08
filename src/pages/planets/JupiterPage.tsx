@@ -25,13 +25,14 @@ import CornerSpark from '../../components/doodles/CornerSpark';
 import HighlightStroke from '../../components/doodles/HighlightStroke';
 import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
-  getArticleSchema,
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const JUPITER_R2_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
 
@@ -712,12 +713,12 @@ export default function JupiterPage() {
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Guru (Jupiter), The Great Benefic',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('jupiter').h1,
         description: PAGE_DESCRIPTION,
         image: HERO_URL,
         datePublished: '2026-04-26',
-        dateModified: '2026-04-26',
+        dateModified: '2026-05-09',
         url: '/planets/jupiter',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -901,10 +902,10 @@ export default function JupiterPage() {
                 </div>
                 <motion.h1 className="font-caveat leading-[0.88]" {...heroTitleMotion}>
                   <span className="block text-[5.8rem] text-[#fcd34d] drop-shadow-[0_0_34px_rgba(252,211,77,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                    Guru
+                    Jupiter in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                    The Guide and Teacher
+                    Guru&apos;s Blessings, Wisdom and Significance
                   </span>
                 </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
@@ -1660,6 +1661,32 @@ export default function JupiterPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#fdf6e3] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#92400e] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('jupiter').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#92400e] shadow-[0_8px_20px_rgba(146,64,14,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#92400e]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

@@ -43,6 +43,7 @@ const MakaraRashiPage = lazy(() => import('./pages/zodiac/MakaraRashiPage'));
 const KumbhaRashiPage = lazy(() => import('./pages/zodiac/KumbhaRashiPage'));
 const MeenaRashiPage = lazy(() => import('./pages/zodiac/MeenaRashiPage'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const SaturnIn7thHouse = lazy(() => import('./pages/blog/SaturnIn7thHouse'));
 
 // Loading component for lazy-loaded pages
 const LoadingSpinner = () => (
@@ -68,6 +69,7 @@ function App() {
           <Route path="/cosmic-podcast" element={<CosmicPodcast />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/mantra" element={<Mantra />} />
+          <Route path="/blog/saturn-in-7th-house-vedic-astrology" element={<SaturnIn7thHouse />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gallery/remedies" element={<Remedies />} />

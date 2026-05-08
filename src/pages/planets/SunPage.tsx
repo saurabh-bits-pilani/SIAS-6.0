@@ -29,13 +29,14 @@ import CornerSpark from '../../components/doodles/CornerSpark';
 import HighlightStroke from '../../components/doodles/HighlightStroke';
 import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
-  getArticleSchema,
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const R2 = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
 const PLANET_HUB = `${R2}/Pillar/Hub/Planets`;
@@ -678,12 +679,12 @@ export default function SunPage() {
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Surya (Sun) in Vedic Astrology: Meaning, Mantras, Remedies, and FAQ',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('sun').h1,
         description: PAGE_DESCRIPTION,
         image: SUN_HERO_URL,
         datePublished: '2026-04-23',
-        dateModified: '2026-05-07',
+        dateModified: '2026-05-09',
         url: '/planets/sun',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -848,7 +849,10 @@ export default function SunPage() {
                   {...heroTitleMotion}
                   className="font-caveat text-[5rem] leading-[0.84] text-[#f4c35a] drop-shadow-[0_0_30px_rgba(250,204,21,0.45)] sm:text-[6.6rem] lg:text-[7.9rem]"
                 >
-                  Surya
+                  <span className="block">Sun in Vedic Astrology</span>
+                  <span className="mt-3 block text-3xl leading-tight text-white sm:text-4xl lg:text-[3.4rem]">
+                    Surya&apos;s Power, Significance and Remedies
+                  </span>
                 </motion.h1>
                 <div className="mt-2 font-cormorant text-[2.2rem] leading-none text-[#fff7dd] sm:text-[3rem]">
                   The Radiant Sun
@@ -1446,6 +1450,32 @@ export default function SunPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f5ecd6] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#8f5b12] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('sun').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/75 px-4 py-3 font-poppins text-base font-semibold text-[#1d2f61] shadow-[0_8px_20px_rgba(57,31,10,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f5b12]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

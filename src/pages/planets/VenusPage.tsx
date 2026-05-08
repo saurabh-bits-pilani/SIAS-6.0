@@ -28,13 +28,14 @@ import CornerSpark from '../../components/doodles/CornerSpark';
 import HighlightStroke from '../../components/doodles/HighlightStroke';
 import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
-  getArticleSchema,
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const VENUS_R2_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
 const PLANET_HUB = `${VENUS_R2_BASE}/Pillar/Hub/Planets`;
@@ -836,12 +837,12 @@ export default function VenusPage() {
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Shukra (Venus), The Lord of Love and Refinement',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('venus').h1,
         description: PAGE_DESCRIPTION,
         image: HERO_URL,
         datePublished: '2026-04-27',
-        dateModified: '2026-04-27',
+        dateModified: '2026-05-09',
         url: '/planets/venus',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -1013,10 +1014,10 @@ export default function VenusPage() {
                 </div>
                 <motion.h1 className="font-caveat leading-[0.88]" {...heroTitleMotion}>
                   <span className="block text-[5.8rem] text-[#fbcfe8] drop-shadow-[0_0_34px_rgba(249,168,212,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                    Shukra
+                    Venus in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                    The Lord of Beauty and Refinement
+                    Shukra&apos;s Influence on Love and Prosperity
                   </span>
                 </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
@@ -1732,6 +1733,32 @@ export default function VenusPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#fdf2f8] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#9d174d] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('venus').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#9d174d] shadow-[0_8px_20px_rgba(157,23,77,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9d174d]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

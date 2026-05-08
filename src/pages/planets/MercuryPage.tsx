@@ -22,13 +22,14 @@ import CornerSpark from '../../components/doodles/CornerSpark';
 import HighlightStroke from '../../components/doodles/HighlightStroke';
 import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
-  getArticleSchema,
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 import mercuryAssetsRaw from '../../../scripts/planets-mercury-manifest.json';
 
 type MercuryAssets = {
@@ -839,12 +840,12 @@ export default function MercuryPage() {
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Budh (Mercury), The Awakened Intelligence',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('mercury').h1,
         description: PAGE_DESCRIPTION,
         image: HERO_URL,
         datePublished: '2026-04-25',
-        dateModified: '2026-04-26',
+        dateModified: '2026-05-09',
         url: '/planets/mercury',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -939,10 +940,10 @@ export default function MercuryPage() {
                 </div>
                 <motion.h1 className="font-caveat leading-[0.84]" {...heroTitleMotion}>
                   <span className="block text-[6.3rem] text-[#4ade80] drop-shadow-[0_0_34px_rgba(34,197,94,0.6)] sm:text-[7.9rem] lg:text-[9.1rem] xl:text-[9.8rem]">
-                    Budh
+                    Mercury in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-[#fff6de] drop-shadow-[0_3px_12px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-[4rem]">
-                    The Awakened Intelligence
+                    Budha&apos;s Role in Intelligence and Communication
                   </span>
                 </motion.h1>
                 <div className="mt-3 flex flex-wrap items-end gap-3">
@@ -2219,6 +2220,32 @@ export default function MercuryPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#eaf6ec] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#166534] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('mercury').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#166534] shadow-[0_8px_20px_rgba(22,101,52,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#166534]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

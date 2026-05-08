@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -31,13 +31,14 @@ import CornerSpark from '../../components/doodles/CornerSpark';
 import HighlightStroke from '../../components/doodles/HighlightStroke';
 import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
-  getArticleSchema,
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const SATURN_ACCENT = '#4A6FA5';
 
@@ -123,7 +124,7 @@ type DetailRow = {
 
 type EditorialSection = {
   title: string;
-  paragraphs: string[];
+  paragraphs: ReactNode[];
 };
 
 type FaqItem = {
@@ -258,7 +259,23 @@ const editorialSections: EditorialSection[] = [
     paragraphs: [
       'Shani holds two homes in the zodiac, the cardinal earth sign Capricorn (Makara) and the fixed air sign Aquarius (Kumbha). Capricorn gives him the room to build, to commit to long structures and slow ascents; Aquarius gives him the room to think, to hold communities together with rules, principles, and the cool air of fairness. Capricorn is where Shani works and Aquarius is where Shani legislates, and a chart with Saturn well-placed in either sign tends to carry the kind of dignity that age earns naturally.',
       'His exaltation is in Libra (Tula) at twenty degrees according to the Parashari tradition, where Venus\'s instinct for balance lifts Saturn into the impartial weighing of action and result. His debilitation is in Aries (Mesha), the cardinal fire sign of Mars, where Saturn\'s slow patience can struggle against impulsive heat. His mooltrikona, the seat of his most balanced expression, is the first twenty degrees of Aquarius. Within these dignities, even small differences in degree reshape the texture of patience and discipline in a chart.',
-      'Among the planetary friendships, Shani counts Mercury (Budh) and Venus (Shukra) as friends; he holds enmity towards the Sun (Surya), Moon (Chandra), and Mars (Mangala); and Jupiter (Guru) sits as a neutral. His direction is the west, the quarter associated with the slow sunset, where day surrenders to night. These correspondences form the syntax through which a Vedic chart reads the temperament of karma.',
+      (
+        <>
+          Among the planetary friendships, Shani counts{' '}
+          <Link to="/planets/mercury" className="text-[#1e3a8a] underline decoration-[#1e3a8a]/40 underline-offset-2 transition hover:decoration-[#1e3a8a]">Mercury</Link>{' '}
+          (Budh) and{' '}
+          <Link to="/planets/venus" className="text-[#1e3a8a] underline decoration-[#1e3a8a]/40 underline-offset-2 transition hover:decoration-[#1e3a8a]">Venus</Link>{' '}
+          (Shukra) as friends; he holds enmity towards the{' '}
+          <Link to="/planets/sun" className="text-[#1e3a8a] underline decoration-[#1e3a8a]/40 underline-offset-2 transition hover:decoration-[#1e3a8a]">Sun</Link>{' '}
+          (Surya),{' '}
+          <Link to="/planets/moon" className="text-[#1e3a8a] underline decoration-[#1e3a8a]/40 underline-offset-2 transition hover:decoration-[#1e3a8a]">Moon</Link>{' '}
+          (Chandra), and{' '}
+          <Link to="/planets/mars" className="text-[#1e3a8a] underline decoration-[#1e3a8a]/40 underline-offset-2 transition hover:decoration-[#1e3a8a]">Mars</Link>{' '}
+          (Mangala); and{' '}
+          <Link to="/planets/jupiter" className="text-[#1e3a8a] underline decoration-[#1e3a8a]/40 underline-offset-2 transition hover:decoration-[#1e3a8a]">Jupiter</Link>{' '}
+          (Guru) sits as a neutral. His direction is the west, the quarter associated with the slow sunset, where day surrenders to night. These correspondences form the syntax through which a Vedic chart reads the temperament of karma.
+        </>
+      ),
     ],
   },
   {
@@ -696,12 +713,12 @@ export default function SaturnPage() {
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Shani (Saturn), The Lord of Discipline',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('saturn').h1,
         description: PAGE_DESCRIPTION,
         image: HERO_URL,
         datePublished: '2026-04-27',
-        dateModified: '2026-04-27',
+        dateModified: '2026-05-09',
         url: '/planets/saturn',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -899,10 +916,10 @@ export default function SaturnPage() {
                   className="font-caveat leading-[0.88]"
                 >
                   <span className="block text-[5.8rem] text-[#a5b4fc] drop-shadow-[0_0_34px_rgba(165,180,252,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                    Shani
+                    Saturn in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                    The Lord of Discipline
+                    Shani&apos;s Lessons, Effects and Remedies
                   </span>
                 </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
@@ -1354,7 +1371,7 @@ export default function SaturnPage() {
                     <div className="mt-6 space-y-4 text-lg leading-8 text-[#332117]">
                       {section.paragraphs.map((paragraph, paragraphIndex) => (
                         <p
-                          key={paragraph}
+                          key={`${section.title}-${paragraphIndex}`}
                           className={paragraphIndex === 0 ? 'drop-cap' : undefined}
                           style={
                             paragraphIndex === 0
@@ -1713,6 +1730,32 @@ export default function SaturnPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#eef1fb] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#1e3a8a] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('saturn').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#1e3a8a] shadow-[0_8px_20px_rgba(30,58,138,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1e3a8a]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

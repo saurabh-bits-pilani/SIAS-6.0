@@ -17,13 +17,14 @@ import CornerSpark from '../../components/doodles/CornerSpark';
 import HighlightStroke from '../../components/doodles/HighlightStroke';
 import UnderlineScribble from '../../components/doodles/UnderlineScribble';
 import {
-  getArticleSchema,
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const PLANET_HUB_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Pillar/Hub/Planets';
 
@@ -687,12 +688,12 @@ export default function KetuPage() {
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Ketu, The Light of Detachment',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('ketu').h1,
         description: PAGE_DESCRIPTION,
         image: HERO_URL,
         datePublished: '2026-04-27',
-        dateModified: '2026-04-27',
+        dateModified: '2026-05-09',
         url: '/planets/ketu',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -801,10 +802,10 @@ export default function KetuPage() {
                 </div>
                 <motion.h1 {...heroTitleMotion} className="font-caveat leading-[0.88]">
                   <span className="block text-[5.8rem] text-[#d1d5db] drop-shadow-[0_0_34px_rgba(209,213,219,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                    Ketu
+                    Ketu in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                    The Light of Detachment
+                    Spirituality, Detachment and Moksha
                   </span>
                 </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
@@ -1552,6 +1553,32 @@ export default function KetuPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f3f4f6] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#1f2937] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('ketu').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#1f2937] shadow-[0_8px_20px_rgba(31,41,55,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1f2937]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>
