@@ -54,9 +54,11 @@ const PAGE_DESCRIPTION =
 const PAGE_KEYWORDS =
   'rahu, north node, vedic astrology, rahu mantra, rahu remedies, hessonite, gomed, chhaya graha, shadow planet, samudra manthan, soul infinity';
 const PAGE_URL = `${SITE_ORIGIN}/planets/rahu`;
+const RAHU_ACCENT = '#7B5EA7';
 
 const pageShellStyle = {
-  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundColor: '#0B1120',
+  backgroundImage: `radial-gradient(circle at top right, ${RAHU_ACCENT}22 0%, transparent 34%), linear-gradient(180deg, rgba(11,17,32,1) 0%, rgba(11,17,32,0.985) 100%)`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 };
@@ -129,7 +131,6 @@ const quickFacts: QuickFact[] = [
   { icon: 'air', label: 'Element', value: 'Air' },
   { icon: 'tamasic', label: 'Nature', value: 'Tamasic' },
   { icon: 'lead', label: 'Metal', value: 'Lead' },
-  { icon: 'day', label: 'Day', value: 'Saturday' },
   { icon: 'direction', label: 'Direction', value: 'South-West' },
 ];
 
@@ -210,13 +211,13 @@ const navagrahaImage = (img: string) => `${PLANET_HUB}/${img}`;
 
 const associations: Association[] = [
   { title: 'Aquarius', subtitle: 'Honorary Sign', icon: 'aquarius' },
-  { title: 'Saturday', subtitle: 'Sacred Day', icon: 'day' },
   { title: 'Smoky Grey', subtitle: 'Sacred Color', icon: 'smoke' },
   { title: 'Hessonite', subtitle: 'Sacred Gemstone', icon: 'gem' },
   { title: 'Snake', subtitle: 'Sacred Symbol', icon: 'snake' },
   { title: 'Foreign Lands', subtitle: 'Sacred Domain', icon: 'foreign' },
   { title: 'Bhairava', subtitle: 'Divine Connection', icon: 'bhairava' },
   { title: 'South-West', subtitle: 'Direction', icon: 'direction' },
+  { title: 'Innovation', subtitle: 'Sacred Impulse', icon: 'benefit' },
 ];
 
 const editorialSections: EditorialSection[] = [

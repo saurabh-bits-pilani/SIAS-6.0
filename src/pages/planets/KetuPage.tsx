@@ -51,9 +51,11 @@ const PAGE_DESCRIPTION =
 const PAGE_KEYWORDS =
   "ketu, south node, vedic astrology, ketu mantra, ketu remedies, cat's eye, lehsunia, vaiduryam, chhaya graha, shadow planet, moksha, soul infinity";
 const PAGE_URL = `${SITE_ORIGIN}/planets/ketu`;
+const KETU_ACCENT = '#8B4A4A';
 
 const pageShellStyle = {
-  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundColor: '#0B1120',
+  backgroundImage: `radial-gradient(circle at top right, ${KETU_ACCENT}22 0%, transparent 34%), linear-gradient(180deg, rgba(11,17,32,1) 0%, rgba(11,17,32,0.985) 100%)`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 };
@@ -156,7 +158,6 @@ const quickFacts: QuickFact[] = [
   { icon: 'fire', label: 'Element', value: 'Fire' },
   { icon: 'tamasic', label: 'Nature', value: 'Tamasic' },
   { icon: 'iron', label: 'Metal', value: 'Iron' },
-  { icon: 'day', label: 'Day', value: 'Tuesday' },
   { icon: 'direction', label: 'Direction', value: 'South-West' },
 ];
 
@@ -212,13 +213,13 @@ const connectPractices = [
 
 const associations: Association[] = [
   { title: 'Scorpio', subtitle: 'Honorary Sign', icon: 'scorpio' },
-  { title: 'Tuesday', subtitle: 'Sacred Day', icon: 'day' },
   { title: 'Smoky Grey', subtitle: 'Sacred Color', icon: 'smoke' },
   { title: "Cat's Eye", subtitle: 'Sacred Gemstone', icon: 'gem' },
   { title: 'Flag', subtitle: 'Sacred Symbol', icon: 'flag' },
   { title: 'Liberation', subtitle: 'Sacred Domain', icon: 'liberation' },
   { title: 'Ganesha', subtitle: 'Divine Connection', icon: 'ganesha' },
   { title: 'South-West', subtitle: 'Direction', icon: 'direction' },
+  { title: 'Past Karma', subtitle: 'Sacred Thread', icon: 'quote' },
 ];
 
 const editorialSections: EditorialSection[] = [
@@ -1293,7 +1294,7 @@ export default function KetuPage() {
                       to={footerCta.href}
                       className="inline-flex items-center gap-2 rounded-full border border-[#8B4A4A]/60 bg-[#8B4A4A]/10 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#f3d6d6] transition hover:bg-[#8B4A4A]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8B4A4A]"
                     >
-                      {footerCta.button} <span aria-hidden="true">{'->'}</span>
+                      {footerCta.button} <span aria-hidden="true">→</span>
                     </Link>
                   </motion.div>
                 </div>

@@ -348,23 +348,23 @@ const faqs: FaqItem[] = [
 ];
 
 const notebookStyle = {
-  backgroundImage: `linear-gradient(rgba(247,240,223,0.96), rgba(247,240,223,0.96)), url(${NOTEBOOK_URL})`,
+  backgroundImage: `linear-gradient(rgba(245,230,200,0.96), rgba(245,230,200,0.95)), url(${NOTEBOOK_URL})`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 };
 
 const stripeStyle = {
-  backgroundImage: `linear-gradient(rgba(246,234,206,0.93), rgba(246,234,206,0.93)), url(${PARCHMENT_STRIPE_URL}), url(${STRIP_BG_URL})`,
-  backgroundSize: 'cover, cover, cover',
+  backgroundImage: `linear-gradient(rgba(245,230,200,0.95), rgba(245,230,200,0.93)), url(${NOTEBOOK_URL})`,
+  backgroundSize: 'cover',
   backgroundPosition: 'center',
 };
 
 const pageShellStyle = {
-  backgroundImage: `linear-gradient(rgba(6,26,20,0.76), rgba(6,26,20,0.9)), url(${PAGE_NEBULA_URL})`,
+  backgroundColor: '#0B1120',
+  backgroundImage:
+    'radial-gradient(circle at top right, rgba(76,175,114,0.2) 0%, transparent 34%), linear-gradient(180deg, rgba(11,17,32,1) 0%, rgba(11,17,32,0.985) 100%)',
   backgroundSize: 'cover',
-  backgroundPosition: 'center top',
-  backgroundAttachment: 'fixed',
-  backgroundColor: '#061a14',
+  backgroundPosition: 'center',
 };
 
 const StickyOval = () => (

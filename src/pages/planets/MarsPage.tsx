@@ -63,7 +63,9 @@ const PAGE_KEYWORDS =
 const PAGE_URL = `${SITE_ORIGIN}/planets/mars`;
 
 const pageShellStyle = {
-  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundColor: '#0B1120',
+  backgroundImage:
+    'radial-gradient(circle at top right, rgba(232,71,42,0.2) 0%, transparent 34%), linear-gradient(180deg, rgba(11,17,32,1) 0%, rgba(11,17,32,0.985) 100%)',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 };
