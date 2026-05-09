@@ -1,4 +1,5 @@
 import reviewsData from '../data/google-reviews.json';
+import manualReviewsData from '../data/google-reviews-manual.json';
 
 /**
  * Renders the Google Reviews widget on the homepage. Data is read
@@ -40,6 +41,23 @@ type ReviewsData = {
 };
 
 const data = reviewsData as ReviewsData;
+
+/**
+ * Manual reviews — the permanent, hand-curated review pool. Never mutated
+ * by any build script. This file is the source of truth for the displayed
+ * total review count and is merged with the live API reviews so both are
+ * shown in a single feed.
+ *
+ * Why hybrid: Google Places API (New) v1 caps the `reviews` field at 5,
+ * and we have 40+ five-star reviews on the Business Profile that we want
+ * surfaced. Manual file holds the long-tail; API supplies the freshest 5.
+ */
+type ManualReviewsFile = {
+  rating?: number;
+  totalReviews?: number;
+  reviews?: readonly Review[];
+};
+const manualData = manualReviewsData as ManualReviewsFile;
 
 /** Deterministic avatar colour from author name (stable across SSR and client). */
 const AVATAR_PALETTE = [
@@ -191,19 +209,51 @@ function FallbackCta({ viewAllUrl, totalCount }: { viewAllUrl: string; totalCoun
 }
 
 export default function GoogleReviewsWidget() {
-  const { aggregate, reviews } = data;
-  // Sort newest-first, then cap to 6 cards. Spread first because the imported
-  // JSON array is readonly. Primary key is the integer `time` (Unix seconds)
-  // produced by scripts/fetch-google-reviews.mjs; `date` (full ISO string) is
-  // a fallback for any review object that lacks `time`. Newest first = larger
-  // timestamp first, hence tB - tA.
-  const visible = [...reviews]
+  const { aggregate, reviews: apiReviews } = data;
+  const manualReviews = manualData.reviews ?? [];
+
+  // Hybrid pool: manual reviews first (curated, win on duplicates), then API
+  // reviews. Dedupe by a stable signature of (lowercased author name) +
+  // (first 40 chars of normalized text) — catches the case where the same
+  // reviewer's words show up in both sources with minor whitespace drift.
+  const dedupeKey = (r: Review): string => {
+    const author = r.author.trim().toLowerCase();
+    const textSlice = (r.text ?? '')
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .slice(0, 40);
+    return `${author}|${textSlice}`;
+  };
+  const seen = new Set<string>();
+  const merged: Review[] = [];
+  for (const r of [...manualReviews, ...apiReviews]) {
+    const key = dedupeKey(r);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(r);
+  }
+
+  // Sort newest-first by integer Unix `time` (preferred), with full-ISO `date`
+  // as fallback for any review missing `time`. Larger timestamp first.
+  const visible = merged
     .sort((a, b) => {
       const tA = a.time ?? new Date(a.date ?? 0).getTime();
       const tB = b.time ?? new Date(b.date ?? 0).getTime();
       return tB - tA;
     })
     .slice(0, 6);
+
+  // Aggregate display: prefer manual file's totals when set (they represent
+  // the true publicly-visible review count on Google Business Profile, which
+  // includes reviews older than the 5 the API returns). Falls back to API
+  // aggregate when the manual file omits these fields.
+  const displayedRating =
+    typeof manualData.rating === 'number' ? manualData.rating : aggregate.averageRating;
+  const displayedCount =
+    typeof manualData.totalReviews === 'number'
+      ? manualData.totalReviews
+      : aggregate.totalCount;
 
   return (
     <section
@@ -223,12 +273,12 @@ export default function GoogleReviewsWidget() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Stars rating={aggregate.averageRating} size="w-5 h-5" />
+          <Stars rating={displayedRating} size="w-5 h-5" />
           <span className="font-heading font-bold text-2xl text-gray-900">
-            {aggregate.averageRating.toFixed(1)}
+            {displayedRating.toFixed(1)}
           </span>
           <span className="text-sm text-gray-500">
-            ({aggregate.totalCount} review{aggregate.totalCount === 1 ? '' : 's'})
+            ({displayedCount} review{displayedCount === 1 ? '' : 's'})
           </span>
         </div>
       </div>
@@ -248,13 +298,13 @@ export default function GoogleReviewsWidget() {
               className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium hover:shadow-md transition-shadow"
             >
               <GoogleGIcon className="w-4 h-4" />
-              See all {aggregate.totalCount} reviews on Google
+              See all {displayedCount} reviews on Google
               <span aria-hidden="true">→</span>
             </a>
           </div>
         </>
       ) : (
-        <FallbackCta viewAllUrl={aggregate.viewAllUrl} totalCount={aggregate.totalCount} />
+        <FallbackCta viewAllUrl={aggregate.viewAllUrl} totalCount={displayedCount} />
       )}
     </section>
   );

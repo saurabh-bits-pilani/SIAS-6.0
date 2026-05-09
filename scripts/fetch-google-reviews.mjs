@@ -233,6 +233,24 @@ async function main() {
   const reviewsRaw = Array.isArray(details.reviews) ? details.reviews : [];
   const reviews = reviewsRaw.map(normalizeReview);
 
+  // Safety guard: if the live response has 0 reviews but a previous good
+  // fetch wrote >0 to the file, do not overwrite. A bad query param (see
+  // f2b9b43, reviewsSort=newest) or a transient API hiccup can return
+  // success-but-empty; preserving the prior good JSON is strictly better
+  // than zeroing out the visible cards on production.
+  if (reviews.length === 0) {
+    const existing = await readExistingJson();
+    const prior = Array.isArray(existing?.reviews) ? existing.reviews.length : 0;
+    if (prior > 0) {
+      warn(
+        `live fetch returned 0 reviews but existing JSON has ${prior} — keeping existing JSON. ` +
+          `Investigate API response if this persists.`,
+      );
+      process.exit(0);
+    }
+    log('live fetch returned 0 reviews and prior JSON also empty; writing empty as-is.');
+  }
+
   const output = {
     aggregate: {
       averageRating:
