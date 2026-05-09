@@ -178,11 +178,11 @@ async function isCacheFresh() {
 }
 
 async function fetchPlaceDetails(placeId, apiKey) {
-  // reviewsSort=newest asks Google to return the most recent 5 reviews
-  // instead of the relevance-ranked default. The widget still applies its
-  // own client-side time-desc sort as a defensive second pass — between the
-  // two, the rendered order is always newest-first.
-  const url = `${ENDPOINT_BASE}/${encodeURIComponent(placeId)}?reviewsSort=newest`;
+  // Plain v1 endpoint — no sort query param. The legacy `reviewsSort=newest`
+  // parameter is not supported by Places API (New) v1 and returned 0 reviews
+  // when added on f2b9b43. Reverted on f2b9b43 follow-up. Newest-first
+  // ordering is enforced client-side by the widget's time-desc sort.
+  const url = `${ENDPOINT_BASE}/${encodeURIComponent(placeId)}`;
   const res = await fetch(url, {
     method: 'GET',
     headers: {
