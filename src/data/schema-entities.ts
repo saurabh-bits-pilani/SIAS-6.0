@@ -252,12 +252,14 @@ function buildReviewSchemas(): JsonLd[] {
           worstRating: 1,
         },
         reviewBody: r.text,
-        // Include @type alongside @id so validators that don't resolve
-        // @id references still see a typed reference.
-        itemReviewed: {
-          '@type': 'LocalBusiness',
-          '@id': SCHEMA_IDS.localBusiness,
-        },
+        // No `itemReviewed` field here: each Review is nested inside the
+        // LocalBusiness `review` array (see getLocalBusinessSchema below),
+        // and Google's Rich Results validator flags `itemReviewed` on a
+        // nested Review as a directional conflict — the parent already
+        // establishes what's being reviewed via its own @id. Keep this
+        // builder strictly for nested use; if Review objects are ever
+        // emitted at the top level, add `itemReviewed` at the call site,
+        // not here.
         publisher: {
           '@type': 'Organization',
           name: 'Google',
