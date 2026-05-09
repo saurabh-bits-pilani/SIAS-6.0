@@ -9,6 +9,12 @@
 //   GOOGLE_PLACE_ID        — Place ID of Soul Infinity Astro Solutions.
 //   FORCE_REVIEW_FETCH=true — bypass the 24h cache check.
 //
+// Env source order (first hit wins):
+//   1. process.env (Vercel deploy env, shell-injected vars)
+//   2. .env.local at repo root (local dev convenience — file is gitignored)
+//   The .env.local loader silently no-ops if the file doesn't exist (Vercel),
+//   so the script behaves identically in both environments.
+//
 // Failure modes (all exit 0 — never breaks build):
 //   - env missing      → log warning, preserve existing JSON, else seed fallback
 //   - API network err  → same
@@ -33,6 +39,32 @@ function log(msg) {
 }
 function warn(msg) {
   console.warn(`[reviews] WARNING: ${msg}`);
+}
+
+// Load .env.local into process.env for local dev. Mirrors the loadEnv()
+// helper used by scripts/upload-*.mjs. Existing process.env values win
+// (Vercel-injected env still authoritative). Missing file is tolerated so
+// the same script runs cleanly on Vercel where .env.local doesn't exist.
+async function loadEnv() {
+  let raw;
+  try {
+    raw = await fs.readFile(path.join(ROOT, '.env.local'), 'utf8');
+  } catch (err) {
+    if (err.code === 'ENOENT') return;
+    throw err;
+  }
+  for (const line of raw.split('\n')) {
+    const t = line.trim();
+    if (!t || t.startsWith('#')) continue;
+    const eq = t.indexOf('=');
+    if (eq < 0) continue;
+    const k = t.slice(0, eq).trim();
+    let v = t.slice(eq + 1).trim();
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+      v = v.slice(1, -1);
+    }
+    if (!(k in process.env)) process.env[k] = v;
+  }
 }
 
 function deterministicInitial(name) {
@@ -167,6 +199,7 @@ async function fetchPlaceDetails(placeId, apiKey) {
 }
 
 async function main() {
+  await loadEnv();
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   const placeId = process.env.GOOGLE_PLACE_ID;
 
