@@ -19,7 +19,10 @@ interface ReviewSnapshot {
   authorPhotoUrl: string | null;
   authorProfileUrl: string | null;
   rating: number;
+  /** Full ISO 8601 publishTime from Google Places (e.g. "2024-12-15T10:00:00Z"). */
   date: string | null;
+  /** Unix epoch seconds — used as the primary sort key in the reviews widget. */
+  time: number | null;
   relativeTime: string;
   text: string;
 }
@@ -225,7 +228,10 @@ function buildReviewSchemas(): JsonLd[] {
   return reviews
     .filter((r) => r && typeof r.author === 'string' && typeof r.text === 'string' && r.text.length > 0)
     .map((r) => {
-      const datePublished = r.date ? `${r.date}-01` : undefined;
+      // r.date is now full ISO 8601 (Schema.org datePublished accepts ISO datetimes
+      // directly). Previously this synthesised a YYYY-MM-DD by appending "-01" to a
+      // YYYY-MM string; with full publishTime preserved, no synthesis is needed.
+      const datePublished = r.date ?? undefined;
       const author: JsonLd = {
         '@type': 'Person',
         name: r.author,

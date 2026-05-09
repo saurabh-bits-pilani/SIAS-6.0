@@ -20,7 +20,10 @@ interface Review {
   authorPhotoUrl: string | null;
   authorProfileUrl: string | null;
   rating: number;
+  /** Full ISO 8601 publishTime from Google Places, e.g. "2024-12-15T10:00:00Z". */
   date: string | null;
+  /** Unix epoch seconds — primary sort key (numeric, no per-compare parsing). */
+  time: number | null;
   relativeTime: string;
   text: string;
 }
@@ -190,12 +193,16 @@ function FallbackCta({ viewAllUrl, totalCount }: { viewAllUrl: string; totalCoun
 export default function GoogleReviewsWidget() {
   const { aggregate, reviews } = data;
   // Sort newest-first, then cap to 6 cards. Spread first because the imported
-  // JSON array is readonly. The actual populated field is `date` (a year-month
-  // string like "2024-12", produced by scripts/fetch-google-reviews.mjs from
-  // Google Places `publishTime`), not Unix `time` — string compare via Date
-  // works across "YYYY-MM" values.
+  // JSON array is readonly. Primary key is the integer `time` (Unix seconds)
+  // produced by scripts/fetch-google-reviews.mjs; `date` (full ISO string) is
+  // a fallback for any review object that lacks `time`. Newest first = larger
+  // timestamp first, hence tB - tA.
   const visible = [...reviews]
-    .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime())
+    .sort((a, b) => {
+      const tA = a.time ?? new Date(a.date ?? 0).getTime();
+      const tB = b.time ?? new Date(b.date ?? 0).getTime();
+      return tB - tA;
+    })
     .slice(0, 6);
 
   return (

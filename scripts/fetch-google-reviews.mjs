@@ -70,7 +70,12 @@ function normalizeReview(raw, index) {
     authorPhotoUrl: raw?.authorAttribution?.photoUri ?? null,
     authorProfileUrl: raw?.authorAttribution?.uri ?? null,
     rating: typeof raw?.rating === 'number' ? raw.rating : 5,
-    date: isoToYearMonth(raw?.publishTime),
+    // Full ISO 8601 publishTime preserved (e.g. "2024-12-15T10:00:00Z") so
+    // sorting can use day/time precision, not just year-month.
+    date: raw?.publishTime ?? null,
+    // Unix epoch seconds — bulletproof primary sort key. Numeric subtraction
+    // is faster and avoids `new Date()` parsing per comparison in the widget.
+    time: raw?.publishTime ? Math.floor(new Date(raw.publishTime).getTime() / 1000) : null,
     relativeTime: raw?.relativePublishTimeDescription ?? '',
     text,
   };
