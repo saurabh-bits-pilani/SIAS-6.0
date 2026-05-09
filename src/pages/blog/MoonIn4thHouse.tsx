@@ -391,7 +391,14 @@ export default function MoonIn4thHouse() {
             {/* Meta row */}
             <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(126,143,203,0.2)", border: "1px solid rgba(200,212,240,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>&#9790;</div>
+                <img
+                  src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp"
+                  alt="Saurabh Jain - Vedic Astrologer trained at K.N. Rao Institute"
+                  width={36}
+                  height={36}
+                  loading="lazy"
+                  style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }}
+                />
                 <div>
                   <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#DDE7FF" }}>Saurabh Jain</p>
                   <p style={{ margin: 0, fontSize: 11, color: "rgba(200,212,240,0.5)" }}>K.N. Rao Institute, New Delhi</p>

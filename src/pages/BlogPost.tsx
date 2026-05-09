@@ -73,7 +73,7 @@ const POST_MODULES = import.meta.glob<MdxModule>('../../content/blog/*.mdx', {
 const TEMPLATE_FILENAME = '_template.mdx';
 
 const AUTHOR_PORTRAIT_URL =
-  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Brand/Saurabh/author-portrait-256.webp';
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp';
 
 interface ResolvedPost {
   Content: ComponentType;
@@ -494,11 +494,11 @@ export default function BlogPost() {
                 <div className="flex items-start gap-4">
                   <img
                     src={AUTHOR_PORTRAIT_URL}
-                    alt="Saurabh Jain"
-                    width={64}
-                    height={64}
+                    alt="Saurabh Jain - Vedic Astrologer trained at K.N. Rao Institute"
+                    width={80}
+                    height={80}
                     loading="lazy"
-                    className="w-16 h-16 rounded-full object-cover flex-shrink-0 border-2 border-blog-gold"
+                    className="w-20 h-20 rounded-full object-cover flex-shrink-0 border-2 border-blog-gold"
                   />
                   <div>
                     <p className="font-poppins font-semibold text-blog-ink mb-1">Saurabh Jain</p>

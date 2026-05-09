@@ -342,15 +342,15 @@ export default function SaturnIn7thHouse() {
 
             {/* Author */}
             <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-lg shrink-0"
-                style={{
-                  background: "rgba(212,175,55,0.2)",
-                  border: "1px solid rgba(212,175,55,0.4)",
-                }}
-              >
-                &#128302;
-              </div>
+              <img
+                src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp"
+                alt="Saurabh Jain - Vedic Astrologer trained at K.N. Rao Institute"
+                style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover" }}
+                width={36}
+                height={36}
+                loading="lazy"
+                className="shrink-0"
+              />
               <div>
                 <p className="text-white/90 text-sm font-semibold">By Saurabh Jain</p>
                 <p className="text-white/45 text-xs">
