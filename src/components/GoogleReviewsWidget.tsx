@@ -189,8 +189,14 @@ function FallbackCta({ viewAllUrl, totalCount }: { viewAllUrl: string; totalCoun
 
 export default function GoogleReviewsWidget() {
   const { aggregate, reviews } = data;
-  // Cap to 6 cards; the widget is visual reassurance, not exhaustive.
-  const visible = reviews.slice(0, 6);
+  // Sort newest-first, then cap to 6 cards. Spread first because the imported
+  // JSON array is readonly. The actual populated field is `date` (a year-month
+  // string like "2024-12", produced by scripts/fetch-google-reviews.mjs from
+  // Google Places `publishTime`), not Unix `time` — string compare via Date
+  // works across "YYYY-MM" values.
+  const visible = [...reviews]
+    .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime())
+    .slice(0, 6);
 
   return (
     <section

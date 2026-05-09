@@ -68,7 +68,7 @@ export const BUSINESS_NAP = {
   longitude: 72.5048,
   priceRange: '₹₹',
   logo: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png',
-  founderImage: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png',
+  founderImage: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp',
   sameAs: [
     'https://www.facebook.com/people/Soul-Infinity/',
     'https://www.quora.com/profile/Saurabh-Jain-Soul-Infinity',
