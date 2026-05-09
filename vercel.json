@@ -6,13 +6,19 @@
     {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "soul-infinity-liard.vercel.app" }],
-      "destination": "https://soul-infinitycom.vercel.app/$1",
+      "destination": "https://www.soulinfinity.space/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "soul-infinitycom.vercel.app" }],
+      "destination": "https://www.soulinfinity.space/$1",
       "permanent": true
     },
     {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.soul-infinitycom.vercel.app" }],
-      "destination": "https://soul-infinitycom.vercel.app/$1",
+      "destination": "https://www.soulinfinity.space/$1",
       "permanent": true
     },
     {
