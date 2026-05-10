@@ -291,7 +291,7 @@ export default function DoshaPage() {
           src={HERO_URL}
           alt="Doshas in Vedic Astrology, Mangal, Kaal Sarp, Nadi, Pitru, Saade Sati illustrated"
           fetchpriority="high"
-          className="block h-auto w-full"
+          className="w-full h-auto block"
         />
         <div className="flex justify-center px-4 py-8 sm:px-6 lg:px-8">
           <Link
@@ -358,7 +358,7 @@ export default function DoshaPage() {
             aria-hidden="true"
             width={1600}
             height={460}
-            className="w-full h-full object-cover"
+            className="w-full h-auto block"
           />
         </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

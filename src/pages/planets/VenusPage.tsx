@@ -978,6 +978,17 @@ export default function VenusPage() {
           </Link>
         </div>
 
+        <section className="w-full bg-[#050810]">
+          <img
+            src={HERO_URL}
+            alt="Shukra hero banner showing Venus in Vedic astrology with love and prosperity symbolism"
+            width={1600}
+            height={900}
+            fetchpriority="high"
+            className="w-full h-auto block"
+          />
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={{
@@ -985,10 +996,7 @@ export default function VenusPage() {
               'radial-gradient(circle at 50% 8%, rgba(249,168,212,0.46) 0%, rgba(190,24,93,0.40) 22%, rgba(38,8,22,1) 46%, rgba(15,5,12,1) 100%)',
           }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-[center_right_18%] bg-no-repeat"
-            style={{ backgroundImage: `url(${HERO_URL})` }}
-          />
+
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(28,8,22,0.96)_0%,rgba(28,8,22,0.92)_18%,rgba(28,8,22,0.66)_34%,rgba(28,8,22,0.26)_48%,rgba(28,8,22,0.08)_66%,rgba(28,8,22,0.02)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,5,12,0.36)_0%,rgba(15,5,12,0.1)_32%,rgba(15,5,12,0.62)_100%)]" />
           <div className="absolute left-[6%] top-[14%] h-48 w-48 rounded-full bg-[#f472b6]/22 blur-3xl" />

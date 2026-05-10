@@ -205,12 +205,12 @@ export default function MoonIn4thHouse() {
     {
       number: "01",
       title: "Bond with Mother",
-      content: "The mother is the emotional cornerstone of the native's life. When Moon is strong — in Cancer, Taurus (exaltation), or Pisces — the mother is nurturing, emotionally present, and deeply influential. When afflicted by Rahu, Ketu, or Saturn, the bond can be complex: physically present but emotionally distant, or separated early. The 4th house Moon native carries their mother's emotional imprint throughout life.",
+      content: "The mother is the emotional cornerstone of the native's life. When Moon is strong , in Cancer, Taurus (exaltation), or Pisces , the mother is nurturing, emotionally present, and deeply influential. When afflicted by Rahu, Ketu, or Saturn, the bond can be complex: physically present but emotionally distant, or separated early. The 4th house Moon native carries their mother's emotional imprint throughout life.",
     },
     {
       number: "02",
       title: "Emotional Nature and Mood",
-      content: "Moon here makes emotions the primary lens through which life is experienced. The native is deeply intuitive, empathetic, and sensitive. Home atmosphere directly affects mental state — a harmonious home creates a calm mind, a disturbed home creates emotional turbulence. The native finds peace through familiar environments, routines, and the presence of loved ones.",
+      content: "Moon here makes emotions the primary lens through which life is experienced. The native is deeply intuitive, empathetic, and sensitive. Home atmosphere directly affects mental state , a harmonious home creates a calm mind, a disturbed home creates emotional turbulence. The native finds peace through familiar environments, routines, and the presence of loved ones.",
     },
     {
       number: "03",
@@ -220,12 +220,12 @@ export default function MoonIn4thHouse() {
     {
       number: "04",
       title: "Ancestral Karma and Moksha Connection",
-      content: "The 4th house is one of the Moksha trikona houses alongside the 8th and 12th. Moon here connects the native strongly to ancestral karma — particularly through the maternal line. The native may feel drawn to serve the mother, honour ancestral traditions, or pursue spiritual practices that bring inner peace. Ancestral remedies such as pitru tarpan and matru seva are especially effective.",
+      content: "The 4th house is one of the Moksha trikona houses alongside the 8th and 12th. Moon here connects the native strongly to ancestral karma , particularly through the maternal line. The native may feel drawn to serve the mother, honour ancestral traditions, or pursue spiritual practices that bring inner peace. Ancestral remedies such as pitru tarpan and matru seva are especially effective.",
     },
     {
       number: "05",
       title: "Ascendant-wise Variations",
-      content: "For Cancer ascendant, Moon rules the Lagna and sits in its own 4th house — extremely powerful, gives emotional stability and prosperity. For Taurus ascendant, Moon is exalted in the 4th creating exceptional comfort and domestic happiness. For Scorpio ascendant, Moon rules the 9th and sits in the 4th — very auspicious for dharma and spiritual growth.",
+      content: "For Cancer ascendant, Moon rules the Lagna and sits in its own 4th house , extremely powerful, gives emotional stability and prosperity. For Taurus ascendant, Moon is exalted in the 4th creating exceptional comfort and domestic happiness. For Scorpio ascendant, Moon rules the 9th and sits in the 4th , very auspicious for dharma and spiritual growth.",
     },
   ];
 
@@ -241,7 +241,7 @@ export default function MoonIn4thHouse() {
   const faqs: FAQProps[] = [
     {
       question: "Is Moon in the 4th house always good?",
-      answer: "Generally yes, but results depend on Moon's sign and aspects. Moon in Cancer, Taurus, or Pisces in the 4th is excellent. An afflicted Moon — conjunct Rahu, Saturn, or Mars — can bring emotional instability, property issues, or complicated mother relationships despite the strong house placement.",
+      answer: "Generally yes, but results depend on Moon's sign and aspects. Moon in Cancer, Taurus, or Pisces in the 4th is excellent. An afflicted Moon , conjunct Rahu, Saturn, or Mars , can bring emotional instability, property issues, or complicated mother relationships despite the strong house placement.",
     },
     {
       question: "What happens when Moon is afflicted in the 4th house?",
@@ -277,7 +277,7 @@ export default function MoonIn4thHouse() {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: "Moon in the 4th House: Why Chandra Finds Peace in Sukh Bhava",
-    description: "Moon in the 4th house is its most natural placement in Jyotish — Moon has digbala here. Discover how Chandra shapes your bond with your mother, emotional security, and inner peace.",
+    description: "Moon in the 4th house is its most natural placement in Jyotish , Moon has digbala here. Discover how Chandra shapes your bond with your mother, emotional security, and inner peace.",
     author: { "@type": "Person", name: "Saurabh Jain", description: "Vedic Astrologer trained at K.N. Rao Institute of Astrology, New Delhi" },
     publisher: { "@type": "Organization", name: "Soul Infinity", url: "https://www.soulinfinity.space" },
     url: "https://www.soulinfinity.space/blog/moon-in-4th-house-vedic-astrology",
@@ -326,12 +326,11 @@ export default function MoonIn4thHouse() {
 
       <div style={{ background: "#08101F", minHeight: "100vh", color: "#F5F8FF", fontFamily: "'Poppins', sans-serif", overflowX: "hidden" }}>
 
-        {/* ── HERO ──────────────────────────────────────────────────────────── */}
-        <section style={{ position: "relative", minHeight: "92vh", display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center" }} className="moon-hero">
+        {/* HERO */}
+        <section style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center" }} className="moon-hero">
           <style>{`
             @media (max-width: 900px) {
               .moon-hero { grid-template-columns: 1fr !important; min-height: auto !important; }
-              .moon-hero-img { min-height: 55vw !important; }
               .moon-hero-content { padding: 40px 24px 60px !important; }
               .moon-insights { grid-template-columns: repeat(2, 1fr) !important; }
               .moon-split { grid-template-columns: 1fr !important; }
@@ -346,17 +345,17 @@ export default function MoonIn4thHouse() {
             }
           `}</style>
 
-          {/* Left — Hero Image Stack */}
-          <div className="moon-hero-img" style={{ position: "relative", minHeight: "92vh", overflow: "hidden" }}>
-            <img src={`${R2}/hero-moon-lake-glow.webp`} alt="Luminous full Moon reflected on a still lake — Moon in 4th house Vedic astrology" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} fetchpriority="high" />
-            <img src={`${R2}/moon-radial-glow.webp`} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.6, mixBlendMode: "screen" }} />
-            <img src={`${R2}/moon-mist-overlay.webp`} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
-            <img src={`${R2}/floating-lotus-overlay.webp`} alt="" aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, right: 0, width: "100%", objectFit: "contain", opacity: 0.7 }} />
-            {/* Dark right fade */}
-            <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "30%", background: "linear-gradient(to right, transparent, #08101F)" }} />
+          {/* Left hero image */}
+          <div className="moon-hero-img" style={{ position: "relative", overflow: "hidden" }}>
+            <img
+              src={`${R2}/hero-moon-lake-glow.webp`}
+              alt="Luminous full Moon reflected on a still lake, Moon in 4th house Vedic astrology"
+              style={{ width: "100%", height: "auto", display: "block" }}
+              fetchpriority="high"
+            />
           </div>
 
-          {/* Right — Editorial Content */}
+          {/* Right editorial content */}
           <div className="moon-hero-content" style={{ padding: "80px 56px 80px 40px", position: "relative", zIndex: 2 }}>
             {/* Breadcrumb */}
             <nav style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 12, color: "rgba(200,212,240,0.45)", marginBottom: 32 }}>
@@ -414,13 +413,13 @@ export default function MoonIn4thHouse() {
 
         {/* ── QUICK INSIGHTS ─────────────────────────────────────────────────── */}
         <section style={{ padding: "0 32px 80px", maxWidth: 1200, margin: "0 auto" }}>
-          <p style={{ textAlign: "center", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(200,212,240,0.4)", marginBottom: 32 }}>Quick Insights — 5 Glance Points</p>
+          <p style={{ textAlign: "center", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(200,212,240,0.4)", marginBottom: 32 }}>Quick Insights , 5 Glance Points</p>
           <div className="moon-insights" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
             <InsightCard img={`${R2}/digbala-directional-strength-icon.webp`} title="Digbala" subtitle="Moon's strongest directional placement" />
             <InsightCard img={`${R2}/mother-homeland-icon.webp`} title="Mother and Homeland" subtitle="Deep bond with mother and homeland" />
             <InsightCard img={`${R2}/moksha-meditation-icon.webp`} title="Emotional Fulfilment" subtitle="Emotional fulfilment through home and family" />
             <InsightCard img={`${R2}/digbala-directional-strength-icon.webp`} title="Intuition and Empathy" subtitle="Strong intuition and deep empathy" />
-            <InsightCard img={`${R2}/moksha-meditation-icon.webp`} title="Moksha Trikona" subtitle="Moksha trikona connection — path to liberation" />
+            <InsightCard img={`${R2}/moksha-meditation-icon.webp`} title="Moksha Trikona" subtitle="Moksha trikona connection , path to liberation" />
           </div>
         </section>
 
@@ -436,19 +435,19 @@ export default function MoonIn4thHouse() {
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
                 <span style={{ fontSize: 20 }}>&#127968;</span>
                 <h2 style={{ fontFamily: "'Caveat', cursive", fontSize: "1.9rem", color: "#DDE7FF", margin: 0 }}>
-                  The 4th House in Jyotish — Sukh Bhava
+                  The 4th House in Jyotish , Sukh Bhava
                 </h2>
               </div>
               <p style={{ color: "rgba(200,212,240,0.75)", fontSize: 14, lineHeight: 1.85, margin: "0 0 16px" }}>
-                The 4th house is called Sukh Bhava — the house of happiness and contentment. It governs mother, homeland, property, vehicles, emotional foundation, and mental peace. It is one of the four Kendra (angular) houses and also part of the Moksha trikona along with the 8th and 12th.
+                The 4th house is called Sukh Bhava , the house of happiness and contentment. It governs mother, homeland, property, vehicles, emotional foundation, and mental peace. It is one of the four Kendra (angular) houses and also part of the Moksha trikona along with the 8th and 12th.
               </p>
               <p style={{ color: "rgba(200,212,240,0.65)", fontSize: 14, lineHeight: 1.85, margin: 0 }}>
-                This dual nature makes it unique — it is both worldly (property, home) and deeply spiritual (inner peace, liberation). Understanding this house is the foundation of any{" "}
+                This dual nature makes it unique , it is both worldly (property, home) and deeply spiritual (inner peace, liberation). Understanding this house is the foundation of any{" "}
                 <Link to="/planets" style={{ color: "#7E8FCB", textDecoration: "none" }}>emotional reading in Vedic Jyotish</Link>.
               </p>
             </div>
             <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", minHeight: 320 }}>
-              <img src={`${R2}/sukh-bhava-house.webp`} alt="Sukh Bhava — the 4th house in Jyotish" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 20 }} loading="lazy" />
+              <img src={`${R2}/sukh-bhava-house.webp`} alt="Sukh Bhava , the 4th house in Jyotish" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 20 }} loading="lazy" />
               <img src={`${R2}/floating-lotus-overlay.webp`} alt="" aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, right: 0, width: "100%", objectFit: "contain", opacity: 0.6 }} />
               <img src={`${R2}/moon-mist-overlay.webp`} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.3, mixBlendMode: "overlay" }} />
             </div>
@@ -472,10 +471,10 @@ export default function MoonIn4thHouse() {
               <p style={{ color: "rgba(200,212,240,0.75)", fontSize: 14, lineHeight: 1.85, margin: "0 0 16px" }}>
                 Two reasons make this placement exceptional. First,{" "}
                 <Link to="/planets/moon" style={{ color: "#7E8FCB", textDecoration: "none" }}>Moon (Chandra)</Link>{" "}
-                has digbala here — directional strength. Digbala means a planet performs at its most powerful in this specific house direction.
+                has digbala here , directional strength. Digbala means a planet performs at its most powerful in this specific house direction.
               </p>
               <p style={{ color: "rgba(200,212,240,0.65)", fontSize: 14, lineHeight: 1.85, margin: "0 0 24px" }}>
-                Second, the 4th house in the natural zodiac corresponds to Cancer, Moon's own sign. So Moon in the 4th is doubly at home — both directionally and by natural signification.
+                Second, the 4th house in the natural zodiac corresponds to Cancer, Moon's own sign. So Moon in the 4th is doubly at home , both directionally and by natural signification.
               </p>
               <a href="/planets/moon" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "#C8D4F0", border: "1px solid rgba(200,212,240,0.25)", padding: "10px 20px", borderRadius: 100, textDecoration: "none" }}>
                 Learn more about Moon (Chandra) →
@@ -509,7 +508,7 @@ export default function MoonIn4thHouse() {
         {/* ── CLASSICAL REFERENCE ────────────────────────────────────────────── */}
         <section style={{ maxWidth: 1200, margin: "0 auto 80px", padding: "0 32px" }}>
           <div className="moon-split" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
-            {/* Left — parchment */}
+            {/* Left , parchment */}
             <div style={{
               background: "linear-gradient(135deg, rgba(139,107,40,0.18) 0%, rgba(16,26,58,0.9) 60%)",
               border: "1px solid rgba(200,212,240,0.18)",
@@ -525,22 +524,22 @@ export default function MoonIn4thHouse() {
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
                   <span style={{ fontSize: 18 }}>&#128220;</span>
                   <h2 style={{ fontFamily: "'Caveat', cursive", fontSize: "1.7rem", color: "#DDE7FF", margin: 0 }}>
-                    Classical Text Reference — What the Ancients Said
+                    Classical Text Reference , What the Ancients Said
                   </h2>
                 </div>
                 <blockquote style={{ borderLeft: "2px solid rgba(200,212,240,0.35)", paddingLeft: 20, margin: "0 0 20px", fontStyle: "italic", color: "#C8D4F0", fontSize: 14, lineHeight: 1.8 }}>
                   "Moon in the 4th house in its own sign or exaltation gives the native all comforts, a devoted mother, property, and emotional contentment."
                 </blockquote>
                 <p style={{ color: "rgba(200,212,240,0.5)", fontSize: 12, margin: "0 0 20px" }}>
-                  — Brihat Parashara Hora Shastra, Chapter on Planetary House Effects
+                  , Brihat Parashara Hora Shastra, Chapter on Planetary House Effects
                 </p>
                 <p style={{ color: "rgba(200,212,240,0.7)", fontSize: 13, lineHeight: 1.8, margin: 0 }}>
-                  The Phaladeepika states that Moon here makes the native charitable, happy, and beloved by family. Consult Lunar Astro's analysis aligns with classical sources in noting Moon's digbala strength here — like a swan resting on a calm lake.
+                  The Phaladeepika states that Moon here makes the native charitable, happy, and beloved by family. Consult Lunar Astro's analysis aligns with classical sources in noting Moon's digbala strength here , like a swan resting on a calm lake.
                 </p>
               </div>
             </div>
 
-            {/* Right — practitioner */}
+            {/* Right , practitioner */}
             <div style={{
               background: "rgba(8,16,31,0.85)",
               border: "1px solid rgba(200,212,240,0.12)",
@@ -555,10 +554,10 @@ export default function MoonIn4thHouse() {
                 </h2>
               </div>
               <p style={{ color: "rgba(200,212,240,0.75)", fontSize: 14, lineHeight: 1.85, margin: "0 0 20px" }}>
-                Pattern from K.N. Rao methodology — when Moon is in the 4th house for Cancer or Pisces ascendants, and the Navamsa also shows a strong 4th lord, the native almost always either inherits property or acquires it before age 35.
+                Pattern from K.N. Rao methodology , when Moon is in the 4th house for Cancer or Pisces ascendants, and the Navamsa also shows a strong 4th lord, the native almost always either inherits property or acquires it before age 35.
               </p>
               <p style={{ color: "rgba(200,212,240,0.65)", fontSize: 14, lineHeight: 1.85, margin: "0 0 28px" }}>
-                The mother's influence on the native's emotional decision-making remains active throughout life even after the mother has passed — visible in recurring emotional patterns around security and belonging that trace directly to childhood conditioning.
+                The mother's influence on the native's emotional decision-making remains active throughout life even after the mother has passed , visible in recurring emotional patterns around security and belonging that trace directly to childhood conditioning.
               </p>
               <p style={{ textAlign: "right", fontFamily: "'Caveat', cursive", fontSize: "1.3rem", color: "rgba(200,212,240,0.5)", margin: 0 }}>
                 - Saurabh Jain
@@ -603,7 +602,7 @@ export default function MoonIn4thHouse() {
 
             {/* CTA */}
             <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", minHeight: 480 }}>
-              <img src={`${R2}/moon-family-silhouette.webp`} alt="Family looking at the Moon — book a Vedic astrology consultation" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
+              <img src={`${R2}/moon-family-silhouette.webp`} alt="Family looking at the Moon , book a Vedic astrology consultation" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
               <img src={`${R2}/floating-lotus-overlay.webp`} alt="" aria-hidden="true" style={{ position: "absolute", bottom: 0, width: "100%", objectFit: "contain", opacity: 0.6 }} />
               <img src={`${R2}/moon-mist-overlay.webp`} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.4, mixBlendMode: "overlay" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,16,31,0.9) 0%, transparent 50%)" }} />

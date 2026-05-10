@@ -877,6 +877,17 @@ export default function SaturnPage() {
           </Link>
         </div>
 
+        <section className="w-full bg-[#050810]">
+          <img
+            src={HERO_URL}
+            alt="Shani hero banner showing Saturn in Vedic astrology with karma and discipline symbolism"
+            width={1600}
+            height={900}
+            fetchpriority="high"
+            className="w-full h-auto block"
+          />
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={{
@@ -884,10 +895,7 @@ export default function SaturnPage() {
               'radial-gradient(circle at 50% 8%, rgba(165,180,252,0.46) 0%, rgba(30,58,138,0.40) 22%, rgba(8,12,30,1) 46%, rgba(4,6,18,1) 100%)',
           }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-[center_right_18%] bg-no-repeat"
-            style={{ backgroundImage: `url(${HERO_URL})` }}
-          />
+
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,12,30,0.96)_0%,rgba(8,12,30,0.92)_18%,rgba(8,12,30,0.66)_34%,rgba(8,12,30,0.26)_48%,rgba(8,12,30,0.08)_66%,rgba(8,12,30,0.02)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,18,0.36)_0%,rgba(4,6,18,0.1)_32%,rgba(4,6,18,0.62)_100%)]" />
           <div className="absolute left-[6%] top-[14%] h-48 w-48 rounded-full bg-[#6366f1]/22 blur-3xl" />

@@ -332,11 +332,8 @@ export default function BlogPost() {
         schemas={schemas}
       />
 
-      {/* ─────────── Hero (full-bleed image + gradient overlay) ─────────── */}
-      <section className="relative bg-blog-navy overflow-hidden min-h-[600px] md:min-h-[700px] flex items-center">
-        {/* Full-bleed background image. The source already contains the
-            constellation/zodiac wheel decoration baked in, so no separate
-            inline SVG is needed. */}
+      {/* Hero image and article header */}
+      <section className="bg-blog-navy overflow-hidden">
         {fm.heroImage && (
           <img
             src={fm.heroImage}
@@ -345,23 +342,11 @@ export default function BlogPost() {
             height={1000}
             loading="eager"
             fetchpriority="high"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="w-full h-auto block"
           />
         )}
-        {/* Mobile gradient: dense vertical fade so all text remains readable
-            even without horizontal space to fade off-screen. */}
-        <div
-          className="absolute inset-0 bg-gradient-to-b from-blog-navy/95 via-blog-navy/85 to-blog-navy/70 lg:hidden"
-          aria-hidden="true"
-        />
-        {/* Desktop gradient: dense on the left where text sits, fades to
-            transparent on the right where the portrait shows through. */}
-        <div
-          className="absolute inset-0 hidden lg:block bg-gradient-to-r from-blog-navy/90 via-blog-navy/70 to-transparent"
-          aria-hidden="true"
-        />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 md:py-20 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full">
           <div className="max-w-2xl">
             <nav aria-label="Breadcrumb" className="mb-6">
               <ol className="flex flex-wrap items-center gap-2 text-sm text-blog-cream/70">

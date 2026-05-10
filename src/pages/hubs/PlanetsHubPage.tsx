@@ -1113,7 +1113,7 @@ export default function PlanetsHubPage() {
           width={1600}
           height={600}
           fetchpriority="high"
-          className="w-full h-auto object-cover"
+          className="w-full h-auto block"
         />
       </section>
 
