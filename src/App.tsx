@@ -20,7 +20,7 @@ const Privacy = lazy(() => import('./pages/Privacy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanetsHubPage = lazy(() => import('./pages/hubs/PlanetsHubPage'));
 const ZodiacHubPage = lazy(() => import('./pages/hubs/ZodiacHubPage'));
-const DoshaHubPage = lazy(() => import('./pages/hubs/DoshaHubPage'));
+const DoshaPage = lazy(() => import('./pages/DoshaPage'));
 const SunPage = lazy(() => import('./pages/planets/SunPage'));
 const MoonPage = lazy(() => import('./pages/planets/MoonPage'));
 const MercuryPage = lazy(() => import('./pages/planets/MercuryPage'));
@@ -100,7 +100,7 @@ function App() {
           <Route path="/zodiac/capricorn" element={<MakaraRashiPage />} />
           <Route path="/zodiac/aquarius" element={<KumbhaRashiPage />} />
           <Route path="/zodiac/pisces" element={<MeenaRashiPage />} />
-          <Route path="/dosha" element={<DoshaHubPage />} />
+          <Route path="/dosha" element={<DoshaPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
