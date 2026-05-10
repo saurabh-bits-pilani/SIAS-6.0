@@ -423,7 +423,7 @@ export default function MangalDoshaPage() {
       <img
         src={HERO_URL}
         alt="Mangal Dosha hero banner showing Mars energy and relationship karmic patterns in Vedic astrology"
-        className="block h-auto w-full"
+        className="w-full h-auto block"
         fetchpriority="high"
       />
 
@@ -713,7 +713,7 @@ export default function MangalDoshaPage() {
             src={HERO_URL}
             alt=""
             aria-hidden="true"
-            className="h-full w-full object-cover"
+            className="w-full h-auto block"
             loading="lazy"
           />
         </div>

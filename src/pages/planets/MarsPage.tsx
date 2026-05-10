@@ -894,6 +894,17 @@ export default function MarsPage() {
           </Link>
         </div>
 
+        <section className="w-full bg-[#050810]">
+          <img
+            src={HERO_URL}
+            alt="Mangala hero banner showing Mars in Vedic astrology with courage and fire symbolism"
+            width={1600}
+            height={900}
+            fetchpriority="high"
+            className="w-full h-auto block"
+          />
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={{
@@ -901,10 +912,7 @@ export default function MarsPage() {
               'radial-gradient(circle at 50% 8%, rgba(220,38,38,0.46) 0%, rgba(88,16,16,0.38) 20%, rgba(32,7,7,1) 44%, rgba(15,5,5,1) 100%)',
           }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-[center_right_18%] bg-no-repeat"
-            style={{ backgroundImage: `url(${HERO_URL})` }}
-          />
+
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(22,6,6,0.97)_0%,rgba(22,6,6,0.92)_18%,rgba(22,6,6,0.66)_34%,rgba(22,6,6,0.26)_48%,rgba(22,6,6,0.08)_66%,rgba(22,6,6,0.02)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,5,5,0.36)_0%,rgba(21,5,5,0.1)_32%,rgba(21,5,5,0.62)_100%)]" />
           <div className="absolute left-[6%] top-[14%] h-48 w-48 rounded-full bg-[#dc2626]/18 blur-3xl" />

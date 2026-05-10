@@ -397,17 +397,18 @@ export default function ZodiacHubPage() {
       </Helmet>
 
       {/* Hero banner */}
-      <section className="relative h-[420px] overflow-hidden">
+      <section className="w-full bg-gray-900">
         <img
           src={HERO_URL}
           alt="Vedic zodiac wheel with the twelve rashis arranged around the sun"
           width={1600}
           height={420}
           fetchpriority="high"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-auto block"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/10" />
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+      </section>
+      <section className="bg-gray-900 px-4 py-10 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <div className="max-w-2xl text-white">
             <h1 className="font-heading font-bold text-3xl md:text-5xl mb-4 leading-tight">
               The 12 Rashis, Vedic Zodiac Signs
@@ -475,7 +476,7 @@ export default function ZodiacHubPage() {
             aria-hidden="true"
             width={1600}
             height={420}
-            className="w-full h-full object-cover"
+            className="w-full h-auto block"
           />
         </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
