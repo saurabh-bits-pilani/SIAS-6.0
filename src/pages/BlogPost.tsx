@@ -55,6 +55,7 @@ interface PostFrontmatter {
   lastModified?: string;
   author?: string;
   category?: string;
+  readTime?: string;
   tags?: readonly string[];
   excerpt?: string;
   heroImage?: string;
@@ -165,6 +166,39 @@ function buildArticleSchema(fm: PostFrontmatter, slug: string): JsonLd {
   };
 }
 
+function buildBreadcrumbSchema(fm: PostFrontmatter, slug: string): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE_ORIGIN,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `${SITE_ORIGIN}/blog`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: fm.category ?? 'Vedic Astrology',
+        item: `${SITE_ORIGIN}/blog`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: fm.title,
+        item: `${SITE_ORIGIN}/blog/${slug}`,
+      },
+    ],
+  };
+}
+
 interface TocItem {
   id: string;
   text: string;
@@ -234,7 +268,10 @@ export default function BlogPost() {
   const { Content, fm, slug: resolvedSlug } = resolved;
   const canonicalUrl = `${SITE_ORIGIN}/blog/${resolvedSlug}`;
 
-  const schemas: JsonLd[] = [buildArticleSchema(fm, resolvedSlug)];
+  const schemas: JsonLd[] = [
+    buildArticleSchema(fm, resolvedSlug),
+    buildBreadcrumbSchema(fm, resolvedSlug),
+  ];
   if (fm.faqs && fm.faqs.length > 0) schemas.push(buildFaqSchema(fm.faqs));
   if (fm.author === 'Saurabh Jain') schemas.push(buildSaurabhPersonSchema(fm.heroImage));
 
@@ -372,7 +409,7 @@ export default function BlogPost() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" aria-hidden="true" />
-                <span>8 min read</span>
+                <span>{fm.readTime ?? '8 min read'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" aria-hidden="true" />
