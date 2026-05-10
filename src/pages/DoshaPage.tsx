@@ -295,23 +295,14 @@ export default function DoshaPage() {
           fetchpriority="high"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/10" />
-        <div className="relative min-h-[560px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center pt-16 pb-12 md:pt-24 md:pb-16">
-          <div className="max-w-3xl text-white">
-            <h1 className="font-caveat font-bold text-5xl md:text-7xl mb-5 leading-[1.08]">
-              Doshas in Vedic Astrology
-            </h1>
-            <p className="text-base md:text-lg text-gray-200 mb-6 leading-relaxed">
-              Five karmic imprints in your birth chart that shape relationships, health, wealth, and spiritual growth. Saurabh Jain at Soul Infinity reads doshas not as curses but as karmic signals requiring understanding, not fear.
-            </p>
-            <Link
-              to="/contact#contact-form-section"
-              className="inline-flex items-center bg-amber-500 hover:bg-amber-400 text-gray-900 font-semibold px-6 py-3 rounded-full transition-colors shadow-md"
-            >
-              Book Your Dosha Reading
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
-          </div>
+        <div className="relative flex min-h-[560px] items-end justify-center px-4 pb-10 sm:px-6 lg:px-8">
+          <Link
+            to="/contact#contact-form-section"
+            className="inline-flex items-center bg-amber-500 hover:bg-amber-400 text-gray-900 font-semibold px-6 py-3 rounded-full transition-colors shadow-md"
+          >
+            Book Your Dosha Reading
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Link>
         </div>
       </section>
 
