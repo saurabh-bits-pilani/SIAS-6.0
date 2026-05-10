@@ -1112,6 +1112,7 @@ export default function PlanetsHubPage() {
           alt="The nine Navagraha planets of Vedic Astrology"
           width={1600}
           height={600}
+          loading="eager"
           fetchpriority="high"
           className="w-full h-auto block"
         />

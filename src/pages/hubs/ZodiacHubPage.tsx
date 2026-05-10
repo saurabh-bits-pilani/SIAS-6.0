@@ -403,6 +403,7 @@ export default function ZodiacHubPage() {
           alt="Vedic zodiac wheel with the twelve rashis arranged around the sun"
           width={1600}
           height={420}
+          loading="eager"
           fetchpriority="high"
           className="w-full h-auto block"
         />

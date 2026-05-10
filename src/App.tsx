@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Layout from './layout/Layout';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
 import { usePageTracking } from './hooks/usePageTracking';
 
-// Lazy load non-critical pages for better performance
+// Lazy load page-level routes for better initial bundle splitting.
+const Home = lazy(() => import('./pages/Home'));
+const Services = lazy(() => import('./pages/Services'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const CosmicGuide = lazy(() => import('./pages/CosmicGuide'));
 const CosmicPodcast = lazy(() => import('./pages/CosmicPodcast'));
 const Blog = lazy(() => import('./pages/Blog'));

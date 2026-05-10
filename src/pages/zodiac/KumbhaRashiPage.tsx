@@ -222,6 +222,7 @@ export default function KumbhaRashiPage() {
           className="w-full h-auto block"
           width={1600}
           height={420}
+          loading="eager"
           fetchpriority="high"
         />
       </div>

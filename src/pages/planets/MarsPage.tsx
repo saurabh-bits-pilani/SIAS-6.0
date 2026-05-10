@@ -900,6 +900,7 @@ export default function MarsPage() {
             alt="Mangala hero banner showing Mars in Vedic astrology with courage and fire symbolism"
             width={1600}
             height={900}
+            loading="eager"
             fetchpriority="high"
             className="w-full h-auto block"
           />

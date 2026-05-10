@@ -290,6 +290,7 @@ export default function DoshaPage() {
         <img
           src={HERO_URL}
           alt="Doshas in Vedic Astrology, Mangal, Kaal Sarp, Nadi, Pitru, Saade Sati illustrated"
+          loading="eager"
           fetchpriority="high"
           className="w-full h-auto block"
         />

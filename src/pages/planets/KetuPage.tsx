@@ -772,6 +772,7 @@ export default function KetuPage() {
             alt="Ketu hero banner showing the south node in Vedic astrology with moksha symbolism"
             width={1600}
             height={900}
+            loading="eager"
             fetchpriority="high"
             className="w-full h-auto block"
           />

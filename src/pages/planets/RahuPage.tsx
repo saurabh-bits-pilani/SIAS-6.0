@@ -771,6 +771,7 @@ export default function RahuPage() {
             alt="Rahu hero banner showing the north node in Vedic astrology with shadow planet symbolism"
             width={1600}
             height={900}
+            loading="eager"
             fetchpriority="high"
             className="w-full h-auto block"
           />

@@ -909,6 +909,7 @@ export default function MercuryPage() {
             alt="Budh hero banner showing Mercury in Vedic astrology with intellect and communication symbolism"
             width={1600}
             height={900}
+            loading="eager"
             fetchpriority="high"
             className="w-full h-auto block"
           />

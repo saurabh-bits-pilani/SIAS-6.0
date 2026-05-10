@@ -707,6 +707,7 @@ export default function MoonPage() {
             alt="Chandra hero banner showing the Moon in Vedic astrology with calm lunar symbolism"
             width={1600}
             height={900}
+            loading="eager"
             fetchpriority="high"
             className="w-full h-auto block"
           />

@@ -319,6 +319,7 @@ export default function MoonIn4thHouse() {
         <title>Moon in 4th House Vedic Astrology: Mother, Home and Inner Peace | Soul Infinity</title>
         <meta name="description" content="Moon in the 4th house is its most natural placement in Jyotish. Moon has digbala here. Discover how Chandra shapes your bond with your mother, emotional security and inner peace." />
         <link rel="canonical" href="https://www.soulinfinity.space/blog/moon-in-4th-house-vedic-astrology" />
+        <link rel="preload" as="image" href={`${R2}/hero-moon-lake-glow.webp`} fetchpriority="high" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
@@ -351,6 +352,7 @@ export default function MoonIn4thHouse() {
               src={`${R2}/hero-moon-lake-glow.webp`}
               alt="Luminous full Moon reflected on a still lake, Moon in 4th house Vedic astrology"
               style={{ width: "100%", height: "auto", display: "block" }}
+              loading="eager"
               fetchpriority="high"
             />
           </div>

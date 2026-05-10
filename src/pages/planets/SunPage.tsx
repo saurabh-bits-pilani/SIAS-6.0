@@ -813,6 +813,7 @@ export default function SunPage() {
             alt="Surya hero banner showing the Sun in Vedic astrology with radiant solar symbolism"
             width={1600}
             height={900}
+            loading="eager"
             fetchpriority="high"
             className="w-full h-auto block"
           />

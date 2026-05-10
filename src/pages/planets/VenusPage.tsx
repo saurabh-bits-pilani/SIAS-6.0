@@ -984,6 +984,7 @@ export default function VenusPage() {
             alt="Shukra hero banner showing Venus in Vedic astrology with love and prosperity symbolism"
             width={1600}
             height={900}
+            loading="eager"
             fetchpriority="high"
             className="w-full h-auto block"
           />

@@ -112,6 +112,7 @@ const Home = () => {
         title="Vedic Astrology Consultation in Ahmedabad | Soul Infinity"
         description="Vedic astrology consultations by Saurabh Jain, trained at K.N. Rao Institute, New Delhi. Birth chart, career timing and Jyotish guidance. Book today."
         keywords="vedic astrology consultation ahmedabad, saurabh jain astrologer, kundli consultation ahmedabad, birth chart reading, career timing, jyotish guidance"
+        image={heroImages[0]}
         omitDefaultSchema
       />
       <SchemaMarkup type="home" serviceFaqs={homeFaqs} />
