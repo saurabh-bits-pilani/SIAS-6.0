@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
@@ -138,30 +139,110 @@ const FAQS: ReadonlyArray<{ question: string; answer: string }> = [
   },
 ];
 
+function FaqIcon({ index }: { index: number }) {
+  const shared = {
+    className: 'h-6 w-6 text-purple-700',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.8,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+    viewBox: '0 0 24 24',
+  };
+
+  if (index === 0) {
+    return (
+      <svg {...shared} aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" />
+        <path d="M8.7 14.6c1.7 1.4 4.9 1.4 6.6 0" />
+      </svg>
+    );
+  }
+
+  if (index === 1) {
+    return (
+      <svg {...shared} aria-hidden="true">
+        <path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+        <path d="M14 3v5h5" />
+        <circle cx="11" cy="13" r="3" />
+        <path d="m13.2 15.2 2.8 2.8" />
+      </svg>
+    );
+  }
+
+  if (index === 2) {
+    return (
+      <svg {...shared} aria-hidden="true">
+        <circle cx="12" cy="6" r="3" />
+        <path d="M7 21c1.5-2 3.2-3 5-3s3.5 1 5 3" />
+        <path d="M6 14c1.7 1.2 3.7 1.8 6 1.8s4.3-.6 6-1.8" />
+        <path d="M8 11c1 1 2.3 1.5 4 1.5S15 12 16 11" />
+      </svg>
+    );
+  }
+
+  if (index === 3) {
+    return (
+      <svg {...shared} aria-hidden="true">
+        <path d="M20 6v5h-5" />
+        <path d="M4 18v-5h5" />
+        <path d="M18.4 9A7 7 0 0 0 6.1 6.6L4 9" />
+        <path d="M5.6 15A7 7 0 0 0 17.9 17.4L20 15" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...shared} aria-hidden="true">
+      <path d="M12 20s-7-4.4-9-8.7C1.8 8.8 3.3 6 6 6c1.7 0 3 1 3.8 2.2C10.7 7 12 6 13.7 6c2.7 0 4.2 2.8 3 5.3C14.7 15.6 12 20 12 20Z" />
+      <path d="M18 10.5c1.7.2 3 1.5 3 3.2 0 2.7-3.8 5-5.5 6" />
+      <path d="M6 10.5c-1.7.2-3 1.5-3 3.2 0 2.7 3.8 5 5.5 6" />
+    </svg>
+  );
+}
+
+function FaqDividerIcon({ type }: { type: 'sun' | 'moon' }) {
+  if (type === 'sun') {
+    return (
+      <svg className="h-8 w-8 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg className="h-7 w-7 text-indigo-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.8 15.8A8 8 0 0 1 8.2 6.2a.75.75 0 0 0-.9-.9 8.9 8.9 0 1 0 11.4 11.4.75.75 0 0 0-.9-.9Z" />
+    </svg>
+  );
+}
+
 function DoshaCard({ dosha }: { dosha: Dosha }) {
   return (
     <Link
       to="#"
       className={`group block h-full rounded-2xl overflow-hidden p-6 text-center transition-all duration-300 transform hover:-translate-y-1 ${dosha.ring} ${dosha.bg} ${dosha.border} hover:shadow-soft-lg`}
     >
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center mb-8">
         <img
           src={dosha.image}
           alt={dosha.alt}
-          width={96}
-          height={96}
+          width={192}
+          height={192}
           loading="lazy"
-          className="w-24 h-24 rounded-full object-cover ring-4 ring-white shadow-md group-hover:scale-105 transition-transform duration-500"
+          className="w-36 h-36 md:w-48 md:h-48 rounded-full object-cover ring-4 ring-white shadow-md group-hover:scale-105 transition-transform duration-500"
         />
       </div>
-      <div className="font-devanagari text-2xl text-gray-900 mb-1">{dosha.sanskritName}</div>
-      <div className="font-kalam font-bold text-xl text-gray-900 mb-3">{dosha.englishName}</div>
-      <div className="flex justify-center mb-3">
+      <div className="font-devanagari text-2xl text-gray-900 mb-2">{dosha.sanskritName}</div>
+      <div className="font-kalam font-bold text-xl text-gray-900 mb-4">{dosha.englishName}</div>
+      <div className="flex justify-center mb-4">
         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${dosha.badge}`}>
           {dosha.rulingPlanets}
         </span>
       </div>
-      <p className="font-poppins text-sm text-gray-700 mb-4 leading-snug line-clamp-3">
+      <p className="font-poppins text-sm text-gray-700 mb-5 leading-snug line-clamp-3">
         {dosha.description}
       </p>
       <span className={`inline-flex items-center text-sm font-semibold ${dosha.text} group-hover:underline`}>
@@ -173,6 +254,8 @@ function DoshaCard({ dosha }: { dosha: Dosha }) {
 }
 
 export default function DoshaPage() {
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+
   return (
     <div className="bg-white font-poppins">
       <SEOHead
@@ -203,7 +286,7 @@ export default function DoshaPage() {
         </script>
       </Helmet>
 
-      <section className="relative h-[460px] overflow-hidden">
+      <section className="relative min-h-[560px] overflow-hidden">
         <img
           src={HERO_URL}
           alt="Vedic astrology dosha chart showing planetary afflictions and karmic patterns"
@@ -213,9 +296,9 @@ export default function DoshaPage() {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/10" />
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+        <div className="relative min-h-[560px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center pt-16 pb-12 md:pt-24 md:pb-16">
           <div className="max-w-3xl text-white">
-            <h1 className="font-caveat font-bold text-5xl md:text-7xl mb-4 leading-tight">
+            <h1 className="font-caveat font-bold text-5xl md:text-7xl mb-5 leading-[1.08]">
               Doshas in Vedic Astrology
             </h1>
             <p className="text-base md:text-lg text-gray-200 mb-6 leading-relaxed">
@@ -232,7 +315,7 @@ export default function DoshaPage() {
         </div>
       </section>
 
-      <section className="bg-slate-950 py-8 text-center text-white">
+      <section className="mt-8 bg-slate-950 py-8 text-center text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="font-devanagari text-2xl md:text-3xl text-amber-300 mb-2" lang="sa">
             कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।
@@ -306,23 +389,79 @@ export default function DoshaPage() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-kalam text-3xl text-gray-900 mb-8 text-center">
-            Frequently Asked Questions
-          </h2>
+      <section className="relative overflow-hidden bg-purple-50 py-20">
+        <svg
+          className="pointer-events-none absolute -bottom-24 -right-20 h-72 w-72 text-purple-300 opacity-15"
+          viewBox="0 0 200 200"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          aria-hidden="true"
+        >
+          <circle cx="100" cy="100" r="84" />
+          <circle cx="100" cy="100" r="58" />
+          <circle cx="100" cy="100" r="28" />
+          {Array.from({ length: 12 }).map((_, index) => {
+            const angle = (index * Math.PI) / 6;
+            const x1 = 100 + Math.cos(angle) * 58;
+            const y1 = 100 + Math.sin(angle) * 58;
+            const x2 = 100 + Math.cos(angle) * 84;
+            const y2 = 100 + Math.sin(angle) * 84;
+            return <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} />;
+          })}
+        </svg>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 flex flex-col items-center text-center">
+            <FaqDividerIcon type="sun" />
+            <h2 className="mt-3 font-kalam text-4xl font-bold text-gray-950 md:text-5xl">
+              Frequently Asked Questions
+            </h2>
+            <div className="mt-4 flex items-center gap-3">
+              <span className="h-px w-16 bg-purple-200" />
+              <FaqDividerIcon type="moon" />
+              <span className="h-px w-16 bg-purple-200" />
+            </div>
+          </div>
+
           <div className="space-y-4">
-            {FAQS.map((faq) => (
-              <details
-                key={faq.question}
-                className="group bg-white border border-gray-200 rounded-xl p-5"
-              >
-                <summary className="cursor-pointer font-semibold text-gray-900">
-                  {faq.question}
-                </summary>
-                <p className="mt-3 text-gray-700 leading-relaxed">{faq.answer}</p>
-              </details>
-            ))}
+            {FAQS.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+
+              return (
+                <div
+                  key={faq.question}
+                  className="overflow-hidden rounded-2xl border border-purple-100 bg-indigo-50 shadow-sm"
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                    className="flex w-full items-center gap-4 px-5 py-5 text-left sm:px-6"
+                  >
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 ring-1 ring-purple-200">
+                      <FaqIcon index={index} />
+                    </span>
+                    <span className="h-12 w-px shrink-0 bg-purple-200" aria-hidden="true" />
+                    <span className="flex-1 font-poppins text-base font-medium leading-snug text-gray-900 md:text-lg">
+                      {faq.question}
+                    </span>
+                    <span
+                      className={`ml-2 text-3xl leading-none text-purple-700 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
+                      aria-hidden="true"
+                    >
+                      ›
+                    </span>
+                  </button>
+                  {isOpen ? (
+                    <div className="border-t border-purple-100 px-5 pb-6 pt-1 sm:px-6">
+                      <p className="ml-16 border-l border-purple-200 pl-5 text-sm leading-relaxed text-gray-700 md:text-base">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
