@@ -286,16 +286,14 @@ export default function DoshaPage() {
         </script>
       </Helmet>
 
-      <section className="relative min-h-[560px] overflow-hidden">
+      <section>
         <img
           src={HERO_URL}
-          alt="Vedic astrology dosha chart showing planetary afflictions and karmic patterns"
-          width={1600}
-          height={460}
+          alt="Doshas in Vedic Astrology, Mangal, Kaal Sarp, Nadi, Pitru, Saade Sati illustrated"
           fetchpriority="high"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="block h-auto w-full"
         />
-        <div className="relative flex min-h-[560px] items-end justify-center px-4 pb-10 sm:px-6 lg:px-8">
+        <div className="flex justify-center px-4 py-8 sm:px-6 lg:px-8">
           <Link
             to="/contact#contact-form-section"
             className="inline-flex items-center bg-amber-500 hover:bg-amber-400 text-gray-900 font-semibold px-6 py-3 rounded-full transition-colors shadow-md"
