@@ -61,6 +61,7 @@ const DESCRIPTIONS = {
   '/zodiac': 'Zodiac Signs — the twelve zodiac signs (Rashi) in Vedic astrology: Aries through Pisces. Explore each sign’s ruling planet, element, nature, character traits, and life themes.',
   '/zodiac/aries': 'Mesha Rashi (Aries) in Vedic astrology — detailed guide covering characteristics, planetary ruler Mangala (Mars), strengths, challenges, Mesha in 12 houses, classical remedies, mantras, and FAQ by Soul Infinity Astro Solutions Ahmedabad.',
   '/dosha': 'Doshas — common doshas in Vedic astrology: Mangal Dosha, Kaal Sarp Dosh, Sade Sati, Pitru Dosh, and Nadi Dosh. Understand what they mean, how they affect life, and their traditional remedies.',
+  '/dosha/mangal': 'Mangal Dosha in Vedic astrology, also called Kuja Dosha or Manglik Dosha. Learn house placements, marriage effects, cancellation rules, remedies, and Mars guidance by Soul Infinity.',
   '/gallery': 'Photo gallery — consultations, healing sessions, and sacred spaces.',
   '/gallery/remedies': 'Vedic planetary remedies — mantras, gemstones, rituals.',
   '/gallery/pitra-dosh': 'Pitra Dosh — causes, symptoms, and Vedic remedies for ancestral karma.',
@@ -97,7 +98,7 @@ const SECTIONS = [
   },
   {
     heading: 'Learn',
-    routes: ['/planets', '/planets/jupiter', '/planets/ketu', '/planets/mars', '/planets/mercury', '/planets/rahu', '/planets/saturn', '/planets/venus', '/zodiac', '/dosha'],
+    routes: ['/planets', '/planets/jupiter', '/planets/ketu', '/planets/mars', '/planets/mercury', '/planets/rahu', '/planets/saturn', '/planets/venus', '/zodiac', '/dosha', '/dosha/mangal'],
   },
   {
     heading: 'Content',

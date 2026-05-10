@@ -21,6 +21,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanetsHubPage = lazy(() => import('./pages/hubs/PlanetsHubPage'));
 const ZodiacHubPage = lazy(() => import('./pages/hubs/ZodiacHubPage'));
 const DoshaPage = lazy(() => import('./pages/DoshaPage'));
+const MangalDoshaPage = lazy(() => import('./pages/dosha/MangalDoshaPage'));
 const SunPage = lazy(() => import('./pages/planets/SunPage'));
 const MoonPage = lazy(() => import('./pages/planets/MoonPage'));
 const MercuryPage = lazy(() => import('./pages/planets/MercuryPage'));
@@ -101,6 +102,7 @@ function App() {
           <Route path="/zodiac/aquarius" element={<KumbhaRashiPage />} />
           <Route path="/zodiac/pisces" element={<MeenaRashiPage />} />
           <Route path="/dosha" element={<DoshaPage />} />
+          <Route path="/dosha/mangal" element={<MangalDoshaPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
