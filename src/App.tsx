@@ -31,7 +31,20 @@ const VenusPage = lazy(() => import('./pages/planets/VenusPage'));
 const RahuPage = lazy(() => import('./pages/planets/RahuPage'));
 const KetuPage = lazy(() => import('./pages/planets/KetuPage'));
 const MeshaRashiPage = lazy(() => import('./pages/zodiac/MeshaRashiPage'));
+const VrishabhaRashiPage = lazy(() => import('./pages/zodiac/VrishabhaRashiPage'));
+const KarkaRashiPage = lazy(() => import('./pages/zodiac/KarkaRashiPage'));
+const MithunaRashiPage = lazy(() => import('./pages/zodiac/MithunaRashiPage'));
+const SimhaRashiPage = lazy(() => import('./pages/zodiac/SimhaRashiPage'));
+const KanyaRashiPage = lazy(() => import('./pages/zodiac/KanyaRashiPage'));
+const TulaRashiPage = lazy(() => import('./pages/zodiac/TulaRashiPage'));
+const VrischikaRashiPage = lazy(() => import('./pages/zodiac/VrischikaRashiPage'));
+const DhanuRashiPage = lazy(() => import('./pages/zodiac/DhanuRashiPage'));
+const MakaraRashiPage = lazy(() => import('./pages/zodiac/MakaraRashiPage'));
+const KumbhaRashiPage = lazy(() => import('./pages/zodiac/KumbhaRashiPage'));
+const MeenaRashiPage = lazy(() => import('./pages/zodiac/MeenaRashiPage'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const SaturnIn7thHouse = lazy(() => import('./pages/blog/SaturnIn7thHouse'));
+const MoonIn4thHouse = lazy(() => import('./pages/blog/MoonIn4thHouse'));
 
 // Loading component for lazy-loaded pages
 const LoadingSpinner = () => (
@@ -57,6 +70,8 @@ function App() {
           <Route path="/cosmic-podcast" element={<CosmicPodcast />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/mantra" element={<Mantra />} />
+          <Route path="/blog/saturn-in-7th-house-vedic-astrology" element={<SaturnIn7thHouse />} />
+          <Route path="/blog/moon-in-4th-house-vedic-astrology" element={<MoonIn4thHouse />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gallery/remedies" element={<Remedies />} />
@@ -74,6 +89,17 @@ function App() {
           <Route path="/planets/ketu" element={<KetuPage />} />
           <Route path="/zodiac" element={<ZodiacHubPage />} />
           <Route path="/zodiac/aries" element={<MeshaRashiPage />} />
+          <Route path="/zodiac/taurus" element={<VrishabhaRashiPage />} />
+          <Route path="/zodiac/cancer" element={<KarkaRashiPage />} />
+          <Route path="/zodiac/gemini" element={<MithunaRashiPage />} />
+          <Route path="/zodiac/leo" element={<SimhaRashiPage />} />
+          <Route path="/zodiac/virgo" element={<KanyaRashiPage />} />
+          <Route path="/zodiac/libra" element={<TulaRashiPage />} />
+          <Route path="/zodiac/scorpio" element={<VrischikaRashiPage />} />
+          <Route path="/zodiac/sagittarius" element={<DhanuRashiPage />} />
+          <Route path="/zodiac/capricorn" element={<MakaraRashiPage />} />
+          <Route path="/zodiac/aquarius" element={<KumbhaRashiPage />} />
+          <Route path="/zodiac/pisces" element={<MeenaRashiPage />} />
           <Route path="/dosha" element={<DoshaHubPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />

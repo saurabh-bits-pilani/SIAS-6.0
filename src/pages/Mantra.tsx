@@ -343,7 +343,7 @@ const Mantra = () => {
           {/* Author box */}
           <article className="flex items-center gap-4 bg-white rounded-2xl p-5 shadow-soft">
             <img
-              src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
+              src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp"
               alt="Saurabh Jain - Certified Vedic astrologer in Ahmedabad"
               width="64"
               height="64"

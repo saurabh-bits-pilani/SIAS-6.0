@@ -19,7 +19,10 @@ interface ReviewSnapshot {
   authorPhotoUrl: string | null;
   authorProfileUrl: string | null;
   rating: number;
+  /** Full ISO 8601 publishTime from Google Places (e.g. "2024-12-15T10:00:00Z"). */
   date: string | null;
+  /** Unix epoch seconds — used as the primary sort key in the reviews widget. */
+  time: number | null;
   relativeTime: string;
   text: string;
 }
@@ -68,7 +71,7 @@ export const BUSINESS_NAP = {
   longitude: 72.5048,
   priceRange: '₹₹',
   logo: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png',
-  founderImage: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png',
+  founderImage: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp',
   sameAs: [
     'https://www.facebook.com/people/Soul-Infinity/',
     'https://www.quora.com/profile/Saurabh-Jain-Soul-Infinity',
@@ -225,7 +228,10 @@ function buildReviewSchemas(): JsonLd[] {
   return reviews
     .filter((r) => r && typeof r.author === 'string' && typeof r.text === 'string' && r.text.length > 0)
     .map((r) => {
-      const datePublished = r.date ? `${r.date}-01` : undefined;
+      // r.date is now full ISO 8601 (Schema.org datePublished accepts ISO datetimes
+      // directly). Previously this synthesised a YYYY-MM-DD by appending "-01" to a
+      // YYYY-MM string; with full publishTime preserved, no synthesis is needed.
+      const datePublished = r.date ?? undefined;
       const author: JsonLd = {
         '@type': 'Person',
         name: r.author,
@@ -246,12 +252,14 @@ function buildReviewSchemas(): JsonLd[] {
           worstRating: 1,
         },
         reviewBody: r.text,
-        // Include @type alongside @id so validators that don't resolve
-        // @id references still see a typed reference.
-        itemReviewed: {
-          '@type': 'LocalBusiness',
-          '@id': SCHEMA_IDS.localBusiness,
-        },
+        // No `itemReviewed` field here: each Review is nested inside the
+        // LocalBusiness `review` array (see getLocalBusinessSchema below),
+        // and Google's Rich Results validator flags `itemReviewed` on a
+        // nested Review as a directional conflict — the parent already
+        // establishes what's being reviewed via its own @id. Keep this
+        // builder strictly for nested use; if Review objects are ever
+        // emitted at the top level, add `itemReviewed` at the call site,
+        // not here.
         publisher: {
           '@type': 'Organization',
           name: 'Google',
@@ -787,6 +795,53 @@ export interface BlogPostMeta {
   url: string; // absolute or site-relative
   articleSection?: string;
   keywords?: readonly string[];
+}
+
+/**
+ * Planet pillar Article schema. Emits @type Article with Organization-as-author
+ * and Organization-as-publisher per the SoulInfinity SEO spec for Navagraha
+ * pillar pages. Distinct from getArticleSchema which emits BlogPosting.
+ */
+export function getPlanetArticleSchema(opts: {
+  headline: string;
+  description: string;
+  url: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  articleSection?: string;
+  keywords?: readonly string[];
+}): JsonLd {
+  const absUrl = opts.url.startsWith('http') ? opts.url : `${SITE_ORIGIN}${opts.url}`;
+  const schema: JsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: opts.headline,
+    description: opts.description,
+    author: {
+      '@type': 'Organization',
+      name: 'Soul Infinity',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Soul Infinity',
+      url: `${SITE_ORIGIN}/`,
+    },
+    url: absUrl,
+    inLanguage: 'en-IN',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': absUrl,
+    },
+  };
+  if (opts.image) schema.image = opts.image;
+  if (opts.datePublished) schema.datePublished = opts.datePublished;
+  if (opts.dateModified ?? opts.datePublished)
+    schema.dateModified = opts.dateModified ?? opts.datePublished;
+  if (opts.articleSection) schema.articleSection = opts.articleSection;
+  if (opts.keywords && opts.keywords.length > 0)
+    schema.keywords = opts.keywords.join(', ');
+  return schema;
 }
 
 export function getArticleSchema(post: BlogPostMeta): JsonLd {

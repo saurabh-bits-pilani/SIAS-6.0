@@ -11,7 +11,7 @@ const CosmicGuide = () => {
     location: 'Ahmedabad, India',
     experience: '5+ Years',
     specialties: ['Vedic Astrology', 'BNN', 'KP', 'Ashtakavarga'],
-    image: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png',
+    image: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp',
     bio: 'A dedicated student of Vedic astrology, continually learning and sharing the timeless wisdom of the cosmos with sincerity and devotion. Saurabh combines traditional knowledge with modern insights to provide accurate predictions and practical solutions.',
     qualifications: [
       'M.Tech in Computer Science – Birla Institute of Technology and Science',
@@ -40,7 +40,7 @@ const CosmicGuide = () => {
         title="About Saurabh Jain - Certified Vedic Astrologer in Ahmedabad | Soul Infinity"
         description="Meet Saurabh Jain: M.Tech, MBA, M.Phil, K.N. Rao Institute certified Vedic astrologer. 5+ years guiding 200+ clients in Ahmedabad with Parashari, BNN & KP methods."
         keywords="saurabh jain, astrologer ahmedabad, vedic astrology expert, KN rao institute, BNN astrology, KP astrology, ashtakavarga, certified astrologer"
-        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
+        image="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp"
         type="profile"
         omitDefaultSchema
       />

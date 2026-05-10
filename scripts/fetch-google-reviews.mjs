@@ -9,6 +9,12 @@
 //   GOOGLE_PLACE_ID        — Place ID of Soul Infinity Astro Solutions.
 //   FORCE_REVIEW_FETCH=true — bypass the 24h cache check.
 //
+// Env source order (first hit wins):
+//   1. process.env (Vercel deploy env, shell-injected vars)
+//   2. .env.local at repo root (local dev convenience — file is gitignored)
+//   The .env.local loader silently no-ops if the file doesn't exist (Vercel),
+//   so the script behaves identically in both environments.
+//
 // Failure modes (all exit 0 — never breaks build):
 //   - env missing      → log warning, preserve existing JSON, else seed fallback
 //   - API network err  → same
@@ -33,6 +39,32 @@ function log(msg) {
 }
 function warn(msg) {
   console.warn(`[reviews] WARNING: ${msg}`);
+}
+
+// Load .env.local into process.env for local dev. Mirrors the loadEnv()
+// helper used by scripts/upload-*.mjs. Existing process.env values win
+// (Vercel-injected env still authoritative). Missing file is tolerated so
+// the same script runs cleanly on Vercel where .env.local doesn't exist.
+async function loadEnv() {
+  let raw;
+  try {
+    raw = await fs.readFile(path.join(ROOT, '.env.local'), 'utf8');
+  } catch (err) {
+    if (err.code === 'ENOENT') return;
+    throw err;
+  }
+  for (const line of raw.split('\n')) {
+    const t = line.trim();
+    if (!t || t.startsWith('#')) continue;
+    const eq = t.indexOf('=');
+    if (eq < 0) continue;
+    const k = t.slice(0, eq).trim();
+    let v = t.slice(eq + 1).trim();
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+      v = v.slice(1, -1);
+    }
+    if (!(k in process.env)) process.env[k] = v;
+  }
 }
 
 function deterministicInitial(name) {
@@ -70,7 +102,12 @@ function normalizeReview(raw, index) {
     authorPhotoUrl: raw?.authorAttribution?.photoUri ?? null,
     authorProfileUrl: raw?.authorAttribution?.uri ?? null,
     rating: typeof raw?.rating === 'number' ? raw.rating : 5,
-    date: isoToYearMonth(raw?.publishTime),
+    // Full ISO 8601 publishTime preserved (e.g. "2024-12-15T10:00:00Z") so
+    // sorting can use day/time precision, not just year-month.
+    date: raw?.publishTime ?? null,
+    // Unix epoch seconds — bulletproof primary sort key. Numeric subtraction
+    // is faster and avoids `new Date()` parsing per comparison in the widget.
+    time: raw?.publishTime ? Math.floor(new Date(raw.publishTime).getTime() / 1000) : null,
     relativeTime: raw?.relativePublishTimeDescription ?? '',
     text,
   };
@@ -141,6 +178,10 @@ async function isCacheFresh() {
 }
 
 async function fetchPlaceDetails(placeId, apiKey) {
+  // Plain v1 endpoint — no sort query param. The legacy `reviewsSort=newest`
+  // parameter is not supported by Places API (New) v1 and returned 0 reviews
+  // when added on f2b9b43. Reverted on f2b9b43 follow-up. Newest-first
+  // ordering is enforced client-side by the widget's time-desc sort.
   const url = `${ENDPOINT_BASE}/${encodeURIComponent(placeId)}`;
   const res = await fetch(url, {
     method: 'GET',
@@ -162,6 +203,7 @@ async function fetchPlaceDetails(placeId, apiKey) {
 }
 
 async function main() {
+  await loadEnv();
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   const placeId = process.env.GOOGLE_PLACE_ID;
 
@@ -190,6 +232,24 @@ async function main() {
 
   const reviewsRaw = Array.isArray(details.reviews) ? details.reviews : [];
   const reviews = reviewsRaw.map(normalizeReview);
+
+  // Safety guard: if the live response has 0 reviews but a previous good
+  // fetch wrote >0 to the file, do not overwrite. A bad query param (see
+  // f2b9b43, reviewsSort=newest) or a transient API hiccup can return
+  // success-but-empty; preserving the prior good JSON is strictly better
+  // than zeroing out the visible cards on production.
+  if (reviews.length === 0) {
+    const existing = await readExistingJson();
+    const prior = Array.isArray(existing?.reviews) ? existing.reviews.length : 0;
+    if (prior > 0) {
+      warn(
+        `live fetch returned 0 reviews but existing JSON has ${prior} — keeping existing JSON. ` +
+          `Investigate API response if this persists.`,
+      );
+      process.exit(0);
+    }
+    log('live fetch returned 0 reviews and prior JSON also empty; writing empty as-is.');
+  }
 
   const output = {
     aggregate: {

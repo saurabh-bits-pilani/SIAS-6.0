@@ -1,14 +1,39 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import SEOHead from '../../components/SEOHead';
+import useEmblaCarousel from 'embla-carousel-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
-  getArticleSchema,
+  Flame,
+  Sparkle,
+  Shield,
+  Compass,
+  Calendar,
+  Cube,
+  Triangle,
+  ArrowUp,
+  ArrowDown,
+  HandsPraying,
+  Diamond,
+  Question,
+  Heart,
+  Star,
+  CaretLeft,
+  CaretRight,
+} from '@phosphor-icons/react';
+import SEOHead from '../../components/SEOHead';
+import CircleCallout from '../../components/doodles/CircleCallout';
+import CornerSpark from '../../components/doodles/CornerSpark';
+import HighlightStroke from '../../components/doodles/HighlightStroke';
+import UnderlineScribble from '../../components/doodles/UnderlineScribble';
+import {
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const R2_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
 const HERO_URL = `${R2_BASE}/Pillar/Planets/Mars/hero-mangala.webp`;
@@ -39,7 +64,9 @@ const PAGE_KEYWORDS =
 const PAGE_URL = `${SITE_ORIGIN}/planets/mars`;
 
 const pageShellStyle = {
-  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundColor: '#0B1120',
+  backgroundImage:
+    'radial-gradient(circle at top right, rgba(232,71,42,0.2) 0%, transparent 34%), linear-gradient(180deg, rgba(11,17,32,1) 0%, rgba(11,17,32,0.985) 100%)',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 };
@@ -277,6 +304,31 @@ const faqs: FaqItem[] = [
       'Classical remedies for a weak or afflicted Mangala include the Tuesday observance, recitation of the Navagraha Mangala stotra and Beej mantra, devotional practices to Hanuman such as the Hanuman Chalisa, donation of red lentils, jaggery, copper utensils, or red cloth, and consultation about Red Coral after personal chart verification. The deeper remedy is the cultivation of disciplined courage in daily life. None of these practices replace medical, legal, or financial counsel, and they are best undertaken alongside qualified human advice.',
   },
 ];
+
+const PLANET_HUB = `${R2_BASE}/Pillar/Hub/Planets`;
+
+type Navagraha = {
+  name: string;
+  sanskrit: string;
+  href: string;
+  img: string;
+  slug: string;
+  current?: boolean;
+};
+
+const navagrahas: Navagraha[] = [
+  { name: 'Surya', sanskrit: 'सूर्य', href: '/planets/sun', img: 'hero-surya.webp', slug: 'sun' },
+  { name: 'Chandra', sanskrit: 'चंद्र', href: '/planets/moon', img: 'hero-chandra.webp', slug: 'moon' },
+  { name: 'Mangal', sanskrit: 'मंगल', href: '/planets/mars', img: 'hero-mangala.webp', slug: 'mars', current: true },
+  { name: 'Budha', sanskrit: 'बुध', href: '/planets/mercury', img: 'hero-budha.webp', slug: 'mercury' },
+  { name: 'Guru', sanskrit: 'गुरु', href: '/planets/jupiter', img: 'hero-guru.webp', slug: 'jupiter' },
+  { name: 'Shukra', sanskrit: 'शुक्र', href: '/planets/venus', img: 'hero-shukra.webp', slug: 'venus' },
+  { name: 'Shani', sanskrit: 'शनि', href: '/planets/saturn', img: 'hero-shani.webp', slug: 'saturn' },
+  { name: 'Rahu', sanskrit: 'राहु', href: '/planets/rahu', img: 'hero-rahu.webp', slug: 'rahu' },
+  { name: 'Ketu', sanskrit: 'केतु', href: '/planets/ketu', img: 'hero-ketu.webp', slug: 'ketu' },
+];
+
+const navagrahaImage = (img: string) => `${PLANET_HUB}/${img}`;
 
 const associations: Association[] = [
   { title: 'Aries', subtitle: 'Ruling Sign', icon: 'aries' },
@@ -611,17 +663,168 @@ function renderFactIcon(fact: QuickFact | DetailRow | Association, className = '
   return null;
 }
 
+function attributeIcon(name: IconName | undefined, className = 'h-7 w-7'): JSX.Element | null {
+  if (!name) return null;
+  switch (name) {
+    case 'planet':
+      return <Sparkle className={className} weight="duotone" />;
+    case 'fire':
+      return <Flame className={className} weight="duotone" />;
+    case 'triangle':
+      return <Triangle className={className} weight="duotone" />;
+    case 'metal':
+      return <Cube className={className} weight="duotone" />;
+    case 'day':
+      return <Calendar className={className} weight="duotone" />;
+    case 'direction':
+      return <Compass className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function renderAttributeIcon(fact: QuickFact, className = 'h-7 w-7') {
+  if (fact.assetUrl) {
+    return <img src={fact.assetUrl} alt="" aria-hidden="true" className={className} loading="lazy" />;
+  }
+  return attributeIcon(fact.icon, className);
+}
+
+function connectStepIcon(index: number, className = 'h-6 w-6'): JSX.Element {
+  switch (index) {
+    case 0:
+      return <Sparkle className={className} weight="duotone" />;
+    case 1:
+      return <Heart className={className} weight="duotone" />;
+    case 2:
+      return <HandsPraying className={className} weight="duotone" />;
+    case 3:
+      return <Diamond className={className} weight="duotone" />;
+    case 4:
+      return <Star className={className} weight="duotone" />;
+    case 5:
+      return <Shield className={className} weight="duotone" />;
+    default:
+      return <Flame className={className} weight="duotone" />;
+  }
+}
+
+function sidebarRowIcon(name: IconName | undefined, className = 'h-6 w-6'): JSX.Element | null {
+  if (!name) return null;
+  switch (name) {
+    case 'sign':
+      return <Sparkle className={className} weight="duotone" />;
+    case 'up':
+      return <ArrowUp className={className} weight="duotone" />;
+    case 'down':
+      return <ArrowDown className={className} weight="duotone" />;
+    case 'direction':
+      return <Compass className={className} weight="duotone" />;
+    default:
+      return iconSvg(name, className);
+  }
+}
+
+function renderLifeRowIcon(row: DetailRow, className = 'h-6 w-6') {
+  if (row.assetUrl) {
+    return <img src={row.assetUrl} alt="" aria-hidden="true" className={className} loading="lazy" />;
+  }
+  return sidebarRowIcon(row.icon, className);
+}
+
 export default function MarsPage() {
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const prefersReducedMotion = useReducedMotion();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start', skipSnaps: false });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const heroTitleMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 24 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, ease: 'easeOut' },
+      };
+
+  const staggerParent = (staggerChildren: number, delayChildren = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: 'hidden',
+          whileInView: 'visible',
+          viewport: { once: true, amount: 0.2 },
+          variants: {
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren,
+                delayChildren,
+              },
+            },
+          },
+        };
+
+  const fadeUpItem = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 16 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.45, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const fadeUpItemLarge = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 18 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.55, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const affirmationMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, amount: 0.4 },
+        transition: { duration: 0.8, delay: 0.3, ease: 'easeOut' },
+      };
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Mangala (Mars), The Warrior of Energy',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('mars').h1,
         description: PAGE_DESCRIPTION,
         image: HERO_URL,
         datePublished: '2026-04-26',
-        dateModified: '2026-04-26',
+        dateModified: '2026-05-09',
         url: '/planets/mars',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -722,23 +925,38 @@ export default function MarsPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#f3c9a6]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat leading-[0.98]">
+                <motion.h1 className="font-caveat leading-[0.98]" {...heroTitleMotion}>
                   <span className="block text-[5.8rem] text-[#ef4444] drop-shadow-[0_0_34px_rgba(220,38,38,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                    Mangala
+                    Mars in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[4rem]">
-                    The Warrior of Energy
+                    Mangal&apos;s Energy, Courage and Effects
                   </span>
-                </h1>
+                </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#fef2f2] sm:text-4xl">मङ्गल</div>
                   <div className="font-kalam text-2xl text-[#fecaca] sm:text-3xl">(Mars)</div>
                 </div>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] [text-shadow:0_3px_10px_rgba(0,0,0,0.34)] sm:text-[2.15rem]">
-                  <p>Mangala fuels our <Highlight>courage</Highlight>, <Highlight>strength</Highlight></p>
+                  <p>
+                    Mangala fuels our{' '}
+                    <HighlightStroke color="#E8472A" show={!prefersReducedMotion}>
+                      <span className="text-[#fecaca]">courage</span>
+                    </HighlightStroke>
+                    ,{' '}
+                    <UnderlineScribble color="#E8472A" show={!prefersReducedMotion}>
+                      <span className="text-[#fecaca]">strength</span>
+                    </UnderlineScribble>
+                  </p>
                   <div className="flex items-center gap-3">
-                    <p>and <Highlight>determination</Highlight>.</p>
+                    <p>
+                      and{' '}
+                      <CircleCallout color="#E8472A" show={!prefersReducedMotion}>
+                        <span className="text-[#fecaca]">determination</span>
+                      </CircleCallout>
+                      .
+                    </p>
                     <ScribbleLine />
                   </div>
                   <p>He is the protector who drives us to <Highlight>action</Highlight> and <Highlight>victory</Highlight>.</p>
@@ -761,20 +979,21 @@ export default function MarsPage() {
 
               <div className="relative z-10 mt-8 max-w-[18rem] sm:mt-10 sm:max-w-[30rem] lg:absolute lg:bottom-4 lg:left-0 lg:mt-0 lg:max-w-[38rem]">
                 <ParchmentCard className="rounded-[24px] p-2.5 sm:p-3 shadow-[0_18px_40px_rgba(0,0,0,0.38)]" rotate="lg:-rotate-[0.55deg]">
-                  <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0">
+                  <motion.div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0" {...staggerParent(0.1)}>
                     {quickFacts.map((fact, index) => (
-                      <div
+                      <motion.div
                         key={fact.label}
                         className={`flex min-h-[96px] flex-col items-center justify-center px-2.5 py-2.5 text-center sm:min-h-[110px] sm:px-3 ${
                           index < quickFacts.length - 1 ? 'lg:border-r lg:border-[#755632]/30' : ''
                         }`}
+                        {...fadeUpItem}
                       >
-                        <div className="text-[#7f1d1d]">{renderFactIcon(fact, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
+                        <div className="text-[#7f1d1d]">{renderAttributeIcon(fact, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
                         <div className="mt-1.5 font-caveat text-[1.55rem] leading-none sm:text-[1.9rem]">{fact.label}</div>
                         <div className="mt-1 font-kalam text-[0.95rem] leading-tight text-[#991b1b] sm:text-[1.08rem]">{fact.value}</div>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </ParchmentCard>
               </div>
             </div>
@@ -804,8 +1023,10 @@ export default function MarsPage() {
           }}
         >
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
-            <div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]">
-              <ParchmentCard className="min-h-full" rotate="xl:-rotate-[0.5deg]">
+            <motion.div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]" {...staggerParent(0.15)}>
+              <motion.div className="min-h-full" {...fadeUpItemLarge}>
+              <ParchmentCard className="relative min-h-full" rotate="xl:-rotate-[0.5deg]">
+                <CornerSpark className="absolute right-3 top-3 h-8 w-8 text-[#E8472A] opacity-70" />
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="mb-2 flex items-center gap-3">
@@ -867,19 +1088,20 @@ export default function MarsPage() {
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
+              </motion.div>
 
-              <div className="grid gap-6">
+              <motion.div className="grid gap-6" {...fadeUpItemLarge}>
                 <ParchmentCard rotate="xl:rotate-[0.4deg]">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Mangala in Our Life
                     </h3>
-                    <div className="text-[#991b1b]">{iconSvg('faq', 'h-12 w-12')}</div>
+                    <div className="text-[#991b1b]"><Flame className="h-12 w-12" weight="duotone" /></div>
                   </div>
                   <div className="mt-4 space-y-3">
                     {lifeRows.map((row) => (
                       <div key={row.label} className="flex gap-3 border-b border-[#745834]/15 pb-3 last:border-b-0 last:pb-0">
-                        <div className="mt-1 text-[#991b1b]">{renderFactIcon(row, 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#991b1b]">{renderLifeRowIcon(row, 'h-6 w-6')}</div>
                         <div className="font-kalam text-lg leading-relaxed text-[#2b1b10]">
                           <span className="font-semibold text-[#991b1b]">{row.label}:</span> {row.value}
                         </div>
@@ -910,11 +1132,12 @@ export default function MarsPage() {
                     ))}
                   </div>
                 </ParchmentCard>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             <div className="mt-6">
-              <ParchmentCard rotate="lg:-rotate-[0.25deg]">
+              <ParchmentCard className="relative" rotate="lg:-rotate-[0.25deg]">
+                <CornerSpark className="absolute right-3 top-3 h-8 w-8 text-[#E8472A] opacity-70" />
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Mangala
@@ -922,12 +1145,12 @@ export default function MarsPage() {
                   <img src={SYMBOL_MARS_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
-                  {connectPractices.map((practice) => (
+                  {connectPractices.map((practice, idx) => (
                     <div
                       key={practice}
                       className="rounded-2xl border border-[#7b603e]/20 bg-white/25 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_12px_28px_rgba(108,35,20,0.07)]"
                     >
-                      <div className="mb-3 text-[#991b1b]">{iconSvg('connect', 'h-6 w-6')}</div>
+                      <div className="mb-3 text-[#991b1b]">{connectStepIcon(idx, 'h-6 w-6')}</div>
                       <p className="font-kalam text-lg leading-relaxed text-[#2a190f]">{practice}</p>
                     </div>
                   ))}
@@ -978,9 +1201,12 @@ export default function MarsPage() {
                   <ScribbleAccent className="h-6 w-6" strokeClassName="text-[#dc2626]" />
                   Warrior vow
                 </div>
-                <div className="mt-6 font-kalam text-[2rem] leading-snug text-[#991b1b] sm:text-[2.4rem]">
+                <motion.div
+                  className="mt-6 font-kalam text-[2rem] leading-snug text-[#991b1b] sm:text-[2.4rem]"
+                  {...affirmationMotion}
+                >
                   “I am strong, I am brave, I take action and create my victorious destiny.”
-                </div>
+                </motion.div>
                 <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
                   This affirmation supports courage that is centered, disciplined, and worthy of the fire it carries.
                 </div>
@@ -1187,7 +1413,13 @@ export default function MarsPage() {
               </div>
             </div>
 
-            <footer className="relative mt-10 overflow-hidden rounded-[32px] border border-[#5c2518] bg-[linear-gradient(135deg,#0b0b0b_0%,#1a0b0b_100%)] px-5 py-8 text-[#fff7ed] shadow-[0_24px_80px_rgba(0,0,0,0.42)] sm:px-8">
+            <footer
+              className="relative mt-10 overflow-hidden rounded-[32px] border border-[#5c2518] bg-[linear-gradient(135deg,#0b0b0b_0%,#1a0b0b_100%)] px-5 py-8 text-[#fff7ed] shadow-[0_24px_80px_rgba(0,0,0,0.42)] sm:px-8"
+              style={{
+                background:
+                  'radial-gradient(circle at center, rgba(232,71,42,0.18), transparent 65%), linear-gradient(135deg,#0b0b0b 0%,#1a0b0b 100%)',
+              }}
+            >
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute left-1/2 top-1/2 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,69,0,0.45)_0%,rgba(255,69,0,0.08)_45%,transparent_75%)]" />
                 <FooterStarfield />
@@ -1197,12 +1429,52 @@ export default function MarsPage() {
                 <div className="flex items-center gap-4">
                   <div className="font-devanagari text-5xl text-[#f97316] sm:text-6xl">ॐ</div>
                   <div>
-                    <div className="font-caveat text-3xl text-[#fff7ed] sm:text-4xl">
-                      Courage is the fire
+                    <div className="flex items-center gap-2 font-caveat text-3xl text-[#fff7ed] sm:text-4xl">
+                      <Flame className="h-6 w-6 text-[#E8472A]" weight="duotone" />
+                      <span>
+                        <UnderlineScribble color="#E8472A" show={!prefersReducedMotion}>
+                          <span className="inline-block">Courage</span>
+                        </UnderlineScribble>{' '}
+                        is the fire
+                      </span>
                     </div>
                     <div className="mt-1 font-kalam text-xl text-[#fde7cf] sm:text-2xl">
-                      that turns dreams into reality.
+                      that turns the will of{' '}
+                      <CircleCallout color="#E8472A" show={!prefersReducedMotion}>
+                        <span className="inline-block text-[#fecaca]">Mangala</span>
+                      </CircleCallout>{' '}
+                      into reality.
                     </div>
+                    <motion.div
+                      animate={
+                        prefersReducedMotion
+                          ? { opacity: 1 }
+                          : {
+                              boxShadow: [
+                                '0 0 0 rgba(232,71,42,0)',
+                                '0 0 22px rgba(232,71,42,0.34)',
+                                '0 0 0 rgba(232,71,42,0)',
+                              ],
+                            }
+                      }
+                      transition={
+                        prefersReducedMotion
+                          ? undefined
+                          : {
+                              duration: 1.6,
+                              repeat: Infinity,
+                              ease: 'easeInOut',
+                            }
+                      }
+                      className="mt-4 inline-flex rounded-full"
+                    >
+                      <Link
+                        to="/contact"
+                        className="inline-flex items-center gap-2 rounded-full border border-[#E8472A]/60 bg-[#E8472A]/10 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#fecaca] transition hover:bg-[#E8472A]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E8472A]"
+                      >
+                        Explore Mangala Remedies <span aria-hidden="true">→</span>
+                      </Link>
+                    </motion.div>
                   </div>
                 </div>
 
@@ -1241,6 +1513,93 @@ export default function MarsPage() {
                 </div>
               </div>
             </footer>
+
+            <div className="mt-8 rounded-[28px] border border-[#d8bb75]/45 bg-white/55 px-5 py-6 shadow-[0_16px_40px_rgba(57,31,10,0.10)]">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollPrev()}
+                  disabled={!canScrollPrev}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8bb75] bg-white/70 text-[#7f1d1d] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E8472A]"
+                  aria-label="Scroll planets left"
+                >
+                  <CaretLeft className="h-5 w-5" weight="regular" />
+                </button>
+                <div className="text-center">
+                  <div className="font-caveat text-3xl leading-none text-[#7f1d1d] sm:text-4xl">
+                    Explore All Navagrahas
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollNext()}
+                  disabled={!canScrollNext}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8bb75] bg-white/70 text-[#7f1d1d] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E8472A]"
+                  aria-label="Scroll planets right"
+                >
+                  <CaretRight className="h-5 w-5" weight="regular" />
+                </button>
+              </div>
+
+              <div className="mt-5 overflow-hidden" ref={emblaRef}>
+                <div className="-ml-4 flex">
+                  {navagrahas.map((planet) => {
+                    const card = (
+                      <Link
+                        to={planet.href}
+                        className={`block min-w-0 rounded-[22px] border px-4 py-4 text-center transition hover:-translate-y-0.5 ${
+                          planet.current
+                            ? 'border-[#E8472A] bg-[#fff1ed] ring-2 ring-[#E8472A]'
+                            : 'border-[#e7d7b0] bg-white/70'
+                        }`}
+                      >
+                        <img
+                          src={navagrahaImage(planet.img)}
+                          alt={`${planet.name} planet portrait`}
+                          className="mx-auto h-16 w-16 rounded-full object-cover shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+                        />
+                        <div className="mt-3 font-poppins text-sm font-semibold text-[#2f1b0d]">{planet.name}</div>
+                        <div className="font-devanagari text-lg text-[#7f1d1d]">{planet.sanskrit}</div>
+                      </Link>
+                    );
+
+                    return (
+                      <div key={planet.slug} className="min-w-0 flex-[0_0_120px] pl-4 sm:flex-[0_0_132px]">
+                        {planet.current ? (
+                          <motion.div
+                            animate={
+                              prefersReducedMotion
+                                ? { opacity: 1 }
+                                : {
+                                    boxShadow: [
+                                      '0 0 0 rgba(232,71,42,0)',
+                                      '0 0 24px rgba(232,71,42,0.34)',
+                                      '0 0 0 rgba(232,71,42,0)',
+                                    ],
+                                  }
+                            }
+                            transition={
+                              prefersReducedMotion
+                                ? undefined
+                                : {
+                                    duration: 1.6,
+                                    repeat: Infinity,
+                                    ease: 'easeInOut',
+                                  }
+                            }
+                            className="rounded-[22px]"
+                          >
+                            {card}
+                          </motion.div>
+                        ) : (
+                          card
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1269,7 +1628,7 @@ export default function MarsPage() {
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="mt-1 text-[#991b1b]">{iconSvg('faq', 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#991b1b]"><Question className="h-6 w-6" weight="regular" /></div>
                         <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#991b1b]">
@@ -1289,6 +1648,32 @@ export default function MarsPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#fdf2ed] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#7f1d1d] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('mars').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#7f1d1d] shadow-[0_8px_20px_rgba(127,29,29,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7f1d1d]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

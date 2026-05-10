@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
@@ -13,6 +12,26 @@ const ARIES_IMG =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Aries/aries-card.webp';
 const TAURUS_IMG =
   'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Hub/preview/tarus-card-1-1-ratio-circular.webp';
+const GEMINI_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Gemini/mithuna-card.webp';
+const CANCER_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Cancer/karka-card.webp';
+const LEO_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Leo/simha-card.webp';
+const VIRGO_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Virgo/kanya-card.webp';
+const LIBRA_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Libra/tula-card.webp';
+const SCORPIO_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Scorpio/vrischika-card.webp';
+const SAGITTARIUS_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Sagittarius/dhanu-card.webp';
+const CAPRICORN_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Capricorn/makara-card.webp';
+const AQUARIUS_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Aquarius/kumbha-card.webp';
+const PISCES_IMG =
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Zodiac/Pisces/meena-card.webp';
 
 type Element = 'Fire' | 'Earth' | 'Air' | 'Water';
 
@@ -112,7 +131,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'May 21 to Jun 20',
     desc: 'Mutable air sign of communication, curiosity, and the bridge between ideas.',
     elementColor: ELEMENT_PALETTE.Air,
-    image: null,
+    image: GEMINI_IMG,
   },
   {
     slug: 'cancer',
@@ -125,7 +144,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Jun 21 to Jul 22',
     desc: 'Cardinal water sign of nurturance, memory, and the protective embrace of family.',
     elementColor: ELEMENT_PALETTE.Water,
-    image: null,
+    image: CANCER_IMG,
   },
   {
     slug: 'leo',
@@ -138,7 +157,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Jul 23 to Aug 22',
     desc: 'Fixed fire sign of sovereignty, creative radiance, and benevolent self-expression.',
     elementColor: ELEMENT_PALETTE.Fire,
-    image: null,
+    image: LEO_IMG,
   },
   {
     slug: 'virgo',
@@ -151,7 +170,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Aug 23 to Sep 22',
     desc: 'Mutable earth sign of pragmatic intelligence, refinement, and devoted service.',
     elementColor: ELEMENT_PALETTE.Earth,
-    image: null,
+    image: VIRGO_IMG,
   },
   {
     slug: 'libra',
@@ -164,7 +183,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Sep 23 to Oct 22',
     desc: 'Cardinal air sign of harmony, partnership, and the impartial weighing of fairness.',
     elementColor: ELEMENT_PALETTE.Air,
-    image: null,
+    image: LIBRA_IMG,
   },
   {
     slug: 'scorpio',
@@ -177,7 +196,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Oct 23 to Nov 21',
     desc: 'Fixed water sign of depth, transformation, and the alchemy of unseen forces.',
     elementColor: ELEMENT_PALETTE.Water,
-    image: null,
+    image: SCORPIO_IMG,
   },
   {
     slug: 'sagittarius',
@@ -190,7 +209,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Nov 22 to Dec 21',
     desc: 'Mutable fire sign of dharma, philosophy, and the long arrow of higher purpose.',
     elementColor: ELEMENT_PALETTE.Fire,
-    image: null,
+    image: SAGITTARIUS_IMG,
   },
   {
     slug: 'capricorn',
@@ -203,7 +222,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Dec 22 to Jan 19',
     desc: 'Cardinal earth sign of discipline, ambition, and the patient ascent of mastery.',
     elementColor: ELEMENT_PALETTE.Earth,
-    image: null,
+    image: CAPRICORN_IMG,
   },
   {
     slug: 'aquarius',
@@ -216,7 +235,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Jan 20 to Feb 18',
     desc: 'Fixed air sign of vision, community, and the steady work of collective progress.',
     elementColor: ELEMENT_PALETTE.Air,
-    image: null,
+    image: AQUARIUS_IMG,
   },
   {
     slug: 'pisces',
@@ -229,7 +248,7 @@ const RASHIS: readonly Rashi[] = [
     dates: 'Feb 19 to Mar 20',
     desc: 'Mutable water sign of compassion, intuition, and the dissolution into oneness.',
     elementColor: ELEMENT_PALETTE.Water,
-    image: null,
+    image: PISCES_IMG,
   },
 ];
 
@@ -273,62 +292,38 @@ function RulerBadge({ rashi }: CardProps) {
   );
 }
 
-function SquareCard({ rashi }: CardProps) {
-  return (
-    <Link
-      to={`/zodiac/${rashi.slug}`}
-      className="group block bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 h-full"
-    >
-      <div className={`relative aspect-[4/3] overflow-hidden ${rashi.image ? '' : rashi.elementColor.placeholderBg}`}>
-        {rashi.image ? (
-          <img
-            src={rashi.image}
-            alt={`${rashi.english} (${rashi.sanskrit}) zodiac sign illustration`}
-            width={800}
-            height={600}
-            loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span
-              className={`text-7xl ${rashi.elementColor.placeholderText} drop-shadow-sm select-none`}
-              aria-hidden="true"
-            >
-              {rashi.symbol}
-            </span>
-          </div>
-        )}
-      </div>
-      <div className="p-5">
-        <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-devanagari text-xl text-gray-900">{rashi.devanagari}</span>
-          <span className="text-sm text-gray-500">{rashi.sanskrit}</span>
-        </div>
-        <div className="font-heading font-bold text-lg text-gray-900 mb-1">{rashi.english}</div>
-        <div className="text-xs text-gray-500 mb-3">{rashi.dates}</div>
-        <p className="text-sm text-gray-700 mb-4 leading-snug line-clamp-2">{rashi.desc}</p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          <ElementBadge rashi={rashi} />
-          <RulerBadge rashi={rashi} />
-        </div>
-        <span className={`inline-flex items-center text-sm font-semibold ${rashi.elementColor.text} group-hover:underline`}>
-          Explore {rashi.sanskrit}
-          <ArrowRight className="ml-1 w-4 h-4" />
-        </span>
-      </div>
-    </Link>
-  );
-}
-
 function CircularCard({ rashi }: CardProps) {
   // Aries gets a heavier red ring to visually separate the card from the
   // text area below, matching the brief.
-  const ariesRing = rashi.slug === 'aries' ? 'border-2 border-red-700' : 'border';
+  const liveRing = rashi.slug === 'aries'
+    ? 'border-2 border-red-700'
+    : rashi.slug === 'taurus'
+      ? 'border-2 border-green-700'
+      : rashi.slug === 'cancer'
+        ? 'border-2 border-sky-700'
+        : rashi.slug === 'gemini'
+          ? 'border-2 border-yellow-700'
+          : rashi.slug === 'leo'
+            ? 'border-2 border-orange-700'
+            : rashi.slug === 'virgo'
+              ? 'border-2 border-emerald-700'
+              : rashi.slug === 'libra'
+                ? 'border-2 border-violet-700'
+                : rashi.slug === 'scorpio'
+                  ? 'border-2 border-rose-800'
+                  : rashi.slug === 'sagittarius'
+                    ? 'border-2 border-amber-700'
+                    : rashi.slug === 'capricorn'
+                      ? 'border-2 border-slate-700'
+                      : rashi.slug === 'aquarius'
+                        ? 'border-2 border-cyan-700'
+                        : rashi.slug === 'pisces'
+                          ? 'border-2 border-teal-700'
+                          : 'border';
   return (
     <Link
       to={`/zodiac/${rashi.slug}`}
-      className={`group block rounded-2xl overflow-hidden p-6 text-center transition-all duration-300 transform hover:-translate-y-1 ${ariesRing} ${rashi.elementColor.bg} ${rashi.elementColor.border} hover:shadow-soft-lg h-full`}
+      className={`group block rounded-2xl overflow-hidden p-6 text-center transition-all duration-300 transform hover:-translate-y-1 ${liveRing} ${rashi.elementColor.bg} ${rashi.elementColor.border} hover:shadow-soft-lg h-full`}
     >
       <div className="flex justify-center mb-4">
         {rashi.image ? (
@@ -371,7 +366,6 @@ function CircularCard({ rashi }: CardProps) {
 }
 
 export default function ZodiacHubPage() {
-  const [layout, setLayout] = useState<'square' | 'circular'>('square');
 
   return (
     <div className="bg-white">
@@ -458,56 +452,16 @@ export default function ZodiacHubPage() {
         </div>
       </section>
 
-      {/* Layout toggle */}
-      <section className="py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div
-            className="inline-flex bg-gray-100 rounded-full p-1 border border-gray-200"
-            role="group"
-            aria-label="Card layout style"
-          >
-            <button
-              type="button"
-              onClick={() => setLayout('square')}
-              aria-pressed={layout === 'square'}
-              className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
-                layout === 'square'
-                  ? 'bg-white shadow-sm text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Square Cards
-            </button>
-            <button
-              type="button"
-              onClick={() => setLayout('circular')}
-              aria-pressed={layout === 'circular'}
-              className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
-                layout === 'circular'
-                  ? 'bg-white shadow-sm text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Circular Cards
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* 4x3 grid of 12 rashi cards */}
-      <section className="pb-16">
+      <section className="pt-6 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             role="list"
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           >
-            {RASHIS.map((rashi) =>
-              layout === 'square' ? (
-                <SquareCard key={rashi.slug} rashi={rashi} />
-              ) : (
-                <CircularCard key={rashi.slug} rashi={rashi} />
-              ),
-            )}
+            {RASHIS.map((rashi) => (
+              <CircularCard key={rashi.slug} rashi={rashi} />
+            ))}
           </div>
         </div>
       </section>

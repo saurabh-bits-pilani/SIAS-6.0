@@ -1,14 +1,35 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import SEOHead from '../../components/SEOHead';
+import useEmblaCarousel from 'embla-carousel-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
-  getArticleSchema,
+  ArrowLeft,
+  ArrowRight,
+  CaretDown,
+  Drop,
+  MoonStars,
+  Eye,
+  FlowerLotus,
+  HandsPraying,
+  Moon,
+  Question,
+  Sparkle,
+  Wind,
+} from '@phosphor-icons/react';
+import SEOHead from '../../components/SEOHead';
+import CircleCallout from '../../components/doodles/CircleCallout';
+import CornerSpark from '../../components/doodles/CornerSpark';
+import HighlightStroke from '../../components/doodles/HighlightStroke';
+import UnderlineScribble from '../../components/doodles/UnderlineScribble';
+import {
   getBreadcrumbSchema,
   getFaqPageSchemaFromList,
+  getPlanetArticleSchema,
   getWebPageSchema,
   type JsonLd,
   SITE_ORIGIN,
 } from '../../data/schema-entities';
+import { getOtherPlanetPillars, getPlanetPillar } from '../../data/planet-pillars';
 
 const RAHU_R2_BASE = 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev';
 
@@ -34,9 +55,11 @@ const PAGE_DESCRIPTION =
 const PAGE_KEYWORDS =
   'rahu, north node, vedic astrology, rahu mantra, rahu remedies, hessonite, gomed, chhaya graha, shadow planet, samudra manthan, soul infinity';
 const PAGE_URL = `${SITE_ORIGIN}/planets/rahu`;
+const RAHU_ACCENT = '#7B5EA7';
 
 const pageShellStyle = {
-  backgroundImage: `linear-gradient(rgba(245,230,200,0.94), rgba(245,230,200,0.95)), url(${PAGE_PARCHMENT_URL})`,
+  backgroundColor: '#0B1120',
+  backgroundImage: `radial-gradient(circle at top right, ${RAHU_ACCENT}22 0%, transparent 34%), linear-gradient(180deg, rgba(11,17,32,1) 0%, rgba(11,17,32,0.985) 100%)`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 };
@@ -109,7 +132,6 @@ const quickFacts: QuickFact[] = [
   { icon: 'air', label: 'Element', value: 'Air' },
   { icon: 'tamasic', label: 'Nature', value: 'Tamasic' },
   { icon: 'lead', label: 'Metal', value: 'Lead' },
-  { icon: 'day', label: 'Day', value: 'Saturday' },
   { icon: 'direction', label: 'Direction', value: 'South-West' },
 ];
 
@@ -141,7 +163,7 @@ const lifeRows: DetailRow[] = [
   { icon: 'up', label: 'Exalted In', value: 'Taurus (Vrishabha)' },
   { icon: 'down', label: 'Debilitated In', value: 'Scorpio (Vrischika)' },
   { icon: 'direction', label: 'Direction', value: 'South-West' },
-  { icon: 'snake', label: 'Symbol', value: 'Smoke, Snake-head, Eclipse shadow' },
+  { icon: 'snake', label: 'Symbol', value: 'Smoke, Snake-head, MoonStars shadow' },
 ];
 
 const benefits = [
@@ -163,15 +185,40 @@ const connectPractices = [
   'Practice meditation to dispel mental fog and obsession.',
 ];
 
+type Navagraha = {
+  name: string;
+  sanskrit: string;
+  href: string;
+  img: string;
+  slug: string;
+  current?: boolean;
+};
+
+const PLANET_HUB = `${RAHU_R2_BASE}/Pillar/Hub/Planets`;
+
+const navagrahas: Navagraha[] = [
+  { name: 'Surya', sanskrit: 'सूर्य', href: '/planets/sun', img: 'hero-surya.webp', slug: 'sun' },
+  { name: 'Chandra', sanskrit: 'चंद्र', href: '/planets/moon', img: 'hero-chandra.webp', slug: 'moon' },
+  { name: 'Mangal', sanskrit: 'मंगल', href: '/planets/mars', img: 'hero-mangala.webp', slug: 'mars' },
+  { name: 'Budha', sanskrit: 'बुध', href: '/planets/mercury', img: 'hero-budha.webp', slug: 'mercury' },
+  { name: 'Guru', sanskrit: 'गुरु', href: '/planets/jupiter', img: 'hero-guru.webp', slug: 'jupiter' },
+  { name: 'Shukra', sanskrit: 'शुक्र', href: '/planets/venus', img: 'hero-shukra.webp', slug: 'venus' },
+  { name: 'Shani', sanskrit: 'शनि', href: '/planets/saturn', img: 'hero-shani.webp', slug: 'saturn' },
+  { name: 'Rahu', sanskrit: 'राहु', href: '/planets/rahu', img: 'hero-rahu.webp', slug: 'rahu', current: true },
+  { name: 'Ketu', sanskrit: 'केतु', href: '/planets/ketu', img: 'hero-ketu.webp', slug: 'ketu' },
+];
+
+const navagrahaImage = (img: string) => `${PLANET_HUB}/${img}`;
+
 const associations: Association[] = [
   { title: 'Aquarius', subtitle: 'Honorary Sign', icon: 'aquarius' },
-  { title: 'Saturday', subtitle: 'Sacred Day', icon: 'day' },
   { title: 'Smoky Grey', subtitle: 'Sacred Color', icon: 'smoke' },
   { title: 'Hessonite', subtitle: 'Sacred Gemstone', icon: 'gem' },
   { title: 'Snake', subtitle: 'Sacred Symbol', icon: 'snake' },
   { title: 'Foreign Lands', subtitle: 'Sacred Domain', icon: 'foreign' },
   { title: 'Bhairava', subtitle: 'Divine Connection', icon: 'bhairava' },
   { title: 'South-West', subtitle: 'Direction', icon: 'direction' },
+  { title: 'Innovation', subtitle: 'Sacred Impulse', icon: 'benefit' },
 ];
 
 const editorialSections: EditorialSection[] = [
@@ -483,10 +530,6 @@ function iconSvg(name: IconName, className = 'h-6 w-6'): JSX.Element {
   }
 }
 
-function Highlight({ children }: { children: string }) {
-  return <span className="highlight-marker rounded px-1.5 py-0.5 text-slate-900">{children}</span>;
-}
-
 function ParchmentCard({
   children,
   className = '',
@@ -570,15 +613,88 @@ function HessoniteRingIllustration() {
 
 export default function RahuPage() {
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const prefersReducedMotion = useReducedMotion();
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    dragFree: true,
+    containScroll: 'trimSnaps',
+  });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const syncEmblaButtons = useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    syncEmblaButtons();
+    emblaApi.on('select', syncEmblaButtons);
+    emblaApi.on('reInit', syncEmblaButtons);
+    return () => {
+      emblaApi.off('select', syncEmblaButtons);
+      emblaApi.off('reInit', syncEmblaButtons);
+    };
+  }, [emblaApi, syncEmblaButtons]);
+
+  const heroTitleMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 18 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, ease: 'easeOut' },
+      };
+
+  const staggerParent = (staggerChildren: number, delayChildren = 0) =>
+    prefersReducedMotion
+      ? {}
+      : {
+          initial: 'hidden',
+          whileInView: 'show',
+          viewport: { once: true, amount: 0.2 },
+          variants: {
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren,
+                delayChildren,
+              },
+            },
+          },
+        };
+
+  const fadeUpItem = prefersReducedMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 18 },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.45, ease: 'easeOut' },
+          },
+        },
+      };
+
+  const affirmationMotion = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, amount: 0.4 },
+        transition: { duration: 0.8, delay: 0.3, ease: 'easeOut' },
+      };
 
   const schemas = useMemo<JsonLd[]>(
     () => [
-      getArticleSchema({
-        headline: 'Rahu, The Shadow of Desire',
+      getPlanetArticleSchema({
+        headline: getPlanetPillar('rahu').h1,
         description: PAGE_DESCRIPTION,
         image: HERO_URL,
         datePublished: '2026-04-27',
-        dateModified: '2026-04-27',
+        dateModified: '2026-05-09',
         url: '/planets/rahu',
         articleSection: 'Vedic Astrology',
         keywords: [
@@ -683,24 +799,39 @@ export default function RahuPage() {
                 <div className="mb-5 text-sm uppercase tracking-[0.45em] text-[#ddd6fe]/80">
                   Planetary Wisdom
                 </div>
-                <h1 className="font-caveat leading-[0.88]">
+                <motion.h1 {...heroTitleMotion} className="font-caveat leading-[0.88]">
                   <span className="block text-[5.8rem] text-[#c4b5fd] drop-shadow-[0_0_34px_rgba(196,181,253,0.38)] sm:text-[7.1rem] lg:text-[8.4rem] xl:text-[9.1rem]">
-                    Rahu
+                    Rahu in Vedic Astrology
                   </span>
                   <span className="mt-4 block text-4xl leading-none text-white sm:text-5xl lg:text-[4rem]">
-                    The Shadow of Desire
+                    Effects, Obsessions and Karmic Lessons
                   </span>
-                </h1>
+                </motion.h1>
                 <div className="mt-3 flex items-end gap-3">
                   <div className="font-devanagari text-3xl text-[#ede9fe] sm:text-4xl">राहु</div>
                   <div className="font-kalam text-2xl text-[#ddd6fe] sm:text-3xl">(North Node)</div>
                 </div>
 
                 <div className="mt-8 max-w-2xl space-y-2 font-kalam text-[1.95rem] leading-relaxed text-[#f7efdc] sm:text-[2.15rem]">
-                  <p>Rahu drives our <Highlight>ambition</Highlight>, <Highlight>illusion</Highlight></p>
-                  <p>and <Highlight>transformation</Highlight>.</p>
+                  <p>
+                    Rahu drives our{' '}
+                    <HighlightStroke color="#7B5EA7" show={!prefersReducedMotion}>
+                      <span className="text-[#ede9fe]">ambition</span>
+                    </HighlightStroke>
+                    ,{' '}
+                    <UnderlineScribble color="#7B5EA7" show={!prefersReducedMotion}>
+                      <span className="text-[#ede9fe]">illusion</span>
+                    </UnderlineScribble>
+                  </p>
+                  <p>
+                    and{' '}
+                    <CircleCallout color="#7B5EA7" show={!prefersReducedMotion}>
+                      <span className="text-[#ede9fe]">transformation</span>
+                    </CircleCallout>
+                    .
+                  </p>
                   <div className="flex items-center gap-3">
-                    <p>He teaches <Highlight>hunger</Highlight> through <Highlight>amplification</Highlight>.</p>
+                    <p>He teaches hunger through amplification.</p>
                     <ScribbleLine />
                   </div>
                 </div>
@@ -721,20 +852,24 @@ export default function RahuPage() {
 
               <div className="relative z-10 mt-8 max-w-[18rem] sm:mt-10 sm:max-w-[30rem] lg:absolute lg:bottom-4 lg:left-0 lg:mt-0 lg:max-w-[38rem]">
                 <ParchmentCard className="rounded-[24px] p-2.5 sm:p-3 shadow-[0_18px_40px_rgba(0,0,0,0.38)]" rotate="lg:-rotate-[0.55deg]">
-                  <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0">
+                  <motion.div
+                    className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-0"
+                    {...staggerParent(0.1)}
+                  >
                     {quickFacts.map((fact, index) => (
-                      <div
+                      <motion.div
                         key={fact.label}
                         className={`flex min-h-[96px] flex-col items-center justify-center px-2.5 py-2.5 text-center sm:min-h-[110px] sm:px-3 ${
                           index < quickFacts.length - 1 ? 'lg:border-r lg:border-[#755632]/30' : ''
                         }`}
+                        {...fadeUpItem}
                       >
                         <div className="text-[#4c1d95]">{iconSvg(fact.icon, 'h-7 w-7 sm:h-8 sm:w-8')}</div>
                         <div className="mt-1.5 font-caveat text-[1.55rem] leading-none sm:text-[1.9rem]">{fact.label}</div>
                         <div className="mt-1 font-kalam text-[0.95rem] leading-tight text-[#5b21b6] sm:text-[1.08rem]">{fact.value}</div>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </ParchmentCard>
               </div>
             </div>
@@ -764,8 +899,10 @@ export default function RahuPage() {
           }}
         >
           <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-10">
-            <div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]">
+            <motion.div className="mt-2 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]" {...staggerParent(0.15)}>
+              <motion.div {...fadeUpItem}>
               <ParchmentCard className="min-h-full" rotate="xl:-rotate-[0.5deg]">
+                <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#7B5EA7]" />
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="mb-2 flex items-center gap-3">
@@ -827,14 +964,15 @@ export default function RahuPage() {
                   className="pointer-events-none absolute bottom-3 left-2 hidden h-44 w-auto opacity-85 lg:block"
                 />
               </ParchmentCard>
+              </motion.div>
 
-              <div className="grid gap-6">
+              <motion.div className="grid gap-6" {...fadeUpItem}>
                 <ParchmentCard rotate="xl:rotate-[0.4deg]">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                       Rahu in Our Life
                     </h3>
-                    <div className="text-[#2a1a10]/70">{iconSvg('faq', 'h-12 w-12')}</div>
+                    <div className="text-[#2a1a10]/70"><Question className="h-12 w-12" weight="duotone" /></div>
                   </div>
                   <div className="mt-4 space-y-3">
                     {lifeRows.map((row) => (
@@ -864,11 +1002,12 @@ export default function RahuPage() {
                     ))}
                   </div>
                 </ParchmentCard>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             <div className="mt-6">
               <ParchmentCard rotate="lg:-rotate-[0.25deg]">
+                <CornerSpark className="absolute top-3 right-3 w-8 h-8 text-[#7B5EA7]" />
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-caveat text-4xl leading-none text-[#1a110a] sm:text-5xl">
                     How to Connect with Rahu
@@ -876,15 +1015,19 @@ export default function RahuPage() {
                   <img src={SACRED_GEOMETRY_URL} alt="" aria-hidden="true" className="h-12 w-12 opacity-70" />
                 </div>
                 <div className="mt-5 grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
-                  {connectPractices.map((practice) => (
-                    <div
-                      key={practice}
-                      className="rounded-2xl border border-[#7b603e]/20 bg-white/25 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]"
-                    >
-                      <div className="mb-3 text-[#5b21b6]">{iconSvg('connect', 'h-6 w-6')}</div>
-                      <p className="font-kalam text-lg leading-relaxed text-[#2a190f]">{practice}</p>
-                    </div>
-                  ))}
+                  {connectPractices.map((practice, idx) => {
+                    const stepIcons = [Moon, Wind, HandsPraying, Sparkle, FlowerLotus, Drop];
+                    const Icon = stepIcons[idx % stepIcons.length];
+                    return (
+                      <div
+                        key={practice}
+                        className="rounded-2xl border border-[#7b603e]/20 bg-white/25 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]"
+                      >
+                        <div className="mb-3 text-[#5b21b6]"><Icon className="h-6 w-6" weight="duotone" /></div>
+                        <p className="font-kalam text-lg leading-relaxed text-[#2a190f]">{practice}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               </ParchmentCard>
             </div>
@@ -924,9 +1067,12 @@ export default function RahuPage() {
                     </svg>
                   </div>
                 </div>
-                <div className="mt-8 font-kalam text-[2rem] leading-snug text-[#4c1d95] sm:text-[2.4rem]">
+                <motion.div
+                  className="mt-8 font-kalam text-[2rem] leading-snug text-[#4c1d95] sm:text-[2.4rem]"
+                  {...affirmationMotion}
+                >
                   &ldquo;I see through illusion, I master desire with awareness, I transform shadow into wisdom.&rdquo;
-                </div>
+                </motion.div>
                 <div className="mt-5 font-kalam text-lg leading-relaxed text-[#2a190f]">
                   This affirmation supports ambition that is honest, fame that serves, and the steady integration of what once lived in shadow.
                 </div>
@@ -1190,6 +1336,175 @@ export default function RahuPage() {
           </div>
         </section>
 
+        <section className="bg-[#f1e7d1] py-12 text-[#26180d]">
+          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
+            <div className="rounded-[28px] border border-[#8c6e47]/25 bg-white/55 px-5 py-6 shadow-[0_16px_40px_rgba(64,40,18,0.10)]">
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollPrev()}
+                  disabled={!canScrollPrev}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#7B5EA7]/40 bg-white/70 text-[#5b21b6] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7B5EA7]"
+                  aria-label="Scroll planets left"
+                >
+                  <ArrowLeft className="h-5 w-5" weight="regular" />
+                </button>
+                <div className="text-center">
+                  <div className="font-caveat text-3xl leading-none text-[#5b21b6] sm:text-4xl">
+                    Explore All Navagrahas
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => emblaApi?.scrollNext()}
+                  disabled={!canScrollNext}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#7B5EA7]/40 bg-white/70 text-[#5b21b6] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7B5EA7]"
+                  aria-label="Scroll planets right"
+                >
+                  <ArrowRight className="h-5 w-5" weight="regular" />
+                </button>
+              </div>
+
+              <div className="mt-5 overflow-hidden" ref={emblaRef}>
+                <div className="-ml-4 flex">
+                  {navagrahas.map((planet) => {
+                    const isCurrent = planet.slug === 'rahu';
+                    const card = (
+                      <Link
+                        key={planet.name}
+                        to={planet.href}
+                        className={`block min-w-0 rounded-[22px] border px-4 py-4 text-center transition hover:-translate-y-0.5 ${
+                          isCurrent
+                            ? 'border-[#7B5EA7] bg-[#f4eefb] ring-2 ring-[#7B5EA7]'
+                            : 'border-[#d8c3ea]/60 bg-white/70'
+                        }`}
+                      >
+                        <img
+                          src={navagrahaImage(planet.img)}
+                          alt={`${planet.name} planet portrait`}
+                          className="mx-auto h-16 w-16 rounded-full object-cover shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+                        />
+                        <div className="mt-3 font-poppins text-sm font-semibold text-[#2f1b0d]">{planet.name}</div>
+                        <div className="font-devanagari text-lg text-[#5b21b6]">{planet.sanskrit}</div>
+                      </Link>
+                    );
+
+                    return (
+                      <div key={planet.name} className="min-w-0 flex-[0_0_120px] pl-4 sm:flex-[0_0_132px]">
+                        {isCurrent ? (
+                          <motion.div
+                            animate={
+                              prefersReducedMotion
+                                ? { opacity: 1 }
+                                : {
+                                    boxShadow: [
+                                      '0 0 0 rgba(123,94,167,0)',
+                                      '0 0 24px rgba(123,94,167,0.32)',
+                                      '0 0 0 rgba(123,94,167,0)',
+                                    ],
+                                  }
+                            }
+                            transition={
+                              prefersReducedMotion
+                                ? undefined
+                                : {
+                                    duration: 1.6,
+                                    repeat: Infinity,
+                                    ease: 'easeInOut',
+                                  }
+                            }
+                            className="rounded-[22px]"
+                          >
+                            {card}
+                          </motion.div>
+                        ) : (
+                          card
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="relative mt-8 overflow-hidden rounded-[30px] border border-[#7B5EA7]/30 bg-[#150a26]/90 px-5 py-8 shadow-[0_28px_70px_rgba(20,12,38,0.42)] sm:px-8 sm:py-9"
+              style={{ background: 'radial-gradient(circle at center, rgba(123,94,167,0.18), transparent 65%)' }}
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(20,12,38,0.92),rgba(13,8,26,0.94)_45%,rgba(24,15,38,0.92))]" />
+              <div className="pointer-events-none absolute inset-0 opacity-50 mix-blend-screen">
+                <NebulaDoodle className="absolute inset-0" />
+              </div>
+              <CornerSpark className="absolute left-4 top-4 h-7 w-7 text-[#7B5EA7] opacity-65" />
+              <CornerSpark className="absolute right-4 top-4 h-7 w-7 text-[#7B5EA7] opacity-65" />
+
+              <div className="relative grid gap-6 lg:grid-cols-[1.3fr_auto_1fr] lg:items-center">
+                <div className="text-left">
+                  <div className="flex items-center gap-2 text-[#c4b5fd]">
+                    <MoonStars className="h-6 w-6 text-[#7B5EA7]" weight="duotone" />
+                    <span className="font-poppins text-xs font-semibold uppercase tracking-[0.35em] text-[#c4b5fd]/80">
+                      Shadow Wisdom
+                    </span>
+                  </div>
+                  <div className="mt-3 font-caveat text-[2.2rem] leading-tight text-[#ede9fe] sm:text-[2.7rem]">
+                    Walk with the{' '}
+                    <UnderlineScribble color="#7B5EA7" show={!prefersReducedMotion}>
+                      <span className="inline-block">shadow</span>
+                    </UnderlineScribble>{' '}
+                    to find the light.
+                  </div>
+                  <p className="mt-3 font-kalam text-[1.05rem] leading-relaxed text-white/80">
+                    Embrace the energy of{' '}
+                    <CircleCallout color="#7B5EA7" show={!prefersReducedMotion}>
+                      <span className="inline-block text-[#c4b5fd]">Rahu</span>
+                    </CircleCallout>{' '}
+                    and transform desire into discernment.
+                  </p>
+                </div>
+
+                <div className="flex justify-center">
+                  <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#7B5EA7]/40 bg-[#7B5EA7]/10 text-[#c4b5fd] shadow-[0_0_28px_rgba(123,94,167,0.20)]">
+                    <Eye className="h-10 w-10" weight="duotone" />
+                  </div>
+                </div>
+
+                <div className="flex justify-start lg:justify-end">
+                  <motion.div
+                    animate={
+                      prefersReducedMotion
+                        ? { opacity: 1 }
+                        : {
+                            boxShadow: [
+                              '0 0 0 rgba(123,94,167,0)',
+                              '0 0 24px rgba(123,94,167,0.34)',
+                              '0 0 0 rgba(123,94,167,0)',
+                            ],
+                          }
+                    }
+                    transition={
+                      prefersReducedMotion
+                        ? undefined
+                        : {
+                            duration: 1.6,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }
+                    }
+                    className="rounded-full"
+                  >
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#7B5EA7]/60 bg-[#7B5EA7]/10 px-5 py-3 font-poppins text-sm font-semibold uppercase tracking-[0.16em] text-[#ede9fe] transition hover:bg-[#7B5EA7]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7B5EA7]"
+                    >
+                      Explore Rahu Remedies <span aria-hidden="true">→</span>
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-[#f1e7d1] py-20 text-[#26180d]">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 text-center">
@@ -1215,13 +1530,11 @@ export default function RahuPage() {
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="mt-1 text-[#5b21b6]">{iconSvg('faq', 'h-6 w-6')}</div>
+                        <div className="mt-1 text-[#5b21b6]"><Question className="h-6 w-6" weight="regular" /></div>
                         <h3 className="font-kalam text-xl leading-relaxed text-[#2a190f]">{faq.question}</h3>
                       </div>
                       <div className="text-[#5b21b6]">
-                        <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.8">
-                          <path d="M12 5v14M5 12h14" />
-                        </svg>
+                        <CaretDown className={`h-6 w-6 transition-transform ${isOpen ? 'rotate-180' : ''}`} weight="regular" />
                       </div>
                     </button>
                     {isOpen ? (
@@ -1235,6 +1548,32 @@ export default function RahuPage() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f3eefb] px-4 py-16 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center">
+              <h2 className="font-caveat text-4xl leading-none text-[#5b21b6] sm:text-5xl">
+                Explore Other Grahas
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl font-kalam text-lg leading-relaxed text-[#3a271a]">
+                Continue your journey through the Navagrahas. Each planet shapes a distinct facet of life, mind and karma in the Vedic chart.
+              </p>
+            </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {getOtherPlanetPillars('rahu').map((pillar) => (
+                <li key={pillar.slug}>
+                  <Link
+                    to={`/planets/${pillar.slug}`}
+                    className="block rounded-2xl border bg-white/85 px-4 py-3 font-poppins text-base font-semibold text-[#5b21b6] shadow-[0_8px_20px_rgba(91,33,182,0.10)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#5b21b6]"
+                    style={{ borderColor: `${pillar.accent}66` }}
+                  >
+                    {pillar.crossLabel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

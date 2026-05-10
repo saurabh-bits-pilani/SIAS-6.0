@@ -907,7 +907,7 @@ const ServiceDetail = () => {
             className="bg-white rounded-2xl p-8 shadow-soft text-center"
           >
             <img
-              src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/People/saurabh%20chat1.png"
+              src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Author/saurabh-jain-profile.webp"
               alt="Saurabh Jain, K.N. Rao Institute trained certified astrologer in Ahmedabad"
               width="96"
               height="96"

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, MessageCircle, Clock, ExternalLink } from 'lucide-react';
 import { trackEvent } from '../utils/analytics';
+import buildInfo from '../data/build-info.json';
 
 interface FooterLink {
   name: string;
@@ -228,6 +229,26 @@ const Footer = () => {
             <br />
             When completeness is taken from completeness, completeness remains.
           </p>
+        </div>
+
+        {/* Last updated card — buildDate is frozen at build time by
+            scripts/generate-build-info.mjs so it reflects the deploy
+            timestamp, not the visitor's clock. */}
+        <div className="mt-8 flex justify-center">
+          <div className="inline-flex items-center gap-3 rounded-full border border-gray-800 bg-gray-950/70 px-4 py-2 backdrop-blur-sm">
+            <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
+            </span>
+            <div className="text-left leading-tight">
+              <p className="text-xs font-semibold text-gray-200">
+                Last updated: {buildInfo.buildDate}
+              </p>
+              <p className="text-[11px] text-gray-500">
+                Site updated regularly with new Jyotish content
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Bottom Bar */}
