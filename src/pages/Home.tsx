@@ -109,9 +109,9 @@ const Home = () => {
   return (
     <>
       <SEOHead
-        title="Best Vedic Astrologer in Ahmedabad | Soul Infinity"
-        description="Vedic astrology, tarot and Reiki by certified astrologer Saurabh Jain in Ahmedabad. 200+ clients, 4.9-star rated. Book consultation today."
-        keywords="vedic astrologer ahmedabad, best astrologer ahmedabad, saurabh jain astrologer, kundli consultation ahmedabad, tarot reader ahmedabad, reiki healer ahmedabad"
+        title="Vedic Astrology Consultation in Ahmedabad | Soul Infinity"
+        description="Vedic astrology consultations by Saurabh Jain, trained at K.N. Rao Institute, New Delhi. Birth chart, career timing and Jyotish guidance. Book today."
+        keywords="vedic astrology consultation ahmedabad, saurabh jain astrologer, kundli consultation ahmedabad, birth chart reading, career timing, jyotish guidance"
         omitDefaultSchema
       />
       <SchemaMarkup type="home" serviceFaqs={homeFaqs} />
