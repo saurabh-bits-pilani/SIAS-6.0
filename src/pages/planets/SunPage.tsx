@@ -807,6 +807,18 @@ export default function SunPage() {
         className="min-h-screen text-[#2b1a0f] [background-attachment:scroll] md:[background-attachment:fixed]"
         style={pageShellStyle}
       >
+        <section className="w-full bg-[#050810]">
+          <img
+            src={SUN_HERO_URL}
+            alt="Surya hero banner showing the Sun in Vedic astrology with radiant solar symbolism"
+            width={1600}
+            height={900}
+            loading="eager"
+            fetchpriority="high"
+            className="w-full h-auto block"
+          />
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={{
@@ -814,10 +826,7 @@ export default function SunPage() {
               'radial-gradient(circle at 76% 18%, rgba(250,204,21,0.62) 0%, rgba(217,119,6,0.28) 18%, rgba(12,17,32,0.96) 54%, #050810 100%)',
           }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-[center_right_12%] bg-no-repeat"
-            style={{ backgroundImage: `url(${SUN_HERO_URL})` }}
-          />
+
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,17,32,0.98)_0%,rgba(11,17,32,0.92)_18%,rgba(11,17,32,0.58)_42%,rgba(11,17,32,0.16)_72%,rgba(11,17,32,0.03)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,16,0.12)_0%,rgba(5,8,16,0.22)_38%,rgba(5,8,16,0.7)_100%)]" />
           <div className="absolute inset-0 opacity-75 mix-blend-screen">

@@ -216,18 +216,15 @@ export default function MeenaRashiPage() {
       </Helmet>
 
       {/* Section 1, Hero. */}
-      <div className="relative w-full overflow-hidden bg-gray-900" style={{ height: '420px' }}>
+      <div className="w-full bg-gray-900">
         <img
           src={HERO_URL}
-          alt="Meena Rashi hero banner Soul Infinity Astro Solutions"
-          className="w-full h-full object-cover"
+          alt="Meena Rashi hero banner showing Pisces Vedic astrology symbolism for Soul Infinity"
+          className="w-full h-auto block"
           width={1600}
           height={420}
+          loading="eager"
           fetchpriority="high"
-        />
-        <div
-          className="absolute inset-0"
-          style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.55) 100%)' }}
         />
       </div>
 
@@ -1110,7 +1107,7 @@ export default function MeenaRashiPage() {
             aria-hidden="true"
             width={1600}
             height={600}
-            className="w-full h-full object-cover"
+            className="w-full h-auto block"
           />
         </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

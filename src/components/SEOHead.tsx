@@ -5,12 +5,17 @@ import { IS_STAGING } from '../config/site';
 
 type TwitterCard = 'summary' | 'summary_large_image' | 'app' | 'player';
 
+const DEFAULT_IMAGE =
+  'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png';
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
   keywords?: string;
   /** OG + Twitter image. Use 1200x630 for best rendering. */
   image?: string;
+  /** Optional page hero image to preload for LCP. Defaults to non-default `image`. */
+  preloadImage?: string | false;
   /** Absolute canonical URL. If omitted, built from SITE_ORIGIN + current path. */
   url?: string;
   /** og:type (e.g. "website", "article"). Default "website". */
@@ -39,7 +44,8 @@ const SEOHead = ({
   title = 'Soul Infinity - Vedic Astrology & Spiritual Guidance by Saurabh Jain',
   description = 'Discover your cosmic path with Soul Infinity. Expert Vedic astrology, spiritual healing, and divine guidance by certified astrologer Saurabh Jain in Ahmedabad.',
   keywords = 'soul infinity, vedic astrology, saurabh jain, spiritual guidance, astrology ahmedabad, KP astrology, BNN, ashtakavarga, reiki healing, tarot reading',
-  image = 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png',
+  image = DEFAULT_IMAGE,
+  preloadImage,
   url,
   type = 'website',
   robots,
@@ -53,6 +59,7 @@ const SEOHead = ({
   // except for the root.
   const pathname = location.pathname === '/' ? '/' : location.pathname.replace(/\/$/, '');
   const resolvedUrl = url ?? `${SITE_ORIGIN}${pathname}${location.search}`;
+  const resolvedPreloadImage = preloadImage === false ? undefined : (preloadImage ?? (image !== DEFAULT_IMAGE ? image : undefined));
 
   // Staging overrides everything. Otherwise: explicit `noindex` prop beats
   // `robots`, which beats the site-wide default.
@@ -74,6 +81,9 @@ const SEOHead = ({
       <meta name="keywords" content={keywords} />
       <meta name="robots" content={resolvedRobots} />
       <meta name="author" content="Saurabh Jain" />
+      {resolvedPreloadImage && (
+        <link rel="preload" as="image" href={resolvedPreloadImage} fetchpriority="high" />
+      )}
 
       {/* Open Graph */}
       <meta property="og:site_name" content="Soul Infinity" />

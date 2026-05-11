@@ -701,6 +701,18 @@ export default function MoonPage() {
           </Link>
         </div>
 
+        <section className="w-full bg-[#050810]">
+          <img
+            src={MOON_HERO_URL}
+            alt="Chandra hero banner showing the Moon in Vedic astrology with calm lunar symbolism"
+            width={1600}
+            height={900}
+            loading="eager"
+            fetchpriority="high"
+            className="w-full h-auto block"
+          />
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={{
@@ -708,10 +720,7 @@ export default function MoonPage() {
               'radial-gradient(circle at 50% 8%, rgba(83,122,206,0.48) 0%, rgba(24,41,88,0.38) 20%, rgba(8,16,38,1) 44%, rgba(4,8,22,1) 100%)',
           }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-[center_right_16%] bg-no-repeat"
-            style={{ backgroundImage: `url(${MOON_HERO_URL})` }}
-          />
+
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,18,44,0.95)_0%,rgba(8,18,44,0.9)_16%,rgba(8,18,44,0.62)_30%,rgba(8,18,44,0.22)_46%,rgba(8,18,44,0.05)_64%,rgba(8,18,44,0.01)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,11,24,0.36)_0%,rgba(5,11,24,0.1)_32%,rgba(5,11,24,0.62)_100%)]" />
           <div className="absolute inset-0 opacity-75 mix-blend-screen">

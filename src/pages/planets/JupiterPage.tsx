@@ -866,6 +866,18 @@ export default function JupiterPage() {
           </Link>
         </div>
 
+        <section className="w-full bg-[#050810]">
+          <img
+            src={HERO_URL}
+            alt="Guru hero banner showing Jupiter in Vedic astrology with wisdom and dharma symbolism"
+            width={1600}
+            height={900}
+            loading="eager"
+            fetchpriority="high"
+            className="w-full h-auto block"
+          />
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={{
@@ -873,10 +885,7 @@ export default function JupiterPage() {
               'radial-gradient(circle at 50% 8%, rgba(252,211,77,0.46) 0%, rgba(180,83,9,0.40) 22%, rgba(38,18,5,1) 46%, rgba(15,9,5,1) 100%)',
           }}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-[center_right_18%] bg-no-repeat"
-            style={{ backgroundImage: `url(${HERO_URL})` }}
-          />
+
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(28,17,6,0.96)_0%,rgba(28,17,6,0.92)_18%,rgba(28,17,6,0.66)_34%,rgba(28,17,6,0.26)_48%,rgba(28,17,6,0.08)_66%,rgba(28,17,6,0.02)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,9,5,0.36)_0%,rgba(15,9,5,0.1)_32%,rgba(15,9,5,0.62)_100%)]" />
           <div className="absolute left-[6%] top-[14%] h-48 w-48 rounded-full bg-[#fbbf24]/22 blur-3xl" />

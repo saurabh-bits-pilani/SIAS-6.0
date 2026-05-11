@@ -65,6 +65,9 @@ export default function Blog() {
         <meta property="og:image" content={featuredPost.heroImage} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.soulinfinity.space/blog" />
+        {featuredPost.heroImage && (
+          <link rel="preload" as="image" href={featuredPost.heroImage} fetchpriority="high" />
+        )}
       </Helmet>
 
       <BlogIndexHero

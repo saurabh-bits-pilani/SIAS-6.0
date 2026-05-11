@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Layout from './layout/Layout';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
 import { usePageTracking } from './hooks/usePageTracking';
 
-// Lazy load non-critical pages for better performance
+// Lazy load page-level routes for better initial bundle splitting.
+const Home = lazy(() => import('./pages/Home'));
+const Services = lazy(() => import('./pages/Services'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const CosmicGuide = lazy(() => import('./pages/CosmicGuide'));
 const CosmicPodcast = lazy(() => import('./pages/CosmicPodcast'));
 const Blog = lazy(() => import('./pages/Blog'));
@@ -20,7 +20,8 @@ const Privacy = lazy(() => import('./pages/Privacy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanetsHubPage = lazy(() => import('./pages/hubs/PlanetsHubPage'));
 const ZodiacHubPage = lazy(() => import('./pages/hubs/ZodiacHubPage'));
-const DoshaHubPage = lazy(() => import('./pages/hubs/DoshaHubPage'));
+const DoshaPage = lazy(() => import('./pages/DoshaPage'));
+const MangalDoshaPage = lazy(() => import('./pages/dosha/MangalDoshaPage'));
 const SunPage = lazy(() => import('./pages/planets/SunPage'));
 const MoonPage = lazy(() => import('./pages/planets/MoonPage'));
 const MercuryPage = lazy(() => import('./pages/planets/MercuryPage'));
@@ -100,7 +101,8 @@ function App() {
           <Route path="/zodiac/capricorn" element={<MakaraRashiPage />} />
           <Route path="/zodiac/aquarius" element={<KumbhaRashiPage />} />
           <Route path="/zodiac/pisces" element={<MeenaRashiPage />} />
-          <Route path="/dosha" element={<DoshaHubPage />} />
+          <Route path="/dosha" element={<DoshaPage />} />
+          <Route path="/dosha/mangal" element={<MangalDoshaPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />

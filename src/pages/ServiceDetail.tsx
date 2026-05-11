@@ -694,6 +694,7 @@ const ServiceDetail = () => {
                 alt={`${currentService.title}, ${content?.primaryKeyword ?? categoryNames[category]} by Saurabh Jain`}
                 width="1200"
                 height="384"
+                loading="eager"
                 fetchpriority="high"
                 className="w-full h-96 object-cover rounded-2xl shadow-soft"
               />

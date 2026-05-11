@@ -903,18 +903,23 @@ export default function MercuryPage() {
       />
 
       <div className="min-h-screen text-[#2b1a0f]" style={pageShellStyle}>
+        <section className="w-full bg-[#050810]">
+          <img
+            src={HERO_URL}
+            alt="Budh hero banner showing Mercury in Vedic astrology with intellect and communication symbolism"
+            width={1600}
+            height={900}
+            loading="eager"
+            fetchpriority="high"
+            className="w-full h-auto block"
+          />
+        </section>
+
         <section
           className="relative overflow-hidden"
           style={pageShellStyle}
         >
-          <img
-            src={HERO_URL}
-            alt="Illustration of Budh, the Mercury planet, in Vedic astrology by Soul Infinity Astro Solutions"
-            width={1600}
-            height={900}
-            fetchpriority="high"
-            className="absolute inset-0 h-full w-full object-cover object-[center_22%]"
-          />
+
           <img
             src={SACRED_GEOMETRY_URL}
             alt="" aria-hidden="true"
