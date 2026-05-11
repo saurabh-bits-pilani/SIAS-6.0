@@ -61,7 +61,7 @@ const PitraDosh = () => {
         description: 'Complete Shraddha ceremony with all traditional elements for Pitra Dosh mitigation'
       }
     ],
-    mantraAudio: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Pitra%20-%20WebP/Pitru%20Gayatri%20Mantra%20With%20Lyrics%20%EF%BD%9C%20%E0%A4%AA%E0%A4%BF%E0%A4%A4%E0%A5%83%20%E0%A4%97%E0%A4%BE%E0%A4%AF%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%80%20%E0%A4%AE%E0%A4%82%E0%A4%A4%E0%A5%8D%E0%A4%B0%20%EF%BD%9C%20Seek%20Blessings%20From%20Ancestors%20%EF%BD%9C%20Pitru%20Paksha.mp3',
+    mantraAudio: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Pitru%20Gayatri%20Mantra%20With%20Lyrics%20%EF%BD%9C%20%E0%A4%AA%E0%A4%BF%E0%A4%A4%E0%A5%83%20%E0%A4%97%E0%A4%BE%E0%A4%AF%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%80%20%E0%A4%AE%E0%A4%82%E0%A4%A4%E0%A5%8D%E0%A4%B0%20%EF%BD%9C%20Seek%20Blessings%20From%20Ancestors%20%EF%BD%9C%20Pitru%20Paksha.mp3',
     easyTarpanVidhiVideo: 'https://pub-6dc6a649f1bd48ceb877305103f5ac87.r2.dev/Pitra%20-%20WebP/Easy%20tarpan%20vidhi%202.mp4'
   };
 

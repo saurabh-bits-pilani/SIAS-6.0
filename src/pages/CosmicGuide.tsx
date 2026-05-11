@@ -50,7 +50,7 @@ const CosmicGuide = () => {
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp" 
+            src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/golden_hour_cinematic_temple_-still.webp" 
             alt=""
             aria-hidden="true"
             width="1920"
