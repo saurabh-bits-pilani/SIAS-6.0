@@ -31,6 +31,10 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  build: {
+    chunkSizeWarningLimit: 500,
+    assetsInlineLimit: 0,
+  },
   ssr: {
     // react-helmet-async ships CJS; bundle it into the SSR output so Node's
     // ESM loader can consume it via the single default export.
