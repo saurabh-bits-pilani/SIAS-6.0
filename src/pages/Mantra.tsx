@@ -29,7 +29,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Sun',
     sanskritName: 'सूर्य',
     mantra: 'जपाकुसुम संकाशं काश्यपेयं महाद्युतिम् । तमोऽरिं सर्वपापघ्नं प्रणतोऽस्मि दिवाकरम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Sun%20Mantra%20-%20Om%20Japa%20Kusuma%20-%20Remove%20Negative%20Energy%20-%20Ancient%20Sun%20Mantra.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Sun%20Mantra%20-%20Om%20Japa%20Kusuma%20-%20Remove%20Negative%20Energy%20-%20Ancient%20Sun%20Mantra.mp3',
     meaning: 'A prayer to Lord Surya, remover of darkness and sins, bestowing energy and vitality.',
     benefits: [
       'Boosts confidence and vitality',
@@ -48,7 +48,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Moon',
     sanskritName: 'चन्द्र',
     mantra: 'दधिशंखतुषाराभं क्षीरोदार्णवसंभवम् । नमामि शशिनं सोमं शंभोर्मुकुट भूषणम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Chandra%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Chandra%20Graha%20Stotram.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Chandra%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Chandra%20Graha%20Stotram.mp3',
     meaning: 'A prayer to Chandra Deva for calmness, emotional balance, and mental clarity.',
     benefits: [
       'Improves emotional stability',
@@ -67,7 +67,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Mars',
     sanskritName: 'मंगल',
     mantra: 'धरणीगर्भसंभूतं विद्युत्कांति समप्रभम् । कुमारं शक्तिहस्तं तं मंगलं प्रणाम्यहम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Mangal%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Mangal%20Graha%20Stotram%20.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Mangal%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Mangal%20Graha%20Stotram%20.mp3',
     meaning: 'A prayer to Mangal Deva for strength, courage, and victory.',
     benefits: [
       'Gives strength and courage',
@@ -86,7 +86,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Mercury',
     sanskritName: 'बुध',
     mantra: 'प्रियंगुकलिकाश्यामं रूपेणाप्रतिमं बुधम् । सौम्यं सौम्यगुणोपेतं तं बुधं प्रणमाम्यहम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Budh%20Shanti%20Graha%20Mantra%20%7CSoul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%EF%BD%9CBudh%20Graha%20Stotram%20.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Budh%20Shanti%20Graha%20Mantra%20%7CSoul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%EF%BD%9CBudh%20Graha%20Stotram%20.mp3',
     meaning: 'A prayer to Budh Deva for intellect, wisdom, and communication skills.',
     benefits: [
       'Enhances communication',
@@ -105,7 +105,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Jupiter',
     sanskritName: 'गुरु',
     mantra: 'देवानांच ऋषीनांच गुरुं कांचनसन्निभम् । बुद्धिभूतं त्रिलोकेशं तं नमामि बृहस्पतिम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Guru%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Guru%20Graha%20Stotram%20.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Guru%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Guru%20Graha%20Stotram%20.mp3',
     meaning: 'A prayer to Brihaspati for wisdom, knowledge, and spiritual growth.',
     benefits: [
       'Improves wisdom',
@@ -124,7 +124,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Venus',
     sanskritName: 'शुक्र',
     mantra: 'हिमकुंदमृणालाभं दैत्यानां परमं गुरुम् । सर्वशास्त्रप्रवक्तारं भार्गवं प्रणमाम्यहम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Shukra%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Shukra%20Graha%20Stotram%20.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Shukra%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Shukra%20Graha%20Stotram%20.mp3',
     meaning: 'A prayer to Shukra Deva for harmony, wealth, and artistic talents.',
     benefits: [
       'Attracts wealth',
@@ -143,7 +143,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Saturn',
     sanskritName: 'शनि',
     mantra: 'नीलांजनसमाभासं रविपुत्रं यमाग्रजम् । छायामार्तण्डसंभूतं तं नमामि शनैश्चरम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Shani%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Shani%20Graha%20%EF%BD%9C%20Shani%20Jayanti%20.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Shani%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20%EF%BD%9C%20Shani%20Graha%20%EF%BD%9C%20Shani%20Jayanti%20.mp3',
     meaning: 'A prayer to Shani Dev for discipline, justice, and removal of hardships.',
     benefits: [
       'Removes obstacles',
@@ -162,7 +162,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Rahu',
     sanskritName: 'राहु',
     mantra: 'अर्धकायं महावीर्यं चंद्रादित्यविमर्दनम् । सिंहिकागर्भसंभूतं तं राहुं प्रणमाम्यहम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Rahu%20Shanti%20Graha%20Mantra%20108%20Times%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Rahu%20Shanti%20Graha%20Mantra%20108%20Times%20With%20Lyrics%20%EF%BD%9C%20Navgraha%20Mantra%20.mp3',
     meaning: 'A prayer to Rahu for removing illusions, confusion, and fear.',
     benefits: [
       'Removes confusion',
@@ -181,7 +181,7 @@ const navagrahaData: readonly PlanetMantra[] = [
     planet: 'Ketu',
     sanskritName: 'केतु',
     mantra: 'पलाशपुष्पसंकाशं तारकाग्रह मस्तकम् । रौद्रं रौद्रात्मकं घोरं तं केतुं प्रणमाम्यहम् ॥',
-    mp3Url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Mantra%20File%20-Mp3/Ketu%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With.mp3',
+    mp3Url: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Mantra-Files/Ketu%20Shanti%20Graha%20Mantra%20Soul-Infinity%20With.mp3',
     meaning: 'A prayer to Ketu for spiritual growth, detachment, and protection from unseen forces.',
     benefits: [
       'Enhances spiritual insight',
