@@ -108,8 +108,11 @@ const Panchang = () => {
             src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp"
             alt=""
             aria-hidden="true"
+            width="1920"
+            height="1080"
             className="w-full h-full object-cover"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
           />
           <div className="absolute inset-0 bg-black/60"></div>
         </div>
