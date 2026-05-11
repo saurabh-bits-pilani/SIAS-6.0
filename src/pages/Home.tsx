@@ -46,10 +46,10 @@ const homeFaqs: ReadonlyArray<{ question: string; answer: string }> = [
 ] as const;
 
 const heroImages: readonly string[] = [
-  'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp',
-  'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_macro_shot_of_a_spiritual_ritual.webp',
-  'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_himalayan_cave_illuminated_by_flickering_oil.webp',
-  'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_spiritual_altar_scene_in_a_serene.webp'
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/golden_hour_cinematic_temple_-still.webp',
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_macro_shot_of_a_spi-still.webp',
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_himalayan_cave_illu-still.webp',
+  'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_spiritual_altar_sce-still.webp'
 ] as const;
 
 const services: readonly ServiceCard[] = [

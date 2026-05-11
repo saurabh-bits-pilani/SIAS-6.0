@@ -96,7 +96,7 @@ const Panchang = () => {
         title="Today's Panchang - Daily Tithi, Nakshatra, Muhurat | Soul Infinity"
         description="Live daily Panchang with tithi, nakshatra, yoga, karana & auspicious muhurat timings. Accurate Hindu calendar by Soul Infinity, Ahmedabad."
         keywords="panchang, vedic calendar, tithi, nakshatra, yoga, karana, rahu kaal, muhurta, auspicious time"
-        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp"
+        image="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/golden_hour_cinematic_temple_-still.webp"
         omitDefaultSchema
       />
       <SchemaMarkup type="panchang" />
@@ -105,7 +105,7 @@ const Panchang = () => {
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/golden_hour_cinematic_temple_scene_with_a_small.webp"
+            src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/golden_hour_cinematic_temple_-still.webp"
             alt=""
             aria-hidden="true"
             width="1920"

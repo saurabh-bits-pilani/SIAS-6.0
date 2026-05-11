@@ -258,7 +258,7 @@ const Mantra = () => {
         title="Sacred Mantras Guide - Meaning, Benefits & How to Chant | Soul Infinity"
         description="Complete guide to powerful Vedic mantras, their meanings, pronunciation & spiritual benefits. Learn proper chanting technique from Saurabh Jain."
         keywords="navagraha mantras, planetary mantras, sanskrit chants, sun mantra, moon mantra, mars mantra, mercury mantra, jupiter mantra, venus mantra, saturn mantra, rahu mantra, ketu mantra, vedic chanting, spiritual mantras"
-        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_himalayan_cave_illuminated_by_flickering_oil.webp"
+        image="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_himalayan_cave_illu-still.webp"
         type="article"
         omitDefaultSchema
       />
@@ -269,7 +269,7 @@ const Mantra = () => {
           description:
             'Complete guide to Navagraha mantras: Sanskrit text, meaning, benefits, and chanting methodology for each of the nine planets.',
           image:
-            'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_himalayan_cave_illuminated_by_flickering_oil.webp',
+            'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_himalayan_cave_illu-still.webp',
           // TODO: replace placeholder dates with real publication history
           // when authoring timestamps become available.
           datePublished: '2025-01-15',
@@ -296,7 +296,7 @@ const Mantra = () => {
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_himalayan_cave_illuminated_by_flickering_oil.webp"
+            src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_himalayan_cave_illu-still.webp"
             alt=""
             aria-hidden="true"
             width="1920"

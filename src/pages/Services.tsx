@@ -21,7 +21,7 @@ const Services = () => {
       id: 'vedic-astrology',
       title: 'Vedic Astrology',
       description: 'Ancient wisdom from the sacred texts of India, offering profound insights into your life path, karma, and spiritual evolution.',
-      image: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_spiritual_altar_scene_in_a_serene.webp',
+      image: 'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_spiritual_altar_sce-still.webp',
       color: 'from-primary-500 to-primary-600',
       services: [
         {
@@ -205,7 +205,7 @@ const Services = () => {
         title={seoContent.title}
         description={seoContent.description}
         keywords={seoContent.keywords}
-        image="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_spiritual_altar_scene_in_a_serene.webp"
+        image="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_spiritual_altar_sce-still.webp"
         omitDefaultSchema
       />
       {category && SERVICES_CATALOG.some((s) => s.category === category) ? (
@@ -234,7 +234,7 @@ const Services = () => {
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/New_Hero-image-%20banner%20/cinematic_spiritual_altar_scene_in_a_serene.webp" 
+            src="https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/New_Hero-image-banner/cinematic_spiritual_altar_sce-still.webp" 
             alt=""
             aria-hidden="true"
             width="1920"
