@@ -222,7 +222,7 @@ function FaqDividerIcon({ type }: { type: 'sun' | 'moon' }) {
 function DoshaCard({ dosha }: { dosha: Dosha }) {
   return (
     <Link
-      to={dosha.slug === 'mangal' ? '/dosha/mangal' : '#'}
+      to={`/dosha/${dosha.slug}`}
       className={`group block h-full rounded-2xl overflow-hidden p-6 text-center transition-all duration-300 transform hover:-translate-y-1 ${dosha.ring} ${dosha.bg} ${dosha.border} hover:shadow-soft-lg`}
     >
       <div className="flex justify-center mb-8">
