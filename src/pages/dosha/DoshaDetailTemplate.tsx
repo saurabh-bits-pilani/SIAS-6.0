@@ -255,7 +255,7 @@ function TraitPanel({
       <div className="divide-y divide-red-50 bg-white">
         {rows.map((row) => (
           <div key={row} className="flex items-center gap-3 px-5 py-3.5 transition-colors hover:bg-red-50">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-50">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-100">
               <Activity className="h-5 w-5 text-red-700" aria-hidden="true" />
             </div>
             <div className="flex-1 text-sm font-bold text-gray-800">{row}</div>
@@ -507,7 +507,7 @@ export default function DoshaDetailTemplate({ data }: { data: DoshaDetailData })
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <TraitPanel title={data.traits.strengthsTitle} rows={data.traits.strengths} icon={ShieldCheck} color={data.theme.accent} />
-            <TraitPanel title={data.traits.challengesTitle} rows={data.traits.challenges} icon={AlertTriangle} color={data.theme.secondary} />
+            <TraitPanel title={data.traits.challengesTitle} rows={data.traits.challenges} icon={AlertTriangle} color="#b91c1c" />
           </div>
         </div>
       </section>
