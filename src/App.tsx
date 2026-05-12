@@ -22,6 +22,10 @@ const PlanetsHubPage = lazy(() => import('./pages/hubs/PlanetsHubPage'));
 const ZodiacHubPage = lazy(() => import('./pages/hubs/ZodiacHubPage'));
 const DoshaPage = lazy(() => import('./pages/DoshaPage'));
 const MangalDoshaPage = lazy(() => import('./pages/dosha/MangalDoshaPage'));
+const SadeSatiPage = lazy(() => import('./pages/dosha/SadeSatiPage'));
+const KaalSarpDoshaPage = lazy(() => import('./pages/dosha/KaalSarpDoshaPage'));
+const NadiDoshaPage = lazy(() => import('./pages/dosha/NadiDoshaPage'));
+const PitruDoshaPage = lazy(() => import('./pages/dosha/PitruDoshaPage'));
 const SunPage = lazy(() => import('./pages/planets/SunPage'));
 const MoonPage = lazy(() => import('./pages/planets/MoonPage'));
 const MercuryPage = lazy(() => import('./pages/planets/MercuryPage'));
@@ -103,6 +107,10 @@ function App() {
           <Route path="/zodiac/pisces" element={<MeenaRashiPage />} />
           <Route path="/dosha" element={<DoshaPage />} />
           <Route path="/dosha/mangal" element={<MangalDoshaPage />} />
+          <Route path="/dosha/saade-sati" element={<SadeSatiPage />} />
+          <Route path="/dosha/kaal-sarp" element={<KaalSarpDoshaPage />} />
+          <Route path="/dosha/nadi" element={<NadiDoshaPage />} />
+          <Route path="/dosha/pitru" element={<PitruDoshaPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
