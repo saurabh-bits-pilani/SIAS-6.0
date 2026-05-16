@@ -533,30 +533,6 @@ function ShaniJayantiPage() {
           </div>
         </section>
 
-        <section className="w-full bg-white">
-          <img
-            src={QUICK_FACTS_IMAGE}
-            alt="Shani Jayanti 2026 quick facts strip with date planet day gemstone and metal"
-            className="block h-auto w-full"
-            width={1600}
-            height={500}
-            loading="lazy"
-          />
-          <div className="grid grid-cols-1 gap-2 px-4 py-4 text-center font-poppins text-sm text-white sm:grid-cols-5 md:hidden" style={{ background: ACCENT }}>
-            {[
-              'Date: 16 May 2026',
-              'Planet: Shani (Saturn)',
-              'Day: Saturday',
-              'Gemstone: Blue Sapphire',
-              'Metal: Iron',
-            ].map((item) => (
-              <div key={item} className="rounded-full bg-white/10 px-3 py-2">
-                {item}
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="px-6 py-12" style={{ background: CREAM }}>
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="space-y-4 lg:col-span-7">
@@ -611,6 +587,16 @@ function ShaniJayantiPage() {
 
             <aside className="lg:col-span-5">
               <div className="sticky top-24 space-y-4">
+                <div className="w-full overflow-hidden rounded-xl shadow-md">
+                  <img
+                    src={QUICK_FACTS_IMAGE}
+                    alt="Shani Jayanti 2026 Quick Facts"
+                    width={800}
+                    height={400}
+                    className="w-full rounded-xl object-cover"
+                    loading="lazy"
+                  />
+                </div>
                 <div className="rounded-xl p-6 font-poppins text-white" style={{ background: ACCENT }}>
                   <h2 className="mb-4 font-kalam text-2xl font-bold text-white">Quick Facts</h2>
                   <div className="space-y-3">
