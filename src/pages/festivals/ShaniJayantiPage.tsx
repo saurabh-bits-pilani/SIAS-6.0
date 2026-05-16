@@ -487,16 +487,18 @@ function ShaniJayantiPage() {
       </Helmet>
 
       <main className="bg-white">
-        <section className="relative w-full overflow-hidden" style={{ height: '420px' }}>
-          <img
-            src={HERO_IMAGE}
-            alt="Shani Jayanti 2026"
-            width={1600}
-            height={420}
-            fetchpriority="high"
-            className="w-full h-full object-cover object-center"
-            style={{ height: '420px' }}
-          />
+        <section className="relative w-full overflow-hidden">
+          <div className="w-full bg-gray-900">
+            <img
+              src={HERO_IMAGE}
+              alt="Shani Jayanti 2026: Saturn's Sacred Birth Anniversary"
+              className="w-full h-auto block"
+              width={1600}
+              height={420}
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
           <div
             className="absolute inset-0"
             style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.88) 100%)' }}
