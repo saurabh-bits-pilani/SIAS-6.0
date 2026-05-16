@@ -28,6 +28,11 @@
       "permanent": true
     },
     {
+      "source": "/shani-jayanti-2026",
+      "destination": "/blog/shani-jayanti-2026",
+      "permanent": true
+    },
+    {
       "source": "/planets/surya",
       "destination": "/planets/sun",
       "permanent": true

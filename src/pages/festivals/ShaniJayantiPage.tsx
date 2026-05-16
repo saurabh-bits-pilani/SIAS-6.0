@@ -440,7 +440,7 @@ function ShaniJayantiPage() {
       },
       datePublished: '2026-05-16',
       image: HERO_IMAGE,
-      url: 'https://www.soulinfinity.space/shani-jayanti-2026',
+      url: 'https://www.soulinfinity.space/blog/shani-jayanti-2026',
     },
     {
       '@context': 'https://schema.org',
@@ -461,7 +461,7 @@ function ShaniJayantiPage() {
           '@type': 'ListItem',
           position: 2,
           name: 'Shani Jayanti 2026',
-          item: 'https://www.soulinfinity.space/shani-jayanti-2026',
+          item: 'https://www.soulinfinity.space/blog/shani-jayanti-2026',
         },
       ],
     },
@@ -475,13 +475,13 @@ function ShaniJayantiPage() {
           name="description"
           content="Shani Jayanti 2026 falls on 16 May. Complete guide to puja vidhi, what to do, what not to do, donations, mantras, and remedies from K.N. Rao Institute trained Jyotish practitioner Saurabh Jain."
         />
-        <link rel="canonical" href="https://www.soulinfinity.space/shani-jayanti-2026" />
+        <link rel="canonical" href="https://www.soulinfinity.space/blog/shani-jayanti-2026" />
         <meta
           property="og:title"
           content="Shani Jayanti 2026: Puja Vidhi, Significance and Remedies | Soul Infinity"
         />
         <meta property="og:image" content={HERO_IMAGE} />
-        <meta property="og:url" content="https://www.soulinfinity.space/shani-jayanti-2026" />
+        <meta property="og:url" content="https://www.soulinfinity.space/blog/shani-jayanti-2026" />
         <meta name="twitter:card" content="summary_large_image" />
         <script type="application/ld+json">{JSON.stringify(schemas)}</script>
       </Helmet>
@@ -502,6 +502,14 @@ function ShaniJayantiPage() {
         </section>
 
         <section className="px-6 py-12" style={{ background: CREAM }}>
+          <div className="mx-auto mb-8 max-w-6xl text-center">
+            <h1 className="font-kalam text-3xl font-bold md:text-5xl" style={{ color: ACCENT }}>
+              <span className="font-devanagari" lang="hi">
+                शनि जयंती 2026
+              </span>{' '}
+              / Shani Jayanti 2026: Puja Vidhi, Significance and Remedies
+            </h1>
+          </div>
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="space-y-4 lg:col-span-7">
               <div className="mb-2">
