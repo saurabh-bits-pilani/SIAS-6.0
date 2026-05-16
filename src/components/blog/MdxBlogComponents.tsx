@@ -23,9 +23,6 @@ import WhatToExpectSection from './WhatToExpectSection';
 import HowWeWorkSection from './HowWeWorkSection';
 import BlogTrustCTA from './BlogTrustCTA';
 import FAQSection from './FAQSection';
-import ShaniQuickFactSection from './ShaniQuickFactSection';
-import ShaniZodiacInsightSection from './ShaniZodiacInsightSection';
-import ShaniMythologyCarousel from './ShaniMythologyCarousel';
 
 export const mdxBlogComponents = {
   WeakSignalsGrid,
@@ -42,7 +39,4 @@ export const mdxBlogComponents = {
   HowWeWorkSection,
   BlogTrustCTA,
   FAQSection,
-  ShaniQuickFactSection,
-  ShaniZodiacInsightSection,
-  ShaniMythologyCarousel,
 };

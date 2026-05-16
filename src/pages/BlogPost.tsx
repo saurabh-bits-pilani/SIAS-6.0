@@ -335,15 +335,25 @@ export default function BlogPost() {
       {/* Hero image and article header */}
       <section className="bg-blog-navy overflow-hidden">
         {fm.heroImage && (
-          <img
-            src={fm.heroImage}
-            alt={fm.heroImageAlt ?? fm.title}
-            width={1600}
-            height={1000}
-            loading="eager"
-            fetchpriority="high"
-            className="w-full h-auto block"
-          />
+          <div className="relative">
+            <img
+              src={fm.heroImage}
+              alt={fm.heroImageAlt ?? fm.title}
+              width={1600}
+              height={1000}
+              loading="eager"
+              fetchpriority="high"
+              className="w-full h-auto block"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.75) 100%)',
+              }}
+              aria-hidden="true"
+            />
+          </div>
         )}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full">
