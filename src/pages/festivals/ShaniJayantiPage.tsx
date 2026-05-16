@@ -487,51 +487,17 @@ function ShaniJayantiPage() {
       </Helmet>
 
       <main className="bg-white">
-        <section className="relative h-[420px] w-full overflow-hidden bg-gray-900">
-          <img
-            src={HERO_IMAGE}
-            alt="Lord Shani cosmic hero banner for Shani Jayanti 2026"
-            className="h-[420px] w-full object-cover"
-            width={1600}
-            height={420}
-            loading="eager"
-            fetchpriority="high"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.72))',
-            }}
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 flex items-end">
-            <div className="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
-              <nav className="mb-4 font-poppins text-sm text-white/60" aria-label="Breadcrumb">
-                <Link to="/" className="hover:text-white">
-                  Home
-                </Link>
-                <span className="mx-2" aria-hidden="true">
-                  &gt;
-                </span>
-                <span>Festivals</span>
-                <span className="mx-2" aria-hidden="true">
-                  &gt;
-                </span>
-                <span>Shani Jayanti 2026</span>
-              </nav>
-              <h1 className="font-caveat text-4xl font-bold text-white drop-shadow md:text-6xl">
-                <span className="font-devanagari" lang="hi">
-                  शनि जयंती 2026
-                </span>{' '}
-                - Shani Jayanti
-              </h1>
-              <p className="mt-4 font-poppins text-base text-white/80 md:text-lg">
-                <span className="font-devanagari" lang="hi">
-                  ज्येष्ठ अमावस्या
-                </span>{' '}
-                · 16 May 2026 · Saturn&apos;s Sacred Birth Anniversary
-              </p>
-            </div>
+        <section className="relative w-full overflow-hidden">
+          <div className="w-full bg-gray-900">
+            <img
+              src={HERO_IMAGE}
+              alt="Shani Jayanti 2026: Saturn's Sacred Birth Anniversary"
+              className="w-full h-auto block"
+              width={1600}
+              height={420}
+              loading="eager"
+              fetchpriority="high"
+            />
           </div>
         </section>
 
