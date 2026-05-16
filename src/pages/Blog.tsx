@@ -23,6 +23,21 @@ const CATEGORIES = [
   'Lifestyle'
 ];
 
+const SHANI_JAYANTI_CARD = {
+  slug: 'shani-jayanti-2026-standalone',
+  href: '/shani-jayanti-2026',
+  title: 'Shani Jayanti 2026: Significance, Puja Vidhi and Remedies',
+  excerpt:
+    'Complete guide to Shani Jayanti 2026, significance, rituals, what to do, what not to do, and Vedic remedies.',
+  heroImage:
+    'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Blog/shani-jayanti/hero-banner.webp',
+  heroImageAlt:
+    'Lord Shani depicted in dark blue cosmic robes for Shani Jayanti 2026',
+  category: 'Spirituality',
+  publishedAt: '2026-05-16',
+  readTime: '7 min read',
+};
+
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState('All Articles');
 
@@ -41,8 +56,9 @@ export default function Blog() {
   const remainingPosts = sortedPosts;
 
   const filteredPosts = useMemo(() => {
-    if (activeCategory === 'All Articles') return remainingPosts;
-    return remainingPosts.filter((p: any) => p.category === activeCategory);
+    const posts = [SHANI_JAYANTI_CARD, ...remainingPosts];
+    if (activeCategory === 'All Articles') return posts;
+    return posts.filter((p: any) => p.category === activeCategory);
   }, [activeCategory, remainingPosts]);
 
   if (!featuredPost) {

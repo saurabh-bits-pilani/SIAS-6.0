@@ -2,6 +2,7 @@ import BlogCard from './BlogCard';
 
 interface BlogGridPost {
   slug: string;
+  href?: string;
   title: string;
   excerpt?: string;
   heroImage?: string;
