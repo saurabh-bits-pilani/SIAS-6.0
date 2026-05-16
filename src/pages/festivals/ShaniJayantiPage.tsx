@@ -490,20 +490,16 @@ function ShaniJayantiPage() {
         <section className="relative w-full overflow-hidden" style={{ height: '420px' }}>
           <img
             src={HERO_IMAGE}
-            alt="Lord Shani cosmic hero banner for Shani Jayanti 2026"
-            className="w-full h-full object-cover object-center"
-            style={{ height: '420px' }}
+            alt="Shani Jayanti 2026"
             width={1600}
             height={420}
-            loading="eager"
             fetchpriority="high"
+            className="w-full h-full object-cover object-center"
+            style={{ height: '420px' }}
           />
           <div
             className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.85) 100%)',
-            }}
+            style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.88) 100%)' }}
             aria-hidden="true"
           />
           <div className="absolute inset-0 flex items-end">
@@ -523,7 +519,7 @@ function ShaniJayantiPage() {
               </nav>
               <h1
                 className="font-caveat text-4xl font-bold text-white drop-shadow md:text-6xl"
-                style={{ textShadow: '0 2px 12px rgba(0,0,0,0.9)' }}
+                style={{ textShadow: '0 2px 16px rgba(0,0,0,1)' }}
               >
                 <span className="font-devanagari" lang="hi">
                   शनि जयंती 2026
@@ -532,7 +528,7 @@ function ShaniJayantiPage() {
               </h1>
               <p
                 className="mt-4 font-poppins text-base text-white/80 md:text-lg"
-                style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
+                style={{ textShadow: '0 1px 8px rgba(0,0,0,0.9)' }}
               >
                 <span className="font-devanagari" lang="hi">
                   ज्येष्ठ अमावस्या
