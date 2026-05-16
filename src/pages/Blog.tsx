@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { BookOpen, Star, Sparkles, Users, Sun } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, BookOpen, Calendar, Clock, Star, Sparkles, Users, Sun } from 'lucide-react';
 import blogManifest from '../data/blog-manifest.json';
 import BlogIndexHero from '../components/blog/BlogIndexHero';
 import BlogCategoryFilter from '../components/blog/BlogCategoryFilter';
-import BlogGrid from '../components/blog/BlogGrid';
+import BlogCard from '../components/blog/BlogCard';
 import BlogTrustCTA from '../components/blog/BlogTrustCTA';
 
 const FEATURE_PILLS = [
@@ -24,7 +25,6 @@ const CATEGORIES = [
 ];
 
 const SHANI_JAYANTI_CARD = {
-  slug: 'shani-jayanti-2026-standalone',
   href: '/shani-jayanti-2026',
   title: 'Shani Jayanti 2026: Significance, Puja Vidhi and Remedies',
   excerpt:
@@ -34,7 +34,7 @@ const SHANI_JAYANTI_CARD = {
   heroImageAlt:
     'Lord Shani depicted in dark blue cosmic robes for Shani Jayanti 2026',
   category: 'Spirituality',
-  publishedAt: '2026-05-16',
+  publishedAt: 'May 16, 2026',
   readTime: '7 min read',
 };
 
@@ -56,10 +56,12 @@ export default function Blog() {
   const remainingPosts = sortedPosts;
 
   const filteredPosts = useMemo(() => {
-    const posts = [SHANI_JAYANTI_CARD, ...remainingPosts];
-    if (activeCategory === 'All Articles') return posts;
-    return posts.filter((p: any) => p.category === activeCategory);
+    if (activeCategory === 'All Articles') return remainingPosts;
+    return remainingPosts.filter((p: any) => p.category === activeCategory);
   }, [activeCategory, remainingPosts]);
+
+  const showShaniCard =
+    activeCategory === 'All Articles' || activeCategory === SHANI_JAYANTI_CARD.category;
 
   if (!featuredPost) {
     return (
@@ -121,7 +123,53 @@ export default function Blog() {
           onSelect={setActiveCategory}
         />
 
-        <BlogGrid posts={filteredPosts} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6">
+          {showShaniCard && (
+            <Link
+              to={SHANI_JAYANTI_CARD.href}
+              className="group block bg-blog-cream-soft rounded-2xl overflow-hidden border border-blog-gold/20 hover:border-blog-gold/50 hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="w-full h-48 overflow-hidden bg-blog-navy rounded-t-xl">
+                <img
+                  src={SHANI_JAYANTI_CARD.heroImage}
+                  alt={SHANI_JAYANTI_CARD.heroImageAlt}
+                  className="w-full h-48 object-cover rounded-t-xl transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-5">
+                <span className="inline-flex items-center bg-blog-cream/95 rounded-full px-3 py-1 font-poppins text-blog-gold text-xs font-semibold mb-3">
+                  {SHANI_JAYANTI_CARD.category}
+                </span>
+                <div className="flex items-center gap-3 text-blog-ink/60 text-xs mb-3">
+                  <span className="inline-flex items-center gap-1">
+                    <Calendar className="w-3 h-3" aria-hidden="true" />
+                    <span>{SHANI_JAYANTI_CARD.publishedAt}</span>
+                  </span>
+                  <span className="text-blog-ink/40" aria-hidden="true">•</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="w-3 h-3" aria-hidden="true" />
+                    <span>{SHANI_JAYANTI_CARD.readTime}</span>
+                  </span>
+                </div>
+                <h3 className="font-poppins font-bold text-blog-ink text-base md:text-lg leading-snug mb-2 group-hover:text-blog-navy transition-colors line-clamp-2">
+                  {SHANI_JAYANTI_CARD.title}
+                </h3>
+                <p className="font-poppins text-blog-ink/70 text-sm leading-relaxed mb-4 line-clamp-3">
+                  {SHANI_JAYANTI_CARD.excerpt}
+                </p>
+                <span className="inline-flex items-center gap-1 text-blog-gold font-semibold text-sm font-poppins">
+                  Read More
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </div>
+            </Link>
+          )}
+
+          {filteredPosts.map((post: any) => (
+            <BlogCard key={post.slug} post={post} />
+          ))}
+        </div>
 
         <BlogTrustCTA
           title="Looking for personalized guidance?"
