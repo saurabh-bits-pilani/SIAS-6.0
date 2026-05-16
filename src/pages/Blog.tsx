@@ -129,11 +129,12 @@ export default function Blog() {
               to={SHANI_JAYANTI_CARD.href}
               className="group block bg-blog-cream-soft rounded-2xl overflow-hidden border border-blog-gold/20 hover:border-blog-gold/50 hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-full h-48 overflow-hidden bg-blog-navy rounded-t-xl">
+              <div className="w-full overflow-hidden bg-blog-navy rounded-t-xl">
                 <img
                   src={SHANI_JAYANTI_CARD.heroImage}
                   alt={SHANI_JAYANTI_CARD.heroImageAlt}
-                  className="w-full h-48 object-cover rounded-t-xl transition-transform duration-500 group-hover:scale-105"
+                  className="w-full object-cover object-top"
+                  style={{ height: '200px' }}
                   loading="lazy"
                 />
               </div>
