@@ -37,6 +37,7 @@ export const ROUTES = [
   '/cosmic-podcast',
   '/blog',
   '/blog/mantra',
+  '/shani-jayanti-2026',
   '/gallery',
   '/gallery/remedies',
   '/gallery/pitra-dosh',

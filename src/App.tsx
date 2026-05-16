@@ -50,6 +50,7 @@ const MeenaRashiPage = lazy(() => import('./pages/zodiac/MeenaRashiPage'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 const SaturnIn7thHouse = lazy(() => import('./pages/blog/SaturnIn7thHouse'));
 const MoonIn4thHouse = lazy(() => import('./pages/blog/MoonIn4thHouse'));
+const ShaniJayantiPage = lazy(() => import('./pages/festivals/ShaniJayantiPage'));
 
 // Loading component for lazy-loaded pages
 const LoadingSpinner = () => (
@@ -78,6 +79,7 @@ function App() {
           <Route path="/blog/saturn-in-7th-house-vedic-astrology" element={<SaturnIn7thHouse />} />
           <Route path="/blog/moon-in-4th-house-vedic-astrology" element={<MoonIn4thHouse />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/shani-jayanti-2026" element={<ShaniJayantiPage />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gallery/remedies" element={<Remedies />} />
           <Route path="/gallery/pitra-dosh" element={<PitraDosh />} />

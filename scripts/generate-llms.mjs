@@ -47,6 +47,7 @@ const DESCRIPTIONS = {
   '/cosmic-podcast': 'Cosmic Podcast — Vedic astrology and spiritual wisdom episodes.',
   '/blog': 'Blog index — articles on Vedic astrology, remedies, and spiritual growth.',
   '/blog/mantra': 'Navagraha mantras — meanings, benefits, and chanting methodology.',
+  '/shani-jayanti-2026': 'Complete guide to Shani Jayanti 2026 on May 16 including significance, puja vidhi, mantras, donations, dos and donts, and Vedic remedies from Soul Infinity Astro Solutions.',
   '/panchang': 'Today’s Panchang — Tithi, Nakshatra, Yoga, Karana, and muhurat timings.',
   '/planets': 'Planets — the nine planets (Navagraha) in Vedic astrology: Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu. Learn each planet’s significance, signs ruled, exaltation, debilitation, and remedies.',
   '/planets/jupiter': "Guru (Jupiter), the great benefic of wisdom, dharma, and expansion. Mantras, gemstone (Yellow Sapphire), remedies, and Vedic traditions for awakening Guru's blessings in your life.",
@@ -105,6 +106,7 @@ const SECTIONS = [
     routes: [
       '/blog',
       '/blog/mantra',
+      '/shani-jayanti-2026',
       '/blog/finding-a-vedic-astrologer-in-ahmedabad',
       '/cosmic-podcast',
       '/panchang',
