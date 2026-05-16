@@ -37,7 +37,7 @@ export const ROUTES = [
   '/cosmic-podcast',
   '/blog',
   '/blog/mantra',
-  '/shani-jayanti-2026',
+  '/blog/shani-jayanti-2026',
   '/gallery',
   '/gallery/remedies',
   '/gallery/pitra-dosh',
@@ -107,6 +107,18 @@ const blogRoutes = await loadBlogRoutes();
 ROUTES.push(...blogRoutes);
 if (blogRoutes.length > 0) {
   console.log(`[prerender] discovered ${blogRoutes.length} blog route(s): ${blogRoutes.join(', ')}`);
+}
+
+// Dedup in place so consumers (generate-sitemap, generate-llms) see a unique
+// route list. A static ROUTES entry can collide with a blog route discovered
+// from content/blog/*.mdx (e.g. an MDX file shadowed by a static React route).
+const seen = new Set();
+for (let i = ROUTES.length - 1; i >= 0; i -= 1) {
+  if (seen.has(ROUTES[i])) {
+    ROUTES.splice(i, 1);
+  } else {
+    seen.add(ROUTES[i]);
+  }
 }
 
 /**

@@ -25,7 +25,7 @@ const CATEGORIES = [
 ];
 
 const SHANI_JAYANTI_CARD = {
-  href: '/shani-jayanti-2026',
+  href: '/blog/shani-jayanti-2026',
   title: 'Shani Jayanti 2026: Significance, Puja Vidhi and Remedies',
   excerpt:
     'Complete guide to Shani Jayanti 2026, significance, rituals, what to do, what not to do, and Vedic remedies.',

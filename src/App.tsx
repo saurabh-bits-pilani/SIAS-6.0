@@ -79,7 +79,7 @@ function App() {
           <Route path="/blog/saturn-in-7th-house-vedic-astrology" element={<SaturnIn7thHouse />} />
           <Route path="/blog/moon-in-4th-house-vedic-astrology" element={<MoonIn4thHouse />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/shani-jayanti-2026" element={<ShaniJayantiPage />} />
+          <Route path="/blog/shani-jayanti-2026" element={<ShaniJayantiPage />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gallery/remedies" element={<Remedies />} />
           <Route path="/gallery/pitra-dosh" element={<PitraDosh />} />
