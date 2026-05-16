@@ -499,46 +499,6 @@ function ShaniJayantiPage() {
               fetchpriority="high"
             />
           </div>
-          <div
-            className="absolute inset-0"
-            style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.88) 100%)' }}
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 flex items-end">
-            <div className="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
-              <nav className="mb-4 font-poppins text-sm text-white/60" aria-label="Breadcrumb">
-                <Link to="/" className="hover:text-white">
-                  Home
-                </Link>
-                <span className="mx-2" aria-hidden="true">
-                  &gt;
-                </span>
-                <span>Festivals</span>
-                <span className="mx-2" aria-hidden="true">
-                  &gt;
-                </span>
-                <span>Shani Jayanti 2026</span>
-              </nav>
-              <h1
-                className="font-caveat text-4xl font-bold text-white drop-shadow md:text-6xl"
-                style={{ textShadow: '0 2px 16px rgba(0,0,0,1)' }}
-              >
-                <span className="font-devanagari" lang="hi">
-                  शनि जयंती 2026
-                </span>{' '}
-                - Shani Jayanti
-              </h1>
-              <p
-                className="mt-4 font-poppins text-base text-white/80 md:text-lg"
-                style={{ textShadow: '0 1px 8px rgba(0,0,0,0.9)' }}
-              >
-                <span className="font-devanagari" lang="hi">
-                  ज्येष्ठ अमावस्या
-                </span>{' '}
-                · 16 May 2026 · Saturn&apos;s Sacred Birth Anniversary
-              </p>
-            </div>
-          </div>
         </section>
 
         <section className="px-6 py-12" style={{ background: CREAM }}>
