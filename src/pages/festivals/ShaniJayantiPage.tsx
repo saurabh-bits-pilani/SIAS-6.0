@@ -26,6 +26,7 @@ import {
   Scissors,
   Shield,
   Star,
+  ZoomIn,
   UserX,
   Users,
   X,
@@ -419,6 +420,7 @@ const FAQ_SCHEMA = FAQ_DATA.map((faq) => ({
 
 function ShaniJayantiPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const schemas = [
     {
@@ -587,7 +589,10 @@ function ShaniJayantiPage() {
 
             <aside className="lg:col-span-5">
               <div className="sticky top-24 space-y-4">
-                <div className="w-full overflow-hidden rounded-xl shadow-md">
+                <div
+                  className="relative cursor-zoom-in group"
+                  onClick={() => setLightboxOpen(true)}
+                >
                   <img
                     src={QUICK_FACTS_IMAGE}
                     alt="Shani Jayanti 2026 Quick Facts"
@@ -596,6 +601,10 @@ function ShaniJayantiPage() {
                     className="w-full rounded-xl object-cover"
                     loading="lazy"
                   />
+                  <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs font-poppins text-white">
+                    <ZoomIn className="h-3 w-3" aria-hidden="true" />
+                    Click to expand
+                  </div>
                 </div>
                 <div className="rounded-xl p-6 font-poppins text-white" style={{ background: ACCENT }}>
                   <h2 className="mb-4 font-kalam text-2xl font-bold text-white">Quick Facts</h2>
@@ -882,6 +891,28 @@ function ShaniJayantiPage() {
             </Link>
           </div>
         </section>
+        {lightboxOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
+            onClick={() => setLightboxOpen(false)}
+          >
+            <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                onClick={() => setLightboxOpen(false)}
+                className="absolute -top-10 right-0 flex items-center gap-2 text-sm font-poppins text-white transition-colors hover:text-amber-400"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+                Close
+              </button>
+              <img
+                src={QUICK_FACTS_IMAGE}
+                alt="Shani Jayanti 2026 Quick Facts expanded"
+                className="w-full rounded-2xl shadow-2xl"
+              />
+            </div>
+          </div>
+        )}
       </main>
     </>
   );
