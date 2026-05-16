@@ -3,6 +3,7 @@ import { Calendar, Clock, ArrowRight } from 'lucide-react';
 
 interface BlogCardPost {
   slug: string;
+  href?: string;
   title: string;
   excerpt?: string;
   heroImage?: string;
@@ -31,10 +32,11 @@ export default function BlogCard({ post }: BlogCardProps) {
   const category = post.category || 'Vedic Astrology';
   const readTime = post.readTime || '8 min read';
   const publishedAt = formatDate(post.publishedAt);
+  const href = post.href || `/blog/${post.slug}`;
 
   return (
     <Link
-      to={`/blog/${post.slug}`}
+      to={href}
       className="group block bg-blog-cream-soft rounded-2xl overflow-hidden border border-blog-gold/20 hover:border-blog-gold/50 hover:-translate-y-1 transition-all duration-300"
     >
       <div className="aspect-[16/10] w-full overflow-hidden bg-blog-navy relative">
