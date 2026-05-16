@@ -23,6 +23,7 @@ import WhatToExpectSection from './WhatToExpectSection';
 import HowWeWorkSection from './HowWeWorkSection';
 import BlogTrustCTA from './BlogTrustCTA';
 import FAQSection from './FAQSection';
+import TLDRAside from './TLDRAside';
 
 export const mdxBlogComponents = {
   WeakSignalsGrid,
@@ -39,4 +40,5 @@ export const mdxBlogComponents = {
   HowWeWorkSection,
   BlogTrustCTA,
   FAQSection,
+  TLDRAside,
 };

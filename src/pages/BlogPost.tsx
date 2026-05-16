@@ -454,7 +454,7 @@ export default function BlogPost() {
               )}
 
               {/* Article body */}
-              <article className="blog-content prose prose-blog max-w-none">
+              <article className="blog-content prose prose-blog max-w-3xl mx-auto px-4 md:px-8 lg:px-0">
                 <MDXProvider components={mdxBlogComponents}>
                   <Content />
                 </MDXProvider>

@@ -31,7 +31,7 @@ export default function RedFlagsSection({
   closingLine2,
 }: RedFlagsSectionProps) {
   return (
-    <section className="my-12 md:my-16 relative overflow-hidden not-prose">
+    <section className="my-12 py-10 md:my-16 md:py-16 relative overflow-hidden not-prose">
       {/* Decorative motifs */}
       <Flower2
         className="absolute top-4 right-4 w-32 h-32 text-blog-gold/10 pointer-events-none"

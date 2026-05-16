@@ -13,7 +13,7 @@ interface WhatFollowsCardsProps {
 
 export default function WhatFollowsCards({ title, items }: WhatFollowsCardsProps) {
   return (
-    <div className="my-10 not-prose">
+    <div className="my-10 py-10 md:py-16 not-prose">
       <h3 className="font-caveat font-bold text-3xl text-blog-ink mb-6 text-center">
         <span className="inline-block border-b-2 border-blog-gold pb-1">{title}</span>
       </h3>
