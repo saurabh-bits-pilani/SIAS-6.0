@@ -69,6 +69,7 @@ const DESCRIPTIONS = {
   '/privacy': 'Privacy policy.',
   '/blog/finding-a-vedic-astrologer-in-ahmedabad': 'How to find a genuine Vedic astrologer in Ahmedabad — practical guide to credentials, K.N. Rao Institute / Bharatiya Vidya Bhavan lineage, classical Jyotish training, questions to ask before booking, red flags to avoid, and what a real consultation should feel like. By Saurabh Jain, Soul Infinity Astro Solutions.',
   '/blog/shani-jayanti-2026': 'Shani Jayanti 2026 guide by Saurabh Jain, meaning, rituals, karmic philosophy, zodiac insights, and Lord Shani mythology. Published May 16, 2026.',
+  '/blog/sade-sati-effects-remedies': 'Sade Sati effects and remedies: the three phases of Saturn transit over natal Moon, real effects on career, health and relationships, and classical Vedic remedies.',
 };
 
 const SECTIONS = [
@@ -107,6 +108,7 @@ const SECTIONS = [
       '/blog',
       '/blog/mantra',
       '/blog/shani-jayanti-2026',
+      '/blog/sade-sati-effects-remedies',
       '/blog/finding-a-vedic-astrologer-in-ahmedabad',
       '/cosmic-podcast',
       '/panchang',
