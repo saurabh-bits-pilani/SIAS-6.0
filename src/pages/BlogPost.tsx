@@ -335,15 +335,18 @@ export default function BlogPost() {
       {/* Hero image and article header */}
       <section className="bg-blog-navy overflow-hidden">
         {fm.heroImage && (
-          <img
-            src={fm.heroImage}
-            alt={fm.heroImageAlt ?? fm.title}
-            width={1600}
-            height={1000}
-            loading="eager"
-            fetchpriority="high"
-            className="w-full h-auto block"
-          />
+          <>
+            <img
+              src={fm.heroImage}
+              alt={fm.heroImageAlt ?? fm.title}
+              width={1600}
+              height={1000}
+              loading="eager"
+              fetchpriority="high"
+              className="w-full h-auto block"
+            />
+            <h1 className="sr-only">{fm.title}</h1>
+          </>
         )}
 
         {!fm.heroImage && (
