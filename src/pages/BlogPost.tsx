@@ -346,63 +346,65 @@ export default function BlogPost() {
           />
         )}
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full">
-          <div className="max-w-2xl">
-            <nav aria-label="Breadcrumb" className="mb-6">
-              <ol className="flex flex-wrap items-center gap-2 text-sm text-blog-cream/70">
-                <li>
-                  <Link to="/" className="hover:text-blog-gold transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li>
-                  <Link to="/blog" className="hover:text-blog-gold transition-colors">
-                    Blog
-                  </Link>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li className="text-blog-gold">{category}</li>
-                <li aria-hidden="true">/</li>
-                <li className="text-blog-cream truncate max-w-xs" aria-current="page">
-                  {fm.title}
-                </li>
-              </ol>
-            </nav>
+        {!fm.heroImage && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full">
+            <div className="max-w-2xl">
+              <nav aria-label="Breadcrumb" className="mb-6">
+                <ol className="flex flex-wrap items-center gap-2 text-sm text-blog-cream/70">
+                  <li>
+                    <Link to="/" className="hover:text-blog-gold transition-colors">
+                      Home
+                    </Link>
+                  </li>
+                  <li aria-hidden="true">/</li>
+                  <li>
+                    <Link to="/blog" className="hover:text-blog-gold transition-colors">
+                      Blog
+                    </Link>
+                  </li>
+                  <li aria-hidden="true">/</li>
+                  <li className="text-blog-gold">{category}</li>
+                  <li aria-hidden="true">/</li>
+                  <li className="text-blog-cream truncate max-w-xs" aria-current="page">
+                    {fm.title}
+                  </li>
+                </ol>
+              </nav>
 
-            {category && (
-              <div className="inline-flex items-center gap-1.5 bg-blog-gold text-blog-navy px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
-                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{category}</span>
-              </div>
-            )}
+              {category && (
+                <div className="inline-flex items-center gap-1.5 bg-blog-gold text-blog-navy px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+                  <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>{category}</span>
+                </div>
+              )}
 
-            <h1 className="font-caveat font-bold text-blog-cream text-6xl md:text-7xl lg:text-8xl leading-tight mb-4">
-              {fm.title}
-            </h1>
+              <h1 className="font-caveat font-bold text-blog-cream text-6xl md:text-7xl lg:text-8xl leading-tight mb-4">
+                {fm.title}
+              </h1>
 
-            {fm.excerpt && (
-              <p className="font-poppins text-blog-cream/80 text-base md:text-lg leading-relaxed mb-6">
-                {fm.excerpt}
-              </p>
-            )}
+              {fm.excerpt && (
+                <p className="font-poppins text-blog-cream/80 text-base md:text-lg leading-relaxed mb-6">
+                  {fm.excerpt}
+                </p>
+              )}
 
-            <div className="flex flex-wrap items-center gap-6 text-blog-cream/70 text-sm">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" aria-hidden="true" />
-                <span>{formattedDate}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" aria-hidden="true" />
-                <span>{fm.readTime ?? '8 min read'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" aria-hidden="true" />
-                <span>{authorName}</span>
+              <div className="flex flex-wrap items-center gap-6 text-blog-cream/70 text-sm">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" aria-hidden="true" />
+                  <span>{formattedDate}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" aria-hidden="true" />
+                  <span>{fm.readTime ?? '8 min read'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4" aria-hidden="true" />
+                  <span>{authorName}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* ─────────── Content + Sidebar ─────────── */}
