@@ -28,7 +28,7 @@ const IMG = {
 const CANONICAL = 'https://www.soulinfinity.space/blog/saturn-karma-two-souls';
 const PAGE_TITLE = 'When Saturn Speaks: A Vedic Case Study Across Two Generations | Soul Infinity';
 const PAGE_DESC =
-  'A real Vedic astrology case study analyzing how Saturn Mahadasha activates 12th house karma across a mother and daughter. BNN methodology, dasha timing, yogas, and remedies.';
+  'Vedic astrology case study: saturn mahadasha and 12th house karma across two charts. Kundali analysis using BNN by a K.N. Rao trained astrologer.';
 
 // CSS, copied verbatim from kundali-case-study.html and scoped under .kcs-root
 // so it cannot leak into the site Header or Footer rendered by Layout.tsx.
@@ -58,74 +58,33 @@ const KCS_CSS = `
 .kcs-root, .kcs-root * { margin: 0; padding: 0; box-sizing: border-box; }
 
 .kcs-root .hero {
-  position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 600px;
+  height: 90vh;
+  min-height: 400px;
+  max-height: 700px;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
 }
 .kcs-root .hero img {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
 }
-.kcs-root .hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(15,10,5,0.92) 0%,
-    rgba(15,10,5,0.5) 50%,
-    rgba(15,10,5,0.15) 100%
-  );
-}
-.kcs-root .hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 0 6vw 6vh;
+
+.kcs-root .kcs-article-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(36px, 5.5vw, 68px);
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 64px 0 12px;
   max-width: 900px;
 }
-.kcs-root .hero-tag {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  border: 1px solid var(--gold);
-  display: inline-block;
-  padding: 5px 14px;
-  margin-bottom: 20px;
-}
-.kcs-root .hero h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(36px, 6vw, 72px);
-  font-weight: 900;
-  color: #f9f5ee;
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-.kcs-root .hero h1 em {
+.kcs-root .kcs-article-title em {
   font-style: italic;
-  color: var(--gold-light);
-}
-.kcs-root .hero-sub {
-  font-family: 'Crimson Pro', serif;
-  font-size: clamp(16px, 2vw, 22px);
-  color: rgba(249,245,238,0.75);
-  font-style: italic;
-  max-width: 600px;
-  margin-bottom: 24px;
-}
-.kcs-root .hero-meta {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  color: rgba(249,245,238,0.5);
-  letter-spacing: 0.1em;
+  color: var(--crimson);
 }
 
 .kcs-root .article-body {
@@ -606,13 +565,201 @@ const KCS_CSS = `
   font-style: italic;
 }
 
+.kcs-root .kcs-link {
+  color: var(--crimson);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.kcs-root .kcs-link:hover {
+  color: var(--crimson-light);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+}
+
+.kcs-root .glossary-box {
+  background: #faf8f4;
+  border: 1px solid #d4c4a0;
+  border-left: 4px solid #b8922a;
+  padding: 24px;
+  margin: 48px 0;
+}
+.kcs-root .glossary-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: block;
+}
+.kcs-root .glossary-term {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(212,196,160,0.5);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-light);
+}
+.kcs-root .glossary-term:last-child { border-bottom: none; padding-bottom: 0; }
+.kcs-root .glossary-term:first-child { padding-top: 0; }
+.kcs-root .glossary-term-name {
+  font-weight: 700;
+  color: var(--ink);
+  font-family: 'Playfair Display', serif;
+}
+
 @media (max-width: 768px) {
+  /* Root */
+  .kcs-root { font-size: 17px; }
+  .kcs-root .article-body { padding: 0 16px; }
+  .kcs-root img { max-width: 100%; height: auto; }
+  .kcs-root table { min-width: 100%; }
+
+  /* Hero, image only */
+  .kcs-root .hero {
+    height: 50vw;
+    min-height: 240px;
+    max-height: 400px;
+  }
+  .kcs-root .kcs-article-title {
+    font-size: clamp(28px, 8vw, 48px);
+    line-height: 1.15;
+    word-break: break-word;
+    margin: 40px 0 8px;
+  }
+
+  /* Lead */
+  .kcs-root .lead-section { padding: 60px 0 40px; }
+  .kcs-root .lead-text { font-size: 18px; line-height: 1.7; }
+  .kcs-root .lead-dropcap::first-letter { font-size: 64px; padding-right: 10px; padding-top: 6px; }
+
+  /* Pull quote */
+  .kcs-root .pull-quote {
+    font-size: clamp(20px, 4vw, 34px);
+    padding: 16px 20px;
+    margin: 32px 0;
+    line-height: 1.4;
+  }
+
+  /* Section header */
+  .kcs-root .section-header { margin: 56px 0 32px; }
+  .kcs-root .section-header h2 { font-size: clamp(24px, 7vw, 36px); line-height: 1.2; }
+  .kcs-root .section-num { font-size: 10px; }
+
+  /* Sub heading */
+  .kcs-root .sub-heading { font-size: 22px; margin: 32px 0 12px; }
+
+  /* Editorial grids stack on mobile */
   .kcs-root .editorial-grid,
   .kcs-root .editorial-grid.wide-text,
-  .kcs-root .editorial-grid.wide-image { grid-template-columns: 1fr; }
-  .kcs-root { font-size: 18px; }
-  .kcs-root .body-text { font-size: 18px; }
-  .kcs-root .compare-table td:first-child { width: 100px; font-size: 10px; }
+  .kcs-root .editorial-grid.wide-image {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 32px 0;
+  }
+  /* Section 04 only: image-first column flips so text comes first on mobile */
+  .kcs-root .editorial-grid.wide-image > :nth-child(1) { order: 2; }
+  .kcs-root .editorial-grid.wide-image > :nth-child(2) { order: 1; }
+
+  /* Body text */
+  .kcs-root .body-text { font-size: 17px; line-height: 1.75; }
+
+  /* Tables: all wrappers scroll horizontally */
+  .kcs-root .planet-table-wrap,
+  .kcs-root .compare-table-wrap,
+  .kcs-root .kcs-bnn-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Planet table */
+  .kcs-root .planet-table th,
+  .kcs-root .planet-table td {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  /* Compare table */
+  .kcs-root .compare-table th {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+  .kcs-root .compare-table td {
+    font-size: 13px;
+    padding: 10px 14px;
+    line-height: 1.55;
+  }
+  .kcs-root .compare-table td:first-child,
+  .kcs-root .compare-table th:first-child {
+    max-width: 90px;
+    width: 90px;
+    font-size: 11px;
+    white-space: normal;
+  }
+
+  /* BNN principles table (Section 08) */
+  .kcs-root .kcs-bnn-wrap table { font-size: 14px; }
+  .kcs-root .kcs-bnn-wrap th,
+  .kcs-root .kcs-bnn-wrap td { padding: 10px 12px !important; }
+  .kcs-root .kcs-bnn-wrap td:first-child,
+  .kcs-root .kcs-bnn-wrap th:first-child { width: 32px !important; }
+  .kcs-root .kcs-bnn-wrap td:nth-child(2) { font-size: 13px !important; }
+  .kcs-root .kcs-bnn-wrap td:nth-child(3) { font-size: 13px !important; }
+
+  /* Reason grid (Section 07) , force single column override of inline auto-fit */
+  .kcs-root .kcs-reason-grid { grid-template-columns: 1fr !important; }
+
+  /* Yoga cards */
+  .kcs-root .yoga-card { padding: 16px; }
+  .kcs-root .yoga-grid { gap: 14px; margin: 32px 0; }
+
+  /* Dasha timeline */
+  .kcs-root .dasha-note { font-size: 15px; line-height: 1.5; }
+  .kcs-root .dasha-period { word-break: break-word; font-size: 11px; }
+  .kcs-root .dasha-dates { font-size: 12px; }
+  .kcs-root .dasha-timeline { margin: 32px 0; }
+
+  /* Annotation boxes */
+  .kcs-root .annotation-box {
+    padding: 16px 18px;
+    font-size: 16px;
+    margin: 24px 0;
+  }
+
+  /* Cinematic break */
+  .kcs-root .cinematic-break { margin: 48px 0; }
+  .kcs-root .cinematic-break::before,
+  .kcs-root .cinematic-break::after { width: calc(50% - 90px); }
+
+  /* Sticky note: no rotation on mobile to prevent overflow */
+  .kcs-root .sticky-note {
+    transform: none;
+    font-size: 15px;
+    padding: 14px 18px;
+  }
+
+  /* Chart embeds */
+  .kcs-root .chart-embed { padding: 18px; }
+
+  /* FAQ */
+  .kcs-root .faq-section { margin: 56px 0; padding-top: 36px; }
+  .kcs-root .faq-q { font-size: 17px; gap: 12px; }
+  .kcs-root .faq-a { font-size: 16px; }
+
+  /* Keyword tags */
+  .kcs-root .keyword-tags { margin: 36px 0 24px; padding: 24px 0; }
+  .kcs-root .tag { font-size: 10px; padding: 4px 10px; }
+
+  /* Footer */
+  .kcs-root .kcs-footer { padding: 36px 18px; font-size: 13px; }
+
+  /* Reading-line is already hidden below 1200px in the desktop rule;
+     keep that , no override needed here. */
 }
 
 .kcs-root .reading-line {
@@ -657,37 +804,37 @@ export default function SaturnKarmaCaseStudy() {
     {
       question: 'What is Saturn Mahadasha and how does it affect daily life?',
       answer:
-        "Saturn Mahadasha is a 19 year period in the Vimshottari Dasha system during which Saturn becomes the primary planetary ruler of your life themes. During this period, Saturn's natural karakas, karma, discipline, service, restriction, longevity, and delayed reward, become dominant. For natives with Saturn placed in difficult houses (6th, 8th, 12th), this period can feel like sustained pressure, reduced resources, and confrontation with long suppressed patterns. For those with well placed Saturn it can bring structured, lasting achievement. The key is the house Saturn occupies natally and its relationship with the ascendant lord.",
+        "Saturn Mahadasha is a 19 year period in the Vimshottari dasha system of Vedic astrology during which Saturn becomes the primary planetary ruler of your life themes. During this period, Saturn's natural karakas, karma, discipline, service, restriction, longevity, and delayed reward, become dominant. For natives with Saturn placed in difficult houses (6th, 8th, 12th), Saturn Mahadasha effects show up as sustained pressure, reduced resources, and confrontation with long suppressed patterns. For those with well placed Saturn it can bring structured, lasting achievement. These effects intensify when a concurrent Saturn transit activates the same houses natally occupied by Saturn.",
     },
     {
       question: 'What does the 12th house mean in Vedic astrology?',
       answer:
-        'The 12th house governs endings, liberation (moksha), hidden enemies, foreign lands, bed pleasures, secret karma, isolated retreat, and self undoing. It is one of the most misunderstood houses because it contains both the highest spiritual potential (liberation) and the deepest karmic traps (addiction, hidden destructive patterns). Planets in the 12th house do not operate in the visible world, they work underground. Saturn retrograde in the 12th house specifically indicates past life karma that must be consciously faced during this lifetime, particularly during Saturn Mahadasha.',
+        'The 12th house in Vedic astrology governs endings, liberation (moksha), hidden enemies, foreign lands, bed pleasures, secret karma, isolated retreat, and self undoing. It is one of the most misunderstood houses in Jyotish because it contains both the highest spiritual potential (liberation) and the deepest karmic traps (addiction, hidden destructive patterns). Planets in the 12th house do not operate in the visible world, they work underground. Saturn retrograde in the 12th house specifically indicates past life karma that must be consciously faced during this lifetime, particularly during Saturn Mahadasha and any Saturn transit reinforcing the 12th house theme.',
     },
     {
       question: 'What is Rahu Grasthata in Vedic astrology?',
       answer:
-        "Rahu Grasthata translates roughly as Rahu possession, a condition where Rahu's shadowy, obsessive, desire amplifying quality begins to override the native's conscious will and rational judgement. It manifests as intense attraction to something (a person, substance, experience) that the native knows intellectually is harmful but cannot resist emotionally. In the chart it is identified when Rahu conjoins or closely aspects the Sun (identity), Moon (mind), or Mercury (rational thinking), particularly in the 6th, 8th, or 12th houses. The condition is strongest during Rahu's own dasha or when its nakshatra lord's dasha is active.",
+        "Rahu Grasthata in Vedic astrology translates roughly as Rahu possession, a condition where Rahu's shadowy, obsessive, desire amplifying quality begins to override the native's conscious will and rational judgement. It manifests as intense attraction to something (a person, substance, experience) that the native knows intellectually is harmful but cannot resist emotionally. In the chart it is identified when Rahu conjoins or closely aspects the Sun (identity), Moon (mind), or Mercury (rational thinking), particularly in the 6th, 8th, or 12th houses. The condition is strongest during Rahu's own dasha, its nakshatra lord's dasha, or a Saturn Mahadasha that afflicts the same group.",
     },
     {
       question: 'What is Bahu Manzil Yoga and what does it indicate?',
       answer:
-        "Bahu Manzil Yoga is identified in BNN (Bhrigu Nandi Nadi) methodology when Mars, Venus, and Rahu form a trine or conjunction in the birth chart. Bahu Manzil translates as multiple floors, indicating multiple significant romantic or desire based episodes in the native's life. This yoga amplifies desire, attraction to multiple partners, and a tendency toward relationships that carry karmic weight. The manifestation depends heavily on the houses involved and the dasha operating: in productive periods it can indicate great passion and creative energy, in difficult dashas it can manifest as obsessive relationships or moral compromise.",
+        "Bahu Manzil Yoga is identified in BNN astrology (Bhrigu Nandi Nadi) when Mars, Venus, and Rahu form a trine or conjunction in the birth chart. Bahu Manzil translates as multiple floors, indicating multiple significant romantic or desire based episodes in the native's life. This yoga amplifies desire, attraction to multiple partners, and a tendency toward relationships that carry karmic weight. In classical Vedic astrology the manifestation depends heavily on the houses involved and the dasha operating: in productive periods it can indicate great passion and creative energy, but during Rahu dasha or Saturn Mahadasha activation it can manifest as obsessive relationships or moral compromise.",
     },
     {
       question: 'How does BNN (Bhrigu Nandi Nadi) differ from classical Vedic astrology?',
       answer:
-        "BNN is a branch of Nadi astrology attributed to the sage Bhrigu's tradition, systematised by R.G. Rao in the modern period. The key methodological difference from classical Parashari Vedic astrology is the treatment of trines: in BNN, planets in 5th and 9th relationship from each other are treated as functionally conjunct, their energies combine as powerfully as if they occupied the same house. This creates different yoga calculations than classical Vedic. BNN also has specific marriage karakas that differ from classical: Mars equals 1st husband (for women), not Jupiter. Venus equals 1st wife (for men). These differences significantly change marriage timing and relationship analysis.",
+        "BNN astrology, also called Bhrigu Nandi Nadi, is a branch of Nadi astrology attributed to the sage Bhrigu's tradition, systematised by R.G. Rao and taught at the K.N. Rao Institute in the modern period. The key methodological difference from classical Parashari Vedic astrology is the treatment of trines: in BNN, planets in 5th and 9th relationship from each other are treated as functionally conjunct, their energies combine as powerfully as if they occupied the same house. BNN also has specific marriage karakas that differ from classical Jyotish: Mars equals 1st husband (for women), not Jupiter. Venus equals 1st wife (for men). These differences significantly change marriage timing and relationship analysis.",
     },
     {
       question: 'Can planetary remedies actually change karma?',
       answer:
-        "In Vedic philosophy, karma (action and its consequence) is not a fixed prison, it is a dialogue. Prarabdha karma (karma already set in motion, indicated by the birth chart) cannot be erased, but its expression can be shaped. Remedies work not by changing planetary positions but by changing the native's internal alignment with those planetary energies. Hanuman worship for instance does not remove Saturn, it helps the native embody Saturn's highest qualities (discipline, service, patience) rather than its lower ones (restriction, addiction, isolation). Think of remedies as changing your relationship with the karma, not the karma itself.",
+        "Yes, planetary remedies in Jyotish reshape how karma is expressed, though they do not erase the karma itself. In Vedic astrology, karma is not a fixed prison, it is a dialogue. Prarabdha karma (karma already set in motion, indicated by the birth chart) cannot be removed, but its expression can be shaped. Remedies work not by changing planetary positions but by changing the native's internal alignment with those planetary energies. Hanuman worship during Saturn Mahadasha for example does not remove Saturn, it helps the native embody Saturn's highest qualities (discipline, service, patience) rather than its lower ones (restriction, addiction, isolation).",
     },
     {
       question: "What is the significance of a very late degree ascendant like Aries 29°54'?",
       answer:
-        "A very late degree ascendant (28° to 30°) carries the energy of both that sign and the next, the native is simultaneously completing one archetype and beginning another. For Ri**'s Aries 29°54', this means Aries (warrior, initiation, courage) is at its final breath and Taurus (stability, earthiness, material world) is about to begin. Practically, this creates a personality that feels perpetually at a threshold, never quite settled into the identity the rising sign promises. In BNN and classical Vedic both, this degree is considered significant because the ascendant lord's period (here, Mars) carries particular weight and the native's life direction can shift substantially at key dasha junctions.",
+        "A very late degree ascendant (28° to 30°) in Vedic astrology carries the energy of both that sign and the next, the native is simultaneously completing one archetype and beginning another. For Ri**'s Aries 29°54', this means Aries (warrior, initiation, courage) is at its final breath and Taurus (stability, earthiness, material world) is about to begin. Practically, this creates a personality that feels perpetually at a threshold, never quite settled into the identity the rising sign promises. In BNN and classical Jyotish both, this degree is considered significant because the ascendant lord's period (here, Mars) carries particular weight and the native's life direction can shift substantially at key dasha junctions.",
     },
   ];
 
@@ -696,6 +843,23 @@ export default function SaturnKarmaCaseStudy() {
     '@type': 'BlogPosting',
     headline: 'When Saturn Speaks: A Vedic Case Study Across Two Generations',
     description: PAGE_DESC,
+    keywords: [
+      'vedic astrology case study',
+      'saturn mahadasha effects',
+      '12th house astrology',
+      'rahu grasthata',
+      'bahu manzil yoga',
+      'BNN astrology',
+      'kundali analysis',
+      'saturn transit effects',
+      'spiritual fall astrology',
+      'ketu in 12th house',
+      'jyotish',
+      'karmic astrology',
+      'nakshatra',
+      'vimshottari dasha',
+      'K.N. Rao Institute',
+    ],
     image: { '@type': 'ImageObject', url: IMG.hero, width: 1600, height: 1000 },
     author: {
       '@type': 'Person',
@@ -780,34 +944,25 @@ export default function SaturnKarmaCaseStudy() {
       <div className="kcs-root">
         <div className="reading-line" aria-hidden="true" />
 
-        {/* HERO */}
+        {/* HERO, image only */}
         <section className="hero">
           <img
             src={IMG.hero}
-            alt="Kundali Analysis, A Journey of Karma Through Saturn, Soul Infinity"
+            alt="Kundali Analysis, When Saturn Speaks, Soul Infinity"
             loading="eager"
             fetchpriority="high"
             width={1600}
             height={1000}
           />
-          <div className="hero-overlay" />
-          <div className="hero-content">
-            <span className="hero-tag">Case Study, Soul Infinity</span>
-            <h1>
-              When Saturn <em>Speaks</em>,<br />Two Souls Listen
-            </h1>
-            <p className="hero-sub">
-              A real Vedic investigation into how one planet's dasha reshapes the lives of a mother
-              and daughter, separated by birth, united by karma.
-            </p>
-            <p className="hero-meta">
-              By Saurabh Jain, Vedic Astrologer · KN Rao Institute · BNN Methodology · May 2026
-            </p>
-          </div>
         </section>
 
         {/* ARTICLE BODY */}
         <main className="article-body">
+
+          {/* TITLE, moved below hero */}
+          <h1 className="kcs-article-title">
+            When Saturn <em>Speaks</em>, Two Souls Listen
+          </h1>
 
           {/* LEAD */}
           <div className="lead-section">
@@ -820,7 +975,7 @@ export default function SaturnKarmaCaseStudy() {
             </div>
 
             <p className="lead-text">
-              This is not a cautionary tale. It is a cartography of karma, drawn from two real horoscopes, analysed through the BNN (Bhrigu Nandi Nadi) framework, and presented here as a practitioner's study in how planetary periods activate latent patterns buried deep within the birth chart. The two charts belong to a mother and her daughter. Their stories are different. Their karmic threads are not.
+              This is not a cautionary tale. It is a kundali analysis drawn from two real horoscopes, a cartography of karmic patterns in Vedic astrology, analysed through the BNN methodology (Bhrigu Nandi Nadi). It is presented here as a Jyotish practitioner's study in how dasha periods activate latent patterns buried deep within the birth chart. The two charts belong to a mother and her daughter. Their stories are different. Their karmic threads are not.
             </p>
           </div>
 
@@ -854,7 +1009,7 @@ export default function SaturnKarmaCaseStudy() {
             <div>
               <div className="chart-embed">
                 <span className="chart-embed-label">D1 Chart, Rasi</span>
-                <div className="chart-embed-title">A**u, Cancer Lagna</div>
+                <div className="chart-embed-title">A**u, Cancer Lagna, Kundali Analysis</div>
                 <div className="chart-embed-sub">05 Jan 1974 · 07:20 PM · Gandhidham</div>
                 <img
                   src={IMG.anjuKundali}
@@ -927,7 +1082,7 @@ export default function SaturnKarmaCaseStudy() {
               <div className="yoga-name">Rahu Grasthata</div>
               <div className="yoga-sanskrit">राहु ग्रस्तता, Rahu Possession</div>
               <div className="yoga-planets">Ra + Su + Me · House 6 · Sagittarius</div>
-              <div className="yoga-desc">Rahu conjunct Sun and combust Mercury in the 6th house. The native's identity (Sun) and rational mind (Mercury) are consumed by Rahu's fog. Manifests as obsession, addiction, inability to perceive situations clearly, the native believes they are choosing freely when karma is choosing for them.</div>
+              <div className="yoga-desc"><a className="kcs-link" href="/planets/rahu">Rahu</a> conjunct Sun and combust Mercury in the 6th house. The native's identity (Sun) and rational mind (Mercury) are consumed by Rahu's fog. Manifests as obsession, addiction, inability to perceive situations clearly, the native believes they are choosing freely when karma is choosing for them.</div>
             </div>
 
             <div className="yoga-card gold">
@@ -969,7 +1124,7 @@ export default function SaturnKarmaCaseStudy() {
             <div>
               <div className="body-text">
                 <p>
-                  A**u entered Saturn Mahadasha on <strong>25th December 2024</strong>. This is the planet that rules her Pushya nakshatra rising, the Mahadasha lord is also the nakshatra lord of her ascendant. In classical Vedic astrology, this would be considered a <em>significant karmic activation point</em>. In BNN terms, it is the beginning of a 19 year dialogue between the native's conscious intentions and the unconscious karma stored in the 12th house.
+                  A**u entered <a className="kcs-link" href="/planets/saturn">Saturn</a> Mahadasha on <strong>25th December 2024</strong>. This is the planet that rules her Pushya nakshatra rising, the Mahadasha lord is also the nakshatra lord of her ascendant. In classical Vedic astrology, this would be considered a <em>significant karmic activation point</em>. In BNN terms, it is the beginning of a 19 year dialogue between the native's conscious intentions and the unconscious karma stored in the 12th house.
                 </p>
                 <p>
                   The current Antardasha is <strong>SA-SA</strong>, Saturn within Saturn, running until December 2027. This is the densest, most concentrated period of the entire Mahadasha. The planet of karma sits with its own energy, undiluted, facing the 12th house it natally occupies.
@@ -1209,6 +1364,7 @@ export default function SaturnKarmaCaseStudy() {
             "The soul does not repeat mistakes verbatim. It reframes them, places the same karma in a different chart, a different body, a different century, and asks: this time, will you choose differently?"
           </div>
 
+          <div className="compare-table-wrap">
           <table className="compare-table">
             <thead>
               <tr>
@@ -1260,6 +1416,7 @@ export default function SaturnKarmaCaseStudy() {
               </tr>
             </tbody>
           </table>
+          </div>
 
 
           {/* SECTION 06, REMEDIES */}
@@ -1273,7 +1430,7 @@ export default function SaturnKarmaCaseStudy() {
             <div className="body-text">
               <h3 className="sub-heading" style={{ marginTop: 0 }}>For A**u, Saturn 12th House</h3>
               <p>
-                The 12th house in Vedic astrology is the house of <em>liberation (moksha) or self undoing</em>, the difference is determined entirely by intention. Saturn retrograde here demands that karma be faced consciously, not suppressed. The remedies are not cosmetic. They are structural.
+                The 12th house in classical Vedic astrology is the house of <em>liberation (moksha) or self undoing</em>, the difference is determined entirely by intention. Saturn retrograde here demands that karma be faced consciously during Saturn Mahadasha, not suppressed. The Jyotish remedies prescribed below come from the K.N. Rao lineage and are not cosmetic. They are structural.
               </p>
 
               <div className="annotation-box" data-label="Primary Remedy">
@@ -1287,12 +1444,30 @@ export default function SaturnKarmaCaseStudy() {
               <div className="annotation-box indigo" data-label="Saturn Seva, Non Negotiable">
                 Saturn Mahadasha for a 12th house Saturn native requires <strong>regular seva (selfless service)</strong>, specifically to those older, poorer, or more isolated. Food donation. Service to one elderly person weekly. This is Saturn's direct currency in this position.
               </div>
+
+              <div className="annotation-box" data-label="Rahu Grasthata, Specific Remedy">
+                <strong>Mehandipur Balaji visit.</strong> For cases of Rahu Grasthata, where Rahu's obsessive energy has overridden the native's rational will, classical Vedic tradition recommends a pilgrimage to Mehandipur Balaji (Rajasthan). This is not superstition. It is a structured psychological and spiritual reset, removing the native from their immediate environment and placing them in a space dedicated to clearing Rahu's grip. One visit with sincere intention, accompanied by fasting and prayer.
+              </div>
+
+              <div className="annotation-box gold" data-label="Mahamrityunjaya Mantra, Daily">
+                <strong style={{ fontFamily: '"Noto Serif Devanagari", serif' }}>ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्</strong><br />
+                <em>Om Tryambakam Yajamahe Sugandhim Pushtivardhanam</em><br />
+                Recite 108 times daily at sunrise. This mantra works directly on the 12th house karma, liberation, longevity, and dissolution of hidden enemies. For Saturn retrograde in the 12th, it is among the most powerful available remedies.
+              </div>
+
+              <div className="annotation-box" data-label="Pitru Tarpan, Overdue Karma">
+                <strong>Pitru tarpan for the late husband.</strong> The husband passed two years ago. In Vedic tradition, the soul's transition is supported by water offerings (tarpan) performed by family members. If this has not been done systematically, it becomes a source of restless Pitru energy in the household. Performing tarpan and Shraddha during Pitru Paksha, or having it performed at Gaya or Haridwar, directly pacifies this category of karma. It is not grief. It is completion.
+              </div>
+
+              <div className="annotation-box indigo" data-label="Kaal Bhairav Worship">
+                <strong>Kaal Bhairav puja, every Sunday.</strong> Kaal Bhairav is the form of Shiva who governs time, Saturn's shadow, and the 12th house's hidden dimensions. For a native with Saturn retrograde and Ketu retrograde both in the 12th house, Bhairav worship cuts through the accumulated karmic density more directly than most remedies. Black sesame, mustard oil lamp, and sincere prayer every Sunday morning.
+              </div>
             </div>
 
             <div className="body-text">
               <h3 className="sub-heading" style={{ marginTop: 0 }}>For Ri**, SA-KE Window</h3>
               <p>
-                Ri**'s current period is not a crisis, it is an <em>invitation</em>. Ketu Antardasha within Saturn Mahadasha is a period that forces detachment from what is familiar, comfortable, and locally rooted. The discomfort she likely feels is not a sign of failure. It is the chart doing exactly what it was designed to do.
+                Ri**'s current period is not a crisis, it is an <em>invitation</em>. <a className="kcs-link" href="/planets/ketu">Ketu Antardasha</a> within Saturn Mahadasha is a period that forces detachment from what is familiar, comfortable, and locally rooted. The discomfort she likely feels is not a sign of failure. It is the chart doing exactly what it was designed to do.
               </p>
 
               <div className="annotation-box indigo" data-label="Key Guidance, SA-KE Period">
@@ -1306,6 +1481,175 @@ export default function SaturnKarmaCaseStudy() {
               <div className="annotation-box gold" data-label="From Jul 2026, SA-VE Opens">
                 The Venus Antardasha from July 2026 onward brings stabilisation, relationship possibility, and a more settled chapter. The roots Ketu cuts now are roots that needed removing. The new ones Venus plants are more aligned with who Ri** is becoming.
               </div>
+            </div>
+          </div>
+
+
+          {/* CINEMATIC + SECTION 07, RI** FOREIGN WINDOWS */}
+          <div className="cinematic-break">
+            <div className="cinematic-break-inner">
+              <span>◆</span><span>Ri**'s Foreign Windows</span><span>◆</span>
+            </div>
+          </div>
+
+          <div className="section-header">
+            <span className="section-num">07, Timing Analysis</span>
+            <h2>When Will Ri**<br /><em>Cross the Threshold?</em></h2>
+            <div className="section-rule" />
+          </div>
+
+          <div className="editorial-grid wide-text">
+            <div className="body-text">
+              <p>
+                One of the most common questions in Vedic astrology consultations is: <em>why did the foreign period not deliver what was promised?</em> Ri**'s Jupiter Mahadasha is a textbook case. Jupiter sits with Rahu in the 3rd house, and the classical rule states that Rahu with a planet gives foreign results during that planet's dasha. Yet no foreign settlement came during Jupiter MD (2003 to 2019).
+              </p>
+
+              <h3 className="sub-heading">Why Jupiter MD Did Not Deliver Foreign Travel</h3>
+
+              <div className="kcs-reason-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', margin: '24px 0' }}>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 1</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>Jupiter in enemy sign.</strong> Gemini is Mercury's sign. Jupiter is in enemy territory, weakened and unable to deliver its full promise.</div>
+                </div>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 2</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>3rd house equals local travel.</strong> The 3rd house governs short journeys, not foreign settlement. Jupiter here amplifies local movement, communication, and siblings, not overseas relocation.</div>
+                </div>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 3</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>Rahu retrograde.</strong> Retrograde Rahu internalises foreign energy. The native develops deep interest in foreign cultures, languages, or ideas, but actual physical relocation is blocked.</div>
+                </div>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 4</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>Saturn in 2nd house.</strong> Saturn's strong placement in Taurus (friendly sign) in the 2nd house creates a powerful rooting force. Family obligations, financial responsibility, and domestic ties kept the native grounded during Jupiter MD.</div>
+                </div>
+              </div>
+
+              <div className="annotation-box gold" data-label="BNN Rule, Conditional Application">
+                The rule "Rahu with planet equals foreign during that planet's MD" is a <strong>conditional rule</strong>, not an absolute one. It requires: the planet in a foreign indicating house (12th, 9th, or 7th), the planet in a friendly sign, Rahu direct, and the native's life stage permitting relocation. When any major condition is absent, the rule does not fire. This is one of the most important lessons in BNN practice, rules are tendencies, not guarantees.
+              </div>
+            </div>
+
+            <div>
+              <div style={{ background: '#fffdf5', border: '1px solid var(--border)', padding: '24px', marginBottom: '20px' }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '10px', color: 'var(--ink-muted)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '16px' }}>Foreign Windows, Ri**</div>
+
+                <div style={{ marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--gold)', letterSpacing: '0.08em', marginBottom: '4px' }}>SA-KE · Jun 2025 to Jul 2026</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Saturn, Ketu Antardasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Ketu activates the 9th house (Mars-Ketu placement). Cutting of local roots. Opportunities requiring cultural or linguistic boundary crossing. <strong>Most likely window for first major foreign exposure.</strong></div>
+                </div>
+
+                <div style={{ marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--gold)', letterSpacing: '0.08em', marginBottom: '4px' }}>SA-VE · Jul 2026 to Sep 2029</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Saturn, Venus Antardasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Venus in 5th (Leo). Stabilisation, possible foreign relationship or creative opportunity abroad. Roots begin forming in new soil.</div>
+                </div>
+
+                <div style={{ marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--indigo)', letterSpacing: '0.08em', marginBottom: '4px' }}>SA-RA · May 2033 to Mar 2036</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Saturn, Rahu Antardasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Direct Rahu activation. This is the strongest foreign window in the entire Saturn MD. Rahu's amplifying energy combines with Saturn's discipline. <strong>Potential for significant international career or settlement.</strong></div>
+                </div>
+
+                <div>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--sage)', letterSpacing: '0.08em', marginBottom: '4px' }}>Mercury MD · From Oct 2038</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Mercury Mahadasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Mercury as career activator. Foreign through professional excellence, teaching, writing, technology, communication.</div>
+                </div>
+              </div>
+
+              <div className="sticky-note">
+                "The foreign door was never locked. It was simply waiting for the right key. SA-KE is that key, cutting the rope that tied Ri** to familiar ground."
+              </div>
+            </div>
+          </div>
+
+
+          {/* CINEMATIC + SECTION 08, BNN PRINCIPLES */}
+          <div className="cinematic-break">
+            <div className="cinematic-break-inner">
+              <span>◆</span><span>BNN Principles Demonstrated</span><span>◆</span>
+            </div>
+          </div>
+
+          <div className="section-header">
+            <span className="section-num">08, Learning</span>
+            <h2>Six BNN Principles<br /><em>This Case Study Confirms</em></h2>
+            <div className="section-rule" />
+          </div>
+
+          <div className="body-text" style={{ maxWidth: '100%', marginBottom: '32px' }}>
+            <p>Every kundali analysis in Vedic astrology is simultaneously a reading and a lesson in Jyotish. A**u and Ri**'s charts together demonstrate six foundational principles of BNN astrology that separate this methodology from generic sun sign or pop astrology. These principles are taught in the classical Jyotish lineage of K.N. Rao.</p>
+          </div>
+
+          <div className="kcs-bnn-wrap" style={{ border: '1px solid var(--border)', margin: '0 0 48px' }}>
+            <div style={{ background: 'var(--ink)', padding: '14px 20px' }}>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--gold-light)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>BNN Methodology · Principles Demonstrated</span>
+            </div>
+            <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '16px', background: '#fffdf5' }}>
+                <thead>
+                  <tr style={{ background: 'var(--paper-dark)' }}>
+                    <th style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', padding: '10px 16px', textAlign: 'left', borderBottom: '2px solid var(--border)', fontWeight: 400, width: '40px' }}>#</th>
+                    <th style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', padding: '10px 16px', textAlign: 'left', borderBottom: '2px solid var(--border)', fontWeight: 400 }}>Principle</th>
+                    <th style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', padding: '10px 16px', textAlign: 'left', borderBottom: '2px solid var(--border)', fontWeight: 400 }}>Demonstrated By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>01</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Trines (5th and 9th) function as conjunctions in BNN, not mildly as in classical Vedic</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>A**u's Mars (H10) trine Venus-Rahu (H6) equals Bahu Manzil Yoga activating as powerfully as a direct conjunction.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)', background: 'rgba(184,146,42,0.04)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>02</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>The same yoga manifests differently based on house, sign, and partner planet</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Mars-Venus-Rahu (A**u) equals destructive amplification. Mars-Venus-Ketu (Ri**) equals spiritual completion. Same Mars-Venus core. Completely different outcomes.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>03</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Mars equals 1st husband karaka for women (not Jupiter as classical Vedic holds)</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>A**u's Mars in 10th (Aries, Mooltrikona) shows her late husband's strength and career oriented nature. Jupiter in 7th debilitated equals he was not her Jupiter figure.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)', background: 'rgba(184,146,42,0.04)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>04</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>BNN rules are conditional, they require supporting conditions to fire</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>"Rahu with planet equals foreign in that planet's MD" did not fire for Ri** during Jupiter MD. Four conditions were absent: enemy sign, wrong house, retrograde Rahu, young age.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>05</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Rahu Grasthata is a real and diagnosable condition, not metaphor</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>A**u's Rahu in 6th (Mula) conjunct Sun and combust Mercury equals Rahu consuming both identity and rational mind simultaneously. Classic Grasthata pattern.</td>
+                  </tr>
+                  <tr>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>06</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Family karma flows generationally but can be completed by the next generation</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Ri**'s chart carries a lighter version of the same Mars-Venus pattern. The 9th house placement and Ketu (vs Rahu) give her the structural possibility to complete what her mother's generation began, if she chooses the dharmic path.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+          {/* JYOTISH GLOSSARY */}
+          <div className="glossary-box">
+            <span className="glossary-title">Key Jyotish Terms Used in This Case Study</span>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Lagna:</span> The ascendant or rising sign, the zodiac sign on the eastern horizon at the moment of birth. Sets the first house and governs the entire chart structure in Vedic astrology (Jyotish).
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Nakshatra:</span> One of 27 lunar mansions in Vedic astrology. Each Nakshatra spans 13 degrees 20 minutes of the zodiac and reveals deeper emotional and karmic patterns beyond the sun or moon sign.
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Navamsa (D9):</span> The ninth divisional chart in Jyotish. Used for detailed analysis of marriage, dharma, and the soul's deeper purpose. Considered the most important divisional chart after the D1 Rasi chart.
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Vimshottari Dasha:</span> The primary planetary period system in Vedic astrology. A 120 year cycle of planetary rulerships (Mahadasha) and sub periods (Antardasha) used to time life events with precision.
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">BNN (Bhrigu Nandi Nadi):</span> A branch of Nadi astrology where planets in 5th or 9th relationship are treated as functionally conjunct, combining their energies as powerfully as a direct conjunction.
             </div>
           </div>
 
