@@ -28,7 +28,7 @@ const IMG = {
 const CANONICAL = 'https://www.soulinfinity.space/blog/saturn-karma-two-souls';
 const PAGE_TITLE = 'When Saturn Speaks: A Vedic Case Study Across Two Generations | Soul Infinity';
 const PAGE_DESC =
-  'A real Vedic astrology case study analyzing how Saturn Mahadasha activates 12th house karma across a mother and daughter. BNN methodology, dasha timing, yogas, and remedies.';
+  'Vedic astrology case study: saturn mahadasha and 12th house karma across two charts. Kundali analysis using BNN by a K.N. Rao trained astrologer.';
 
 // CSS, copied verbatim from kundali-case-study.html and scoped under .kcs-root
 // so it cannot leak into the site Header or Footer rendered by Layout.tsx.
@@ -804,37 +804,37 @@ export default function SaturnKarmaCaseStudy() {
     {
       question: 'What is Saturn Mahadasha and how does it affect daily life?',
       answer:
-        "Saturn Mahadasha is a 19 year period in the Vimshottari Dasha system during which Saturn becomes the primary planetary ruler of your life themes. During this period, Saturn's natural karakas, karma, discipline, service, restriction, longevity, and delayed reward, become dominant. For natives with Saturn placed in difficult houses (6th, 8th, 12th), this period can feel like sustained pressure, reduced resources, and confrontation with long suppressed patterns. For those with well placed Saturn it can bring structured, lasting achievement. The key is the house Saturn occupies natally and its relationship with the ascendant lord.",
+        "Saturn Mahadasha is a 19 year period in the Vimshottari dasha system of Vedic astrology during which Saturn becomes the primary planetary ruler of your life themes. During this period, Saturn's natural karakas, karma, discipline, service, restriction, longevity, and delayed reward, become dominant. For natives with Saturn placed in difficult houses (6th, 8th, 12th), Saturn Mahadasha effects show up as sustained pressure, reduced resources, and confrontation with long suppressed patterns. For those with well placed Saturn it can bring structured, lasting achievement. These effects intensify when a concurrent Saturn transit activates the same houses natally occupied by Saturn.",
     },
     {
       question: 'What does the 12th house mean in Vedic astrology?',
       answer:
-        'The 12th house governs endings, liberation (moksha), hidden enemies, foreign lands, bed pleasures, secret karma, isolated retreat, and self undoing. It is one of the most misunderstood houses because it contains both the highest spiritual potential (liberation) and the deepest karmic traps (addiction, hidden destructive patterns). Planets in the 12th house do not operate in the visible world, they work underground. Saturn retrograde in the 12th house specifically indicates past life karma that must be consciously faced during this lifetime, particularly during Saturn Mahadasha.',
+        'The 12th house in Vedic astrology governs endings, liberation (moksha), hidden enemies, foreign lands, bed pleasures, secret karma, isolated retreat, and self undoing. It is one of the most misunderstood houses in Jyotish because it contains both the highest spiritual potential (liberation) and the deepest karmic traps (addiction, hidden destructive patterns). Planets in the 12th house do not operate in the visible world, they work underground. Saturn retrograde in the 12th house specifically indicates past life karma that must be consciously faced during this lifetime, particularly during Saturn Mahadasha and any Saturn transit reinforcing the 12th house theme.',
     },
     {
       question: 'What is Rahu Grasthata in Vedic astrology?',
       answer:
-        "Rahu Grasthata translates roughly as Rahu possession, a condition where Rahu's shadowy, obsessive, desire amplifying quality begins to override the native's conscious will and rational judgement. It manifests as intense attraction to something (a person, substance, experience) that the native knows intellectually is harmful but cannot resist emotionally. In the chart it is identified when Rahu conjoins or closely aspects the Sun (identity), Moon (mind), or Mercury (rational thinking), particularly in the 6th, 8th, or 12th houses. The condition is strongest during Rahu's own dasha or when its nakshatra lord's dasha is active.",
+        "Rahu Grasthata in Vedic astrology translates roughly as Rahu possession, a condition where Rahu's shadowy, obsessive, desire amplifying quality begins to override the native's conscious will and rational judgement. It manifests as intense attraction to something (a person, substance, experience) that the native knows intellectually is harmful but cannot resist emotionally. In the chart it is identified when Rahu conjoins or closely aspects the Sun (identity), Moon (mind), or Mercury (rational thinking), particularly in the 6th, 8th, or 12th houses. The condition is strongest during Rahu's own dasha, its nakshatra lord's dasha, or a Saturn Mahadasha that afflicts the same group.",
     },
     {
       question: 'What is Bahu Manzil Yoga and what does it indicate?',
       answer:
-        "Bahu Manzil Yoga is identified in BNN (Bhrigu Nandi Nadi) methodology when Mars, Venus, and Rahu form a trine or conjunction in the birth chart. Bahu Manzil translates as multiple floors, indicating multiple significant romantic or desire based episodes in the native's life. This yoga amplifies desire, attraction to multiple partners, and a tendency toward relationships that carry karmic weight. The manifestation depends heavily on the houses involved and the dasha operating: in productive periods it can indicate great passion and creative energy, in difficult dashas it can manifest as obsessive relationships or moral compromise.",
+        "Bahu Manzil Yoga is identified in BNN astrology (Bhrigu Nandi Nadi) when Mars, Venus, and Rahu form a trine or conjunction in the birth chart. Bahu Manzil translates as multiple floors, indicating multiple significant romantic or desire based episodes in the native's life. This yoga amplifies desire, attraction to multiple partners, and a tendency toward relationships that carry karmic weight. In classical Vedic astrology the manifestation depends heavily on the houses involved and the dasha operating: in productive periods it can indicate great passion and creative energy, but during Rahu dasha or Saturn Mahadasha activation it can manifest as obsessive relationships or moral compromise.",
     },
     {
       question: 'How does BNN (Bhrigu Nandi Nadi) differ from classical Vedic astrology?',
       answer:
-        "BNN is a branch of Nadi astrology attributed to the sage Bhrigu's tradition, systematised by R.G. Rao in the modern period. The key methodological difference from classical Parashari Vedic astrology is the treatment of trines: in BNN, planets in 5th and 9th relationship from each other are treated as functionally conjunct, their energies combine as powerfully as if they occupied the same house. This creates different yoga calculations than classical Vedic. BNN also has specific marriage karakas that differ from classical: Mars equals 1st husband (for women), not Jupiter. Venus equals 1st wife (for men). These differences significantly change marriage timing and relationship analysis.",
+        "BNN astrology, also called Bhrigu Nandi Nadi, is a branch of Nadi astrology attributed to the sage Bhrigu's tradition, systematised by R.G. Rao and taught at the K.N. Rao Institute in the modern period. The key methodological difference from classical Parashari Vedic astrology is the treatment of trines: in BNN, planets in 5th and 9th relationship from each other are treated as functionally conjunct, their energies combine as powerfully as if they occupied the same house. BNN also has specific marriage karakas that differ from classical Jyotish: Mars equals 1st husband (for women), not Jupiter. Venus equals 1st wife (for men). These differences significantly change marriage timing and relationship analysis.",
     },
     {
       question: 'Can planetary remedies actually change karma?',
       answer:
-        "In Vedic philosophy, karma (action and its consequence) is not a fixed prison, it is a dialogue. Prarabdha karma (karma already set in motion, indicated by the birth chart) cannot be erased, but its expression can be shaped. Remedies work not by changing planetary positions but by changing the native's internal alignment with those planetary energies. Hanuman worship for instance does not remove Saturn, it helps the native embody Saturn's highest qualities (discipline, service, patience) rather than its lower ones (restriction, addiction, isolation). Think of remedies as changing your relationship with the karma, not the karma itself.",
+        "Yes, planetary remedies in Jyotish reshape how karma is expressed, though they do not erase the karma itself. In Vedic astrology, karma is not a fixed prison, it is a dialogue. Prarabdha karma (karma already set in motion, indicated by the birth chart) cannot be removed, but its expression can be shaped. Remedies work not by changing planetary positions but by changing the native's internal alignment with those planetary energies. Hanuman worship during Saturn Mahadasha for example does not remove Saturn, it helps the native embody Saturn's highest qualities (discipline, service, patience) rather than its lower ones (restriction, addiction, isolation).",
     },
     {
       question: "What is the significance of a very late degree ascendant like Aries 29°54'?",
       answer:
-        "A very late degree ascendant (28° to 30°) carries the energy of both that sign and the next, the native is simultaneously completing one archetype and beginning another. For Ri**'s Aries 29°54', this means Aries (warrior, initiation, courage) is at its final breath and Taurus (stability, earthiness, material world) is about to begin. Practically, this creates a personality that feels perpetually at a threshold, never quite settled into the identity the rising sign promises. In BNN and classical Vedic both, this degree is considered significant because the ascendant lord's period (here, Mars) carries particular weight and the native's life direction can shift substantially at key dasha junctions.",
+        "A very late degree ascendant (28° to 30°) in Vedic astrology carries the energy of both that sign and the next, the native is simultaneously completing one archetype and beginning another. For Ri**'s Aries 29°54', this means Aries (warrior, initiation, courage) is at its final breath and Taurus (stability, earthiness, material world) is about to begin. Practically, this creates a personality that feels perpetually at a threshold, never quite settled into the identity the rising sign promises. In BNN and classical Jyotish both, this degree is considered significant because the ascendant lord's period (here, Mars) carries particular weight and the native's life direction can shift substantially at key dasha junctions.",
     },
   ];
 
@@ -843,6 +843,23 @@ export default function SaturnKarmaCaseStudy() {
     '@type': 'BlogPosting',
     headline: 'When Saturn Speaks: A Vedic Case Study Across Two Generations',
     description: PAGE_DESC,
+    keywords: [
+      'vedic astrology case study',
+      'saturn mahadasha effects',
+      '12th house astrology',
+      'rahu grasthata',
+      'bahu manzil yoga',
+      'BNN astrology',
+      'kundali analysis',
+      'saturn transit effects',
+      'spiritual fall astrology',
+      'ketu in 12th house',
+      'jyotish',
+      'karmic astrology',
+      'nakshatra',
+      'vimshottari dasha',
+      'K.N. Rao Institute',
+    ],
     image: { '@type': 'ImageObject', url: IMG.hero, width: 1600, height: 1000 },
     author: {
       '@type': 'Person',
@@ -958,7 +975,7 @@ export default function SaturnKarmaCaseStudy() {
             </div>
 
             <p className="lead-text">
-              This is not a cautionary tale. It is a cartography of karma, drawn from two real horoscopes, analysed through the BNN (Bhrigu Nandi Nadi) framework, and presented here as a practitioner's study in how planetary periods activate latent patterns buried deep within the birth chart. The two charts belong to a mother and her daughter. Their stories are different. Their karmic threads are not.
+              This is not a cautionary tale. It is a kundali analysis drawn from two real horoscopes, a cartography of karmic patterns in Vedic astrology, analysed through the BNN methodology (Bhrigu Nandi Nadi). It is presented here as a Jyotish practitioner's study in how dasha periods activate latent patterns buried deep within the birth chart. The two charts belong to a mother and her daughter. Their stories are different. Their karmic threads are not.
             </p>
           </div>
 
@@ -992,7 +1009,7 @@ export default function SaturnKarmaCaseStudy() {
             <div>
               <div className="chart-embed">
                 <span className="chart-embed-label">D1 Chart, Rasi</span>
-                <div className="chart-embed-title">A**u, Cancer Lagna</div>
+                <div className="chart-embed-title">A**u, Cancer Lagna, Kundali Analysis</div>
                 <div className="chart-embed-sub">05 Jan 1974 · 07:20 PM · Gandhidham</div>
                 <img
                   src={IMG.anjuKundali}
@@ -1413,7 +1430,7 @@ export default function SaturnKarmaCaseStudy() {
             <div className="body-text">
               <h3 className="sub-heading" style={{ marginTop: 0 }}>For A**u, Saturn 12th House</h3>
               <p>
-                The 12th house in Vedic astrology is the house of <em>liberation (moksha) or self undoing</em>, the difference is determined entirely by intention. Saturn retrograde here demands that karma be faced consciously, not suppressed. The remedies are not cosmetic. They are structural.
+                The 12th house in classical Vedic astrology is the house of <em>liberation (moksha) or self undoing</em>, the difference is determined entirely by intention. Saturn retrograde here demands that karma be faced consciously during Saturn Mahadasha, not suppressed. The Jyotish remedies prescribed below come from the K.N. Rao lineage and are not cosmetic. They are structural.
               </p>
 
               <div className="annotation-box" data-label="Primary Remedy">
@@ -1563,7 +1580,7 @@ export default function SaturnKarmaCaseStudy() {
           </div>
 
           <div className="body-text" style={{ maxWidth: '100%', marginBottom: '32px' }}>
-            <p>Every case study in Vedic astrology is simultaneously a reading and a lesson. A**u and Ri**'s charts together demonstrate six foundational BNN principles that separate this methodology from generic sun sign or pop astrology.</p>
+            <p>Every kundali analysis in Vedic astrology is simultaneously a reading and a lesson in Jyotish. A**u and Ri**'s charts together demonstrate six foundational principles of BNN astrology that separate this methodology from generic sun sign or pop astrology. These principles are taught in the classical Jyotish lineage of K.N. Rao.</p>
           </div>
 
           <div className="kcs-bnn-wrap" style={{ border: '1px solid var(--border)', margin: '0 0 48px' }}>
