@@ -645,7 +645,7 @@ export default function CanAIDoVedicAstrology() {
     {
       question: 'Which AI is good for Vedic astrology?',
       answer:
-        "No AI is truly good for Vedic astrology in the classical sense of Jyotish. Tools like ChatGPT, Vedic AstroGPT, and similar apps can provide generic chart descriptions based on planetary positions, but they cannot interpret subtle yogas, apply BNN conditional rules correctly, cross-reference the Navamsa chart, integrate dasha periods accurately, or give personalised predictions. They are useful for learning basic Jyotish definitions and understanding nakshatra meanings. For accurate Vedic astrology readings that follow the K.N. Rao Institute tradition, including kundali analysis, dasha timing, and remedy prescription, you need a qualified human Jyotishi, not an AI chatbot.",
+        "The honest answer to which AI is good for Vedic astrology is: none of them, in the classical sense of Jyotish. Tools like ChatGPT, Vedic AstroGPT, and similar apps can provide generic chart descriptions based on planetary positions, but they cannot interpret subtle yogas, apply BNN conditional rules correctly, cross-reference the Navamsa chart, integrate dasha periods accurately, or give personalised predictions. They are useful for learning basic Jyotish definitions and understanding nakshatra meanings. For accurate Vedic astrology readings that follow the K.N. Rao Institute tradition, including kundali analysis, dasha timing, and remedy prescription, you need a qualified human Jyotishi, not an AI chatbot.",
     },
     {
       question: 'Is Vedic AstroGPT legit?',
@@ -732,6 +732,16 @@ export default function CanAIDoVedicAstrology() {
     })),
   };
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.soulinfinity.space' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.soulinfinity.space/blog' },
+      { '@type': 'ListItem', position: 3, name: 'Can AI Do Vedic Astrology', item: CANONICAL },
+    ],
+  };
+
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -760,12 +770,12 @@ export default function CanAIDoVedicAstrology() {
         <meta property="og:type" content="article" />
         <meta property="og:title" content={PAGE_TITLE} />
         <meta property="og:description" content={PAGE_DESC} />
-        <meta property="og:image" content={IMG.hero} />
+        <meta property="og:image" content={IMG.aiImg} />
         <meta property="og:url" content={CANONICAL} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESC} />
-        <meta name="twitter:image" content={IMG.hero} />
+        <meta name="twitter:image" content={IMG.aiImg} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -774,6 +784,7 @@ export default function CanAIDoVedicAstrology() {
         />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
       </Helmet>
 
@@ -811,6 +822,9 @@ export default function CanAIDoVedicAstrology() {
               <span>June 2026</span>
               <span>2,800 words · 11 min read</span>
             </div>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: '#b8922a', letterSpacing: '0.1em', marginTop: '12px', fontStyle: 'italic' }}>
+              Assessment based on direct testing against K.N. Rao Institute Jyotish methodology. Updated June 2026.
+            </p>
           </div>
 
           {/* LEAD */}
@@ -885,11 +899,11 @@ export default function CanAIDoVedicAstrology() {
               <div className="test-chart-box">
                 <div className="test-chart-label">Test Chart Used</div>
                 <div className="test-chart-list">
-                  Lagna: Cancer (Pushya)<br />
+                  Lagna: <a href="/zodiac/cancer" style={{ color: 'inherit', textDecoration: 'underline', textDecorationColor: '#b8922a' }}>Cancer</a> (Pushya)<br />
                   Moon: Taurus H11 (Rohini), Exalted<br />
                   Saturn(R): Gemini H12 (Aadra)<br />
                   Ketu(R): Gemini H12<br />
-                  Rahu(R): Sagittarius H6 (Mula)<br />
+                  <a href="/planets/rahu" style={{ color: 'inherit', textDecoration: 'underline', textDecorationColor: '#b8922a' }}>Rahu</a>(R): Sagittarius H6 (Mula)<br />
                   Sun + Me(c): Sagittarius H6<br />
                   Venus(R) + Ju: Capricorn H7<br />
                   Mars: Aries H10<br /><br />
@@ -935,7 +949,7 @@ export default function CanAIDoVedicAstrology() {
                   <tr><td>List basic significations of each house</td><td className="can">Can do</td><td className="can">Can do</td></tr>
                   <tr><td>Identify retrograde and combust planets</td><td className="can">Can do</td><td className="can">Can do</td></tr>
                   <tr><td>Calculate Vimshottari dasha periods</td><td className="can">Can do (with software)</td><td className="can">Can do</td></tr>
-                  <tr><td>Name the nakshatra of each planet</td><td className="can">Can do</td><td className="can">Can do</td></tr>
+                  <tr><td>Name the nakshatra of each planet (basic nakshatra analysis)</td><td className="can">Can do</td><td className="can">Can do</td></tr>
                   <tr><td>Apply BNN trine yuti methodology correctly</td><td className="cannot">Cannot do</td><td className="can">Can do</td></tr>
                   <tr><td>Integrate D1 + Navamsa (D9) + dasha simultaneously</td><td className="cannot">Cannot do</td><td className="can">Can do</td></tr>
                   <tr><td>Identify Rahu Grasthata or other Nadi conditions</td><td className="cannot">Cannot do</td><td className="can">Can do</td></tr>
@@ -1115,7 +1129,7 @@ export default function CanAIDoVedicAstrology() {
                     <td className="human-cell win">Human Jyotishi essential</td>
                   </tr>
                   <tr>
-                    <td>Saturn Mahadasha navigation</td>
+                    <td><a href="/planets/saturn" style={{ color: 'inherit', textDecoration: 'underline', textDecorationColor: '#b8922a' }}>Saturn Mahadasha navigation</a></td>
                     <td>Do NOT rely on AI</td>
                     <td className="human-cell win">Human Jyotishi essential</td>
                   </tr>
@@ -1133,6 +1147,10 @@ export default function CanAIDoVedicAstrology() {
               </table>
             </div>
           </div>
+
+          <p style={{ fontSize: '18px', fontStyle: 'italic', color: 'var(--ink-light)', marginTop: '24px' }}>
+            Ready for a real Vedic astrology reading by a K.N. Rao Institute trained Jyotishi? <a href="/contact" style={{ color: '#b8922a', fontWeight: 600, textDecoration: 'underline' }}>Book your consultation</a> at Soul Infinity.
+          </p>
 
           {/* GLOSSARY */}
           <div className="glossary-box">
