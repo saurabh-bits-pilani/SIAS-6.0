@@ -38,6 +38,7 @@ export const ROUTES = [
   '/blog',
   '/blog/mantra',
   '/blog/shani-jayanti-2026',
+  '/blog/saturn-karma-two-souls',
   '/gallery',
   '/gallery/remedies',
   '/gallery/pitra-dosh',
