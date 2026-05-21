@@ -19,7 +19,7 @@ interface BlogGridProps {
 export default function BlogGrid({ posts }: BlogGridProps) {
   if (posts.length === 0) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6">
         <div className="col-span-full text-center py-12 font-poppins text-blog-ink/60">
           No articles in this category yet. Check back soon.
         </div>
@@ -28,7 +28,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6">
       {posts.map((post) => (
         <BlogCard key={post.slug} post={post} />
       ))}
