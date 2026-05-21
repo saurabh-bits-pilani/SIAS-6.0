@@ -607,12 +607,159 @@ const KCS_CSS = `
 }
 
 @media (max-width: 768px) {
+  /* Root */
+  .kcs-root { font-size: 17px; }
+  .kcs-root .article-body { padding: 0 16px; }
+  .kcs-root img { max-width: 100%; height: auto; }
+  .kcs-root table { min-width: 100%; }
+
+  /* Hero */
+  .kcs-root .hero { height: auto; min-height: 500px; }
+  .kcs-root .hero-content { padding: 0 20px 40px; max-width: 100%; }
+  .kcs-root .hero h1 { font-size: clamp(28px, 8vw, 48px); line-height: 1.15; word-break: break-word; }
+  .kcs-root .hero-sub { font-size: 16px; line-height: 1.5; }
+  .kcs-root .hero-tag { font-size: 10px; padding: 4px 10px; }
+  .kcs-root .hero-meta { font-size: 10px; }
+  .kcs-root .hero-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(15,10,5,0.96) 0%,
+      rgba(15,10,5,0.7) 55%,
+      rgba(15,10,5,0.3) 100%
+    );
+  }
+
+  /* Lead */
+  .kcs-root .lead-section { padding: 60px 0 40px; }
+  .kcs-root .lead-text { font-size: 18px; line-height: 1.7; }
+  .kcs-root .lead-dropcap::first-letter { font-size: 64px; padding-right: 10px; padding-top: 6px; }
+
+  /* Pull quote */
+  .kcs-root .pull-quote {
+    font-size: clamp(20px, 4vw, 34px);
+    padding: 16px 20px;
+    margin: 32px 0;
+    line-height: 1.4;
+  }
+
+  /* Section header */
+  .kcs-root .section-header { margin: 56px 0 32px; }
+  .kcs-root .section-header h2 { font-size: clamp(24px, 7vw, 36px); line-height: 1.2; }
+  .kcs-root .section-num { font-size: 10px; }
+
+  /* Sub heading */
+  .kcs-root .sub-heading { font-size: 22px; margin: 32px 0 12px; }
+
+  /* Editorial grids stack on mobile */
   .kcs-root .editorial-grid,
   .kcs-root .editorial-grid.wide-text,
-  .kcs-root .editorial-grid.wide-image { grid-template-columns: 1fr; }
-  .kcs-root { font-size: 18px; }
-  .kcs-root .body-text { font-size: 18px; }
-  .kcs-root .compare-table td:first-child { width: 100px; font-size: 10px; }
+  .kcs-root .editorial-grid.wide-image {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 32px 0;
+  }
+  /* Section 04 only: image-first column flips so text comes first on mobile */
+  .kcs-root .editorial-grid.wide-image > :nth-child(1) { order: 2; }
+  .kcs-root .editorial-grid.wide-image > :nth-child(2) { order: 1; }
+
+  /* Body text */
+  .kcs-root .body-text { font-size: 17px; line-height: 1.75; }
+
+  /* Tables: all wrappers scroll horizontally */
+  .kcs-root .planet-table-wrap,
+  .kcs-root .compare-table-wrap,
+  .kcs-root .kcs-bnn-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Planet table */
+  .kcs-root .planet-table th,
+  .kcs-root .planet-table td {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  /* Compare table */
+  .kcs-root .compare-table th {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+  .kcs-root .compare-table td {
+    font-size: 13px;
+    padding: 10px 14px;
+    line-height: 1.55;
+  }
+  .kcs-root .compare-table td:first-child,
+  .kcs-root .compare-table th:first-child {
+    max-width: 90px;
+    width: 90px;
+    font-size: 11px;
+    white-space: normal;
+  }
+
+  /* BNN principles table (Section 08) */
+  .kcs-root .kcs-bnn-wrap table { font-size: 14px; }
+  .kcs-root .kcs-bnn-wrap th,
+  .kcs-root .kcs-bnn-wrap td { padding: 10px 12px !important; }
+  .kcs-root .kcs-bnn-wrap td:first-child,
+  .kcs-root .kcs-bnn-wrap th:first-child { width: 32px !important; }
+  .kcs-root .kcs-bnn-wrap td:nth-child(2) { font-size: 13px !important; }
+  .kcs-root .kcs-bnn-wrap td:nth-child(3) { font-size: 13px !important; }
+
+  /* Reason grid (Section 07) , force single column override of inline auto-fit */
+  .kcs-root .kcs-reason-grid { grid-template-columns: 1fr !important; }
+
+  /* Yoga cards */
+  .kcs-root .yoga-card { padding: 16px; }
+  .kcs-root .yoga-grid { gap: 14px; margin: 32px 0; }
+
+  /* Dasha timeline */
+  .kcs-root .dasha-note { font-size: 15px; line-height: 1.5; }
+  .kcs-root .dasha-period { word-break: break-word; font-size: 11px; }
+  .kcs-root .dasha-dates { font-size: 12px; }
+  .kcs-root .dasha-timeline { margin: 32px 0; }
+
+  /* Annotation boxes */
+  .kcs-root .annotation-box {
+    padding: 16px 18px;
+    font-size: 16px;
+    margin: 24px 0;
+  }
+
+  /* Cinematic break */
+  .kcs-root .cinematic-break { margin: 48px 0; }
+  .kcs-root .cinematic-break::before,
+  .kcs-root .cinematic-break::after { width: calc(50% - 90px); }
+
+  /* Sticky note: no rotation on mobile to prevent overflow */
+  .kcs-root .sticky-note {
+    transform: none;
+    font-size: 15px;
+    padding: 14px 18px;
+  }
+
+  /* Chart embeds */
+  .kcs-root .chart-embed { padding: 18px; }
+
+  /* FAQ */
+  .kcs-root .faq-section { margin: 56px 0; padding-top: 36px; }
+  .kcs-root .faq-q { font-size: 17px; gap: 12px; }
+  .kcs-root .faq-a { font-size: 16px; }
+
+  /* Keyword tags */
+  .kcs-root .keyword-tags { margin: 36px 0 24px; padding: 24px 0; }
+  .kcs-root .tag { font-size: 10px; padding: 4px 10px; }
+
+  /* Footer */
+  .kcs-root .kcs-footer { padding: 36px 18px; font-size: 13px; }
+
+  /* Reading-line is already hidden below 1200px in the desktop rule;
+     keep that , no override needed here. */
 }
 
 .kcs-root .reading-line {
@@ -1209,6 +1356,7 @@ export default function SaturnKarmaCaseStudy() {
             "The soul does not repeat mistakes verbatim. It reframes them, places the same karma in a different chart, a different body, a different century, and asks: this time, will you choose differently?"
           </div>
 
+          <div className="compare-table-wrap">
           <table className="compare-table">
             <thead>
               <tr>
@@ -1260,6 +1408,7 @@ export default function SaturnKarmaCaseStudy() {
               </tr>
             </tbody>
           </table>
+          </div>
 
 
           {/* SECTION 06, REMEDIES */}
@@ -1349,7 +1498,7 @@ export default function SaturnKarmaCaseStudy() {
 
               <h3 className="sub-heading">Why Jupiter MD Did Not Deliver Foreign Travel</h3>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', margin: '24px 0' }}>
+              <div className="kcs-reason-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', margin: '24px 0' }}>
                 <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
                   <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 1</div>
                   <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>Jupiter in enemy sign.</strong> Gemini is Mercury's sign. Jupiter is in enemy territory, weakened and unable to deliver its full promise.</div>
@@ -1426,11 +1575,11 @@ export default function SaturnKarmaCaseStudy() {
             <p>Every case study in Vedic astrology is simultaneously a reading and a lesson. A**u and Ri**'s charts together demonstrate six foundational BNN principles that separate this methodology from generic sun sign or pop astrology.</p>
           </div>
 
-          <div style={{ border: '1px solid var(--border)', overflow: 'hidden', margin: '0 0 48px' }}>
+          <div className="kcs-bnn-wrap" style={{ border: '1px solid var(--border)', margin: '0 0 48px' }}>
             <div style={{ background: 'var(--ink)', padding: '14px 20px' }}>
               <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--gold-light)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>BNN Methodology · Principles Demonstrated</span>
             </div>
-            <div style={{ overflowX: 'auto' }}>
+            <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '16px', background: '#fffdf5' }}>
                 <thead>
                   <tr style={{ background: 'var(--paper-dark)' }}>
