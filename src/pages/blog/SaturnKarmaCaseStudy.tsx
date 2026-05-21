@@ -606,6 +606,50 @@ const KCS_CSS = `
   font-style: italic;
 }
 
+.kcs-root .kcs-link {
+  color: var(--crimson);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.kcs-root .kcs-link:hover {
+  color: var(--crimson-light);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+}
+
+.kcs-root .glossary-box {
+  background: #faf8f4;
+  border: 1px solid #d4c4a0;
+  border-left: 4px solid #b8922a;
+  padding: 24px;
+  margin: 48px 0;
+}
+.kcs-root .glossary-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: block;
+}
+.kcs-root .glossary-term {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(212,196,160,0.5);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-light);
+}
+.kcs-root .glossary-term:last-child { border-bottom: none; padding-bottom: 0; }
+.kcs-root .glossary-term:first-child { padding-top: 0; }
+.kcs-root .glossary-term-name {
+  font-weight: 700;
+  color: var(--ink);
+  font-family: 'Playfair Display', serif;
+}
+
 @media (max-width: 768px) {
   /* Root */
   .kcs-root { font-size: 17px; }
@@ -1074,7 +1118,7 @@ export default function SaturnKarmaCaseStudy() {
               <div className="yoga-name">Rahu Grasthata</div>
               <div className="yoga-sanskrit">राहु ग्रस्तता, Rahu Possession</div>
               <div className="yoga-planets">Ra + Su + Me · House 6 · Sagittarius</div>
-              <div className="yoga-desc">Rahu conjunct Sun and combust Mercury in the 6th house. The native's identity (Sun) and rational mind (Mercury) are consumed by Rahu's fog. Manifests as obsession, addiction, inability to perceive situations clearly, the native believes they are choosing freely when karma is choosing for them.</div>
+              <div className="yoga-desc"><a className="kcs-link" href="/planets/rahu">Rahu</a> conjunct Sun and combust Mercury in the 6th house. The native's identity (Sun) and rational mind (Mercury) are consumed by Rahu's fog. Manifests as obsession, addiction, inability to perceive situations clearly, the native believes they are choosing freely when karma is choosing for them.</div>
             </div>
 
             <div className="yoga-card gold">
@@ -1116,7 +1160,7 @@ export default function SaturnKarmaCaseStudy() {
             <div>
               <div className="body-text">
                 <p>
-                  A**u entered Saturn Mahadasha on <strong>25th December 2024</strong>. This is the planet that rules her Pushya nakshatra rising, the Mahadasha lord is also the nakshatra lord of her ascendant. In classical Vedic astrology, this would be considered a <em>significant karmic activation point</em>. In BNN terms, it is the beginning of a 19 year dialogue between the native's conscious intentions and the unconscious karma stored in the 12th house.
+                  A**u entered <a className="kcs-link" href="/planets/saturn">Saturn</a> Mahadasha on <strong>25th December 2024</strong>. This is the planet that rules her Pushya nakshatra rising, the Mahadasha lord is also the nakshatra lord of her ascendant. In classical Vedic astrology, this would be considered a <em>significant karmic activation point</em>. In BNN terms, it is the beginning of a 19 year dialogue between the native's conscious intentions and the unconscious karma stored in the 12th house.
                 </p>
                 <p>
                   The current Antardasha is <strong>SA-SA</strong>, Saturn within Saturn, running until December 2027. This is the densest, most concentrated period of the entire Mahadasha. The planet of karma sits with its own energy, undiluted, facing the 12th house it natally occupies.
@@ -1459,7 +1503,7 @@ export default function SaturnKarmaCaseStudy() {
             <div className="body-text">
               <h3 className="sub-heading" style={{ marginTop: 0 }}>For Ri**, SA-KE Window</h3>
               <p>
-                Ri**'s current period is not a crisis, it is an <em>invitation</em>. Ketu Antardasha within Saturn Mahadasha is a period that forces detachment from what is familiar, comfortable, and locally rooted. The discomfort she likely feels is not a sign of failure. It is the chart doing exactly what it was designed to do.
+                Ri**'s current period is not a crisis, it is an <em>invitation</em>. <a className="kcs-link" href="/planets/ketu">Ketu Antardasha</a> within Saturn Mahadasha is a period that forces detachment from what is familiar, comfortable, and locally rooted. The discomfort she likely feels is not a sign of failure. It is the chart doing exactly what it was designed to do.
               </p>
 
               <div className="annotation-box indigo" data-label="Key Guidance, SA-KE Period">
@@ -1621,6 +1665,27 @@ export default function SaturnKarmaCaseStudy() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+
+
+          {/* JYOTISH GLOSSARY */}
+          <div className="glossary-box">
+            <span className="glossary-title">Key Jyotish Terms Used in This Case Study</span>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Lagna:</span> The ascendant or rising sign, the zodiac sign on the eastern horizon at the moment of birth. Sets the first house and governs the entire chart structure in Vedic astrology (Jyotish).
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Nakshatra:</span> One of 27 lunar mansions in Vedic astrology. Each Nakshatra spans 13 degrees 20 minutes of the zodiac and reveals deeper emotional and karmic patterns beyond the sun or moon sign.
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Navamsa (D9):</span> The ninth divisional chart in Jyotish. Used for detailed analysis of marriage, dharma, and the soul's deeper purpose. Considered the most important divisional chart after the D1 Rasi chart.
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">Vimshottari Dasha:</span> The primary planetary period system in Vedic astrology. A 120 year cycle of planetary rulerships (Mahadasha) and sub periods (Antardasha) used to time life events with precision.
+            </div>
+            <div className="glossary-term">
+              <span className="glossary-term-name">BNN (Bhrigu Nandi Nadi):</span> A branch of Nadi astrology where planets in 5th or 9th relationship are treated as functionally conjunct, combining their energies as powerfully as a direct conjunction.
             </div>
           </div>
 
