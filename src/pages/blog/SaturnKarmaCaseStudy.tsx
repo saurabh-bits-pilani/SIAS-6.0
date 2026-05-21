@@ -1287,6 +1287,24 @@ export default function SaturnKarmaCaseStudy() {
               <div className="annotation-box indigo" data-label="Saturn Seva, Non Negotiable">
                 Saturn Mahadasha for a 12th house Saturn native requires <strong>regular seva (selfless service)</strong>, specifically to those older, poorer, or more isolated. Food donation. Service to one elderly person weekly. This is Saturn's direct currency in this position.
               </div>
+
+              <div className="annotation-box" data-label="Rahu Grasthata, Specific Remedy">
+                <strong>Mehandipur Balaji visit.</strong> For cases of Rahu Grasthata, where Rahu's obsessive energy has overridden the native's rational will, classical Vedic tradition recommends a pilgrimage to Mehandipur Balaji (Rajasthan). This is not superstition. It is a structured psychological and spiritual reset, removing the native from their immediate environment and placing them in a space dedicated to clearing Rahu's grip. One visit with sincere intention, accompanied by fasting and prayer.
+              </div>
+
+              <div className="annotation-box gold" data-label="Mahamrityunjaya Mantra, Daily">
+                <strong style={{ fontFamily: '"Noto Serif Devanagari", serif' }}>ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्</strong><br />
+                <em>Om Tryambakam Yajamahe Sugandhim Pushtivardhanam</em><br />
+                Recite 108 times daily at sunrise. This mantra works directly on the 12th house karma, liberation, longevity, and dissolution of hidden enemies. For Saturn retrograde in the 12th, it is among the most powerful available remedies.
+              </div>
+
+              <div className="annotation-box" data-label="Pitru Tarpan, Overdue Karma">
+                <strong>Pitru tarpan for the late husband.</strong> The husband passed two years ago. In Vedic tradition, the soul's transition is supported by water offerings (tarpan) performed by family members. If this has not been done systematically, it becomes a source of restless Pitru energy in the household. Performing tarpan and Shraddha during Pitru Paksha, or having it performed at Gaya or Haridwar, directly pacifies this category of karma. It is not grief. It is completion.
+              </div>
+
+              <div className="annotation-box indigo" data-label="Kaal Bhairav Worship">
+                <strong>Kaal Bhairav puja, every Sunday.</strong> Kaal Bhairav is the form of Shiva who governs time, Saturn's shadow, and the 12th house's hidden dimensions. For a native with Saturn retrograde and Ketu retrograde both in the 12th house, Bhairav worship cuts through the accumulated karmic density more directly than most remedies. Black sesame, mustard oil lamp, and sincere prayer every Sunday morning.
+              </div>
             </div>
 
             <div className="body-text">
@@ -1306,6 +1324,154 @@ export default function SaturnKarmaCaseStudy() {
               <div className="annotation-box gold" data-label="From Jul 2026, SA-VE Opens">
                 The Venus Antardasha from July 2026 onward brings stabilisation, relationship possibility, and a more settled chapter. The roots Ketu cuts now are roots that needed removing. The new ones Venus plants are more aligned with who Ri** is becoming.
               </div>
+            </div>
+          </div>
+
+
+          {/* CINEMATIC + SECTION 07, RI** FOREIGN WINDOWS */}
+          <div className="cinematic-break">
+            <div className="cinematic-break-inner">
+              <span>◆</span><span>Ri**'s Foreign Windows</span><span>◆</span>
+            </div>
+          </div>
+
+          <div className="section-header">
+            <span className="section-num">07, Timing Analysis</span>
+            <h2>When Will Ri**<br /><em>Cross the Threshold?</em></h2>
+            <div className="section-rule" />
+          </div>
+
+          <div className="editorial-grid wide-text">
+            <div className="body-text">
+              <p>
+                One of the most common questions in Vedic astrology consultations is: <em>why did the foreign period not deliver what was promised?</em> Ri**'s Jupiter Mahadasha is a textbook case. Jupiter sits with Rahu in the 3rd house, and the classical rule states that Rahu with a planet gives foreign results during that planet's dasha. Yet no foreign settlement came during Jupiter MD (2003 to 2019).
+              </p>
+
+              <h3 className="sub-heading">Why Jupiter MD Did Not Deliver Foreign Travel</h3>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', margin: '24px 0' }}>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 1</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>Jupiter in enemy sign.</strong> Gemini is Mercury's sign. Jupiter is in enemy territory, weakened and unable to deliver its full promise.</div>
+                </div>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 2</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>3rd house equals local travel.</strong> The 3rd house governs short journeys, not foreign settlement. Jupiter here amplifies local movement, communication, and siblings, not overseas relocation.</div>
+                </div>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 3</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>Rahu retrograde.</strong> Retrograde Rahu internalises foreign energy. The native develops deep interest in foreign cultures, languages, or ideas, but actual physical relocation is blocked.</div>
+                </div>
+                <div style={{ background: '#fff8f8', border: '1px solid var(--border)', borderLeft: '3px solid var(--crimson)', padding: '14px 16px' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: 'var(--crimson)', letterSpacing: '0.15em', marginBottom: '6px' }}>REASON 4</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}><strong>Saturn in 2nd house.</strong> Saturn's strong placement in Taurus (friendly sign) in the 2nd house creates a powerful rooting force. Family obligations, financial responsibility, and domestic ties kept the native grounded during Jupiter MD.</div>
+                </div>
+              </div>
+
+              <div className="annotation-box gold" data-label="BNN Rule, Conditional Application">
+                The rule "Rahu with planet equals foreign during that planet's MD" is a <strong>conditional rule</strong>, not an absolute one. It requires: the planet in a foreign indicating house (12th, 9th, or 7th), the planet in a friendly sign, Rahu direct, and the native's life stage permitting relocation. When any major condition is absent, the rule does not fire. This is one of the most important lessons in BNN practice, rules are tendencies, not guarantees.
+              </div>
+            </div>
+
+            <div>
+              <div style={{ background: '#fffdf5', border: '1px solid var(--border)', padding: '24px', marginBottom: '20px' }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '10px', color: 'var(--ink-muted)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '16px' }}>Foreign Windows, Ri**</div>
+
+                <div style={{ marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--gold)', letterSpacing: '0.08em', marginBottom: '4px' }}>SA-KE · Jun 2025 to Jul 2026</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Saturn, Ketu Antardasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Ketu activates the 9th house (Mars-Ketu placement). Cutting of local roots. Opportunities requiring cultural or linguistic boundary crossing. <strong>Most likely window for first major foreign exposure.</strong></div>
+                </div>
+
+                <div style={{ marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--gold)', letterSpacing: '0.08em', marginBottom: '4px' }}>SA-VE · Jul 2026 to Sep 2029</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Saturn, Venus Antardasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Venus in 5th (Leo). Stabilisation, possible foreign relationship or creative opportunity abroad. Roots begin forming in new soil.</div>
+                </div>
+
+                <div style={{ marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border-light)' }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--indigo)', letterSpacing: '0.08em', marginBottom: '4px' }}>SA-RA · May 2033 to Mar 2036</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Saturn, Rahu Antardasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Direct Rahu activation. This is the strongest foreign window in the entire Saturn MD. Rahu's amplifying energy combines with Saturn's discipline. <strong>Potential for significant international career or settlement.</strong></div>
+                </div>
+
+                <div>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--sage)', letterSpacing: '0.08em', marginBottom: '4px' }}>Mercury MD · From Oct 2038</div>
+                  <div style={{ fontSize: '13px', color: 'var(--ink-muted)', fontStyle: 'italic', marginBottom: '8px' }}>Mercury Mahadasha</div>
+                  <div style={{ fontSize: '15px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Mercury as career activator. Foreign through professional excellence, teaching, writing, technology, communication.</div>
+                </div>
+              </div>
+
+              <div className="sticky-note">
+                "The foreign door was never locked. It was simply waiting for the right key. SA-KE is that key, cutting the rope that tied Ri** to familiar ground."
+              </div>
+            </div>
+          </div>
+
+
+          {/* CINEMATIC + SECTION 08, BNN PRINCIPLES */}
+          <div className="cinematic-break">
+            <div className="cinematic-break-inner">
+              <span>◆</span><span>BNN Principles Demonstrated</span><span>◆</span>
+            </div>
+          </div>
+
+          <div className="section-header">
+            <span className="section-num">08, Learning</span>
+            <h2>Six BNN Principles<br /><em>This Case Study Confirms</em></h2>
+            <div className="section-rule" />
+          </div>
+
+          <div className="body-text" style={{ maxWidth: '100%', marginBottom: '32px' }}>
+            <p>Every case study in Vedic astrology is simultaneously a reading and a lesson. A**u and Ri**'s charts together demonstrate six foundational BNN principles that separate this methodology from generic sun sign or pop astrology.</p>
+          </div>
+
+          <div style={{ border: '1px solid var(--border)', overflow: 'hidden', margin: '0 0 48px' }}>
+            <div style={{ background: 'var(--ink)', padding: '14px 20px' }}>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: 'var(--gold-light)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>BNN Methodology · Principles Demonstrated</span>
+            </div>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '16px', background: '#fffdf5' }}>
+                <thead>
+                  <tr style={{ background: 'var(--paper-dark)' }}>
+                    <th style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', padding: '10px 16px', textAlign: 'left', borderBottom: '2px solid var(--border)', fontWeight: 400, width: '40px' }}>#</th>
+                    <th style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', padding: '10px 16px', textAlign: 'left', borderBottom: '2px solid var(--border)', fontWeight: 400 }}>Principle</th>
+                    <th style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', padding: '10px 16px', textAlign: 'left', borderBottom: '2px solid var(--border)', fontWeight: 400 }}>Demonstrated By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>01</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Trines (5th and 9th) function as conjunctions in BNN, not mildly as in classical Vedic</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>A**u's Mars (H10) trine Venus-Rahu (H6) equals Bahu Manzil Yoga activating as powerfully as a direct conjunction.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)', background: 'rgba(184,146,42,0.04)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>02</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>The same yoga manifests differently based on house, sign, and partner planet</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Mars-Venus-Rahu (A**u) equals destructive amplification. Mars-Venus-Ketu (Ri**) equals spiritual completion. Same Mars-Venus core. Completely different outcomes.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>03</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Mars equals 1st husband karaka for women (not Jupiter as classical Vedic holds)</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>A**u's Mars in 10th (Aries, Mooltrikona) shows her late husband's strength and career oriented nature. Jupiter in 7th debilitated equals he was not her Jupiter figure.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)', background: 'rgba(184,146,42,0.04)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>04</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>BNN rules are conditional, they require supporting conditions to fire</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>"Rahu with planet equals foreign in that planet's MD" did not fire for Ri** during Jupiter MD. Four conditions were absent: enemy sign, wrong house, retrograde Rahu, young age.</td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>05</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Rahu Grasthata is a real and diagnosable condition, not metaphor</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>A**u's Rahu in 6th (Mula) conjunct Sun and combust Mercury equals Rahu consuming both identity and rational mind simultaneously. Classic Grasthata pattern.</td>
+                  </tr>
+                  <tr>
+                    <td style={{ padding: '14px 16px', fontFamily: "'Space Mono', monospace", fontSize: '13px', color: 'var(--gold)', fontWeight: 700 }}>06</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink)', fontWeight: 600, lineHeight: 1.5 }}>Family karma flows generationally but can be completed by the next generation</td>
+                    <td style={{ padding: '14px 16px', color: 'var(--ink-light)', lineHeight: 1.6 }}>Ri**'s chart carries a lighter version of the same Mars-Venus pattern. The 9th house placement and Ketu (vs Rahu) give her the structural possibility to complete what her mother's generation began, if she chooses the dharmic path.</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
