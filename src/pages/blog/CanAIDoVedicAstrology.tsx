@@ -708,6 +708,7 @@ export default function CanAIDoVedicAstrology() {
     publisher: {
       '@type': 'Organization',
       name: 'Soul Infinity',
+      url: 'https://www.soulinfinity.space',
       logo: {
         '@type': 'ImageObject',
         url: 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png',
@@ -859,7 +860,7 @@ export default function CanAIDoVedicAstrology() {
           <div className="editorial-grid wide-text">
             <div className="body-text">
               <p>
-                I ran a controlled test. I gave three AI systems, ChatGPT-4o, Claude, and Vedic AstroGPT, the same birth chart: Cancer lagna, Moon in Taurus 11th house, Saturn retrograde in Gemini 12th house, Rahu in Sagittarius 6th house. A chart I know intimately from my own casework.
+                I ran a controlled test. I gave three AI systems, ChatGPT-4o, Claude, and Vedic AstroGPT, the same birth chart: Cancer lagna, Moon in Taurus 11th house, Saturn retrograde in Gemini 12th house, Rahu in Sagittarius 6th house. A chart I know intimately from my own casework. We analyse this chart in full detail in our <a href="/blog/saturn-karma-two-souls" style={{ color: '#b8922a', textDecoration: 'underline' }}>Saturn Mahadasha case study</a>.
               </p>
               <p>
                 All three tools produced outputs that were <em>technically correct at the surface level</em>. They identified the Cancer ascendant. They noted Saturn's retrograde status. They mentioned that Rahu in the 6th house can indicate health challenges and hidden enemies. Nothing they said was factually wrong.
