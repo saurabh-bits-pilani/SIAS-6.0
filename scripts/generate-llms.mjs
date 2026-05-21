@@ -71,6 +71,7 @@ const DESCRIPTIONS = {
   '/blog/shani-jayanti-2026': 'Shani Jayanti 2026 guide by Saurabh Jain, meaning, rituals, karmic philosophy, zodiac insights, and Lord Shani mythology. Published May 16, 2026.',
   '/blog/sade-sati-effects-remedies': 'Sade Sati effects and remedies: the three phases of Saturn transit over natal Moon, real effects on career, health and relationships, and classical Vedic remedies.',
   '/blog/saturn-karma-two-souls': 'Vedic astrology case study: Saturn Mahadasha activating 12th house karma across two generations. BNN analysis of yogas, dasha timing, and remedies.',
+  '/blog/can-ai-do-vedic-astrology': 'Can AI do Vedic astrology? A K.N. Rao Institute trained Jyotishi explains what ChatGPT gets wrong in kundali analysis and what only a human astrologer can see in classical Jyotish.',
 };
 
 const SECTIONS = [

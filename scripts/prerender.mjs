@@ -39,6 +39,7 @@ export const ROUTES = [
   '/blog/mantra',
   '/blog/shani-jayanti-2026',
   '/blog/saturn-karma-two-souls',
+  '/blog/can-ai-do-vedic-astrology',
   '/gallery',
   '/gallery/remedies',
   '/gallery/pitra-dosh',
