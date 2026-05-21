@@ -58,74 +58,33 @@ const KCS_CSS = `
 .kcs-root, .kcs-root * { margin: 0; padding: 0; box-sizing: border-box; }
 
 .kcs-root .hero {
-  position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 600px;
+  height: 90vh;
+  min-height: 400px;
+  max-height: 700px;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
 }
 .kcs-root .hero img {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
 }
-.kcs-root .hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(15,10,5,0.92) 0%,
-    rgba(15,10,5,0.5) 50%,
-    rgba(15,10,5,0.15) 100%
-  );
-}
-.kcs-root .hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 0 6vw 6vh;
+
+.kcs-root .kcs-article-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(36px, 5.5vw, 68px);
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 64px 0 12px;
   max-width: 900px;
 }
-.kcs-root .hero-tag {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  border: 1px solid var(--gold);
-  display: inline-block;
-  padding: 5px 14px;
-  margin-bottom: 20px;
-}
-.kcs-root .hero h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(36px, 6vw, 72px);
-  font-weight: 900;
-  color: #f9f5ee;
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-.kcs-root .hero h1 em {
+.kcs-root .kcs-article-title em {
   font-style: italic;
-  color: var(--gold-light);
-}
-.kcs-root .hero-sub {
-  font-family: 'Crimson Pro', serif;
-  font-size: clamp(16px, 2vw, 22px);
-  color: rgba(249,245,238,0.75);
-  font-style: italic;
-  max-width: 600px;
-  margin-bottom: 24px;
-}
-.kcs-root .hero-meta {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  color: rgba(249,245,238,0.5);
-  letter-spacing: 0.1em;
+  color: var(--crimson);
 }
 
 .kcs-root .article-body {
@@ -657,20 +616,17 @@ const KCS_CSS = `
   .kcs-root img { max-width: 100%; height: auto; }
   .kcs-root table { min-width: 100%; }
 
-  /* Hero */
-  .kcs-root .hero { height: auto; min-height: 500px; }
-  .kcs-root .hero-content { padding: 0 20px 40px; max-width: 100%; }
-  .kcs-root .hero h1 { font-size: clamp(28px, 8vw, 48px); line-height: 1.15; word-break: break-word; }
-  .kcs-root .hero-sub { font-size: 16px; line-height: 1.5; }
-  .kcs-root .hero-tag { font-size: 10px; padding: 4px 10px; }
-  .kcs-root .hero-meta { font-size: 10px; }
-  .kcs-root .hero-overlay {
-    background: linear-gradient(
-      to top,
-      rgba(15,10,5,0.96) 0%,
-      rgba(15,10,5,0.7) 55%,
-      rgba(15,10,5,0.3) 100%
-    );
+  /* Hero, image only */
+  .kcs-root .hero {
+    height: 50vw;
+    min-height: 240px;
+    max-height: 400px;
+  }
+  .kcs-root .kcs-article-title {
+    font-size: clamp(28px, 8vw, 48px);
+    line-height: 1.15;
+    word-break: break-word;
+    margin: 40px 0 8px;
   }
 
   /* Lead */
@@ -971,34 +927,25 @@ export default function SaturnKarmaCaseStudy() {
       <div className="kcs-root">
         <div className="reading-line" aria-hidden="true" />
 
-        {/* HERO */}
+        {/* HERO, image only */}
         <section className="hero">
           <img
             src={IMG.hero}
-            alt="Kundali Analysis, A Journey of Karma Through Saturn, Soul Infinity"
+            alt="Kundali Analysis, When Saturn Speaks, Soul Infinity"
             loading="eager"
             fetchpriority="high"
             width={1600}
             height={1000}
           />
-          <div className="hero-overlay" />
-          <div className="hero-content">
-            <span className="hero-tag">Case Study, Soul Infinity</span>
-            <h1>
-              When Saturn <em>Speaks</em>,<br />Two Souls Listen
-            </h1>
-            <p className="hero-sub">
-              A real Vedic investigation into how one planet's dasha reshapes the lives of a mother
-              and daughter, separated by birth, united by karma.
-            </p>
-            <p className="hero-meta">
-              By Saurabh Jain, Vedic Astrologer · KN Rao Institute · BNN Methodology · May 2026
-            </p>
-          </div>
         </section>
 
         {/* ARTICLE BODY */}
         <main className="article-body">
+
+          {/* TITLE, moved below hero */}
+          <h1 className="kcs-article-title">
+            When Saturn <em>Speaks</em>, Two Souls Listen
+          </h1>
 
           {/* LEAD */}
           <div className="lead-section">
