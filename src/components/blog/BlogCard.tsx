@@ -40,7 +40,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       to={href}
       className="group block bg-blog-cream-soft rounded-2xl overflow-hidden border border-blog-gold/20 hover:border-blog-gold/50 hover:-translate-y-1 transition-all duration-300"
     >
-      <div className="h-[160px] sm:h-[180px] md:h-[200px] w-full overflow-hidden bg-blog-navy relative">
+      <div className="h-[180px] sm:h-[200px] md:h-[220px] w-full overflow-hidden bg-blog-navy relative">
         {post.heroImage && (
           <img
             src={post.heroImage}
@@ -50,12 +50,20 @@ export default function BlogCard({ post }: BlogCardProps) {
             loading="lazy"
           />
         )}
-        <span className="absolute top-3 left-3 inline-flex items-center bg-blog-cream/95 backdrop-blur-sm rounded-full px-3 py-1 font-poppins text-blog-gold text-xs font-semibold">
+        <div
+          className="absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{ height: '40%', background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }}
+          aria-hidden="true"
+        />
+        <span
+          className="absolute top-3 left-3 z-10 inline-flex items-center backdrop-blur-sm rounded-full font-poppins text-white text-[11px] font-semibold"
+          style={{ backgroundColor: 'rgba(0,0,0,0.75)', border: '1px solid rgba(255,255,255,0.2)', padding: '4px 12px' }}
+        >
           {category}
         </span>
       </div>
-      <div className="p-5">
-        <div className="flex items-center gap-3 text-blog-ink/60 text-xs mb-3">
+      <div className="p-4 md:p-5">
+        <div className="flex items-center gap-2 text-blog-ink/60 text-xs mb-2">
           <span className="inline-flex items-center gap-1">
             <Calendar className="w-3 h-3" aria-hidden="true" />
             <span>{publishedAt}</span>
@@ -66,11 +74,11 @@ export default function BlogCard({ post }: BlogCardProps) {
             <span>{readTime}</span>
           </span>
         </div>
-        <h3 className="font-poppins font-bold text-blog-ink text-base md:text-lg leading-snug mb-2 group-hover:text-blog-navy transition-colors line-clamp-2">
+        <h3 className="font-poppins font-bold text-blog-ink text-[clamp(15px,2vw,18px)] leading-[1.4] mb-2 group-hover:text-blog-navy transition-colors line-clamp-2">
           {post.title}
         </h3>
         {post.excerpt && (
-          <p className="font-poppins text-blog-ink/70 text-sm leading-relaxed mb-4 line-clamp-3">
+          <p className="font-poppins text-blog-ink/70 text-sm md:text-[15px] leading-[1.6] mb-3 line-clamp-3">
             {post.excerpt}
           </p>
         )}

@@ -38,7 +38,7 @@ export default function BlogFeaturedPost({ post }: BlogFeaturedPostProps) {
       to={`/blog/${post.slug}`}
       className="block group relative bg-blog-cream-soft rounded-2xl overflow-hidden border border-blog-gold/20 hover:border-blog-gold/50 transition-colors"
     >
-      <div className="relative h-[200px] sm:h-[220px] md:h-[260px] w-full overflow-hidden bg-blog-navy">
+      <div className="relative h-[220px] sm:h-[260px] md:h-[300px] w-full overflow-hidden bg-blog-navy">
         {post.heroImage && (
           <img
             src={post.heroImage}
@@ -48,6 +48,11 @@ export default function BlogFeaturedPost({ post }: BlogFeaturedPostProps) {
             loading="lazy"
           />
         )}
+        <div
+          className="absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{ height: '40%', background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }}
+          aria-hidden="true"
+        />
         <div className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-blog-gold/95 backdrop-blur-sm rounded-full px-3 py-1 shadow-sm">
           <Star className="w-3.5 h-3.5 text-blog-navy" aria-hidden="true" />
           <span className="font-poppins text-blog-navy text-xs font-bold uppercase tracking-wide">
@@ -59,7 +64,7 @@ export default function BlogFeaturedPost({ post }: BlogFeaturedPostProps) {
         <span className="inline-flex items-center bg-blog-cream border border-blog-gold/40 rounded-full px-3 py-1 mb-3 font-poppins text-blog-gold text-xs font-semibold">
           {category}
         </span>
-        <h2 className="font-poppins font-bold text-blog-ink text-xl md:text-2xl leading-tight mb-3 group-hover:text-blog-navy transition-colors line-clamp-2">
+        <h2 className="font-poppins font-extrabold text-blog-ink text-[clamp(20px,3vw,28px)] leading-tight mb-3 group-hover:text-blog-navy transition-colors line-clamp-2">
           {post.title}
         </h2>
         {post.excerpt && (
