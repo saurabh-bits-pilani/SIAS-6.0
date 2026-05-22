@@ -11,6 +11,7 @@ interface BlogCardPost {
   category?: string;
   publishedAt?: string;
   readTime?: string;
+  imagePosition?: string;
 }
 
 interface BlogCardProps {
@@ -39,12 +40,13 @@ export default function BlogCard({ post }: BlogCardProps) {
       to={href}
       className="group block bg-blog-cream-soft rounded-2xl overflow-hidden border border-blog-gold/20 hover:border-blog-gold/50 hover:-translate-y-1 transition-all duration-300"
     >
-      <div className="aspect-[16/10] w-full overflow-hidden bg-blog-navy relative">
+      <div className="h-[160px] sm:h-[180px] md:h-[200px] w-full overflow-hidden bg-blog-navy relative">
         {post.heroImage && (
           <img
             src={post.heroImage}
             alt={post.heroImageAlt || post.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            style={{ objectPosition: post.imagePosition || 'center center' }}
             loading="lazy"
           />
         )}

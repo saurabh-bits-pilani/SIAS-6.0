@@ -15,6 +15,7 @@ interface FeaturedPost {
   category?: string;
   publishedAt?: string;
   readTime?: string;
+  imagePosition?: string;
 }
 
 interface BlogIndexHeroProps {
