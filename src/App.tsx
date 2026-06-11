@@ -47,6 +47,7 @@ const DhanuRashiPage = lazy(() => import('./pages/zodiac/DhanuRashiPage'));
 const MakaraRashiPage = lazy(() => import('./pages/zodiac/MakaraRashiPage'));
 const KumbhaRashiPage = lazy(() => import('./pages/zodiac/KumbhaRashiPage'));
 const MeenaRashiPage = lazy(() => import('./pages/zodiac/MeenaRashiPage'));
+const RohiniNakshatraPage = lazy(() => import('./pages/nakshatra/RohiniNakshatraPage'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 const SaturnIn7thHouse = lazy(() => import('./pages/blog/SaturnIn7thHouse'));
 const MoonIn4thHouse = lazy(() => import('./pages/blog/MoonIn4thHouse'));
@@ -111,6 +112,7 @@ function App() {
           <Route path="/zodiac/capricorn" element={<MakaraRashiPage />} />
           <Route path="/zodiac/aquarius" element={<KumbhaRashiPage />} />
           <Route path="/zodiac/pisces" element={<MeenaRashiPage />} />
+          <Route path="/nakshatra/rohini" element={<RohiniNakshatraPage />} />
           <Route path="/dosha" element={<DoshaPage />} />
           <Route path="/dosha/mangal" element={<MangalDoshaPage />} />
           <Route path="/dosha/saade-sati" element={<SadeSatiPage />} />

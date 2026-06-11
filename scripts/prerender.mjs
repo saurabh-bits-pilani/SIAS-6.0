@@ -67,6 +67,7 @@ export const ROUTES = [
   '/zodiac/capricorn',
   '/zodiac/aquarius',
   '/zodiac/pisces',
+  '/nakshatra/rohini',
   '/dosha',
   '/dosha/mangal',
   '/dosha/saade-sati',
