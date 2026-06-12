@@ -524,40 +524,42 @@ export default function RohiniNakshatraPage() {
           </div>
         </section>
 
-      {/* Section 4, Story of Rohini. Scroll image above, narrative card below. */}
-      <section className="py-16" style={{ background: '#fdf6f0' }}>
-        <div className="relative max-w-4xl mx-auto px-4">
-          <img
-            src={SCROLL_IMAGE}
-            alt="Ancient Vedic parchment scroll"
-            width={1200}
-            height={800}
-            className="w-full rounded-2xl shadow-lg"
-            loading="lazy"
-          />
-          <div className="bg-[#FFF9ED] border border-[#E5D5B0] rounded-2xl p-8 mt-4 max-w-3xl mx-auto">
-            <p className="font-kalam text-lg text-[#2A2438] leading-relaxed mb-4">
+      {/* Section 4, Story of Rohini. Standalone cream section with heading, scroll image, then text card. */}
+      <section className="py-12 bg-[#FAF6EC]">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="font-kalam text-3xl text-[#2A2438] mb-8 text-center">
+            The Story of Rohini
+          </h2>
+          <div className="relative mb-6">
+            <img
+              src={SCROLL_IMAGE}
+              alt="Ancient Vedic parchment scroll with Rohini nakshatra story"
+              width={1200}
+              height={800}
+              className="w-full rounded-2xl shadow-lg"
+              loading="lazy"
+            />
+          </div>
+          <div className="bg-[#FFF9ED] border border-[#E5D5B0] rounded-2xl p-8">
+            <p className="font-kalam text-xl text-[#2A2438] leading-relaxed mb-5">
               Chandra married the 27 daughters of Prajapati Daksha, who became the
               27 Nakshatras. But Chandra was deeply enamored by Rohini, the fourth
               among them. He spent most of his time with her, neglecting the others.
             </p>
-            <p className="font-poppins text-base text-[#5C4A2A] leading-relaxed mb-4">
+            <p className="font-poppins text-base text-[#5C4A2A] leading-relaxed mb-5">
               Angered by this partiality, the other wives complained to their father.
               Daksha cursed Chandra to wane away and lose his brilliance. The Devas
               pleaded for Chandra and the curse was softened. So Chandra now waxes
               and wanes every month.
             </p>
-            <p className="font-poppins text-base text-[#5C4A2A] leading-relaxed">
+            <p className="font-poppins text-base text-[#5C4A2A] leading-relaxed mb-5">
               This is why Rohini is the seat of longing, desire, and emotional depth.
               The Moon always returns to Rohini, just as Chandra always returned to
               his beloved.
             </p>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 mt-10" aria-hidden="true">
-            <div className="h-px w-16 bg-[#D4A11E]/40" />
-            <Sun className="w-4 h-4 text-[#D4A11E]" />
-            <div className="h-px w-16 bg-[#D4A11E]/40" />
+            <p className="font-caveat text-xl text-[#D4A11E] italic text-center mt-4">
+              "The Moon in Rohini seeks beauty, love, and emotional nourishment in every area of life."
+            </p>
           </div>
         </div>
       </section>
