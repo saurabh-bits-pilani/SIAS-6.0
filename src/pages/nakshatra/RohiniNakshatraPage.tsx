@@ -6,6 +6,7 @@ import {
   ChevronDown,
   AlertTriangle,
   Moon,
+  Sun,
   Heart,
   BookOpen,
   Sparkles,
@@ -231,7 +232,7 @@ export default function RohiniNakshatraPage() {
       </Helmet>
 
       {/* Section 1, Hero banner. */}
-      <div className="w-full bg-gray-900">
+      <div className="w-full bg-white">
         <img
           src={HERO_IMAGE}
           alt="Rohini Nakshatra hero banner showing Moon in Vrishabha Vedic astrology symbolism for Soul Infinity"
@@ -523,19 +524,18 @@ export default function RohiniNakshatraPage() {
           </div>
         </section>
 
-      {/* Section 4, Mantra. Full-width parallax bg, dark overlay, centered text. */}
-      <section
-        className="relative flex items-center"
-        style={{
-          minHeight: '300px',
-          backgroundImage: `url(${SCROLL_IMAGE})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-        }}
-      >
-        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.55)' }} />
-        <div className="relative w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center text-white">
+      {/* Section 4, Mantra. Plain image above, mantra text below, no parallax. */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ background: '#2A1810' }}>
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <img
+            src={SCROLL_IMAGE}
+            alt="Rohini nakshatra mantra context, sacred cow imagery"
+            className="w-full rounded-2xl shadow-md mb-10"
+            width={1200}
+            height={600}
+            loading="lazy"
+          />
+
           <div
             className="font-devanagari text-amber-300 mb-5 leading-relaxed"
             style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
@@ -553,6 +553,12 @@ export default function RohiniNakshatraPage() {
             Chant 108 times
             <span className="mx-2">·</span>
             on a pearl or white sphatik mala, on Mondays
+          </div>
+
+          <div className="flex items-center justify-center gap-3 my-6 mt-10" aria-hidden="true">
+            <div className="h-px w-16 bg-[#D4A11E]/40" />
+            <Sun className="w-4 h-4 text-[#D4A11E]" />
+            <div className="h-px w-16 bg-[#D4A11E]/40" />
           </div>
         </div>
       </section>
