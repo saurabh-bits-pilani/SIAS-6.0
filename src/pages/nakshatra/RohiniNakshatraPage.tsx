@@ -524,38 +524,37 @@ export default function RohiniNakshatraPage() {
           </div>
         </section>
 
-      {/* Section 4, Mantra. Plain image above, mantra text below, no parallax. */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ background: '#2A1810' }}>
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      {/* Section 4, Story of Rohini. Scroll image above, narrative card below. */}
+      <section className="py-16" style={{ background: '#fdf6f0' }}>
+        <div className="relative max-w-4xl mx-auto px-4">
           <img
             src={SCROLL_IMAGE}
-            alt="Rohini nakshatra mantra context, sacred cow imagery"
-            className="w-full rounded-2xl shadow-md mb-10"
+            alt="Ancient Vedic parchment scroll"
             width={1200}
-            height={600}
+            height={800}
+            className="w-full rounded-2xl shadow-lg"
             loading="lazy"
           />
+          <div className="bg-[#FFF9ED] border border-[#E5D5B0] rounded-2xl p-8 mt-4 max-w-3xl mx-auto">
+            <p className="font-kalam text-lg text-[#2A2438] leading-relaxed mb-4">
+              Chandra married the 27 daughters of Prajapati Daksha, who became the
+              27 Nakshatras. But Chandra was deeply enamored by Rohini, the fourth
+              among them. He spent most of his time with her, neglecting the others.
+            </p>
+            <p className="font-poppins text-base text-[#5C4A2A] leading-relaxed mb-4">
+              Angered by this partiality, the other wives complained to their father.
+              Daksha cursed Chandra to wane away and lose his brilliance. The Devas
+              pleaded for Chandra and the curse was softened. So Chandra now waxes
+              and wanes every month.
+            </p>
+            <p className="font-poppins text-base text-[#5C4A2A] leading-relaxed">
+              This is why Rohini is the seat of longing, desire, and emotional depth.
+              The Moon always returns to Rohini, just as Chandra always returned to
+              his beloved.
+            </p>
+          </div>
 
-          <div
-            className="font-devanagari text-amber-300 mb-5 leading-relaxed"
-            style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
-            lang="sa"
-          >
-            ॐ श्रां श्रीं श्रौं सः चन्द्रमसे नमः
-          </div>
-          <div className="text-lg md:text-xl italic text-white mb-3">
-            Om Shraam Shreem Shraum Sah Chandramasay Namah
-          </div>
-          <div className="text-sm md:text-base text-gray-200 mb-6 max-w-xl mx-auto">
-            I bow to Chandra, the lord of Rohini nakshatra and the keeper of the mind.
-          </div>
-          <div className="inline-block bg-amber-500 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold shadow-md">
-            Chant 108 times
-            <span className="mx-2">·</span>
-            on a pearl or white sphatik mala, on Mondays
-          </div>
-
-          <div className="flex items-center justify-center gap-3 my-6 mt-10" aria-hidden="true">
+          <div className="flex items-center justify-center gap-3 mt-10" aria-hidden="true">
             <div className="h-px w-16 bg-[#D4A11E]/40" />
             <Sun className="w-4 h-4 text-[#D4A11E]" />
             <div className="h-px w-16 bg-[#D4A11E]/40" />
@@ -876,30 +875,26 @@ export default function RohiniNakshatraPage() {
         </div>
       </section>
 
-      {/* Section 7, Remedies. Bg image rendered as <img>, text overlaid on
-          the empty right-side row spaces via absolute positioning. */}
-      <section style={{ position: 'relative', width: '100%' }}>
+      {/* Section 7, Remedies. Bg image with dark overlay; remedies pushed right. */}
+      <section className="relative min-h-[600px] py-16">
         <img
           src={REMEDIES_BG}
-          alt="Classical Vedic Remedies for Rohini Moon"
-          style={{ width: '100%', display: 'block' }}
+          alt=""
+          width={1400}
+          height={900}
+          className="absolute inset-0 w-full h-full object-cover"
+          aria-hidden="true"
           loading="lazy"
         />
-
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            padding: '2% 3% 2% 38%',
-            paddingRight: '10%',
-          }}
-        >
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 max-w-6xl mx-auto px-4">
+          <h2 className="font-kalam text-3xl text-[#D4A11E] text-center mb-2">
+            Classical Vedic Remedies for Rohini Moon
+          </h2>
+          <p className="font-poppins text-white/60 text-xs text-center mb-10 uppercase tracking-widest">
+            FOR AN AFFLICTED OR WEAKENED CHANDRA
+          </p>
+          <div className="max-w-2xl ml-auto space-y-5">
           {[
             { main: 'Worship Lord Chandra on Mondays', sub: 'Offer white flowers, milk, and white rice to the Moon on Purnima and every Monday', highlight: 'Worship Lord Chandra' },
             { main: 'Wear Pearl (Moti) after astrological consultation', sub: 'Set in silver, worn on the little finger on Monday morning after puja', highlight: 'Pearl (Moti)' },
@@ -909,46 +904,24 @@ export default function RohiniNakshatraPage() {
             { main: 'Practice non-attachment in close relationships', sub: 'Recognize that the longing is a spiritual quality, not a wound to be filled by another person', highlight: 'non-attachment' },
             { main: 'Read Shri Sukta on Fridays', sub: 'Dedicated to Lakshmi, the divine feminine that Rohini most naturally embodies', highlight: 'Shri Sukta' },
           ].map((item, i) => (
-            <div
-              key={i}
-              style={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                paddingRight: '8%',
-              }}
-            >
-              <p
-                style={{
-                  color: 'white',
-                  fontWeight: 600,
-                  fontSize: 'clamp(10px, 1.1vw, 14px)',
-                  margin: '0 0 2px',
-                  lineHeight: 1.4,
-                }}
-              >
+            <div key={i}>
+              <p className="font-poppins font-semibold text-white text-base mb-1 leading-snug">
                 {item.main.split(item.highlight).map((part, j, arr) => (
                   <span key={j}>
                     {part}
                     {j < arr.length - 1 && (
-                      <span style={{ color: '#f59e0b', fontWeight: 700 }}>{item.highlight}</span>
+                      <span className="font-bold" style={{ color: '#f59e0b' }}>{item.highlight}</span>
                     )}
                   </span>
                 ))}
               </p>
-              <p
-                style={{
-                  color: 'rgba(255,255,255,0.65)',
-                  fontSize: 'clamp(9px, 0.9vw, 12px)',
-                  margin: 0,
-                }}
-              >
-                <span aria-hidden="true" style={{ marginRight: 4 }}>›</span>
+              <p className="font-poppins text-sm text-white/70 leading-relaxed m-0">
+                <span aria-hidden="true" className="mr-1">›</span>
                 {item.sub}
               </p>
             </div>
           ))}
+          </div>
         </div>
       </section>
 
