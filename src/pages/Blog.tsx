@@ -38,6 +38,19 @@ const SHANI_JAYANTI_CARD = {
   readTime: '7 min read',
 };
 
+const ROHINI_CARD = {
+  href: '/nakshatra/rohini',
+  title: 'Moon in Rohini Nakshatra: The Seat of Longing',
+  excerpt:
+    "Rohini is the Moon's most beloved nakshatra. Complete Vedic guide to mythology, characteristics, the 12 houses, mantras, and classical remedies.",
+  heroImage:
+    'https://pub-e1337dd263d041bba0fa87fe1c597575.r2.dev/Nakshatra/Rohini/hero-banner-rohini.webp',
+  heroImageAlt: 'Moon in Rohini Nakshatra Vedic astrology guide',
+  category: 'Vedic Astrology',
+  publishedAt: 'Jun 10, 2026',
+  readTime: '8 min read',
+};
+
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState('All Articles');
 
@@ -62,6 +75,9 @@ export default function Blog() {
 
   const showShaniCard =
     activeCategory === 'All Articles' || activeCategory === SHANI_JAYANTI_CARD.category;
+
+  const showRohiniCard =
+    activeCategory === 'All Articles' || activeCategory === ROHINI_CARD.category;
 
   if (!featuredPost) {
     return (
@@ -158,6 +174,49 @@ export default function Blog() {
                 </h3>
                 <p className="font-poppins text-blog-ink/70 text-sm leading-relaxed mb-4 line-clamp-3">
                   {SHANI_JAYANTI_CARD.excerpt}
+                </p>
+                <span className="inline-flex items-center gap-1 text-blog-gold font-semibold text-sm font-poppins">
+                  Read More
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </div>
+            </Link>
+          )}
+
+          {showRohiniCard && (
+            <Link
+              to={ROHINI_CARD.href}
+              className="group block bg-blog-cream-soft rounded-2xl overflow-hidden border border-blog-gold/20 hover:border-blog-gold/50 hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="w-full overflow-hidden bg-blog-navy rounded-t-xl">
+                <img
+                  src={ROHINI_CARD.heroImage}
+                  alt={ROHINI_CARD.heroImageAlt}
+                  className="w-full object-cover object-top"
+                  style={{ height: '200px' }}
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-5">
+                <span className="inline-flex items-center bg-blog-cream/95 rounded-full px-3 py-1 font-poppins text-blog-gold text-xs font-semibold mb-3">
+                  {ROHINI_CARD.category}
+                </span>
+                <div className="flex items-center gap-3 text-blog-ink/60 text-xs mb-3">
+                  <span className="inline-flex items-center gap-1">
+                    <Calendar className="w-3 h-3" aria-hidden="true" />
+                    <span>{ROHINI_CARD.publishedAt}</span>
+                  </span>
+                  <span className="text-blog-ink/40" aria-hidden="true">•</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="w-3 h-3" aria-hidden="true" />
+                    <span>{ROHINI_CARD.readTime}</span>
+                  </span>
+                </div>
+                <h3 className="font-poppins font-bold text-blog-ink text-base md:text-lg leading-snug mb-2 group-hover:text-blog-navy transition-colors line-clamp-2">
+                  {ROHINI_CARD.title}
+                </h3>
+                <p className="font-poppins text-blog-ink/70 text-sm leading-relaxed mb-4 line-clamp-3">
+                  {ROHINI_CARD.excerpt}
                 </p>
                 <span className="inline-flex items-center gap-1 text-blog-gold font-semibold text-sm font-poppins">
                   Read More
