@@ -59,6 +59,9 @@ const SaturnIn7thHouse = lazy(() => import('./pages/blog/SaturnIn7thHouse'));
 const MoonIn4thHouse = lazy(() => import('./pages/blog/MoonIn4thHouse'));
 const SaturnKarmaCaseStudy = lazy(() => import('./pages/blog/SaturnKarmaCaseStudy'));
 const CanAIDoVedicAstrology = lazy(() => import('./pages/blog/CanAIDoVedicAstrology'));
+const SaturnMahadashaPage = lazy(() => import('./pages/blog/SaturnMahadashaPage'));
+const JupiterRetrogradePage = lazy(() => import('./pages/blog/JupiterRetrogradePage'));
+const RohiniCompatibilityPage = lazy(() => import('./pages/blog/RohiniCompatibilityPage'));
 const ShaniJayantiPage = lazy(() => import('./pages/festivals/ShaniJayantiPage'));
 
 // Loading component for lazy-loaded pages
@@ -95,6 +98,9 @@ function App() {
           <Route path="/blog/reiki-vs-pranic-healing" element={<ReikiVsPranicPage />} />
           <Route path="/blog/mangal-dosha-cancellation-rules" element={<MangalDoshaBlogPage />} />
           <Route path="/blog/sade-sati-2026-2027-rashi-effects" element={<SadeSati2026Page />} />
+          <Route path="/blog/saturn-mahadasha-antardasha-effects" element={<SaturnMahadashaPage />} />
+          <Route path="/blog/jupiter-retrograde-2026" element={<JupiterRetrogradePage />} />
+          <Route path="/blog/rohini-nakshatra-compatibility" element={<RohiniCompatibilityPage />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/blog/shani-jayanti-2026" element={<ShaniJayantiPage />} />
           <Route path="/gallery" element={<Gallery />} />
