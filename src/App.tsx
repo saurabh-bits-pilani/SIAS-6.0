@@ -52,6 +52,9 @@ const BlogPost = lazy(() => import('./pages/BlogPost'));
 const RohiniNakshatraFemalePage = lazy(() => import('./pages/blog/RohiniNakshatraFemalePage'));
 const RohiniNakshatraMalePage = lazy(() => import('./pages/blog/RohiniNakshatraMalePage'));
 const RohiniNakshatraPadasPage = lazy(() => import('./pages/blog/RohiniNakshatraPadasPage'));
+const ReikiVsPranicPage = lazy(() => import('./pages/blog/ReikiVsPranicPage'));
+const MangalDoshaPage = lazy(() => import('./pages/blog/MangalDoshaPage'));
+const SadeSati2026Page = lazy(() => import('./pages/blog/SadeSati2026Page'));
 const SaturnIn7thHouse = lazy(() => import('./pages/blog/SaturnIn7thHouse'));
 const MoonIn4thHouse = lazy(() => import('./pages/blog/MoonIn4thHouse'));
 const SaturnKarmaCaseStudy = lazy(() => import('./pages/blog/SaturnKarmaCaseStudy'));
@@ -89,6 +92,9 @@ function App() {
           <Route path="/blog/rohini-nakshatra-female" element={<RohiniNakshatraFemalePage />} />
           <Route path="/blog/rohini-nakshatra-male" element={<RohiniNakshatraMalePage />} />
           <Route path="/blog/rohini-nakshatra-padas" element={<RohiniNakshatraPadasPage />} />
+          <Route path="/blog/reiki-vs-pranic-healing" element={<ReikiVsPranicPage />} />
+          <Route path="/blog/mangal-dosha-cancellation-rules" element={<MangalDoshaPage />} />
+          <Route path="/blog/sade-sati-2026-2027-rashi-effects" element={<SadeSati2026Page />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/blog/shani-jayanti-2026" element={<ShaniJayantiPage />} />
           <Route path="/gallery" element={<Gallery />} />
