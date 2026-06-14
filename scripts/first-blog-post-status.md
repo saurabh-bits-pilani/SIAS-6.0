@@ -185,3 +185,16 @@ A "no orphaned-bucket references" gate from the brief was dropped after diagnosi
 
 ### Stopped here per instruction
 PR #2 open. Vercel preview green. **No merge to staging or main has happened.** Awaiting your call on (a) merging PR #1 then PR #2 to staging, or (b) any of the parked items above.
+
+---
+
+## Manifest generation errors
+
+Generated at build time by `scripts/generate-blog-manifest.mjs` on 2026-06-13T21:24:49.156Z.
+
+- **can-ai-do-vedic-astrology.mdx**: frontmatter parse failed: duplicated mapping key at line 6, column 1:
+    date: "2026-06-01"
+    ^
+- **saturn-karma-two-souls.mdx**: frontmatter parse failed: duplicated mapping key at line 6, column 1:
+    date: "2026-05-22"
+    ^

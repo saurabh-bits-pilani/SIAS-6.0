@@ -49,6 +49,9 @@ const KumbhaRashiPage = lazy(() => import('./pages/zodiac/KumbhaRashiPage'));
 const MeenaRashiPage = lazy(() => import('./pages/zodiac/MeenaRashiPage'));
 const RohiniNakshatraPage = lazy(() => import('./pages/nakshatra/RohiniNakshatraPage'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const RohiniNakshatraFemalePage = lazy(() => import('./pages/blog/RohiniNakshatraFemalePage'));
+const RohiniNakshatraMalePage = lazy(() => import('./pages/blog/RohiniNakshatraMalePage'));
+const RohiniNakshatraPadasPage = lazy(() => import('./pages/blog/RohiniNakshatraPadasPage'));
 const SaturnIn7thHouse = lazy(() => import('./pages/blog/SaturnIn7thHouse'));
 const MoonIn4thHouse = lazy(() => import('./pages/blog/MoonIn4thHouse'));
 const SaturnKarmaCaseStudy = lazy(() => import('./pages/blog/SaturnKarmaCaseStudy'));
@@ -83,6 +86,9 @@ function App() {
           <Route path="/blog/moon-in-4th-house-vedic-astrology" element={<MoonIn4thHouse />} />
           <Route path="/blog/saturn-karma-two-souls" element={<SaturnKarmaCaseStudy />} />
           <Route path="/blog/can-ai-do-vedic-astrology" element={<CanAIDoVedicAstrology />} />
+          <Route path="/blog/rohini-nakshatra-female" element={<RohiniNakshatraFemalePage />} />
+          <Route path="/blog/rohini-nakshatra-male" element={<RohiniNakshatraMalePage />} />
+          <Route path="/blog/rohini-nakshatra-padas" element={<RohiniNakshatraPadasPage />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/blog/shani-jayanti-2026" element={<ShaniJayantiPage />} />
           <Route path="/gallery" element={<Gallery />} />
