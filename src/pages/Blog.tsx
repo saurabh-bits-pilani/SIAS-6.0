@@ -56,9 +56,15 @@ export default function Blog() {
 
   const sortedPosts = useMemo(() => {
     const posts = (blogManifest as any).posts || [];
-    return [...posts].sort((a: any, b: any) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
+    const now = Date.now();
+    return [...posts]
+      .filter((p: any) => {
+        const t = new Date(p.publishedAt).getTime();
+        return !Number.isNaN(t) && t <= now;
+      })
+      .sort((a: any, b: any) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
   }, []);
 
   const featuredPost = sortedPosts[0];
