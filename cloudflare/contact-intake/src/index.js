@@ -16,6 +16,264 @@ const MONTH_INDEX = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[+\d][\d\s\-()]{6,20}$/;
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function unauthorizedResponse() {
+  return new Response('Authentication required.', {
+    status: 401,
+    headers: {
+      'WWW-Authenticate': 'Basic realm="Soul Infinity Leads Preview"',
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
+  });
+}
+
+function isAuthorized(request, env) {
+  const expectedUser = env.ADMIN_USERNAME;
+  const expectedPassword = env.ADMIN_PASSWORD;
+
+  if (!expectedUser || !expectedPassword) {
+    return false;
+  }
+
+  const authorization = request.headers.get('Authorization');
+  if (!authorization || !authorization.startsWith('Basic ')) {
+    return false;
+  }
+
+  try {
+    const decoded = atob(authorization.slice(6));
+    const separatorIndex = decoded.indexOf(':');
+    if (separatorIndex === -1) {
+      return false;
+    }
+
+    const username = decoded.slice(0, separatorIndex);
+    const password = decoded.slice(separatorIndex + 1);
+    return username === expectedUser && password === expectedPassword;
+  } catch {
+    return false;
+  }
+}
+
+function renderLeadsHtml(rows) {
+  const tableRows = rows
+    .map(
+      (row) => `
+        <tr>
+          <td>${escapeHtml(row.created_at)}</td>
+          <td>${escapeHtml(row.full_name)}</td>
+          <td><a href="tel:${escapeHtml(row.phone_number)}">${escapeHtml(row.phone_number)}</a></td>
+          <td><a href="mailto:${escapeHtml(row.email_address)}">${escapeHtml(row.email_address)}</a></td>
+          <td>${escapeHtml(row.country)}</td>
+          <td>${escapeHtml(row.place_of_birth)}</td>
+          <td>${escapeHtml(row.gender)}</td>
+          <td>${escapeHtml(row.message_text || '')}</td>
+          <td>${escapeHtml(row.source_page || '')}</td>
+        </tr>`
+    )
+    .join('');
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soul Infinity Leads Preview</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f1e6;
+        --ink: #1f2937;
+        --muted: #6b7280;
+        --navy: #111827;
+        --gold: #c89b3c;
+        --card: #fffdf8;
+        --line: #e7dcc7;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(180deg, #f8f3ea 0%, #f3ecdf 100%);
+        color: var(--ink);
+      }
+      .wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 32px 20px 48px;
+      }
+      .hero {
+        background: linear-gradient(135deg, rgba(17,24,39,0.98), rgba(39,51,74,0.95));
+        color: #f9edd6;
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 24px 70px rgba(17,24,39,0.18);
+      }
+      .eyebrow {
+        color: #eac36b;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      h1 {
+        margin: 12px 0 8px;
+        font-size: 40px;
+        line-height: 1.1;
+      }
+      .sub {
+        color: #e5d7bb;
+        max-width: 720px;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      .stats {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .stat {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 18px;
+        padding: 14px 18px;
+        min-width: 180px;
+      }
+      .stat strong {
+        display: block;
+        color: white;
+        font-size: 26px;
+      }
+      .card {
+        margin-top: 24px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 18px 40px rgba(120, 93, 47, 0.08);
+      }
+      .card-head {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .card-head h2 {
+        margin: 0;
+        font-size: 20px;
+      }
+      .card-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .table-wrap {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1100px;
+      }
+      th, td {
+        padding: 14px 16px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+      th {
+        position: sticky;
+        top: 0;
+        background: #fbf6ed;
+        color: #6e5530;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      td a {
+        color: #80581f;
+        text-decoration: none;
+      }
+      td a:hover {
+        text-decoration: underline;
+      }
+      .empty {
+        padding: 40px 24px;
+        color: var(--muted);
+      }
+      @media (max-width: 768px) {
+        h1 { font-size: 30px; }
+        .wrap { padding: 18px 12px 36px; }
+        .hero { padding: 22px; border-radius: 22px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="hero">
+        <div class="eyebrow">Cloudflare Workers Preview</div>
+        <h1>Soul Infinity Leads Table</h1>
+        <p class="sub">This preview reads directly from Cloudflare D1 and lists the most recent saved contact submissions, newest first.</p>
+        <div class="stats">
+          <div class="stat">
+            <span>Total visible rows</span>
+            <strong>${rows.length}</strong>
+          </div>
+          <div class="stat">
+            <span>Data order</span>
+            <strong>Newest first</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Latest saved contacts</h2>
+            <p>Date-wise entries from Cloudflare D1</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          ${
+            rows.length > 0
+              ? `<table>
+                  <thead>
+                    <tr>
+                      <th>Created At</th>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>Country</th>
+                      <th>Place of Birth</th>
+                      <th>Gender</th>
+                      <th>Message</th>
+                      <th>Source</th>
+                    </tr>
+                  </thead>
+                  <tbody>${tableRows}</tbody>
+                </table>`
+              : `<div class="empty">No records have been saved yet.</div>`
+          }
+        </div>
+      </section>
+    </div>
+  </body>
+</html>`;
+}
+
 function json(data, status = 200, headers = {}) {
   return new Response(JSON.stringify(data), {
     status,
@@ -153,6 +411,37 @@ export default {
         200,
         corsHeaders,
       );
+    }
+
+    if (url.pathname === '/admin/leads' && request.method === 'GET') {
+      if (!isAuthorized(request, env)) {
+        return unauthorizedResponse();
+      }
+
+      const results = await env.CONTACT_DB.prepare(
+        `SELECT
+          id,
+          full_name,
+          phone_number,
+          email_address,
+          country,
+          place_of_birth,
+          gender,
+          message_text,
+          source_page,
+          created_at
+        FROM contact_submissions
+        ORDER BY created_at DESC
+        LIMIT 500`
+      ).all();
+
+      return new Response(renderLeadsHtml(results.results || []), {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'no-store',
+        },
+      });
     }
 
     if (url.pathname !== '/api/contact' || request.method !== 'POST') {

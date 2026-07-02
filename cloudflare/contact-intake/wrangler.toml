@@ -6,4 +6,4 @@ workers_dev = true
 [[d1_databases]]
 binding = "CONTACT_DB"
 database_name = "soul-infinity-contact"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "bee032ee-04aa-4dee-8867-1ed94f11494c"
