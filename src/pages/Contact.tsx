@@ -5,6 +5,10 @@ import { MapPin, Phone, Mail, Clock, MessageCircle, Send, AlertCircle } from 'lu
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
 import {
+  buildContactSubmissionPayload,
+  submitContactLead,
+} from '../utils/contact-api';
+import {
   validateContactForm,
   buildWhatsappUrl,
   type ContactFormData,
@@ -105,6 +109,23 @@ interface FaqItem {
   answer: string;
 }
 
+type SubmissionFeedback =
+  | {
+      tone: 'success';
+      title: string;
+      body: string;
+    }
+  | {
+      tone: 'warning';
+      title: string;
+      body: string;
+    }
+  | {
+      tone: 'error';
+      title: string;
+      body: string;
+    };
+
 const faqs: readonly FaqItem[] = [
   {
     question: 'Why do you need my exact birth time?',
@@ -127,11 +148,16 @@ const faqs: readonly FaqItem[] = [
 const Contact = () => {
   const [formData, setFormData] = useState<ContactFormData>(initialFormData);
   const [errors, setErrors] = useState<ValidationError[]>([]);
+  const [website, setWebsite] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<SubmissionFeedback | null>(null);
+  const [lastWhatsappUrl, setLastWhatsappUrl] = useState('');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const found = validateContactForm(formData);
     setErrors(found);
+    setFeedback(null);
     if (found.length > 0) {
       trackEvent('contact_form_validation_error', {
         error_count: found.length,
@@ -146,8 +172,56 @@ const Contact = () => {
     });
 
     const phone = import.meta.env.VITE_WHATSAPP_PHONE || DEFAULT_WHATSAPP_PHONE;
-    const url = buildWhatsappUrl(phone, formData);
-    window.open(url, '_blank', 'noopener,noreferrer');
+    const whatsappUrl = buildWhatsappUrl(phone, formData);
+    setLastWhatsappUrl(whatsappUrl);
+    setIsSubmitting(true);
+
+    try {
+      const result = await submitContactLead(
+        buildContactSubmissionPayload(formData, '/contact', website),
+      );
+
+      if (result.ok) {
+        trackEvent('contact_form_saved', {
+          contact_id: result.id,
+          country: formData.country,
+        });
+        setFeedback({
+          tone: 'success',
+          title: 'Saved successfully',
+          body:
+            'Your details have been saved securely. You can also continue on WhatsApp if you want a faster conversation.',
+        });
+        setFormData(initialFormData);
+        setWebsite('');
+        setErrors([]);
+        return;
+      }
+
+      trackEvent('contact_form_persist_failed', {
+        reason: result.error,
+      });
+      setFeedback({
+        tone: 'warning',
+        title: 'Saved fallback used',
+        body:
+          'We could not save your request to the database just now, so WhatsApp has been opened as a fallback.',
+      });
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    } catch (error) {
+      trackEvent('contact_form_persist_failed', {
+        reason: error instanceof Error ? error.message : 'unknown_error',
+      });
+      setFeedback({
+        tone: 'warning',
+        title: 'Saved fallback used',
+        body:
+          'We could not reach the save service right now, so WhatsApp has been opened as a fallback.',
+      });
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -251,7 +325,7 @@ const Contact = () => {
               </h2>
               <p className="text-gray-600 mb-8">
                 Fill out the form below and we'll get back to you within 24 hours.
-                For immediate assistance, use WhatsApp.
+                Your details can be saved securely, and you can still continue on WhatsApp for faster coordination.
               </p>
 
               {errors.length > 0 && (
@@ -272,6 +346,32 @@ const Contact = () => {
                       </ul>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {feedback && (
+                <div
+                  role="status"
+                  className={`mb-6 rounded-lg border p-4 ${
+                    feedback.tone === 'success'
+                      ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
+                      : feedback.tone === 'warning'
+                        ? 'border-amber-200 bg-amber-50 text-amber-900'
+                        : 'border-red-200 bg-red-50 text-red-900'
+                  }`}
+                >
+                  <p className="text-sm font-semibold">{feedback.title}</p>
+                  <p className="mt-1 text-sm">{feedback.body}</p>
+                  {lastWhatsappUrl && (
+                    <a
+                      href={lastWhatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center text-sm font-semibold underline underline-offset-4"
+                    >
+                      Continue on WhatsApp
+                    </a>
+                  )}
                 </div>
               )}
 
@@ -531,6 +631,20 @@ const Contact = () => {
                 </div>
 
                 <div>
+                  <label htmlFor="website" className="sr-only">
+                    Website
+                  </label>
+                  <input
+                    id="website"
+                    type="text"
+                    name="website"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="hidden"
+                    aria-hidden="true"
+                  />
                   <label htmlFor="messageText" className="block text-sm font-medium text-gray-700 mb-2">
                     Additional Message
                   </label>
@@ -547,18 +661,18 @@ const Contact = () => {
 
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <p className="text-sm text-blue-800">
-                    <strong>Note:</strong> Your birth details will be sent directly to Saurabh via WhatsApp for immediate processing.
-                    All information is kept strictly confidential and used only for your astrological consultation.
+                    <strong>Note:</strong> Your details are saved for consultation follow-up. If the save service is unavailable, we automatically fall back to WhatsApp so your inquiry is not lost.
                   </p>
                 </div>
 
                 <button
                   type="submit"
-                  aria-label="Send contact details via WhatsApp"
-                  className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center"
+                  aria-label="Save contact details and continue if needed"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70 flex items-center justify-center"
                 >
                   <Send className="w-5 h-5 mr-2" />
-                  Send Details via WhatsApp
+                  {isSubmitting ? 'Saving Your Details...' : 'Save Details'}
                 </button>
               </form>
             </motion.div>

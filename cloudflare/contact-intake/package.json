@@ -1,0 +1,10 @@
+{
+  "name": "soul-infinity-contact-intake",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create soul-infinity-contact",
+    "db:migrate": "wrangler d1 execute soul-infinity-contact --remote --file=./schema.sql"
+  }
+}
