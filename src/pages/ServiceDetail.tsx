@@ -16,6 +16,7 @@ import {
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
 import Breadcrumbs from '../components/Breadcrumbs';
+import BnnEditorialPage from '../components/services/BnnEditorialPage';
 import { SERVICES_CATALOG } from '../data/schema-entities';
 import { getServiceContent, type ServiceContent } from '../data/services-content';
 import { trackEvent } from '../utils/analytics';
@@ -564,6 +565,7 @@ const ServiceDetail = () => {
     catalogEntry?.seoTitle ?? `${currentService.title} - ${categoryNames[category]} | Soul Infinity`;
   const seoDescription = catalogEntry?.seoDescription ?? currentService.description;
   const pageH1 = content?.h1 ?? catalogEntry?.h1 ?? currentService.title;
+  const isBnnEditorialPage = category === 'vedic-astrology' && service === 'bnn' && !!content;
 
   const whatsappUrl = content
     ? buildWhatsAppUrl(content.cta.whatsappMessage)
@@ -600,6 +602,20 @@ const ServiceDetail = () => {
         ]}
       />
 
+      {isBnnEditorialPage ? (
+        <BnnEditorialPage
+          category={category}
+          service={service}
+          content={content}
+          currentService={currentService}
+          pageH1={pageH1}
+          whatsappUrl={whatsappUrl}
+          openFaq={openFaq}
+          setOpenFaq={setOpenFaq}
+          phoneTel={PHONE_TEL}
+        />
+      ) : (
+        <>
       {/* Hero Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -851,8 +867,11 @@ const ServiceDetail = () => {
           </section>
         </>
       )}
+        </>
+      )}
 
       {/* Benefits & What's Included */}
+      {!isBnnEditorialPage && (
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -896,8 +915,10 @@ const ServiceDetail = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Practitioner Section */}
+      {!isBnnEditorialPage && (
       <section className="py-16 bg-surface">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -935,8 +956,10 @@ const ServiceDetail = () => {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* CTA Block, WhatsApp first */}
+      {!isBnnEditorialPage && (
       <section className="py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img
@@ -991,9 +1014,10 @@ const ServiceDetail = () => {
           </p>
         </div>
       </section>
+      )}
 
       {/* FAQs */}
-      {content && content.faqs.length > 0 && (
+      {!isBnnEditorialPage && content && content.faqs.length > 0 && (
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.h2
