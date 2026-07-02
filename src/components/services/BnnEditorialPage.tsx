@@ -8,12 +8,15 @@ import {
   ChevronDown,
   Clock,
   Compass,
+  Flower2,
+  HelpCircle,
   MessageCircle,
   Phone,
   Quote,
   Search,
   Sparkles,
   Star,
+  Sun,
   Target,
   Users,
 } from 'lucide-react';
@@ -55,7 +58,7 @@ type BnnEditorialPageProps = {
 };
 
 const noteCardClass =
-  'rounded-[28px] border border-[#d8cbb4] bg-[#fffaf0] p-6 shadow-[0_24px_60px_rgba(50,38,20,0.12)]';
+  'rounded-[28px] border border-blog-gold/25 bg-blog-cream-soft p-6 shadow-[0_24px_60px_rgba(17,24,39,0.10)]';
 
 const editorialCards = [
   {
@@ -130,7 +133,7 @@ export default function BnnEditorialPage({
 }: BnnEditorialPageProps) {
   return (
     <>
-      <section className="relative overflow-hidden bg-[#120f1f] text-[#f9f2e1]">
+      <section className="relative overflow-hidden bg-blog-navy text-blog-cream">
         <div className="absolute inset-0">
           <img
             src={bnnHero}
@@ -138,13 +141,13 @@ export default function BnnEditorialPage({
             aria-hidden="true"
             className="h-full w-full object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(247,205,96,0.28),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(124,58,237,0.24),transparent_28%),linear-gradient(135deg,rgba(10,10,20,0.95),rgba(25,18,47,0.88))]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(245,158,11,0.24),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(251,191,36,0.18),transparent_24%),linear-gradient(135deg,rgba(17,24,39,0.96),rgba(30,41,59,0.90))]" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-14 sm:px-6 lg:px-8 lg:pb-24">
           <Link
             to="/services"
-            className="mb-10 inline-flex items-center text-sm font-semibold tracking-[0.24em] text-[#f4ddb0] transition-colors hover:text-white"
+            className="mb-10 inline-flex items-center text-sm font-semibold tracking-[0.24em] text-blog-gold transition-colors hover:text-white"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Services
@@ -156,16 +159,39 @@ export default function BnnEditorialPage({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="mb-6 inline-flex items-center rounded-full border border-[#f4ddb0]/40 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#f7d46b] backdrop-blur">
+              <div className="mb-6 inline-flex items-center rounded-full border border-blog-gold/35 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-blog-gold backdrop-blur">
                 Rare timing method
               </div>
 
-              <h1 className="max-w-4xl text-4xl font-bold leading-tight text-white md:text-6xl">
-                <span className="font-kalam text-[#f7d46b]">BNN</span>{' '}
-                <span>{pageH1}</span>
+              <Sparkles className="mb-3 h-4 w-4 text-blog-gold" aria-hidden="true" />
+              <h1 className="max-w-4xl font-poppins text-4xl font-bold leading-tight text-white md:text-6xl">
+                Reading the
               </h1>
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <Sparkles className="h-5 w-5 text-blog-gold" aria-hidden="true" />
+                <p className="font-caveat text-4xl italic text-blog-gold md:text-6xl">
+                  BNN timing file
+                </p>
+                <Sparkles className="h-5 w-5 text-blog-gold" aria-hidden="true" />
+              </div>
+              <p className="mt-3 max-w-4xl font-poppins text-2xl font-semibold leading-tight text-white md:text-4xl">
+                {pageH1}
+              </p>
+              <div className="mt-4 flex items-center gap-4">
+                <span className="h-px w-16 bg-blog-gold/40" aria-hidden="true" />
+                <Sun className="h-4 w-4 text-blog-gold" aria-hidden="true" />
+                <span className="h-px w-16 bg-blog-gold/40" aria-hidden="true" />
+              </div>
+
+              <p className="mt-4 font-caveat text-2xl text-blog-gold md:text-3xl">
+                rare, precise, cross-verified
+              </p>
 
               <p className="mt-5 max-w-3xl text-lg leading-8 text-[#f0e6d1] md:text-xl">
+                {content.heroTagline}
+              </p>
+
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-[#f0e6d1] md:text-xl">
                 {content.heroIntro}
               </p>
 
@@ -173,24 +199,24 @@ export default function BnnEditorialPage({
                 <span className="rounded-full border border-white/15 bg-white/8 px-4 py-2">
                   <HighlightStroke color="#f6d879">Best for decision timing</HighlightStroke>
                 </span>
-                <span className="font-caveat text-2xl text-[#f7d46b]">
-                  rare, precise, cross-verified
+                <span className="rounded-full border border-blog-gold/20 bg-blog-gold/10 px-4 py-2 font-poppins uppercase tracking-[0.22em] text-blog-gold">
+                  editorial consultation layout
                 </span>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
                 <div className="rounded-[24px] border border-white/12 bg-white/8 p-5 backdrop-blur">
-                  <Clock className="mb-3 h-6 w-6 text-[#f6d879]" />
+                  <Clock className="mb-3 h-6 w-6 text-blog-gold" />
                   <div className="text-2xl font-semibold text-white">{currentService.duration}</div>
                   <div className="mt-1 text-sm text-[#d2c6a9]">Deep-dive session</div>
                 </div>
                 <div className="rounded-[24px] border border-white/12 bg-white/8 p-5 backdrop-blur">
-                  <Star className="mb-3 h-6 w-6 fill-current text-[#f6d879]" />
+                  <Star className="mb-3 h-6 w-6 fill-current text-blog-gold" />
                   <div className="text-2xl font-semibold text-white">{currentService.rating}</div>
                   <div className="mt-1 text-sm text-[#d2c6a9]">Client-rated trust</div>
                 </div>
                 <div className="rounded-[24px] border border-white/12 bg-white/8 p-5 backdrop-blur">
-                  <Users className="mb-3 h-6 w-6 text-[#f6d879]" />
+                  <Users className="mb-3 h-6 w-6 text-blog-gold" />
                   <div className="text-2xl font-semibold text-white">{currentService.clients}+</div>
                   <div className="mt-1 text-sm text-[#d2c6a9]">Consultations supported</div>
                 </div>
@@ -208,7 +234,7 @@ export default function BnnEditorialPage({
                       location: 'bnn_hero',
                     })
                   }
-                  className="inline-flex items-center justify-center rounded-full bg-[#f7d46b] px-8 py-4 text-base font-semibold text-[#1f1634] transition-transform duration-300 hover:scale-[1.02] hover:bg-[#ffe08d]"
+                  className="inline-flex items-center justify-center rounded-full bg-blog-gold px-8 py-4 text-base font-semibold text-blog-navy transition-transform duration-300 hover:scale-[1.02] hover:bg-blog-gold-bright"
                 >
                   <MessageCircle className="mr-2 h-5 w-5" />
                   Start on WhatsApp
@@ -222,7 +248,7 @@ export default function BnnEditorialPage({
                       location: 'bnn_hero',
                     })
                   }
-                  className="inline-flex items-center justify-center rounded-full border border-[#f7d46b]/60 px-8 py-4 text-base font-semibold text-[#f8ebce] transition-colors duration-300 hover:bg-white/10"
+                  className="inline-flex items-center justify-center rounded-full border border-blog-gold/60 px-8 py-4 text-base font-semibold text-[#f8ebce] transition-colors duration-300 hover:bg-white/10"
                 >
                   <Phone className="mr-2 h-5 w-5" />
                   Speak to Saurabh
@@ -274,16 +300,28 @@ export default function BnnEditorialPage({
         </div>
       </section>
 
-      <section className="bg-[#f8efe1] py-16">
+      <section className="relative overflow-hidden bg-blog-cream py-16">
+        <Flower2
+          className="pointer-events-none absolute right-6 top-6 h-28 w-28 text-blog-gold/10"
+          aria-hidden="true"
+        />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="font-kalam text-2xl text-[#8b5e34]">newspaper-style brief</p>
-              <h2 className="max-w-3xl text-3xl font-bold text-[#1f172b] md:text-4xl">
-                <UnderlineScribble color="#c99a2e">Why people seek BNN now</UnderlineScribble>
+              <Sparkles className="mb-2 h-4 w-4 text-blog-gold" aria-hidden="true" />
+              <h2 className="max-w-3xl font-poppins text-3xl font-bold text-blog-ink md:text-5xl">
+                Why people seek BNN now
               </h2>
+              <p className="mt-1 font-caveat text-3xl italic text-blog-gold md:text-5xl">
+                <UnderlineScribble color="#c99a2e">Why people seek BNN now</UnderlineScribble>
+              </p>
+              <div className="mt-4 flex items-center gap-4">
+                <span className="h-px w-16 bg-blog-gold/40" aria-hidden="true" />
+                <Sun className="h-4 w-4 text-blog-gold" aria-hidden="true" />
+                <span className="h-px w-16 bg-blog-gold/40" aria-hidden="true" />
+              </div>
             </div>
-            <p className="max-w-xl text-base leading-7 text-[#5c4a35]">
+            <p className="max-w-xl text-base leading-7 text-blog-ink/75">
               Modern seekers come to BNN when a life event feels close and a general reading is not
               enough. They want timing, context, and next steps.
             </p>
@@ -291,7 +329,7 @@ export default function BnnEditorialPage({
 
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <div className={`${noteCardClass} relative overflow-hidden`}>
-              <div className="absolute -right-14 top-3 h-32 w-32 rounded-full bg-[#f0c35d]/18 blur-3xl" />
+              <div className="absolute -right-14 top-3 h-32 w-32 rounded-full bg-blog-gold/15 blur-3xl" />
               <CircleCallout color="#8b5e34">
                 <span className="font-kalam text-2xl text-[#6d4725]">The Bhrigu file</span>
               </CircleCallout>
@@ -327,7 +365,11 @@ export default function BnnEditorialPage({
         </div>
       </section>
 
-      <section className="bg-white py-20">
+      <section className="relative overflow-hidden bg-white py-20">
+        <Flower2
+          className="pointer-events-none absolute left-6 top-8 h-28 w-28 text-blog-gold/10"
+          aria-hidden="true"
+        />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="space-y-6">
@@ -335,7 +377,7 @@ export default function BnnEditorialPage({
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#9e7441]">
                   Reader&apos;s note
                 </p>
-                <h2 className="mt-3 text-3xl font-bold text-[#1f172b]">
+                <h2 className="mt-3 font-poppins text-3xl font-bold text-blog-ink md:text-4xl">
                   <HighlightStroke color="#fde68a">{content.howItWorks.heading}</HighlightStroke>
                 </h2>
                 {content.howItWorks.paragraphs.map((paragraph) => (
@@ -395,16 +437,23 @@ export default function BnnEditorialPage({
         </div>
       </section>
 
-      <section className="bg-[#f4ead9] py-20">
+      <section className="relative overflow-hidden bg-blog-cream-soft py-20">
+        <Flower2
+          className="pointer-events-none absolute right-10 top-8 h-24 w-24 text-blog-gold/10"
+          aria-hidden="true"
+        />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="font-caveat text-3xl text-[#8a6036]">client-facing dossier</p>
-              <h2 className="text-3xl font-bold text-[#1f172b] md:text-4xl">
+              <Sparkles className="mb-2 h-4 w-4 text-blog-gold" aria-hidden="true" />
+              <h2 className="font-poppins text-3xl font-bold text-blog-ink md:text-5xl">
                 What your BNN consultation gives you
               </h2>
+              <p className="mt-1 font-caveat text-3xl italic text-blog-gold md:text-5xl">
+                what lands after the reading
+              </p>
             </div>
-            <div className="max-w-2xl text-base leading-7 text-[#5f4b35]">
+            <div className="max-w-2xl text-base leading-7 text-blog-ink/75">
               The session is designed to feel premium and practical: strong timing insight,
               readable notes, and clear follow-up.
             </div>
@@ -453,7 +502,11 @@ export default function BnnEditorialPage({
         </div>
       </section>
 
-      <section className="bg-[#161127] py-20 text-[#f8efdc]">
+      <section className="relative overflow-hidden bg-blog-navy py-20 text-[#f8efdc]">
+        <Flower2
+          className="pointer-events-none absolute left-8 top-8 h-24 w-24 text-blog-gold/10"
+          aria-hidden="true"
+        />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="rounded-[32px] border border-white/10 bg-white/6 p-8 backdrop-blur">
@@ -541,13 +594,20 @@ export default function BnnEditorialPage({
       </section>
 
       {content.faqs.length > 0 && (
-        <section className="bg-white py-20">
+        <section className="relative overflow-hidden bg-white py-20">
+          <Flower2
+            className="pointer-events-none absolute right-8 top-8 h-28 w-28 text-blog-gold/10"
+            aria-hidden="true"
+          />
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 text-center">
-              <p className="font-caveat text-3xl text-[#8b5e34]">questions people actually ask</p>
-              <h2 className="text-3xl font-bold text-[#1f172b] md:text-4xl">
+              <Sparkles className="mx-auto mb-2 h-4 w-4 text-blog-gold" aria-hidden="true" />
+              <h2 className="font-poppins text-3xl font-bold text-blog-ink md:text-5xl">
                 BNN consultation FAQs
               </h2>
+              <p className="mt-1 font-caveat text-3xl italic text-blog-gold md:text-5xl">
+                questions people actually ask
+              </p>
             </div>
 
             <div className="space-y-4">
