@@ -20,6 +20,9 @@ export type ContactSubmissionResult =
   | ContactSubmissionSuccess
   | ContactSubmissionFailure;
 
+const DEFAULT_CONTACT_API_URL =
+  'https://soul-infinity-contact-intake.saurabhiim.workers.dev/api/contact';
+
 export function buildContactSubmissionPayload(
   data: ContactFormData,
   sourcePage: string,
@@ -33,7 +36,7 @@ export function buildContactSubmissionPayload(
 }
 
 export function getContactApiUrl(): string {
-  return import.meta.env.VITE_CONTACT_API_URL?.trim() || '/api/contact';
+  return import.meta.env.VITE_CONTACT_API_URL?.trim() || DEFAULT_CONTACT_API_URL;
 }
 
 export async function submitContactLead(
