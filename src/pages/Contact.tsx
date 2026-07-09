@@ -830,7 +830,7 @@ const Contact = () => {
                   {isSubmitting ? 'Saving Your Details...' : 'Save Details'}
                 </button>
 
-                <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-center">
+                <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
                   <p className="text-sm text-slate-600">
                     Existing clients can directly open their private report here:{' '}
                     <Link
@@ -840,6 +840,14 @@ const Contact = () => {
                       Client Analysis Access
                     </Link>
                   </p>
+                  <a
+                    href={PORTAL_ADMIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-100"
+                  >
+                    Open Analysis Portal Admin
+                  </a>
                 </div>
 
                 {IS_STAGING && (
