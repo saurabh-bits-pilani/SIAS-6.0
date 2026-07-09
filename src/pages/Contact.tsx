@@ -959,6 +959,17 @@ const Contact = () => {
               Use Contact Form
             </Link>
           </div>
+          <div className="mt-8 text-center">
+            <p className="text-sm text-primary-100/85">
+              Existing clients can open their private report here:{' '}
+              <Link
+                to="/my-analysis"
+                className="font-semibold underline underline-offset-4 hover:text-white"
+              >
+                Client Analysis Access
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
     </>
