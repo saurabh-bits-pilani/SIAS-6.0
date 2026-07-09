@@ -589,8 +589,27 @@ async function createReportPdf(report, submission) {
   return await pdfDoc.save();
 }
 
-function buildPortalBaseUrl(candidate, env) {
-  const raw = String(candidate || env.PORTAL_SITE_URL || 'https://www.soulinfinity.space').trim();
+function defaultPortalSiteUrl(env, requestUrl = '') {
+  const configured = String(env.PORTAL_SITE_URL || '').trim();
+  if (configured) {
+    return configured;
+  }
+
+  try {
+    const currentUrl = requestUrl ? new URL(requestUrl) : null;
+    const hostname = currentUrl?.hostname || '';
+    if (hostname.includes('contact-intake-staging')) {
+      return 'https://soul-infinitycom-git-staging-saurabh-bits-pilanis-projects.vercel.app';
+    }
+  } catch {
+    // Fall through to production default.
+  }
+
+  return 'https://www.soulinfinity.space';
+}
+
+function buildPortalBaseUrl(candidate, env, requestUrl = '') {
+  const raw = String(candidate || defaultPortalSiteUrl(env, requestUrl)).trim();
 
   try {
     const url = new URL(raw);
@@ -1768,7 +1787,7 @@ export default {
         renderPortalAdminHtml(
           leadsResult.results || [],
           reportsResult.results || [],
-          buildPortalBaseUrl('', env),
+          buildPortalBaseUrl('', env, request.url),
         ),
         {
           status: 200,
@@ -1881,7 +1900,7 @@ export default {
 
       const payload = await parseBody(request);
       const submissionId = String(payload.submissionId || '').trim();
-      const portalBaseUrl = buildPortalBaseUrl(payload.portalBaseUrl, env);
+      const portalBaseUrl = buildPortalBaseUrl(payload.portalBaseUrl, env, request.url);
       const expiryHours = Math.min(Math.max(parseInteger(payload.expiryHours, DEFAULT_LINK_EXPIRY_HOURS), 1), 720);
 
       if (!submissionId) {
