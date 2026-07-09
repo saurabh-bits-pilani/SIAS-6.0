@@ -1,3 +1,5 @@
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+
 const MONTH_INDEX = {
   January: 0,
   February: 1,
@@ -17,6 +19,11 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[+\d][\d\s\-()]{6,20}$/;
 const SESSION_LIFETIME_DAYS = 30;
 const DEFAULT_LINK_EXPIRY_HOURS = 72;
+const REPORT_LOGO_URL = 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png';
+const REPORT_SITE_URL = 'https://www.soulinfinity.space';
+const REPORT_CONTACT_EMAIL = 'soul.infinity.astro@gmail.com';
+const REPORT_CONTACT_PHONE = '+91 90790 53840';
+const REPORT_CONTACT_WHATSAPP = 'https://wa.me/919079053840';
 const textEncoder = new TextEncoder();
 
 function escapeHtml(value) {
@@ -232,8 +239,377 @@ function parseBoolean(value) {
   );
 }
 
-function buildPortalBaseUrl(candidate, env) {
-  const raw = String(candidate || env.PORTAL_SITE_URL || 'https://www.soulinfinity.space').trim();
+function normalizeBlockText(value) {
+  return String(value || '').replaceAll('\r\n', '\n').trim();
+}
+
+function normalizeWhitespace(value) {
+  return normalizeBlockText(value).replace(/\n{3,}/g, '\n\n');
+}
+
+function combineReportSections({ analysisBody, remediesBody, resourceLinksBody }) {
+  const sections = [
+    ['Planetary Analysis', normalizeWhitespace(analysisBody)],
+    ['Recommended Remedies', normalizeWhitespace(remediesBody)],
+    ['Mantras And Helpful Links', normalizeWhitespace(resourceLinksBody)],
+  ].filter(([, body]) => body);
+
+  return sections
+    .map(([title, body]) => `${title}\n${body}`)
+    .join('\n\n');
+}
+
+function wrapTextToWidth(text, font, size, maxWidth) {
+  const normalized = String(text || '').trim();
+  if (!normalized) {
+    return [''];
+  }
+
+  const tokens = normalized.split(/\s+/);
+  const lines = [];
+  let currentLine = '';
+
+  const pushLine = () => {
+    if (currentLine) {
+      lines.push(currentLine);
+      currentLine = '';
+    }
+  };
+
+  for (const token of tokens) {
+    const candidate = currentLine ? `${currentLine} ${token}` : token;
+    if (font.widthOfTextAtSize(candidate, size) <= maxWidth) {
+      currentLine = candidate;
+      continue;
+    }
+
+    if (currentLine) {
+      pushLine();
+    }
+
+    if (font.widthOfTextAtSize(token, size) <= maxWidth) {
+      currentLine = token;
+      continue;
+    }
+
+    let fragment = '';
+    for (const char of token) {
+      const fragmentCandidate = fragment + char;
+      if (font.widthOfTextAtSize(fragmentCandidate, size) <= maxWidth) {
+        fragment = fragmentCandidate;
+      } else {
+        if (fragment) {
+          lines.push(fragment);
+        }
+        fragment = char;
+      }
+    }
+
+    currentLine = fragment;
+  }
+
+  pushLine();
+  return lines.length > 0 ? lines : [''];
+}
+
+async function fetchReportLogoBytes() {
+  try {
+    const response = await fetch(REPORT_LOGO_URL);
+    if (!response.ok) {
+      return null;
+    }
+    const contentType = response.headers.get('content-type') || '';
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    return {
+      bytes,
+      isPng: contentType.includes('png'),
+    };
+  } catch {
+    return null;
+  }
+}
+
+function extractResourceEntries(value) {
+  return normalizeBlockText(value)
+    .split('\n')
+    .map((line) => line.trim())
+    .map((line) => line.replace(/^[-*•]\s*/, ''))
+    .filter(Boolean);
+}
+
+async function createReportPdf(report, submission) {
+  const pdfDoc = await PDFDocument.create();
+  const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  const logoAsset = await fetchReportLogoBytes();
+  const embeddedLogo = logoAsset
+    ? logoAsset.isPng
+      ? await pdfDoc.embedPng(logoAsset.bytes)
+      : await pdfDoc.embedJpg(logoAsset.bytes)
+    : null;
+
+  const pageWidth = 595.28;
+  const pageHeight = 841.89;
+  const marginX = 48;
+  const topMargin = 54;
+  const bottomMargin = 52;
+  const contentWidth = pageWidth - marginX * 2;
+  const normalTextSize = 11;
+  const lineGap = 5;
+
+  let page;
+  let cursorY;
+
+  const createPage = () => {
+    page = pdfDoc.addPage([pageWidth, pageHeight]);
+    page.drawRectangle({
+      x: 0,
+      y: 0,
+      width: pageWidth,
+      height: pageHeight,
+      color: rgb(0.995, 0.984, 0.957),
+    });
+    page.drawRectangle({
+      x: marginX,
+      y: pageHeight - 148,
+      width: contentWidth,
+      height: 110,
+      color: rgb(0.09, 0.125, 0.196),
+      borderColor: rgb(0.79, 0.61, 0.24),
+      borderWidth: 1,
+    });
+
+    cursorY = pageHeight - topMargin;
+
+    if (embeddedLogo) {
+      const logoDims = embeddedLogo.scale(0.24);
+      page.drawImage(embeddedLogo, {
+        x: marginX + 16,
+        y: pageHeight - 128,
+        width: logoDims.width,
+        height: logoDims.height,
+      });
+    }
+
+    page.drawText('Soul Infinity', {
+      x: marginX + 90,
+      y: pageHeight - 84,
+      font: boldFont,
+      size: 20,
+      color: rgb(1, 0.973, 0.91),
+    });
+    page.drawText('Vedic Astrology And Spiritual Guidance', {
+      x: marginX + 90,
+      y: pageHeight - 104,
+      font: regularFont,
+      size: 10,
+      color: rgb(0.94, 0.91, 0.84),
+    });
+    page.drawText(REPORT_SITE_URL, {
+      x: marginX + 90,
+      y: pageHeight - 122,
+      font: regularFont,
+      size: 9,
+      color: rgb(0.6, 0.86, 0.98),
+    });
+
+    page.drawText(REPORT_CONTACT_EMAIL, {
+      x: pageWidth - marginX - 170,
+      y: pageHeight - 84,
+      font: regularFont,
+      size: 9,
+      color: rgb(0.94, 0.91, 0.84),
+    });
+    page.drawText(REPORT_CONTACT_PHONE, {
+      x: pageWidth - marginX - 170,
+      y: pageHeight - 102,
+      font: regularFont,
+      size: 9,
+      color: rgb(0.94, 0.91, 0.84),
+    });
+    page.drawText(REPORT_CONTACT_WHATSAPP, {
+      x: pageWidth - marginX - 170,
+      y: pageHeight - 120,
+      font: regularFont,
+      size: 9,
+      color: rgb(0.6, 0.86, 0.98),
+    });
+
+    cursorY = pageHeight - 176;
+  };
+
+  const ensureSpace = (requiredHeight) => {
+    if (!page || cursorY - requiredHeight < bottomMargin) {
+      createPage();
+    }
+  };
+
+  const drawLines = (lines, options = {}) => {
+    const {
+      x = marginX,
+      font = regularFont,
+      size = normalTextSize,
+      color = rgb(0.16, 0.19, 0.25),
+      lineHeight = size + lineGap,
+      indent = 0,
+    } = options;
+
+    for (const line of lines) {
+      ensureSpace(lineHeight + 4);
+      page.drawText(line, {
+        x: x + indent,
+        y: cursorY,
+        font,
+        size,
+        color,
+      });
+      cursorY -= lineHeight;
+    }
+  };
+
+  const drawParagraphBlock = (body, options = {}) => {
+    const paragraphs = normalizeWhitespace(body).split('\n\n').filter(Boolean);
+    paragraphs.forEach((paragraph, index) => {
+      const lines = wrapTextToWidth(paragraph.replaceAll('\n', ' '), regularFont, normalTextSize, contentWidth - 12);
+      drawLines(lines, options);
+      if (index < paragraphs.length - 1) {
+        cursorY -= 6;
+      }
+    });
+  };
+
+  const drawSectionHeading = (title) => {
+    ensureSpace(42);
+    page.drawRectangle({
+      x: marginX,
+      y: cursorY - 12,
+      width: contentWidth,
+      height: 26,
+      color: rgb(0.977, 0.949, 0.898),
+      borderColor: rgb(0.89, 0.8, 0.62),
+      borderWidth: 1,
+    });
+    page.drawText(title, {
+      x: marginX + 14,
+      y: cursorY - 3,
+      font: boldFont,
+      size: 13,
+      color: rgb(0.43, 0.31, 0.15),
+    });
+    cursorY -= 38;
+  };
+
+  createPage();
+
+  page.drawText(report.title || 'Kundali Analysis', {
+    x: marginX,
+    y: cursorY,
+    font: boldFont,
+    size: 22,
+    color: rgb(0.1, 0.14, 0.2),
+  });
+  cursorY -= 26;
+
+  const summaryRows = [
+    `Client: ${submission.full_name || report.fullName || 'Soul Infinity Client'}`,
+    `Email: ${submission.email_address || ''}`,
+    `Phone: ${submission.phone_number || ''}`,
+    `Birth details: ${formatBirthDate(submission) || 'Not shared'}${formatBirthTime(submission) ? ` | ${formatBirthTime(submission)}` : ''}`,
+    `Place of birth: ${submission.place_of_birth || 'Not shared'}${submission.country ? `, ${submission.country}` : ''}`,
+    `Report type: ${report.report_type || 'Kundali Analysis'}`,
+    `Prepared on: ${formatIstTimestamp(report.updated_at || report.created_at)}`,
+  ].filter(Boolean);
+
+  drawLines(summaryRows.map((line) => line.trim()), {
+    size: 10,
+    color: rgb(0.33, 0.38, 0.46),
+    lineHeight: 16,
+  });
+  cursorY -= 8;
+
+  const sections = [
+    ['Planetary Analysis', report.analysis_body || report.report_body],
+    ['Recommended Remedies', report.remedies_body],
+    ['Mantras And Helpful Links', report.resource_links_body],
+  ];
+
+  for (const [title, body] of sections) {
+    if (!normalizeBlockText(body)) {
+      continue;
+    }
+
+    drawSectionHeading(title);
+
+    if (title === 'Mantras And Helpful Links') {
+      const entries = extractResourceEntries(body);
+      entries.forEach((entry) => {
+        const wrapped = wrapTextToWidth(`• ${entry}`, regularFont, normalTextSize, contentWidth - 8);
+        drawLines(wrapped, {
+          size: normalTextSize,
+          color: rgb(0.16, 0.19, 0.25),
+          lineHeight: 18,
+        });
+        cursorY -= 4;
+      });
+    } else {
+      drawParagraphBlock(body);
+    }
+
+    cursorY -= 12;
+  }
+
+  ensureSpace(42);
+  page.drawLine({
+    start: { x: marginX, y: cursorY },
+    end: { x: pageWidth - marginX, y: cursorY },
+    thickness: 1,
+    color: rgb(0.88, 0.83, 0.74),
+  });
+  cursorY -= 20;
+  drawLines(
+    [
+      'Soul Infinity | Vedic Astrology And Spiritual Guidance',
+      `Website: ${REPORT_SITE_URL} | Email: ${REPORT_CONTACT_EMAIL} | Phone: ${REPORT_CONTACT_PHONE}`,
+      `WhatsApp: ${REPORT_CONTACT_WHATSAPP}`,
+    ],
+    {
+      size: 9,
+      color: rgb(0.4, 0.42, 0.48),
+      lineHeight: 14,
+    },
+  );
+
+  pdfDoc.setTitle(report.title || 'Soul Infinity Analysis Report');
+  pdfDoc.setAuthor('Soul Infinity');
+  pdfDoc.setSubject(report.report_type || 'Kundali Analysis');
+  pdfDoc.setKeywords(['Soul Infinity', 'Astrology Report', 'Kundali Analysis']);
+  pdfDoc.setProducer('Soul Infinity Cloudflare Worker');
+  pdfDoc.setCreator('Soul Infinity Portal');
+
+  return await pdfDoc.save();
+}
+
+function defaultPortalSiteUrl(env, requestUrl = '') {
+  const configured = String(env.PORTAL_SITE_URL || '').trim();
+  if (configured) {
+    return configured;
+  }
+
+  try {
+    const currentUrl = requestUrl ? new URL(requestUrl) : null;
+    const hostname = currentUrl?.hostname || '';
+    if (hostname.includes('contact-intake-staging')) {
+      return 'https://soul-infinitycom-git-staging-saurabh-bits-pilanis-projects.vercel.app';
+    }
+  } catch {
+    // Fall through to production default.
+  }
+
+  return 'https://www.soulinfinity.space';
+}
+
+function buildPortalBaseUrl(candidate, env, requestUrl = '') {
+  const raw = String(candidate || defaultPortalSiteUrl(env, requestUrl)).trim();
 
   try {
     const url = new URL(raw);
@@ -419,6 +795,11 @@ async function loadPortalReports(env, email) {
       ar.title,
       ar.report_type,
       ar.report_body,
+      ar.analysis_body,
+      ar.remedies_body,
+      ar.resource_links_body,
+      ar.pdf_enabled,
+      ar.pdf_generated_at,
       ar.visible_to_client,
       ar.created_at,
       ar.updated_at,
@@ -444,6 +825,11 @@ async function loadPortalReports(env, email) {
     title: row.title,
     reportType: row.report_type,
     reportBody: row.report_body,
+    analysisBody: row.analysis_body || row.report_body || '',
+    remediesBody: row.remedies_body || '',
+    resourceLinksBody: row.resource_links_body || '',
+    pdfEnabled: Boolean(row.pdf_enabled),
+    pdfGeneratedAt: row.pdf_generated_at || '',
     visibleToClient: Boolean(row.visible_to_client),
     createdAt: row.created_at,
     updatedAt: row.updated_at,
@@ -462,6 +848,52 @@ async function buildPortalSessionPayload(env, email) {
     client: profile,
     reports,
   };
+}
+
+async function loadReportForSession(env, email, reportId) {
+  return await env.CONTACT_DB.prepare(
+    `SELECT
+      ar.id,
+      ar.submission_id,
+      ar.title,
+      ar.report_type,
+      ar.report_body,
+      ar.analysis_body,
+      ar.remedies_body,
+      ar.resource_links_body,
+      ar.admin_notes,
+      ar.pdf_enabled,
+      ar.pdf_generated_at,
+      ar.visible_to_client,
+      ar.created_at,
+      ar.updated_at,
+      ar.published_at,
+      cs.id AS contact_id,
+      cs.full_name,
+      cs.gender,
+      cs.birth_day,
+      cs.birth_month,
+      cs.birth_year,
+      cs.birth_hour,
+      cs.birth_meridiem,
+      cs.birth_minute,
+      cs.birth_second,
+      cs.phone_number,
+      cs.email_address,
+      cs.country,
+      cs.place_of_birth,
+      cs.preferred_language,
+      cs.discussion_mode
+    FROM analysis_reports ar
+    INNER JOIN contact_submissions cs
+      ON cs.id = ar.submission_id
+    WHERE ar.id = ?
+      AND cs.email_address = ?
+      AND ar.visible_to_client = 1
+    LIMIT 1`
+  )
+    .bind(reportId, email)
+    .first();
 }
 
 async function resolvePortalSession(env, request) {
@@ -851,6 +1283,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         <td>${escapeHtml(report.email_address)}</td>
         <td>${escapeHtml(report.title)}</td>
         <td>${escapeHtml(report.report_type)}</td>
+        <td>${report.pdf_enabled ? 'Enabled' : 'Off'}</td>
         <td>${report.visible_to_client ? 'Visible' : 'Draft'}</td>
       </tr>`
     )
@@ -890,6 +1323,9 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
       .card-head h2 { margin: 0; font-size: 20px; }
       .card-head p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
       .card-body { padding: 22px; }
+      .section-card { margin-bottom: 16px; border: 1px solid #eadfcf; border-radius: 18px; padding: 16px; background: linear-gradient(180deg, #fffefb 0%, #fcf8f0 100%); }
+      .section-card h3 { margin: 0 0 8px; font-size: 16px; color: #233042; }
+      .section-card p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
       label { display: block; margin-bottom: 6px; font-size: 13px; color: #5b4b32; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
       input, select, textarea { width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid #d5c7ae; background: white; font: inherit; }
       textarea { min-height: 180px; resize: vertical; }
@@ -961,9 +1397,29 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
                   <input id="reportType" name="reportType" type="text" value="Kundali Analysis" />
                 </div>
               </div>
-              <div class="field">
-                <label for="reportBody">Analysis Body</label>
-                <textarea id="reportBody" name="reportBody" placeholder="Write the astrology analysis here..." required></textarea>
+              <div class="section-card">
+                <h3>Section 1: Planetary Analysis</h3>
+                <p>This is the main reading you want the client to see in the report and portal.</p>
+                <div class="field" style="margin-bottom:0;">
+                  <label for="analysisBody">Planetary Analysis</label>
+                  <textarea id="analysisBody" name="analysisBody" placeholder="Write the full planetary analysis here..." required></textarea>
+                </div>
+              </div>
+              <div class="section-card">
+                <h3>Section 2: Remedies</h3>
+                <p>Add practical remedies, rituals, gemstones, fasting guidance, or follow-up spiritual actions.</p>
+                <div class="field" style="margin-bottom:0;">
+                  <label for="remediesBody">Recommended Remedies</label>
+                  <textarea id="remediesBody" name="remediesBody" placeholder="Write remedies and next steps here..."></textarea>
+                </div>
+              </div>
+              <div class="section-card">
+                <h3>Section 3: Mantra And Blog Links</h3>
+                <p>Add one item per line. You can paste mantra links, blog links, or plain guidance text.</p>
+                <div class="field" style="margin-bottom:0;">
+                  <label for="resourceLinksBody">Mantra / Blog Links</label>
+                  <textarea id="resourceLinksBody" name="resourceLinksBody" placeholder="Hanuman Chalisa - https://www.soulinfinity.space/blog/mantra&#10;Shani remedy guide - https://www.soulinfinity.space/blog/..."></textarea>
+                </div>
               </div>
               <div class="field">
                 <label for="adminNotes">Admin Notes</label>
@@ -971,6 +1427,10 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
               </div>
               <div class="field">
                 <label><input type="checkbox" name="visibleToClient" style="width:auto; margin-right:8px;" /> Visible to client now</label>
+              </div>
+              <div class="field">
+                <label><input type="checkbox" name="pdfEnabled" style="width:auto; margin-right:8px;" /> Generate downloadable PDF for client</label>
+                <div class="helper">Only reports with this checked will show a PDF download button inside the secure client portal.</div>
               </div>
               <button type="submit">Save Analysis</button>
             </form>
@@ -1034,6 +1494,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
                       <th>Email</th>
                       <th>Title</th>
                       <th>Type</th>
+                      <th>PDF</th>
                       <th>Status</th>
                     </tr>
                   </thead>
@@ -1185,6 +1646,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         const form = new FormData(event.currentTarget);
         const payload = Object.fromEntries(form.entries());
         payload.visibleToClient = form.get('visibleToClient') === 'on';
+        payload.pdfEnabled = form.get('pdfEnabled') === 'on';
 
         try {
           const result = await postJson('/api/admin/reports', payload);
@@ -1308,6 +1770,7 @@ export default {
             ar.id,
             ar.title,
             ar.report_type,
+            ar.pdf_enabled,
             ar.visible_to_client,
             ar.updated_at,
             cs.full_name,
@@ -1324,7 +1787,7 @@ export default {
         renderPortalAdminHtml(
           leadsResult.results || [],
           reportsResult.results || [],
-          buildPortalBaseUrl('', env),
+          buildPortalBaseUrl('', env, request.url),
         ),
         {
           status: 200,
@@ -1345,12 +1808,20 @@ export default {
       const submissionId = String(payload.submissionId || '').trim();
       const title = String(payload.title || '').trim();
       const reportType = String(payload.reportType || 'Kundali Analysis').trim() || 'Kundali Analysis';
-      const reportBody = String(payload.reportBody || '').trim();
+      const analysisBody = normalizeWhitespace(payload.analysisBody || payload.reportBody || '');
+      const remediesBody = normalizeWhitespace(payload.remediesBody || '');
+      const resourceLinksBody = normalizeWhitespace(payload.resourceLinksBody || '');
+      const reportBody = combineReportSections({
+        analysisBody,
+        remediesBody,
+        resourceLinksBody,
+      });
       const adminNotes = String(payload.adminNotes || '').trim();
       const visibleToClient = parseBoolean(payload.visibleToClient);
+      const pdfEnabled = parseBoolean(payload.pdfEnabled);
 
-      if (!submissionId || !title || !reportBody) {
-        return json({ error: 'Lead, report title, and analysis body are required.' }, 400, corsHeaders);
+      if (!submissionId || !title || !analysisBody) {
+        return json({ error: 'Lead, report title, and planetary analysis are required.' }, 400, corsHeaders);
       }
 
       const submission = await env.CONTACT_DB.prepare(
@@ -1376,12 +1847,17 @@ export default {
           title,
           report_type,
           report_body,
+          analysis_body,
+          remedies_body,
+          resource_links_body,
           admin_notes,
+          pdf_enabled,
+          pdf_generated_at,
           visible_to_client,
           created_at,
           updated_at,
           published_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
         .bind(
           reportId,
@@ -1389,7 +1865,12 @@ export default {
           title,
           reportType,
           reportBody,
+          analysisBody,
+          remediesBody,
+          resourceLinksBody,
           adminNotes,
+          pdfEnabled ? 1 : 0,
+          pdfEnabled ? now : '',
           visibleToClient ? 1 : 0,
           now,
           now,
@@ -1403,6 +1884,7 @@ export default {
           reportId,
           submissionId,
           emailAddress: submission.email_address,
+          pdfEnabled,
           visibleToClient,
           savedAt: now,
         },
@@ -1418,7 +1900,7 @@ export default {
 
       const payload = await parseBody(request);
       const submissionId = String(payload.submissionId || '').trim();
-      const portalBaseUrl = buildPortalBaseUrl(payload.portalBaseUrl, env);
+      const portalBaseUrl = buildPortalBaseUrl(payload.portalBaseUrl, env, request.url);
       const expiryHours = Math.min(Math.max(parseInteger(payload.expiryHours, DEFAULT_LINK_EXPIRY_HOURS), 1), 720);
 
       if (!submissionId) {
@@ -1577,6 +2059,56 @@ export default {
         200,
         corsHeaders,
       );
+    }
+
+    const reportPdfMatch = url.pathname.match(/^\/api\/portal\/reports\/([^/]+)\/pdf$/);
+    if (reportPdfMatch && request.method === 'GET') {
+      if (origin && !isAllowedOrigin(origin, env)) {
+        return json({ error: 'Origin not allowed.' }, 403, corsHeaders);
+      }
+
+      const session = await resolvePortalSession(env, request);
+      if (!session) {
+        return json({ error: 'Portal session is invalid or expired.' }, 401, corsHeaders);
+      }
+
+      const reportId = decodeURIComponent(reportPdfMatch[1] || '').trim();
+      if (!reportId) {
+        return json({ error: 'Report selection is required.' }, 400, corsHeaders);
+      }
+
+      const report = await loadReportForSession(env, session.email_address, reportId);
+      if (!report) {
+        return json({ error: 'This report is not available for download.' }, 404, corsHeaders);
+      }
+
+      if (!report.pdf_enabled) {
+        return json({ error: 'PDF download is not enabled for this report yet.' }, 403, corsHeaders);
+      }
+
+      const pdfBytes = await createReportPdf(report, report);
+      const filenameBase = `${report.full_name || 'soul-infinity-client'}-${report.title || 'analysis-report'}`
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'analysis-report';
+
+      await env.CONTACT_DB.prepare(
+        `UPDATE analysis_reports
+        SET pdf_generated_at = ?
+        WHERE id = ?`
+      )
+        .bind(new Date().toISOString(), report.id)
+        .run();
+
+      return new Response(pdfBytes, {
+        status: 200,
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/pdf',
+          'Cache-Control': 'no-store',
+          'Content-Disposition': `attachment; filename="${filenameBase}.pdf"`,
+        },
+      });
     }
 
     if (url.pathname === '/api/portal/logout' && request.method === 'POST') {
