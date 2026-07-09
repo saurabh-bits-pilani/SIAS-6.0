@@ -498,18 +498,18 @@ const Contact = () => {
                     save, we also prepare the WhatsApp follow-up for faster coordination.
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-3 lg:max-w-[23rem] lg:justify-end">
-                  <div className="rounded-full border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                <div className="flex flex-wrap gap-3 lg:max-w-[25rem] lg:justify-end">
+                  <div className="flex min-h-[5.75rem] min-w-[7.25rem] flex-col justify-center rounded-[1.5rem] border border-slate-200 bg-white px-4 py-3 text-center shadow-sm">
                     <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 1</p>
-                    <p className="mt-1 text-sm font-semibold text-slate-900">Personal info</p>
+                    <p className="mt-1 text-sm font-semibold leading-5 text-slate-900">Personal info</p>
                   </div>
-                  <div className="rounded-full border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                  <div className="flex min-h-[5.75rem] min-w-[7.25rem] flex-col justify-center rounded-[1.5rem] border border-slate-200 bg-white px-4 py-3 text-center shadow-sm">
                     <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 2</p>
-                    <p className="mt-1 text-sm font-semibold text-slate-900">Birth details</p>
+                    <p className="mt-1 text-sm font-semibold leading-5 text-slate-900">Birth details</p>
                   </div>
-                  <div className="rounded-full border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                  <div className="flex min-h-[5.75rem] min-w-[7.25rem] flex-col justify-center rounded-[1.5rem] border border-slate-200 bg-white px-4 py-3 text-center shadow-sm">
                     <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 3</p>
-                    <p className="mt-1 text-sm font-semibold text-slate-900">Contact + notes</p>
+                    <p className="mt-1 text-sm font-semibold leading-5 text-slate-900">Contact + notes</p>
                   </div>
                 </div>
               </div>

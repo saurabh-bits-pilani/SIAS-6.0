@@ -544,11 +544,9 @@ function renderLeadsHtml(rows) {
   const leadCards = rows
     .map(
       (row) => `
-        <article class="lead-card" data-search="${escapeHtml(
+        <article class="lead-card" data-search-primary="${escapeHtml(
           [
             row.full_name,
-            row.email_address,
-            row.phone_number,
             row.country,
             row.place_of_birth,
             row.preferred_language,
@@ -556,6 +554,15 @@ function renderLeadsHtml(rows) {
             row.gender,
             row.message_text,
             row.source_page,
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase(),
+        )}" data-search-contact="${escapeHtml(
+          [
+            row.full_name,
+            row.email_address,
+            row.phone_number,
           ]
             .filter(Boolean)
             .join(' ')
@@ -759,7 +766,12 @@ function renderLeadsHtml(rows) {
             function filteredCards() {
               const query = (searchInput.value || '').trim().toLowerCase();
               if (!query) return leadCards;
-              return leadCards.filter((card) => (card.dataset.search || '').includes(query));
+
+              const isEmailLike = query.includes('@') || query.includes('.');
+              const hasDigits = /[0-9+]/.test(query);
+              const datasetKey = isEmailLike || hasDigits ? 'searchContact' : 'searchPrimary';
+
+              return leadCards.filter((card) => (card.dataset[datasetKey] || '').includes(query));
             }
 
             function renderCards() {
