@@ -12,10 +12,13 @@ const validData: ContactFormData = {
   birthMonth: 'June',
   birthYear: '1992',
   birthHour: '09',
+  birthMeridiem: 'AM',
   birthMinute: '30',
   birthSecond: '00',
   country: 'India',
   placeOfBirth: 'Pune',
+  preferredLanguage: 'English',
+  discussionMode: 'On call',
   phoneNumber: '+91 90790 53840',
   emailAddress: 'anika@example.com',
   messageText: 'Hello',
@@ -62,10 +65,32 @@ describe('validateContactForm', () => {
   });
 
   it('rejects out-of-range hour', () => {
-    const errors = validateContactForm({ ...validData, birthHour: '25' });
+    const errors = validateContactForm({ ...validData, birthHour: '13' });
     expect(errors).toContainEqual({
       field: 'birthDate',
       message: expect.stringContaining('complete time'),
+    });
+  });
+
+  it('rejects missing meridiem, language, and discussion mode', () => {
+    const errors = validateContactForm({
+      ...validData,
+      birthMeridiem: '',
+      preferredLanguage: '',
+      discussionMode: '',
+    });
+
+    expect(errors).toContainEqual({
+      field: 'birthDate',
+      message: expect.stringContaining('complete time'),
+    });
+    expect(errors).toContainEqual({
+      field: 'preferredLanguage',
+      message: expect.stringContaining('preferred language'),
+    });
+    expect(errors).toContainEqual({
+      field: 'discussionMode',
+      message: expect.stringContaining('discussion mode'),
     });
   });
 

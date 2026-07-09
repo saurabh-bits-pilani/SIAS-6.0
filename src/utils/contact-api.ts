@@ -1,4 +1,4 @@
-import type { ContactFormData } from './validation';
+import { to24HourClock, type ContactFormData } from './validation';
 
 export interface ContactSubmissionPayload extends ContactFormData {
   sourcePage: string;
@@ -30,6 +30,7 @@ export function buildContactSubmissionPayload(
 ): ContactSubmissionPayload {
   return {
     ...data,
+    birthHour: to24HourClock(data.birthHour, data.birthMeridiem),
     sourcePage,
     website,
   };
