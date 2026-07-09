@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send, AlertCircle, CheckCircle2 } from 'lucide-react';
@@ -200,6 +200,12 @@ const Contact = () => {
   const [feedback, setFeedback] = useState<SubmissionFeedback | null>(null);
   const [lastWhatsappUrl, setLastWhatsappUrl] = useState('');
   const [successModal, setSuccessModal] = useState<SuccessModalState | null>(null);
+
+  useEffect(() => {
+    trackEvent('contact_page_view', {
+      page_path: '/contact',
+    });
+  }, []);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();

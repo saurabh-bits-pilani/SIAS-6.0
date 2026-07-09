@@ -1,7 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import Layout from './layout/Layout';
 import { usePageTracking } from './hooks/usePageTracking';
+import { IS_PRODUCTION } from './config/site';
 
 // Lazy load page-level routes for better initial bundle splitting.
 const Home = lazy(() => import('./pages/Home'));
@@ -144,6 +146,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      {IS_PRODUCTION ? <VercelAnalytics mode="production" /> : null}
     </Layout>
   );
 }

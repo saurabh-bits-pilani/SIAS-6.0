@@ -75,6 +75,7 @@ export const ROUTES = [
   '/dosha/nadi',
   '/dosha/pitru',
   '/contact',
+  '/my-analysis',
   '/privacy',
   '/404',
 ];
