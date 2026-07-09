@@ -830,7 +830,33 @@ const Contact = () => {
                   {isSubmitting ? 'Saving Your Details...' : 'Save Details'}
                 </button>
 
-                <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
+                <div className="space-y-4 rounded-2xl border-2 border-slate-300 bg-slate-50 px-5 py-5 text-center shadow-sm">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+                      Admin Quick Access
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      Use these buttons to open the saved leads list and the analysis portal admin directly.
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <a
+                      href={LEADS_ADMIN_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-14 flex-1 items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800"
+                    >
+                      Open Leads Admin
+                    </a>
+                    <a
+                      href={PORTAL_ADMIN_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-14 flex-1 items-center justify-center rounded-2xl border border-primary-300 bg-white px-6 py-4 text-base font-semibold text-primary-700 transition hover:bg-primary-50"
+                    >
+                      Open Portal Admin
+                    </a>
+                  </div>
                   <p className="text-sm text-slate-600">
                     Existing clients can directly open their private report here:{' '}
                     <Link
@@ -840,14 +866,6 @@ const Contact = () => {
                       Client Analysis Access
                     </Link>
                   </p>
-                  <a
-                    href={PORTAL_ADMIN_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-100"
-                  >
-                    Open Analysis Portal Admin
-                  </a>
                 </div>
 
                 {IS_STAGING && (
