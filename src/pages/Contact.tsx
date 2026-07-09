@@ -204,6 +204,7 @@ const Contact = () => {
   const [feedback, setFeedback] = useState<SubmissionFeedback | null>(null);
   const [lastWhatsappUrl, setLastWhatsappUrl] = useState('');
   const [successModal, setSuccessModal] = useState<SuccessModalState | null>(null);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -497,17 +498,17 @@ const Contact = () => {
                     save, we also prepare the WhatsApp follow-up for faster coordination.
                   </p>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Step 1</p>
+                <div className="flex flex-wrap gap-3 lg:max-w-[23rem] lg:justify-end">
+                  <div className="rounded-full border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 1</p>
                     <p className="mt-1 text-sm font-semibold text-slate-900">Personal info</p>
                   </div>
-                  <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Step 2</p>
+                  <div className="rounded-full border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 2</p>
                     <p className="mt-1 text-sm font-semibold text-slate-900">Birth details</p>
                   </div>
-                  <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Step 3</p>
+                  <div className="rounded-full border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 3</p>
                     <p className="mt-1 text-sm font-semibold text-slate-900">Contact + notes</p>
                   </div>
                 </div>
@@ -931,34 +932,75 @@ const Contact = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Frequently Asked Questions</span>
+      <section className="bg-[radial-gradient(circle_at_top,#f3fbff_0%,#ffffff_42%,#f9f5ee_100%)] py-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+              Answers Before You Submit
+            </p>
+            <h2 className="mt-4 font-heading text-3xl font-bold text-slate-900 md:text-5xl">
+              Frequently Asked Questions
             </h2>
-            <p className="text-xl text-gray-600">
-              Common questions about birth chart consultations and required information.
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+              Clear guidance on birth details, privacy, and what helps us prepare a better astrology consultation.
             </p>
           </div>
 
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={faq.question}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-surface rounded-xl p-6 shadow-soft"
-              >
-                <h3 className="font-heading font-bold text-lg text-gray-900 mb-3">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </motion.div>
-            ))}
+          <div className="mt-12 space-y-4">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+
+              return (
+                <motion.div
+                  key={faq.question}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                  className={`overflow-hidden rounded-[1.75rem] border transition-all duration-300 ${
+                    isOpen
+                      ? 'border-slate-900 bg-slate-900 text-white shadow-[0_24px_60px_rgba(15,23,42,0.18)]'
+                      : 'border-slate-200 bg-white shadow-[0_12px_35px_rgba(148,163,184,0.12)]'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                    className="flex w-full items-start gap-4 px-6 py-6 text-left"
+                  >
+                    <div
+                      className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl text-sm font-bold ${
+                        isOpen ? 'bg-white/10 text-white' : 'bg-slate-100 text-slate-700'
+                      }`}
+                    >
+                      {(index + 1).toString().padStart(2, '0')}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className={`font-heading text-xl font-bold ${isOpen ? 'text-white' : 'text-slate-900'}`}>
+                        {faq.question}
+                      </h3>
+                      <p className={`mt-2 text-sm leading-7 ${isOpen ? 'text-slate-300' : 'text-slate-500'}`}>
+                        {isOpen ? 'Tap to collapse' : 'Tap to read the answer'}
+                      </p>
+                    </div>
+                    <div
+                      className={`mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border text-2xl ${
+                        isOpen
+                          ? 'border-white/15 bg-white/10 text-white'
+                          : 'border-slate-200 bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      {isOpen ? '−' : '+'}
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="border-t border-white/10 px-6 pb-6 pt-5 text-base leading-8 text-slate-200">
+                      {faq.answer}
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -544,7 +544,23 @@ function renderLeadsHtml(rows) {
   const leadCards = rows
     .map(
       (row) => `
-        <article class="lead-card">
+        <article class="lead-card" data-search="${escapeHtml(
+          [
+            row.full_name,
+            row.email_address,
+            row.phone_number,
+            row.country,
+            row.place_of_birth,
+            row.preferred_language,
+            row.discussion_mode,
+            row.gender,
+            row.message_text,
+            row.source_page,
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase(),
+        )}">
           <div class="lead-top">
             <div>
               <p class="lead-time">${escapeHtml(formatIstTimestamp(row.created_at))}</p>
@@ -640,6 +656,10 @@ function renderLeadsHtml(rows) {
       .card-head { padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
       .card-head h2 { margin: 0; font-size: 20px; }
       .card-head p { margin: 0; color: var(--muted); font-size: 14px; }
+      .controls { display: grid; gap: 12px; width: 100%; }
+      .search-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+      .search-input { flex: 1 1 300px; min-width: 0; border: 1px solid #d8cdb8; border-radius: 999px; padding: 12px 16px; background: white; font: inherit; }
+      .results-chip { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 16px; border-radius: 999px; background: #fbf6ed; border: 1px solid #e7dcc7; color: #5f4b28; font-weight: 700; white-space: nowrap; }
       .lead-list { display: grid; gap: 18px; padding: 20px; }
       .lead-card { border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(180deg, #fffefb 0%, #fdf7ec 100%); padding: 20px; box-shadow: 0 14px 30px rgba(120, 93, 47, 0.06); }
       .lead-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
@@ -657,6 +677,11 @@ function renderLeadsHtml(rows) {
       .message-box { margin-top: 14px; padding: 16px; border-radius: 18px; background: #fffaf1; border: 1px solid #ead8b8; }
       .message-box span { display: block; color: #8b6f45; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
       .message-box p { margin: 8px 0 0; color: #2f3948; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+      .pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 0 20px 20px; }
+      .pagination-meta { color: var(--muted); font-size: 14px; }
+      .pagination-actions { display: flex; gap: 10px; }
+      .pager-btn { border: 1px solid #d7c8ae; background: white; color: #243042; border-radius: 999px; padding: 10px 16px; font: inherit; font-weight: 700; cursor: pointer; }
+      .pager-btn:disabled { opacity: 0.45; cursor: not-allowed; }
       .empty { padding: 40px 24px; color: var(--muted); }
       @media (max-width: 900px) {
         .lead-grid { grid-template-columns: 1fr; }
@@ -692,16 +717,104 @@ function renderLeadsHtml(rows) {
             <h2>Latest saved contacts</h2>
             <p>Date-wise entries from Cloudflare D1</p>
           </div>
+          <div class="controls">
+            <div class="search-bar">
+              <input id="leadSearch" class="search-input" type="search" placeholder="Search by name, email, phone, country, birth place, message..." />
+              <div id="resultsChip" class="results-chip">Showing ${rows.length} records</div>
+            </div>
+          </div>
         </div>
-        <div class="lead-list">
+        <div id="leadList" class="lead-list">
           ${
             rows.length > 0
               ? leadCards
               : `<div class="empty">No records have been saved yet.</div>`
           }
         </div>
+        ${
+          rows.length > 0
+            ? `<div class="pagination">
+                <div id="paginationMeta" class="pagination-meta"></div>
+                <div class="pagination-actions">
+                  <button id="prevPage" class="pager-btn" type="button">Previous</button>
+                  <button id="nextPage" class="pager-btn" type="button">Next</button>
+                </div>
+              </div>`
+            : ''
+        }
       </section>
     </div>
+    ${
+      rows.length > 0
+        ? `<script>
+            const searchInput = document.getElementById('leadSearch');
+            const leadCards = Array.from(document.querySelectorAll('.lead-card'));
+            const resultsChip = document.getElementById('resultsChip');
+            const paginationMeta = document.getElementById('paginationMeta');
+            const prevPage = document.getElementById('prevPage');
+            const nextPage = document.getElementById('nextPage');
+            const pageSize = 10;
+            let currentPage = 1;
+
+            function filteredCards() {
+              const query = (searchInput.value || '').trim().toLowerCase();
+              if (!query) return leadCards;
+              return leadCards.filter((card) => (card.dataset.search || '').includes(query));
+            }
+
+            function renderCards() {
+              const matches = filteredCards();
+              const totalPages = Math.max(1, Math.ceil(matches.length / pageSize));
+              currentPage = Math.min(currentPage, totalPages);
+              const start = (currentPage - 1) * pageSize;
+              const end = start + pageSize;
+              const visible = matches.slice(start, end);
+
+              leadCards.forEach((card) => {
+                card.style.display = 'none';
+              });
+
+              visible.forEach((card) => {
+                card.style.display = 'block';
+              });
+
+              resultsChip.textContent = 'Showing ' + matches.length + ' record' + (matches.length === 1 ? '' : 's');
+
+              if (matches.length === 0) {
+                paginationMeta.textContent = 'No matching records found.';
+              } else {
+                paginationMeta.textContent = 'Page ' + currentPage + ' of ' + totalPages + ' • Records ' + (start + 1) + '–' + Math.min(end, matches.length);
+              }
+
+              prevPage.disabled = currentPage <= 1;
+              nextPage.disabled = currentPage >= totalPages || matches.length === 0;
+            }
+
+            searchInput.addEventListener('input', () => {
+              currentPage = 1;
+              renderCards();
+            });
+
+            prevPage.addEventListener('click', () => {
+              if (currentPage > 1) {
+                currentPage -= 1;
+                renderCards();
+              }
+            });
+
+            nextPage.addEventListener('click', () => {
+              const matches = filteredCards();
+              const totalPages = Math.max(1, Math.ceil(matches.length / pageSize));
+              if (currentPage < totalPages) {
+                currentPage += 1;
+                renderCards();
+              }
+            });
+
+            renderCards();
+          </script>`
+        : ''
+    }
   </body>
 </html>`;
 }
