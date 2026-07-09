@@ -18,8 +18,12 @@ import {
 import { trackEvent } from '../utils/analytics';
 
 const DEFAULT_WHATSAPP_PHONE = '919079053840';
-const PORTAL_ADMIN_URL = 'https://soul-infinity-contact-intake.saurabhiim.workers.dev/admin/portal';
-const LEADS_ADMIN_URL = 'https://soul-infinity-contact-intake.saurabhiim.workers.dev/admin/leads';
+const LIVE_PORTAL_ADMIN_URL = 'https://soul-infinity-contact-intake.saurabhiim.workers.dev/admin/portal';
+const LIVE_LEADS_ADMIN_URL = 'https://soul-infinity-contact-intake.saurabhiim.workers.dev/admin/leads';
+const STAGING_PORTAL_ADMIN_URL = 'https://soul-infinity-contact-intake-staging.saurabhiim.workers.dev/admin/portal';
+const STAGING_LEADS_ADMIN_URL = 'https://soul-infinity-contact-intake-staging.saurabhiim.workers.dev/admin/leads';
+const PORTAL_ADMIN_URL = IS_STAGING ? STAGING_PORTAL_ADMIN_URL : LIVE_PORTAL_ADMIN_URL;
+const LEADS_ADMIN_URL = IS_STAGING ? STAGING_LEADS_ADMIN_URL : LIVE_LEADS_ADMIN_URL;
 
 const initialFormData: ContactFormData = {
   fullName: '',
@@ -200,6 +204,7 @@ const Contact = () => {
   const [feedback, setFeedback] = useState<SubmissionFeedback | null>(null);
   const [lastWhatsappUrl, setLastWhatsappUrl] = useState('');
   const [successModal, setSuccessModal] = useState<SuccessModalState | null>(null);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
   useEffect(() => {
     trackEvent('contact_page_view', {
@@ -373,67 +378,162 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Information */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={info.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center p-6 bg-surface rounded-2xl shadow-soft"
-              >
-                <div className={`w-16 h-16 ${info.color} bg-current bg-opacity-10 rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                  <info.icon className={`w-8 h-8 ${info.color}`} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-gray-900 mb-3">
-                  {info.title}
-                </h3>
-                {info.details.map((detail) => (
-                  <p key={detail} className="text-gray-600 text-sm">
-                    {detail}
-                  </p>
-                ))}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form & Map */}
-      <section className="py-20 bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              id="contact-form-section"
-              className="bg-white rounded-2xl p-8 shadow-soft"
-            >
-              <h2 className="font-heading font-bold text-3xl text-gray-900 mb-6">
-                Send Us a Message
-              </h2>
-              <p className="text-gray-600 mb-8">
-                Fill out the form below and we'll get back to you within 24 hours.
-                Your details are saved securely, and after a successful save we also prepare a WhatsApp follow-up for faster coordination.
+      <section className="bg-[linear-gradient(180deg,#f8f5ef_0%,#eef4f9_100%)] py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.92fr,1.18fr] lg:px-8">
+          <motion.aside
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="space-y-6 lg:sticky lg:top-24 lg:self-start"
+          >
+            <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-[#162032] p-8 text-white shadow-[0_30px_80px_rgba(16,24,40,0.18)]">
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f2cc7f]">
+                Consultation Desk
               </p>
+              <h2 className="mt-4 font-heading text-4xl font-bold leading-tight">
+                A calmer way to share your birth and contact details.
+              </h2>
+              <p className="mt-4 text-base leading-8 text-slate-200">
+                The form is organised step by step so nothing important gets missed. Your details are
+                saved securely first, and then we prepare the WhatsApp follow-up for faster coordination.
+              </p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                <div className="rounded-2xl border border-white/10 bg-white/10 px-4 py-4 backdrop-blur-sm">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-300">Response window</p>
+                  <p className="mt-2 text-lg font-semibold text-white">Within 24 hours</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/10 px-4 py-4 backdrop-blur-sm">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-300">Saved details</p>
+                  <p className="mt-2 text-lg font-semibold text-white">Birth data, language, mode, message</p>
+                </div>
+              </div>
+            </div>
 
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {contactInfo.map((info, index) => (
+                <motion.div
+                  key={info.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: index * 0.08 }}
+                  className="rounded-[1.75rem] border border-slate-200 bg-white/90 p-6 shadow-[0_18px_45px_rgba(148,163,184,0.12)] backdrop-blur-sm"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-slate-100 ${info.color}`}>
+                      <info.icon className={`h-6 w-6 ${info.color}`} />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-heading text-lg font-bold text-slate-900">{info.title}</h3>
+                      <div className="mt-3 space-y-1.5 text-sm leading-6 text-slate-600">
+                        {info.details.map((detail) => (
+                          <p key={detail}>{detail}</p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="rounded-[1.75rem] border border-sky-100 bg-white p-6 shadow-[0_18px_45px_rgba(148,163,184,0.12)]">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-700">
+                Keep Ready
+              </p>
+              <div className="mt-4 space-y-3 text-sm leading-7 text-slate-600">
+                <p className="rounded-2xl bg-sky-50 px-4 py-3">Exact date of birth</p>
+                <p className="rounded-2xl bg-sky-50 px-4 py-3">Birth time with AM / PM and minutes</p>
+                <p className="rounded-2xl bg-sky-50 px-4 py-3">Birth place, phone number, email address</p>
+                <p className="rounded-2xl bg-sky-50 px-4 py-3">Preferred language and discussion mode</p>
+              </div>
+            </div>
+
+            {IS_STAGING && (
+              <div className="rounded-[1.75rem] border border-amber-200 bg-amber-50/90 p-6 shadow-[0_18px_45px_rgba(148,163,184,0.12)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-800">
+                  Staging Admin Access
+                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-700">
+                  These staging buttons point to the staging worker preview so we can review safely before moving to main.
+                </p>
+                <div className="mt-5 flex flex-col gap-3">
+                  <a
+                    href={LEADS_ADMIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                  >
+                    Open Leads Admin
+                  </a>
+                  <a
+                    href={PORTAL_ADMIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                  >
+                    Open Portal Admin
+                  </a>
+                  <Link
+                    to="/my-analysis"
+                    className="inline-flex items-center justify-center rounded-2xl border border-sky-300 bg-sky-100 px-5 py-3 text-sm font-semibold text-sky-800 transition hover:bg-sky-200"
+                  >
+                    Open Client Portal Route
+                  </Link>
+                </div>
+              </div>
+            )}
+          </motion.aside>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.05 }}
+            id="contact-form-section"
+            className="overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
+          >
+            <div className="border-b border-slate-200 bg-[linear-gradient(135deg,#ffffff_0%,#f7fbff_55%,#fdf4e8_100%)] px-8 py-8">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-500">
+                    Soul Infinity Contact Form
+                  </p>
+                  <h2 className="mt-3 font-heading text-3xl font-bold text-slate-900">
+                    Share your consultation details in one organised flow.
+                  </h2>
+                  <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
+                    Fill each section once, review your birth details, and then save. After a successful
+                    save, we also prepare the WhatsApp follow-up for faster coordination.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3 lg:max-w-[25rem] lg:justify-end">
+                  <div className="flex min-h-[5.75rem] min-w-[7.25rem] flex-col justify-center rounded-[1.5rem] border border-slate-200 bg-white px-4 py-3 text-center shadow-sm">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 1</p>
+                    <p className="mt-1 text-sm font-semibold leading-5 text-slate-900">Personal info</p>
+                  </div>
+                  <div className="flex min-h-[5.75rem] min-w-[7.25rem] flex-col justify-center rounded-[1.5rem] border border-slate-200 bg-white px-4 py-3 text-center shadow-sm">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 2</p>
+                    <p className="mt-1 text-sm font-semibold leading-5 text-slate-900">Birth details</p>
+                  </div>
+                  <div className="flex min-h-[5.75rem] min-w-[7.25rem] flex-col justify-center rounded-[1.5rem] border border-slate-200 bg-white px-4 py-3 text-center shadow-sm">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Step 3</p>
+                    <p className="mt-1 text-sm font-semibold leading-5 text-slate-900">Contact + notes</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="px-8 py-8">
               {errors.length > 0 && (
                 <div
                   role="alert"
-                  className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+                  className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4"
                 >
                   <div className="flex items-start">
-                    <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
+                    <AlertCircle className="mt-0.5 mr-2 h-5 w-5 flex-shrink-0 text-red-500" />
                     <div>
-                      <p className="text-sm font-semibold text-red-800 mb-2">
+                      <p className="mb-2 text-sm font-semibold text-red-800">
                         Please correct the following before submitting:
                       </p>
-                      <ul className="text-sm text-red-700 list-disc list-inside space-y-1">
+                      <ul className="list-inside list-disc space-y-1 text-sm text-red-700">
                         {errors.map((err) => (
                           <li key={`${err.field}-${err.message}`}>{err.message}</li>
                         ))}
@@ -446,7 +546,7 @@ const Contact = () => {
               {feedback && (
                 <div
                   role="status"
-                  className={`mb-6 rounded-lg border p-4 ${
+                  className={`mb-6 rounded-2xl border p-4 ${
                     feedback.tone === 'success'
                       ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
                       : feedback.tone === 'warning'
@@ -470,15 +570,14 @@ const Contact = () => {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                {/* Personal Information */}
-                <div className="space-y-6">
-                  <h3 className="font-heading font-semibold text-lg text-gray-900 border-b border-gray-200 pb-2">
+                <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-6">
+                  <h3 className="border-b border-slate-200 pb-3 font-heading text-lg font-semibold text-gray-900">
                     Personal Information
                   </h3>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
-                      <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="fullName" className="mb-2 block text-sm font-medium text-gray-700">
                         Full Name *
                       </label>
                       <input
@@ -488,12 +587,12 @@ const Contact = () => {
                         value={formData.fullName}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
                         placeholder="Enter your full name"
                       />
                     </div>
                     <div>
-                      <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="gender" className="mb-2 block text-sm font-medium text-gray-700">
                         Gender *
                       </label>
                       <select
@@ -502,7 +601,7 @@ const Contact = () => {
                         value={formData.gender}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
                       >
                         <option value="">Select Gender</option>
                         {genders.map((gender) => (
@@ -515,245 +614,245 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Birth Details */}
-                <div className="space-y-6">
-                  <h3 className="font-heading font-semibold text-lg text-gray-900 border-b border-gray-200 pb-2">
+                <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
+                  <h3 className="border-b border-slate-200 pb-3 font-heading text-lg font-semibold text-gray-900">
                     Birth Details
                   </h3>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Date of Birth *
-                    </label>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div>
-                        <label htmlFor="birthDay" className="block text-xs text-gray-500 mb-1">Day</label>
-                        <select
-                          id="birthDay"
-                          name="birthDay"
-                          value={formData.birthDay}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        >
-                          <option value="">Day</option>
-                          {days.map((day) => (
-                            <option key={day} value={day}>
-                              {day}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor="birthMonth" className="block text-xs text-gray-500 mb-1">Month</label>
-                        <select
-                          id="birthMonth"
-                          name="birthMonth"
-                          value={formData.birthMonth}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        >
-                          <option value="">Month</option>
-                          {months.map((month) => (
-                            <option key={month} value={month}>
-                              {month}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor="birthYear" className="block text-xs text-gray-500 mb-1">Year</label>
-                        <select
-                          id="birthYear"
-                          name="birthYear"
-                          value={formData.birthYear}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        >
-                          <option value="">Year</option>
-                          {years.map((year) => (
-                            <option key={year} value={year}>
-                              {year}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Time of Birth *
-                    </label>
-                    <div className="grid grid-cols-4 gap-4">
-                      <div>
-                        <label htmlFor="birthHour" className="block text-xs text-gray-500 mb-1">Hour</label>
-                        <select
-                          id="birthHour"
-                          name="birthHour"
-                          value={formData.birthHour}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        >
-                          <option value="">Hour</option>
-                          {hours.map((hour) => (
-                            <option key={hour} value={hour}>
-                              {hour}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor="birthMeridiem" className="block text-xs text-gray-500 mb-1">AM / PM</label>
-                        <select
-                          id="birthMeridiem"
-                          name="birthMeridiem"
-                          value={formData.birthMeridiem}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        >
-                          <option value="">AM / PM</option>
-                          {meridiems.map((meridiem) => (
-                            <option key={meridiem} value={meridiem}>
-                              {meridiem}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor="birthMinute" className="block text-xs text-gray-500 mb-1">Minute</label>
-                        <select
-                          id="birthMinute"
-                          name="birthMinute"
-                          value={formData.birthMinute}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        >
-                          <option value="">Min</option>
-                          {minutes.map((minute) => (
-                            <option key={minute} value={minute}>
-                              {minute}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor="birthSecond" className="block text-xs text-gray-500 mb-1">Second</label>
-                        <select
-                          id="birthSecond"
-                          name="birthSecond"
-                          value={formData.birthSecond}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        >
-                          <option value="">Sec</option>
-                          {seconds.map((second) => (
-                            <option key={second} value={second}>
-                              {second}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="mt-6 space-y-6">
                     <div>
-                      <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-2">
-                        Country *
+                      <label className="mb-3 block text-sm font-medium text-gray-700">
+                        Date of Birth *
                       </label>
-                      <select
-                        id="country"
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                      <div className="grid grid-cols-3 gap-4">
+                        <div>
+                          <label htmlFor="birthDay" className="mb-1 block text-xs text-gray-500">Day</label>
+                          <select
+                            id="birthDay"
+                            name="birthDay"
+                            value={formData.birthDay}
+                            onChange={handleChange}
+                            required
+                            className="w-full rounded-xl border border-gray-300 px-3 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          >
+                            <option value="">Day</option>
+                            {days.map((day) => (
+                              <option key={day} value={day}>
+                                {day}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="birthMonth" className="mb-1 block text-xs text-gray-500">Month</label>
+                          <select
+                            id="birthMonth"
+                            name="birthMonth"
+                            value={formData.birthMonth}
+                            onChange={handleChange}
+                            required
+                            className="w-full rounded-xl border border-gray-300 px-3 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          >
+                            <option value="">Month</option>
+                            {months.map((month) => (
+                              <option key={month} value={month}>
+                                {month}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="birthYear" className="mb-1 block text-xs text-gray-500">Year</label>
+                          <select
+                            id="birthYear"
+                            name="birthYear"
+                            value={formData.birthYear}
+                            onChange={handleChange}
+                            required
+                            className="w-full rounded-xl border border-gray-300 px-3 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          >
+                            <option value="">Year</option>
+                            {years.map((year) => (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="mb-3 block text-sm font-medium text-gray-700">
+                        Time of Birth *
+                      </label>
+                      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                        <div>
+                          <label htmlFor="birthHour" className="mb-1 block text-xs text-gray-500">Hour</label>
+                          <select
+                            id="birthHour"
+                            name="birthHour"
+                            value={formData.birthHour}
+                            onChange={handleChange}
+                            required
+                            className="w-full rounded-xl border border-gray-300 px-3 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          >
+                            <option value="">Hour</option>
+                            {hours.map((hour) => (
+                              <option key={hour} value={hour}>
+                                {hour}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="birthMeridiem" className="mb-1 block text-xs text-gray-500">AM / PM</label>
+                          <select
+                            id="birthMeridiem"
+                            name="birthMeridiem"
+                            value={formData.birthMeridiem}
+                            onChange={handleChange}
+                            required
+                            className="w-full rounded-xl border border-gray-300 px-3 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          >
+                            <option value="">AM / PM</option>
+                            {meridiems.map((meridiem) => (
+                              <option key={meridiem} value={meridiem}>
+                                {meridiem}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="birthMinute" className="mb-1 block text-xs text-gray-500">Minute</label>
+                          <select
+                            id="birthMinute"
+                            name="birthMinute"
+                            value={formData.birthMinute}
+                            onChange={handleChange}
+                            required
+                            className="w-full rounded-xl border border-gray-300 px-3 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          >
+                            <option value="">Min</option>
+                            {minutes.map((minute) => (
+                              <option key={minute} value={minute}>
+                                {minute}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="birthSecond" className="mb-1 block text-xs text-gray-500">Second</label>
+                          <select
+                            id="birthSecond"
+                            name="birthSecond"
+                            value={formData.birthSecond}
+                            onChange={handleChange}
+                            required
+                            className="w-full rounded-xl border border-gray-300 px-3 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          >
+                            <option value="">Sec</option>
+                            {seconds.map((second) => (
+                              <option key={second} value={second}>
+                                {second}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                      <div>
+                        <label htmlFor="country" className="mb-2 block text-sm font-medium text-gray-700">
+                          Country *
+                        </label>
+                        <select
+                          id="country"
+                          name="country"
+                          value={formData.country}
+                          onChange={handleChange}
+                          required
+                          className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
                         >
                           <option value="">Select Country</option>
                           {countries.map((country) => (
                             <option key={country} value={country}>
                               {country}
-                          </option>
-                        ))}
-                      </select>
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor="placeOfBirth" className="mb-2 block text-sm font-medium text-gray-700">
+                          Place of Birth *
+                        </label>
+                        <input
+                          id="placeOfBirth"
+                          type="text"
+                          name="placeOfBirth"
+                          value={formData.placeOfBirth}
+                          onChange={handleChange}
+                          required
+                          className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                          placeholder="Enter city of birth"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label htmlFor="placeOfBirth" className="block text-sm font-medium text-gray-700 mb-2">
-                        Place of Birth *
-                      </label>
-                      <input
-                        id="placeOfBirth"
-                        type="text"
-                        name="placeOfBirth"
-                        value={formData.placeOfBirth}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                        placeholder="Enter city of birth"
-                      />
-                    </div>
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="preferredLanguage" className="block text-sm font-medium text-gray-700 mb-2">
-                        Preferred Language *
-                      </label>
-                      <select
-                        id="preferredLanguage"
-                        name="preferredLanguage"
-                        value={formData.preferredLanguage}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                      >
-                        <option value="">Select Language</option>
-                        {preferredLanguages.map((language) => (
-                          <option key={language} value={language}>
-                            {language}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="discussionMode" className="block text-sm font-medium text-gray-700 mb-2">
-                        Discussion Mode *
-                      </label>
-                      <select
-                        id="discussionMode"
-                        name="discussionMode"
-                        value={formData.discussionMode}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                      >
-                        <option value="">Select Discussion Mode</option>
-                        {discussionModes.map((mode) => (
-                          <option key={mode} value={mode}>
-                            {mode}
-                          </option>
-                        ))}
-                      </select>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                      <div>
+                        <label htmlFor="preferredLanguage" className="mb-2 block text-sm font-medium text-gray-700">
+                          Preferred Language *
+                        </label>
+                        <select
+                          id="preferredLanguage"
+                          name="preferredLanguage"
+                          value={formData.preferredLanguage}
+                          onChange={handleChange}
+                          required
+                          className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                        >
+                          <option value="">Select Language</option>
+                          {preferredLanguages.map((language) => (
+                            <option key={language} value={language}>
+                              {language}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor="discussionMode" className="mb-2 block text-sm font-medium text-gray-700">
+                          Discussion Mode *
+                        </label>
+                        <select
+                          id="discussionMode"
+                          name="discussionMode"
+                          value={formData.discussionMode}
+                          onChange={handleChange}
+                          required
+                          className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                        >
+                          <option value="">Select Discussion Mode</option>
+                          {discussionModes.map((mode) => (
+                            <option key={mode} value={mode}>
+                              {mode}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Contact Information */}
-                <div className="space-y-6">
-                  <h3 className="font-heading font-semibold text-lg text-gray-900 border-b border-gray-200 pb-2">
+                <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-6">
+                  <h3 className="border-b border-slate-200 pb-3 font-heading text-lg font-semibold text-gray-900">
                     Contact Information
                   </h3>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
-                      <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="phoneNumber" className="mb-2 block text-sm font-medium text-gray-700">
                         Phone Number *
                       </label>
                       <input
@@ -763,12 +862,12 @@ const Contact = () => {
                         value={formData.phoneNumber}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
                         placeholder="+91 90790 53840"
                       />
                     </div>
                     <div>
-                      <label htmlFor="emailAddress" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="emailAddress" className="mb-2 block text-sm font-medium text-gray-700">
                         Email Address *
                       </label>
                       <input
@@ -778,14 +877,14 @@ const Contact = () => {
                         value={formData.emailAddress}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
                         placeholder="your@email.com"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div>
+                <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
                   <label htmlFor="website" className="sr-only">
                     Website
                   </label>
@@ -800,7 +899,7 @@ const Contact = () => {
                     className="hidden"
                     aria-hidden="true"
                   />
-                  <label htmlFor="messageText" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="messageText" className="mb-2 block text-sm font-medium text-gray-700">
                     Additional Message
                   </label>
                   <textarea
@@ -809,24 +908,27 @@ const Contact = () => {
                     value={formData.messageText}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+                    className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
                     placeholder="Any specific questions or additional information you'd like to share..."
                   />
-                </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-sm text-blue-800">
-                    <strong>Note:</strong> Your birth date, birth time with AM or PM, place of birth, preferred language, and discussion mode are all saved for consultation follow-up. If the save service is unavailable, we automatically fall back to WhatsApp so your inquiry is not lost.
-                  </p>
+                  <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 p-4">
+                    <p className="text-sm text-blue-800">
+                      <strong>Note:</strong> Your birth date, birth time with AM or PM, place of birth,
+                      preferred language, and discussion mode are all saved for consultation follow-up.
+                      If the save service is unavailable, we automatically fall back to WhatsApp so your
+                      inquiry is not lost.
+                    </p>
+                  </div>
                 </div>
 
                 <button
                   type="submit"
                   aria-label="Save contact details and continue if needed"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70 flex items-center justify-center"
+                  className="flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-primary-500 to-secondary-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-[1.01] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  <Send className="w-5 h-5 mr-2" />
+                  <Send className="mr-2 h-5 w-5" />
                   {isSubmitting ? 'Saving Your Details...' : 'Save Details'}
                 </button>
 
@@ -908,40 +1010,81 @@ const Contact = () => {
                   </div>
                 )}
               </form>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Frequently Asked Questions</span>
+      <section className="bg-[radial-gradient(circle_at_top,#f3fbff_0%,#ffffff_42%,#f9f5ee_100%)] py-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+              Answers Before You Submit
+            </p>
+            <h2 className="mt-4 font-heading text-3xl font-bold text-slate-900 md:text-5xl">
+              Frequently Asked Questions
             </h2>
-            <p className="text-xl text-gray-600">
-              Common questions about birth chart consultations and required information.
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+              Clear guidance on birth details, privacy, and what helps us prepare a better astrology consultation.
             </p>
           </div>
 
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={faq.question}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-surface rounded-xl p-6 shadow-soft"
-              >
-                <h3 className="font-heading font-bold text-lg text-gray-900 mb-3">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </motion.div>
-            ))}
+          <div className="mt-12 space-y-4">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+
+              return (
+                <motion.div
+                  key={faq.question}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                  className={`overflow-hidden rounded-[1.75rem] border transition-all duration-300 ${
+                    isOpen
+                      ? 'border-slate-900 bg-slate-900 text-white shadow-[0_24px_60px_rgba(15,23,42,0.18)]'
+                      : 'border-slate-200 bg-white shadow-[0_12px_35px_rgba(148,163,184,0.12)]'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                    className="flex w-full items-start gap-4 px-6 py-6 text-left"
+                  >
+                    <div
+                      className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl text-sm font-bold ${
+                        isOpen ? 'bg-white/10 text-white' : 'bg-slate-100 text-slate-700'
+                      }`}
+                    >
+                      {(index + 1).toString().padStart(2, '0')}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className={`font-heading text-xl font-bold ${isOpen ? 'text-white' : 'text-slate-900'}`}>
+                        {faq.question}
+                      </h3>
+                      <p className={`mt-2 text-sm leading-7 ${isOpen ? 'text-slate-300' : 'text-slate-500'}`}>
+                        {isOpen ? 'Tap to collapse' : 'Tap to read the answer'}
+                      </p>
+                    </div>
+                    <div
+                      className={`mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border text-2xl ${
+                        isOpen
+                          ? 'border-white/15 bg-white/10 text-white'
+                          : 'border-slate-200 bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      {isOpen ? '−' : '+'}
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="border-t border-white/10 px-6 pb-6 pt-5 text-base leading-8 text-slate-200">
+                      {faq.answer}
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
