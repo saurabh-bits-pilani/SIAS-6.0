@@ -16,6 +16,7 @@ const Remedies = lazy(() => import('./pages/Remedies'));
 const PitraDosh = lazy(() => import('./pages/PitraDosh'));
 const Panchang = lazy(() => import('./pages/Panchang'));
 const Contact = lazy(() => import('./pages/Contact'));
+const MyAnalysis = lazy(() => import('./pages/MyAnalysis'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanetsHubPage = lazy(() => import('./pages/hubs/PlanetsHubPage'));
@@ -138,6 +139,7 @@ function App() {
           <Route path="/dosha/nadi" element={<NadiDoshaPage />} />
           <Route path="/dosha/pitru" element={<PitruDoshaPage />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/my-analysis" element={<MyAnalysis />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
