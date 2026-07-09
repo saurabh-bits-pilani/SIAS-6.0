@@ -14,6 +14,14 @@ import {
 
 const PORTAL_SESSION_STORAGE_KEY = 'soul_infinity_portal_session';
 
+function getPortalSessionStore(): Storage | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  return window.sessionStorage;
+}
+
 type PortalState =
   | { status: 'loading'; message: string }
   | { status: 'error'; message: string }
@@ -105,10 +113,7 @@ const MyAnalysis = () => {
 
     const load = async () => {
       const accessToken = searchParams.get('token')?.trim() || '';
-      const existingSession =
-        typeof window !== 'undefined'
-          ? window.localStorage.getItem(PORTAL_SESSION_STORAGE_KEY) || ''
-          : '';
+      const existingSession = getPortalSessionStore()?.getItem(PORTAL_SESSION_STORAGE_KEY) || '';
 
       try {
         if (accessToken) {
@@ -117,7 +122,7 @@ const MyAnalysis = () => {
             return;
           }
 
-          window.localStorage.setItem(PORTAL_SESSION_STORAGE_KEY, result.sessionToken);
+          getPortalSessionStore()?.setItem(PORTAL_SESSION_STORAGE_KEY, result.sessionToken);
           setSearchParams((current) => {
             current.delete('token');
             return current;
@@ -157,7 +162,7 @@ const MyAnalysis = () => {
           return;
         }
 
-        window.localStorage.removeItem(PORTAL_SESSION_STORAGE_KEY);
+        getPortalSessionStore()?.removeItem(PORTAL_SESSION_STORAGE_KEY);
         setPortalState({
           status: 'error',
           message:
@@ -181,8 +186,8 @@ const MyAnalysis = () => {
       : null;
 
   const handleLogout = async () => {
-    const sessionToken = window.localStorage.getItem(PORTAL_SESSION_STORAGE_KEY) || '';
-    window.localStorage.removeItem(PORTAL_SESSION_STORAGE_KEY);
+    const sessionToken = getPortalSessionStore()?.getItem(PORTAL_SESSION_STORAGE_KEY) || '';
+    getPortalSessionStore()?.removeItem(PORTAL_SESSION_STORAGE_KEY);
 
     if (sessionToken) {
       void logoutPortalSession(sessionToken);
@@ -196,7 +201,7 @@ const MyAnalysis = () => {
   };
 
   const handleDownloadPdf = async (report: PortalReport) => {
-    const sessionToken = window.localStorage.getItem(PORTAL_SESSION_STORAGE_KEY) || '';
+    const sessionToken = getPortalSessionStore()?.getItem(PORTAL_SESSION_STORAGE_KEY) || '';
     if (!sessionToken) {
       window.alert('Your secure session expired. Please open the latest analysis link again before downloading the report.');
       return;
@@ -324,7 +329,7 @@ const MyAnalysis = () => {
                     <p className="mt-3 text-sm leading-7 text-slate-600">
                       {portalState.deliveryEmail
                         ? `Access redeemed for ${portalState.deliveryEmail}.`
-                        : 'Your session is active on this device.'}
+                        : 'Your session is active in this tab only.'}
                     </p>
                   </div>
 
