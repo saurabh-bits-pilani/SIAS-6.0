@@ -541,24 +541,69 @@ async function createPortalSession(env, submissionId, emailAddress) {
 }
 
 function renderLeadsHtml(rows) {
-  const tableRows = rows
+  const leadCards = rows
     .map(
       (row) => `
-        <tr>
-          <td>${escapeHtml(formatIstTimestamp(row.created_at))}</td>
-          <td>${escapeHtml(row.full_name)}</td>
-          <td>${escapeHtml(formatBirthDate(row))}</td>
-          <td>${escapeHtml(formatBirthTime(row))}</td>
-          <td><a href="tel:${escapeHtml(row.phone_number)}">${escapeHtml(row.phone_number)}</a></td>
-          <td><a href="mailto:${escapeHtml(row.email_address)}">${escapeHtml(row.email_address)}</a></td>
-          <td>${escapeHtml(row.country)}</td>
-          <td>${escapeHtml(row.place_of_birth)}</td>
-          <td>${escapeHtml(row.preferred_language || '')}</td>
-          <td>${escapeHtml(row.discussion_mode || '')}</td>
-          <td>${escapeHtml(row.gender)}</td>
-          <td>${escapeHtml(row.message_text || '')}</td>
-          <td>${escapeHtml(row.source_page || '')}</td>
-        </tr>`
+        <article class="lead-card">
+          <div class="lead-top">
+            <div>
+              <p class="lead-time">${escapeHtml(formatIstTimestamp(row.created_at))}</p>
+              <h3>${escapeHtml(row.full_name)}</h3>
+            </div>
+            <div class="lead-actions">
+              <a href="tel:${escapeHtml(row.phone_number)}">Call</a>
+              <a href="mailto:${escapeHtml(row.email_address)}">Email</a>
+            </div>
+          </div>
+
+          <div class="lead-grid">
+            <div class="meta">
+              <span>Birth date</span>
+              <strong>${escapeHtml(formatBirthDate(row))}</strong>
+            </div>
+            <div class="meta">
+              <span>Birth time</span>
+              <strong>${escapeHtml(formatBirthTime(row))}</strong>
+            </div>
+            <div class="meta">
+              <span>Phone</span>
+              <strong><a href="tel:${escapeHtml(row.phone_number)}">${escapeHtml(row.phone_number)}</a></strong>
+            </div>
+            <div class="meta">
+              <span>Email</span>
+              <strong><a href="mailto:${escapeHtml(row.email_address)}">${escapeHtml(row.email_address)}</a></strong>
+            </div>
+            <div class="meta">
+              <span>Country</span>
+              <strong>${escapeHtml(row.country || 'Not shared')}</strong>
+            </div>
+            <div class="meta">
+              <span>Place of birth</span>
+              <strong>${escapeHtml(row.place_of_birth || 'Not shared')}</strong>
+            </div>
+            <div class="meta">
+              <span>Language</span>
+              <strong>${escapeHtml(row.preferred_language || 'Not shared')}</strong>
+            </div>
+            <div class="meta">
+              <span>Discussion mode</span>
+              <strong>${escapeHtml(row.discussion_mode || 'Not shared')}</strong>
+            </div>
+            <div class="meta">
+              <span>Gender</span>
+              <strong>${escapeHtml(row.gender || 'Not shared')}</strong>
+            </div>
+            <div class="meta">
+              <span>Source</span>
+              <strong>${escapeHtml(row.source_page || '/contact')}</strong>
+            </div>
+          </div>
+
+          <div class="message-box">
+            <span>Message</span>
+            <p>${escapeHtml(row.message_text || 'No additional message shared.')}</p>
+          </div>
+        </article>`
     )
     .join('');
 
@@ -595,13 +640,28 @@ function renderLeadsHtml(rows) {
       .card-head { padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
       .card-head h2 { margin: 0; font-size: 20px; }
       .card-head p { margin: 0; color: var(--muted); font-size: 14px; }
-      .table-wrap { overflow: auto; }
-      table { width: 100%; border-collapse: collapse; min-width: 1100px; }
-      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); font-size: 14px; }
-      th { position: sticky; top: 0; background: #fbf6ed; color: #6e5530; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
-      td a { color: #80581f; text-decoration: none; }
-      td a:hover { text-decoration: underline; }
+      .lead-list { display: grid; gap: 18px; padding: 20px; }
+      .lead-card { border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(180deg, #fffefb 0%, #fdf7ec 100%); padding: 20px; box-shadow: 0 14px 30px rgba(120, 93, 47, 0.06); }
+      .lead-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
+      .lead-top h3 { margin: 8px 0 0; font-size: 24px; line-height: 1.15; color: #243042; }
+      .lead-time { margin: 0; color: #8a6a39; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+      .lead-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .lead-actions a { display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 999px; color: #243042; text-decoration: none; border: 1px solid #d7c8ae; background: rgba(255,255,255,0.95); font-weight: 700; }
+      .lead-actions a:hover { background: #fbf6ed; }
+      .lead-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .meta { min-width: 0; padding: 14px 15px; border-radius: 16px; background: #fffdfa; border: 1px solid #eee1c7; }
+      .meta span { display: block; color: #8b6f45; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+      .meta strong { display: block; margin-top: 6px; color: #243042; font-size: 15px; line-height: 1.55; overflow-wrap: anywhere; }
+      .meta a { color: #80581f; text-decoration: none; }
+      .meta a:hover { text-decoration: underline; }
+      .message-box { margin-top: 14px; padding: 16px; border-radius: 18px; background: #fffaf1; border: 1px solid #ead8b8; }
+      .message-box span { display: block; color: #8b6f45; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+      .message-box p { margin: 8px 0 0; color: #2f3948; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
       .empty { padding: 40px 24px; color: var(--muted); }
+      @media (max-width: 900px) {
+        .lead-grid { grid-template-columns: 1fr; }
+        .lead-top { flex-direction: column; }
+      }
     </style>
   </head>
   <body>
@@ -633,29 +693,10 @@ function renderLeadsHtml(rows) {
             <p>Date-wise entries from Cloudflare D1</p>
           </div>
         </div>
-        <div class="table-wrap">
+        <div class="lead-list">
           ${
             rows.length > 0
-              ? `<table>
-                  <thead>
-                    <tr>
-                      <th>Created At (IST)</th>
-                      <th>Name</th>
-                      <th>Birth Date</th>
-                      <th>Birth Time</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Country</th>
-                      <th>Place of Birth</th>
-                      <th>Language</th>
-                      <th>Discussion Mode</th>
-                      <th>Gender</th>
-                      <th>Message</th>
-                      <th>Source</th>
-                    </tr>
-                  </thead>
-                  <tbody>${tableRows}</tbody>
-                </table>`
+              ? leadCards
               : `<div class="empty">No records have been saved yet.</div>`
           }
         </div>
