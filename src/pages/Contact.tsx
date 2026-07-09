@@ -416,46 +416,6 @@ const Contact = () => {
                 Your details are saved securely, and after a successful save we also prepare a WhatsApp follow-up for faster coordination.
               </p>
 
-              {IS_STAGING && (
-                <div className="mb-8 rounded-2xl border border-sky-200 bg-sky-50/80 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">
-                    Staging Quick Admin Access
-                  </p>
-                  <h3 className="mt-2 font-heading text-xl font-bold text-slate-900">
-                    Open the admin links from here whenever you need to reply or update an analysis.
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
-                    The admin pages still require your existing password. The client-facing analysis page is
-                    <span className="mx-1 font-mono text-xs text-slate-700">/my-analysis</span>
-                    on this same staging domain.
-                  </p>
-                  <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                    <a
-                      href={LEADS_ADMIN_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-                    >
-                      Open Leads Admin
-                    </a>
-                    <a
-                      href={PORTAL_ADMIN_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                    >
-                      Open Portal Admin
-                    </a>
-                    <Link
-                      to="/my-analysis"
-                      className="inline-flex items-center justify-center rounded-full border border-sky-300 bg-sky-100 px-5 py-3 text-sm font-semibold text-sky-800 transition hover:bg-sky-200"
-                    >
-                      Open Client Portal Route
-                    </Link>
-                  </div>
-                </div>
-              )}
-
               {errors.length > 0 && (
                 <div
                   role="alert"
@@ -863,6 +823,46 @@ const Contact = () => {
                   <Send className="w-5 h-5 mr-2" />
                   {isSubmitting ? 'Saving Your Details...' : 'Save Details'}
                 </button>
+
+                {IS_STAGING && (
+                  <div className="rounded-2xl border border-sky-200 bg-sky-50/80 p-5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">
+                      Staging Quick Admin Access
+                    </p>
+                    <h3 className="mt-2 font-heading text-xl font-bold text-slate-900">
+                      Open the admin links from here whenever you need to reply or update an analysis.
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">
+                      The admin pages still require your existing password. The client-facing analysis page is
+                      <span className="mx-1 font-mono text-xs text-slate-700">/my-analysis</span>
+                      on this same staging domain.
+                    </p>
+                    <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                      <a
+                        href={LEADS_ADMIN_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                      >
+                        Open Leads Admin
+                      </a>
+                      <a
+                        href={PORTAL_ADMIN_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                      >
+                        Open Portal Admin
+                      </a>
+                      <Link
+                        to="/my-analysis"
+                        className="inline-flex items-center justify-center rounded-full border border-sky-300 bg-sky-100 px-5 py-3 text-sm font-semibold text-sky-800 transition hover:bg-sky-200"
+                      >
+                        Open Client Portal Route
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </form>
             </motion.div>
           </div>
