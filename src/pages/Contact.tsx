@@ -830,6 +830,18 @@ const Contact = () => {
                   {isSubmitting ? 'Saving Your Details...' : 'Save Details'}
                 </button>
 
+                <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-center">
+                  <p className="text-sm text-slate-600">
+                    Existing clients can directly open their private report here:{' '}
+                    <Link
+                      to="/my-analysis"
+                      className="font-semibold text-primary-700 underline underline-offset-4 hover:text-primary-800"
+                    >
+                      Client Analysis Access
+                    </Link>
+                  </p>
+                </div>
+
                 {IS_STAGING && (
                   <div className="rounded-2xl border border-sky-200 bg-sky-50/80 p-5">
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">
