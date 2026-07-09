@@ -16,6 +16,11 @@ export interface PortalReport {
   title: string;
   reportType: string;
   reportBody: string;
+  analysisBody: string;
+  remediesBody: string;
+  resourceLinksBody: string;
+  pdfEnabled: boolean;
+  pdfGeneratedAt: string;
   visibleToClient: boolean;
   createdAt: string;
   updatedAt: string;
@@ -36,11 +41,22 @@ export interface RedeemPortalLinkResult extends PortalSessionPayload {
   deliveryEmail: string;
 }
 
-const DEFAULT_PORTAL_API_BASE =
+const LIVE_PORTAL_API_BASE =
   'https://soul-infinity-contact-intake.saurabhiim.workers.dev';
+const STAGING_PORTAL_API_BASE =
+  'https://soul-infinity-contact-intake-staging.saurabhiim.workers.dev';
 
 export function getPortalApiBaseUrl(): string {
-  return import.meta.env.VITE_PORTAL_API_URL?.trim() || DEFAULT_PORTAL_API_BASE;
+  const override = import.meta.env.VITE_PORTAL_API_URL?.trim();
+  if (override) {
+    return override;
+  }
+
+  const isProduction =
+    import.meta.env.VITE_SITE_ENV === 'production' ||
+    import.meta.env.VERCEL_ENV === 'production';
+
+  return isProduction ? LIVE_PORTAL_API_BASE : STAGING_PORTAL_API_BASE;
 }
 
 async function readJson<T>(response: Response): Promise<T> {
@@ -89,4 +105,26 @@ export async function logoutPortalSession(sessionToken: string): Promise<void> {
       Authorization: `Bearer ${sessionToken}`,
     },
   });
+}
+
+export async function downloadPortalReportPdf(sessionToken: string, reportId: string): Promise<Blob> {
+  const response = await fetch(`${getPortalApiBaseUrl()}/api/portal/reports/${encodeURIComponent(reportId)}/pdf`, {
+    headers: {
+      Authorization: `Bearer ${sessionToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const message =
+      body &&
+      typeof body === 'object' &&
+      'error' in body &&
+      typeof body.error === 'string'
+        ? body.error
+        : 'Unable to download the PDF report.';
+    throw new Error(message);
+  }
+
+  return await response.blob();
 }

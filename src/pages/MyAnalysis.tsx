@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock3, LogOut, Mail, ShieldCheck, Sparkles } from 'lucide-react';
+import { BookOpen, Clock3, Download, LogOut, Mail, ShieldCheck, Sparkles } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import {
+  downloadPortalReportPdf,
   fetchPortalSession,
   logoutPortalSession,
   redeemPortalAccessLink,
@@ -45,8 +46,55 @@ function formatPortalDate(value: string): string {
   }).format(date);
 }
 
+function renderTextWithLinks(value: string) {
+  const parts = value.split(/(https?:\/\/[^\s]+)/g);
+  return parts.map((part, index) => {
+    if (/^https?:\/\//.test(part)) {
+      return (
+        <a
+          key={`${part}-${index}`}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-sky-700 underline underline-offset-4 hover:text-sky-800"
+        >
+          {part}
+        </a>
+      );
+    }
+
+    return <span key={`${part}-${index}`}>{part}</span>;
+  });
+}
+
+function renderParagraphs(value: string) {
+  return value
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+    .map((paragraph, index) => (
+      <p key={`${paragraph.slice(0, 24)}-${index}`} className="leading-8 text-slate-700">
+        {renderTextWithLinks(paragraph)}
+      </p>
+    ));
+}
+
+function renderLinkEntries(value: string) {
+  return value
+    .split('\n')
+    .map((line) => line.trim())
+    .map((line) => line.replace(/^[-*•]\s*/, ''))
+    .filter(Boolean)
+    .map((line, index) => (
+      <li key={`${line.slice(0, 24)}-${index}`} className="leading-8 text-slate-700">
+        {renderTextWithLinks(line)}
+      </li>
+    ));
+}
+
 const MyAnalysis = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [downloadingReportId, setDownloadingReportId] = useState<string | null>(null);
   const [portalState, setPortalState] = useState<PortalState>({
     status: 'loading',
     message: 'Opening your private analysis portal...',
@@ -145,6 +193,40 @@ const MyAnalysis = () => {
       message:
         'You have been signed out of the analysis portal. Open your secure email link again whenever you want to revisit your reading.',
     });
+  };
+
+  const handleDownloadPdf = async (report: PortalReport) => {
+    const sessionToken = window.localStorage.getItem(PORTAL_SESSION_STORAGE_KEY) || '';
+    if (!sessionToken) {
+      window.alert('Your secure session expired. Please open the latest analysis link again before downloading the report.');
+      return;
+    }
+
+    try {
+      setDownloadingReportId(report.id);
+      const blob = await downloadPortalReportPdf(sessionToken, report.id);
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const slug = `${report.title || 'soul-infinity-analysis'}`
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'soul-infinity-analysis';
+
+      link.href = downloadUrl;
+      link.download = `${slug}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      window.alert(
+        error instanceof Error
+          ? error.message
+          : 'We could not download the PDF report right now.',
+      );
+    } finally {
+      setDownloadingReportId(null);
+    }
   };
 
   return (
@@ -319,14 +401,66 @@ const MyAnalysis = () => {
                             {activeReport.placeOfBirth ? ` • Birth place recorded as ${activeReport.placeOfBirth}` : ''}
                           </p>
                         </div>
-                        <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
-                          History maintained on Soul Infinity for future readings.
-                        </div>
+                      <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                        History maintained on Soul Infinity for future readings.
                       </div>
+                    </div>
 
-                      <article className="prose prose-slate mt-8 max-w-none whitespace-pre-wrap leading-8">
-                        {activeReport.reportBody}
-                      </article>
+                      {activeReport.pdfEnabled && (
+                        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/80 px-5 py-4">
+                          <div>
+                            <p className="text-sm font-semibold text-slate-900">Download your branded PDF report</p>
+                            <p className="mt-1 text-sm text-slate-600">
+                              This download includes your analysis, remedies, and mantra or blog references in one Soul Infinity report.
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => void handleDownloadPdf(activeReport)}
+                            disabled={downloadingReportId === activeReport.id}
+                            className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+                          >
+                            <Download className="mr-2 h-4 w-4" />
+                            {downloadingReportId === activeReport.id ? 'Preparing PDF...' : 'Download PDF Report'}
+                          </button>
+                        </div>
+                      )}
+
+                      <div className="mt-8 space-y-6">
+                        <section className="rounded-[28px] border border-slate-200 bg-slate-50/80 p-6">
+                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+                            Section 1
+                          </p>
+                          <h3 className="mt-2 font-heading text-2xl font-bold text-slate-900">Planetary Analysis</h3>
+                          <div className="mt-4 space-y-4">
+                            {renderParagraphs(activeReport.analysisBody || activeReport.reportBody)}
+                          </div>
+                        </section>
+
+                        {activeReport.remediesBody && (
+                          <section className="rounded-[28px] border border-slate-200 bg-white p-6">
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+                              Section 2
+                            </p>
+                            <h3 className="mt-2 font-heading text-2xl font-bold text-slate-900">Recommended Remedies</h3>
+                            <div className="mt-4 space-y-4">
+                              {renderParagraphs(activeReport.remediesBody)}
+                            </div>
+                          </section>
+                        )}
+
+                        {activeReport.resourceLinksBody && (
+                          <section className="rounded-[28px] border border-slate-200 bg-white p-6">
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+                              Section 3
+                            </p>
+                            <h3 className="mt-2 font-heading text-2xl font-bold text-slate-900">Mantras And Helpful Links</h3>
+                            <ul className="mt-4 space-y-3">
+                              {renderLinkEntries(activeReport.resourceLinksBody)}
+                            </ul>
+                          </section>
+                        )}
+                      </div>
                     </>
                   ) : (
                     <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-slate-600">
