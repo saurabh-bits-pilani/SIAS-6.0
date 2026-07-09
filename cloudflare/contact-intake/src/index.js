@@ -28,6 +28,13 @@ function escapeHtml(value) {
     .replaceAll("'", '&#39;');
 }
 
+function safeJsonForScript(value) {
+  return JSON.stringify(value)
+    .replaceAll('<', '\\u003c')
+    .replaceAll('>', '\\u003e')
+    .replaceAll('&', '\\u0026');
+}
+
 function unauthorizedResponse() {
   return new Response('Authentication required.', {
     status: 401,
@@ -659,11 +666,16 @@ function renderLeadsHtml(rows) {
 }
 
 function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
-  const leadOptions = leads
-    .map(
-      (lead) => `<option value="${escapeHtml(lead.id)}">${escapeHtml(lead.full_name)} | ${escapeHtml(lead.email_address)} | ${escapeHtml(formatIstTimestamp(lead.created_at))}</option>`
-    )
-    .join('');
+  const leadDataJson = safeJsonForScript(
+    leads.map((lead) => ({
+      id: lead.id,
+      fullName: lead.full_name,
+      emailAddress: lead.email_address,
+      phoneNumber: lead.phone_number || '',
+      createdAt: lead.created_at,
+      createdAtLabel: formatIstTimestamp(lead.created_at),
+    })),
+  );
 
   const reportRows = reports
     .map(
@@ -724,6 +736,11 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
       .status.success { background: #ecfdf5; color: var(--green); border: 1px solid #a7f3d0; }
       .status.error { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
       .status code { display: block; white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 8px; }
+      .picker-meta { margin-top: 8px; color: var(--muted); font-size: 13px; }
+      .quick-leads { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+      .quick-lead { border: 1px solid #cfe0f5; background: #f7fbff; color: #174a7a; border-radius: 999px; padding: 8px 12px; font-size: 13px; cursor: pointer; }
+      .quick-lead:hover { background: #edf6ff; }
+      .helper { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.6; }
       table { width: 100%; border-collapse: collapse; }
       th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); font-size: 14px; }
       th { background: #fbf6ed; color: #6e5530; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
@@ -756,11 +773,17 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
           <div class="card-body">
             <form id="report-form">
               <div class="field">
+                <label for="reportLeadSearch">Find Lead</label>
+                <input id="reportLeadSearch" type="text" placeholder="Search by name, email, or phone" autocomplete="off" />
+                <div class="helper">Recent leads from the last 5 days appear first. Use search for older records.</div>
+                <div id="reportQuickLeads" class="quick-leads"></div>
+              </div>
+              <div class="field">
                 <label for="submissionId">Lead</label>
                 <select id="submissionId" name="submissionId" required>
                   <option value="">Select a saved lead</option>
-                  ${leadOptions}
                 </select>
+                <div id="reportLeadMeta" class="picker-meta"></div>
               </div>
               <div class="row">
                 <div class="field">
@@ -797,11 +820,17 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
           <div class="card-body">
             <form id="link-form">
               <div class="field">
+                <label for="linkLeadSearch">Find Lead</label>
+                <input id="linkLeadSearch" type="text" placeholder="Search by name, email, or phone" autocomplete="off" />
+                <div class="helper">Recent leads from the last 5 days appear first. Use search for older records.</div>
+                <div id="linkQuickLeads" class="quick-leads"></div>
+              </div>
+              <div class="field">
                 <label for="linkSubmissionId">Lead</label>
                 <select id="linkSubmissionId" name="submissionId" required>
                   <option value="">Select a saved lead</option>
-                  ${leadOptions}
                 </select>
+                <div id="linkLeadMeta" class="picker-meta"></div>
               </div>
               <div class="row">
                 <div class="field">
@@ -851,6 +880,9 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
     </div>
 
     <script>
+      const leads = ${leadDataJson};
+      const recentThreshold = Date.now() - 5 * 24 * 60 * 60 * 1000;
+
       async function postJson(url, payload) {
         const response = await fetch(url, {
           method: 'POST',
@@ -872,6 +904,115 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         node.className = 'status show ' + tone;
         node.innerHTML = '<strong>' + title + '</strong>' + (detail ? '<code>' + detail.replaceAll('<', '&lt;') + '</code>' : '');
       }
+
+      function buildLeadLabel(lead) {
+        const phone = lead.phoneNumber ? ' | ' + lead.phoneNumber : '';
+        return lead.fullName + ' | ' + lead.emailAddress + phone + ' | ' + lead.createdAtLabel;
+      }
+
+      function escapeInlineHtml(value) {
+        return String(value)
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#39;');
+      }
+
+      function renderLeadMeta(metaId, lead) {
+        const metaNode = document.getElementById(metaId);
+        if (!metaNode) return;
+        if (!lead) {
+          metaNode.textContent = '';
+          return;
+        }
+        metaNode.textContent = 'Selected: ' + lead.fullName + ' | ' + lead.emailAddress + (lead.phoneNumber ? ' | ' + lead.phoneNumber : '');
+      }
+
+      function createLeadPicker(config) {
+        const searchInput = document.getElementById(config.searchId);
+        const select = document.getElementById(config.selectId);
+        const quickLeads = document.getElementById(config.quickId);
+        const metaId = config.metaId;
+
+        function filteredLeads() {
+          const query = (searchInput.value || '').trim().toLowerCase();
+          const sorted = [...leads].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+          if (!query) {
+            return sorted;
+          }
+
+          return sorted.filter((lead) =>
+            lead.fullName.toLowerCase().includes(query) ||
+            lead.emailAddress.toLowerCase().includes(query) ||
+            (lead.phoneNumber || '').toLowerCase().includes(query)
+          );
+        }
+
+        function fillOptions() {
+          const currentValue = select.value;
+          const matches = filteredLeads();
+          select.innerHTML = '<option value=\"\">Select a saved lead</option>' +
+            matches.map((lead) => '<option value=\"' + escapeInlineHtml(lead.id) + '\">' + escapeInlineHtml(buildLeadLabel(lead)) + '</option>').join('');
+
+          if (matches.some((lead) => lead.id === currentValue)) {
+            select.value = currentValue;
+          }
+
+          const activeLead = leads.find((lead) => lead.id === select.value) || null;
+          renderLeadMeta(metaId, activeLead);
+        }
+
+        function fillQuickLeads() {
+          const recentLeads = [...leads]
+            .filter((lead) => new Date(lead.createdAt).getTime() >= recentThreshold)
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            .slice(0, 12);
+
+          if (recentLeads.length === 0) {
+            quickLeads.innerHTML = '<span class=\"helper\">No leads were created in the last 5 days.</span>';
+            return;
+          }
+
+          quickLeads.innerHTML = recentLeads
+            .map((lead) => '<button type=\"button\" class=\"quick-lead\" data-lead-id=\"' + escapeInlineHtml(lead.id) + '\">' + escapeInlineHtml(lead.fullName) + '</button>')
+            .join('');
+
+          quickLeads.querySelectorAll('[data-lead-id]').forEach((button) => {
+            button.addEventListener('click', () => {
+              searchInput.value = '';
+              fillOptions();
+              select.value = button.getAttribute('data-lead-id') || '';
+              const activeLead = leads.find((lead) => lead.id === select.value) || null;
+              renderLeadMeta(metaId, activeLead);
+            });
+          });
+        }
+
+        searchInput.addEventListener('input', fillOptions);
+        select.addEventListener('change', () => {
+          const activeLead = leads.find((lead) => lead.id === select.value) || null;
+          renderLeadMeta(metaId, activeLead);
+        });
+
+        fillQuickLeads();
+        fillOptions();
+      }
+
+      createLeadPicker({
+        searchId: 'reportLeadSearch',
+        selectId: 'submissionId',
+        quickId: 'reportQuickLeads',
+        metaId: 'reportLeadMeta',
+      });
+
+      createLeadPicker({
+        searchId: 'linkLeadSearch',
+        selectId: 'linkSubmissionId',
+        quickId: 'linkQuickLeads',
+        metaId: 'linkLeadMeta',
+      });
 
       document.getElementById('report-form').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -990,6 +1131,7 @@ export default {
             id,
             full_name,
             email_address,
+            phone_number,
             created_at
           FROM contact_submissions
           ORDER BY created_at DESC
