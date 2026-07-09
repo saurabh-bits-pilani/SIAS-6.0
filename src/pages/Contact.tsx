@@ -25,20 +25,57 @@ const initialFormData: ContactFormData = {
   birthMonth: '',
   birthYear: '',
   birthHour: '',
+  birthMeridiem: '',
   birthMinute: '',
   birthSecond: '',
   country: '',
   placeOfBirth: '',
+  preferredLanguage: '',
+  discussionMode: '',
   phoneNumber: '',
   emailAddress: '',
   messageText: '',
 };
 
 const countries: readonly string[] = [
-  'India', 'United States', 'United Kingdom', 'Canada', 'Australia',
-  'Germany', 'France', 'Japan', 'China', 'Brazil', 'Russia', 'Italy',
-  'Spain', 'Netherlands', 'Switzerland', 'Sweden', 'Norway', 'Denmark',
-  'Singapore', 'UAE', 'South Africa', 'New Zealand', 'Ireland', 'Belgium'
+  'India',
+  'Sri Lanka',
+  'Nepal',
+  'Bhutan',
+  'Bangladesh',
+  'Maldives',
+  'Afghanistan',
+  'Pakistan',
+  'United Arab Emirates',
+  'Saudi Arabia',
+  'Qatar',
+  'Oman',
+  'Bahrain',
+  'Kuwait',
+  'Singapore',
+  'Malaysia',
+  'Mauritius',
+  'South Africa',
+  'United States',
+  'United Kingdom',
+  'Canada',
+  'Australia',
+  'New Zealand',
+  'Fiji',
+  'Trinidad and Tobago',
+  'Guyana',
+  'Suriname',
+  'Kenya',
+  'Ireland',
+  'Germany',
+  'France',
+  'Netherlands',
+  'Switzerland',
+  'Belgium',
+  'Italy',
+  'Spain',
+  'Japan',
+  'Thailand',
 ];
 
 const months: readonly string[] = [
@@ -52,8 +89,8 @@ const years: readonly number[] = Array.from(
   (_, i) => new Date().getFullYear() - i,
 );
 const hours: readonly string[] = Array.from(
-  { length: 24 },
-  (_, i) => i.toString().padStart(2, '0'),
+  { length: 12 },
+  (_, i) => String(i + 1).padStart(2, '0'),
 );
 const minutes: readonly string[] = Array.from(
   { length: 60 },
@@ -64,6 +101,9 @@ const seconds: readonly string[] = Array.from(
   (_, i) => i.toString().padStart(2, '0'),
 );
 const genders: readonly string[] = ['Male', 'Female', 'Other'];
+const meridiems: readonly string[] = ['AM', 'PM'];
+const preferredLanguages: readonly string[] = ['English', 'Hindi'];
+const discussionModes: readonly string[] = ['On call', 'On chat'];
 
 interface ContactInfoItem {
   id: string;
@@ -174,6 +214,8 @@ const Contact = () => {
     trackEvent('contact_form_submit', {
       country: formData.country,
       has_birth_time: Boolean(formData.birthHour && formData.birthMinute),
+      preferred_language: formData.preferredLanguage,
+      discussion_mode: formData.discussionMode,
     });
 
     const phone = import.meta.env.VITE_WHATSAPP_PHONE || DEFAULT_WHATSAPP_PHONE;
@@ -536,9 +578,9 @@ const Contact = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-3">
                       Time of Birth *
                     </label>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-4 gap-4">
                       <div>
-                        <label htmlFor="birthHour" className="block text-xs text-gray-500 mb-1">Hour (24h)</label>
+                        <label htmlFor="birthHour" className="block text-xs text-gray-500 mb-1">Hour</label>
                         <select
                           id="birthHour"
                           name="birthHour"
@@ -551,6 +593,24 @@ const Contact = () => {
                           {hours.map((hour) => (
                             <option key={hour} value={hour}>
                               {hour}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor="birthMeridiem" className="block text-xs text-gray-500 mb-1">AM / PM</label>
+                        <select
+                          id="birthMeridiem"
+                          name="birthMeridiem"
+                          value={formData.birthMeridiem}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                        >
+                          <option value="">AM / PM</option>
+                          {meridiems.map((meridiem) => (
+                            <option key={meridiem} value={meridiem}>
+                              {meridiem}
                             </option>
                           ))}
                         </select>
@@ -606,11 +666,11 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                      >
-                        <option value="">Select Country</option>
-                        {countries.map((country) => (
-                          <option key={country} value={country}>
-                            {country}
+                        >
+                          <option value="">Select Country</option>
+                          {countries.map((country) => (
+                            <option key={country} value={country}>
+                              {country}
                           </option>
                         ))}
                       </select>
@@ -629,6 +689,49 @@ const Contact = () => {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                         placeholder="Enter city of birth"
                       />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="preferredLanguage" className="block text-sm font-medium text-gray-700 mb-2">
+                        Preferred Language *
+                      </label>
+                      <select
+                        id="preferredLanguage"
+                        name="preferredLanguage"
+                        value={formData.preferredLanguage}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                      >
+                        <option value="">Select Language</option>
+                        {preferredLanguages.map((language) => (
+                          <option key={language} value={language}>
+                            {language}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="discussionMode" className="block text-sm font-medium text-gray-700 mb-2">
+                        Discussion Mode *
+                      </label>
+                      <select
+                        id="discussionMode"
+                        name="discussionMode"
+                        value={formData.discussionMode}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                      >
+                        <option value="">Select Discussion Mode</option>
+                        {discussionModes.map((mode) => (
+                          <option key={mode} value={mode}>
+                            {mode}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -704,7 +807,7 @@ const Contact = () => {
 
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <p className="text-sm text-blue-800">
-                    <strong>Note:</strong> Your birth date, birth time, and place of birth are all saved for consultation follow-up. If the save service is unavailable, we automatically fall back to WhatsApp so your inquiry is not lost.
+                    <strong>Note:</strong> Your birth date, birth time with AM or PM, place of birth, preferred language, and discussion mode are all saved for consultation follow-up. If the save service is unavailable, we automatically fall back to WhatsApp so your inquiry is not lost.
                   </p>
                 </div>
 

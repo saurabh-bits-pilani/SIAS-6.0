@@ -103,6 +103,7 @@ function formatBirthTime(row) {
   const hour = Number(row.birth_hour);
   const minute = Number(row.birth_minute);
   const second = Number(row.birth_second);
+  const storedMeridiem = String(row.birth_meridiem || '').trim().toUpperCase();
 
   if (
     !Number.isInteger(hour) ||
@@ -110,6 +111,13 @@ function formatBirthTime(row) {
     !Number.isInteger(second)
   ) {
     return '';
+  }
+
+  const meridiem = storedMeridiem || (hour >= 12 ? 'PM' : 'AM');
+
+  if (meridiem === 'AM' || meridiem === 'PM') {
+    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+    return `${String(hour12).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')} ${meridiem}`;
   }
 
   return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}`;
@@ -128,6 +136,8 @@ function renderLeadsHtml(rows) {
           <td><a href="mailto:${escapeHtml(row.email_address)}">${escapeHtml(row.email_address)}</a></td>
           <td>${escapeHtml(row.country)}</td>
           <td>${escapeHtml(row.place_of_birth)}</td>
+          <td>${escapeHtml(row.preferred_language || '')}</td>
+          <td>${escapeHtml(row.discussion_mode || '')}</td>
           <td>${escapeHtml(row.gender)}</td>
           <td>${escapeHtml(row.message_text || '')}</td>
           <td>${escapeHtml(row.source_page || '')}</td>
@@ -314,6 +324,8 @@ function renderLeadsHtml(rows) {
                       <th>Email</th>
                       <th>Country</th>
                       <th>Place of Birth</th>
+                      <th>Language</th>
+                      <th>Discussion Mode</th>
                       <th>Gender</th>
                       <th>Message</th>
                       <th>Source</th>
@@ -428,6 +440,7 @@ function validatePayload(data) {
   const hour = Number(data.birthHour);
   const minute = Number(data.birthMinute);
   const second = Number(data.birthSecond);
+  const meridiem = String(data.birthMeridiem || '').trim().toUpperCase();
   if (
     !Number.isInteger(hour) ||
     hour < 0 ||
@@ -440,6 +453,20 @@ function validatePayload(data) {
     second > 59
   ) {
     errors.push('Complete time of birth is required.');
+  }
+
+  if (meridiem && !['AM', 'PM'].includes(meridiem)) {
+    errors.push('Birth meridiem must be AM or PM.');
+  }
+
+  const preferredLanguage = String(data.preferredLanguage || '').trim();
+  if (preferredLanguage && !['English', 'Hindi'].includes(preferredLanguage)) {
+    errors.push('Preferred language is required.');
+  }
+
+  const discussionMode = String(data.discussionMode || '').trim();
+  if (discussionMode && !['On call', 'On chat'].includes(discussionMode)) {
+    errors.push('Discussion mode is required.');
   }
 
   return errors;
@@ -482,12 +509,15 @@ export default {
           birth_month,
           birth_year,
           birth_hour,
+          birth_meridiem,
           birth_minute,
           birth_second,
           phone_number,
           email_address,
           country,
           place_of_birth,
+          preferred_language,
+          discussion_mode,
           gender,
           message_text,
           source_page,
@@ -538,10 +568,13 @@ export default {
         birth_month,
         birth_year,
         birth_hour,
+        birth_meridiem,
         birth_minute,
         birth_second,
         country,
         place_of_birth,
+        preferred_language,
+        discussion_mode,
         phone_number,
         email_address,
         message_text,
@@ -550,7 +583,7 @@ export default {
         user_agent,
         cf_country,
         created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         submissionId,
@@ -560,10 +593,14 @@ export default {
         String(payload.birthMonth || '').trim(),
         Number(payload.birthYear),
         Number(payload.birthHour),
+        String(payload.birthMeridiem || '').trim().toUpperCase() ||
+          (Number(payload.birthHour) >= 12 ? 'PM' : 'AM'),
         Number(payload.birthMinute),
         Number(payload.birthSecond),
         String(payload.country || '').trim(),
         String(payload.placeOfBirth || '').trim(),
+        String(payload.preferredLanguage || '').trim(),
+        String(payload.discussionMode || '').trim(),
         String(payload.phoneNumber || '').trim(),
         String(payload.emailAddress || '').trim(),
         String(payload.messageText || '').trim(),
