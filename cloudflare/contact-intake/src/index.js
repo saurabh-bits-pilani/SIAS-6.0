@@ -63,13 +63,67 @@ function isAuthorized(request, env) {
   }
 }
 
+function formatIstTimestamp(value) {
+  if (!value) {
+    return '';
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return String(value);
+  }
+
+  const formatter = new Intl.DateTimeFormat('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+  });
+
+  return `${formatter.format(date)} IST`;
+}
+
+function formatBirthDate(row) {
+  const day = Number(row.birth_day);
+  const year = Number(row.birth_year);
+  const month = String(row.birth_month || '').trim();
+
+  if (!Number.isInteger(day) || !Number.isInteger(year) || !month) {
+    return '';
+  }
+
+  return `${String(day).padStart(2, '0')} ${month} ${year}`;
+}
+
+function formatBirthTime(row) {
+  const hour = Number(row.birth_hour);
+  const minute = Number(row.birth_minute);
+  const second = Number(row.birth_second);
+
+  if (
+    !Number.isInteger(hour) ||
+    !Number.isInteger(minute) ||
+    !Number.isInteger(second)
+  ) {
+    return '';
+  }
+
+  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}`;
+}
+
 function renderLeadsHtml(rows) {
   const tableRows = rows
     .map(
       (row) => `
         <tr>
-          <td>${escapeHtml(row.created_at)}</td>
+          <td>${escapeHtml(formatIstTimestamp(row.created_at))}</td>
           <td>${escapeHtml(row.full_name)}</td>
+          <td>${escapeHtml(formatBirthDate(row))}</td>
+          <td>${escapeHtml(formatBirthTime(row))}</td>
           <td><a href="tel:${escapeHtml(row.phone_number)}">${escapeHtml(row.phone_number)}</a></td>
           <td><a href="mailto:${escapeHtml(row.email_address)}">${escapeHtml(row.email_address)}</a></td>
           <td>${escapeHtml(row.country)}</td>
@@ -252,8 +306,10 @@ function renderLeadsHtml(rows) {
               ? `<table>
                   <thead>
                     <tr>
-                      <th>Created At</th>
+                      <th>Created At (IST)</th>
                       <th>Name</th>
+                      <th>Birth Date</th>
+                      <th>Birth Time</th>
                       <th>Phone</th>
                       <th>Email</th>
                       <th>Country</th>
@@ -422,6 +478,12 @@ export default {
         `SELECT
           id,
           full_name,
+          birth_day,
+          birth_month,
+          birth_year,
+          birth_hour,
+          birth_minute,
+          birth_second,
           phone_number,
           email_address,
           country,

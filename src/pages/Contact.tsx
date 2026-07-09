@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, MessageCircle, Send, AlertCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, MessageCircle, Send, AlertCircle, CheckCircle2 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
 import {
@@ -126,6 +126,10 @@ type SubmissionFeedback =
       body: string;
     };
 
+type SuccessModalState = {
+  whatsappUrl: string;
+};
+
 const faqs: readonly FaqItem[] = [
   {
     question: 'Why do you need my exact birth time?',
@@ -152,6 +156,7 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<SubmissionFeedback | null>(null);
   const [lastWhatsappUrl, setLastWhatsappUrl] = useState('');
+  const [successModal, setSuccessModal] = useState<SuccessModalState | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -186,12 +191,15 @@ const Contact = () => {
           contact_id: result.id,
           country: formData.country,
         });
+
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
         setFeedback({
           tone: 'success',
-          title: 'Saved successfully',
+          title: 'Details saved successfully',
           body:
-            'Your details have been saved securely. You can also continue on WhatsApp if you want a faster conversation.',
+            'Your details have been saved properly in our database. We are generating your kundali and a WhatsApp follow-up has been prepared.',
         });
+        setSuccessModal({ whatsappUrl });
         setFormData(initialFormData);
         setWebsite('');
         setErrors([]);
@@ -241,6 +249,41 @@ const Contact = () => {
         omitDefaultSchema
       />
       <SchemaMarkup type="contact" />
+
+      {successModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4">
+          <div className="w-full max-w-lg rounded-3xl bg-white p-8 shadow-2xl">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+              <CheckCircle2 className="h-9 w-9" />
+            </div>
+            <h2 className="mt-6 text-center font-heading text-3xl font-bold text-slate-900">
+              Kundali Request Saved
+            </h2>
+            <p className="mt-4 text-center text-base leading-7 text-slate-600">
+              Your details have been saved properly in our database and we are generating your kundali.
+              We have also prepared your WhatsApp follow-up for faster coordination.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={successModal.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center rounded-full bg-green-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-600"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Open WhatsApp
+              </a>
+              <button
+                type="button"
+                onClick={() => setSuccessModal(null)}
+                className="inline-flex flex-1 items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
@@ -325,7 +368,7 @@ const Contact = () => {
               </h2>
               <p className="text-gray-600 mb-8">
                 Fill out the form below and we'll get back to you within 24 hours.
-                Your details can be saved securely, and you can still continue on WhatsApp for faster coordination.
+                Your details are saved securely, and after a successful save we also prepare a WhatsApp follow-up for faster coordination.
               </p>
 
               {errors.length > 0 && (
@@ -661,7 +704,7 @@ const Contact = () => {
 
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <p className="text-sm text-blue-800">
-                    <strong>Note:</strong> Your details are saved for consultation follow-up. If the save service is unavailable, we automatically fall back to WhatsApp so your inquiry is not lost.
+                    <strong>Note:</strong> Your birth date, birth time, and place of birth are all saved for consultation follow-up. If the save service is unavailable, we automatically fall back to WhatsApp so your inquiry is not lost.
                   </p>
                 </div>
 
