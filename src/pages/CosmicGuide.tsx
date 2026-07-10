@@ -133,7 +133,7 @@ const CosmicGuide = () => {
             regression), and spiritual healing (Reiki, Pranic, Theta, and Crystal
             Healing). Sessions are conducted in person in Ahmedabad and online in
             English, Hindi, and Gujarati. As of 2026 the practice holds a 4.9-star
-            rating across 40 Google reviews.
+            rating across 65 Google reviews.
           </p>
         </div>
       </section>

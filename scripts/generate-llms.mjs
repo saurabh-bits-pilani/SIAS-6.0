@@ -149,7 +149,7 @@ async function main() {
 
   const body = `# Soul Infinity
 
-> Vedic astrology, tarot, and spiritual healing practice in Ahmedabad, Gujarat, India. Founded by certified astrologer Saurabh Jain (K.N. Rao Institute; M.Tech, MBA, M.Phil). 4.9★ from 40 Google reviews.
+> Vedic astrology, tarot, and spiritual healing practice in Ahmedabad, Gujarat, India. Founded by certified astrologer Saurabh Jain (K.N. Rao Institute; M.Tech, MBA, M.Phil). 4.9★ from 65 Google reviews.
 
 ${sectionBlocks.join('\n\n')}
 

@@ -79,7 +79,7 @@ export const BUSINESS_NAP = {
   ],
   aggregateRating: {
     ratingValue: 4.9,
-    reviewCount: 40,
+    reviewCount: 65,
     bestRating: 5,
     worstRating: 1,
   },
