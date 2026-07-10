@@ -406,67 +406,63 @@ function extractResourceEntries(value) {
     .filter(Boolean);
 }
 
-function parseRichTextBlocks(value) {
-  const lines = String(value || '').replaceAll('\r\n', '\n').split('\n');
-  const blocks = [];
-  let paragraphLines = [];
-  let listKind = null;
-  let listItems = [];
+function isEmojiOrSymbolBullet(line) {
+  return /^[^\p{L}\p{N}\s][^\s]*\s+/u.test(line);
+}
 
-  const flushParagraph = () => {
-    const text = paragraphLines.join(' ').trim();
-    if (text) {
-      blocks.push({ type: 'paragraph', text });
-    }
-    paragraphLines = [];
-  };
-
-  const flushList = () => {
-    if (listKind && listItems.length > 0) {
-      blocks.push({ type: listKind, items: [...listItems] });
-    }
-    listKind = null;
-    listItems = [];
-  };
-
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
-    if (!line) {
-      flushParagraph();
-      flushList();
-      continue;
-    }
-
-    const orderedMatch = line.match(/^(\d+)[.)]\s+(.*)$/);
-    if (orderedMatch) {
-      flushParagraph();
-      if (listKind !== 'ordered-list') {
-        flushList();
-        listKind = 'ordered-list';
-      }
-      listItems.push(orderedMatch[2].trim());
-      continue;
-    }
-
-    const unorderedMatch = line.match(/^[-*•]\s+(.*)$/);
-    if (unorderedMatch) {
-      flushParagraph();
-      if (listKind !== 'unordered-list') {
-        flushList();
-        listKind = 'unordered-list';
-      }
-      listItems.push(unorderedMatch[1].trim());
-      continue;
-    }
-
-    flushList();
-    paragraphLines.push(line);
+function shouldTreatAsLineList(lines) {
+  if (lines.length < 2) {
+    return false;
   }
 
-  flushParagraph();
-  flushList();
+  if (lines.some((line) => line.length > 240 || line.endsWith(':'))) {
+    return false;
+  }
 
-  return blocks;
+  return lines.every((line) => /[A-Za-z0-9\u00C0-\u024F\u0900-\u097F]/u.test(line));
+}
+
+function parseRichTextBlocks(value) {
+  const rawBlocks = String(value || '')
+    .replaceAll('\r\n', '\n')
+    .split(/\n\s*\n/g)
+    .map((block) => block.trim())
+    .filter(Boolean);
+
+  return rawBlocks.flatMap((rawBlock) => {
+    const lines = rawBlock
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (lines.length === 0) {
+      return [];
+    }
+
+    const orderedItems = lines
+      .map((line) => line.match(/^(\d+)[.)]\s+(.*)$/))
+      .filter(Boolean);
+    if (orderedItems.length === lines.length) {
+      return [{ type: 'ordered-list', items: orderedItems.map((match) => match[2].trim()) }];
+    }
+
+    const explicitUnorderedItems = lines
+      .map((line) => line.match(/^[-*•]\s+(.*)$/))
+      .filter(Boolean);
+    if (explicitUnorderedItems.length === lines.length) {
+      return [{ type: 'unordered-list', items: explicitUnorderedItems.map((match) => match[1].trim()) }];
+    }
+
+    if (lines.every((line) => isEmojiOrSymbolBullet(line))) {
+      return [{ type: 'unordered-list', items: lines }];
+    }
+
+    if (shouldTreatAsLineList(lines)) {
+      return [{ type: 'unordered-list', items: lines }];
+    }
+
+    return [{ type: 'paragraph', text: lines.join(' ') }];
+  });
 }
 
 async function createReportPdf(report, submission) {

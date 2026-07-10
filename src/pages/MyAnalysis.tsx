@@ -80,67 +80,63 @@ type ContentBlock =
   | { type: 'ordered-list'; items: string[] }
   | { type: 'unordered-list'; items: string[] };
 
-function parseContentBlocks(value: string): ContentBlock[] {
-  const lines = String(value || '').replaceAll('\r\n', '\n').split('\n');
-  const blocks: ContentBlock[] = [];
-  let paragraphLines: string[] = [];
-  let listKind: 'ordered-list' | 'unordered-list' | null = null;
-  let listItems: string[] = [];
+function isEmojiOrSymbolBullet(line: string): boolean {
+  return /^[^\p{L}\p{N}\s][^\s]*\s+/u.test(line);
+}
 
-  const flushParagraph = () => {
-    const text = paragraphLines.join(' ').trim();
-    if (text) {
-      blocks.push({ type: 'paragraph', text });
-    }
-    paragraphLines = [];
-  };
-
-  const flushList = () => {
-    if (listKind && listItems.length > 0) {
-      blocks.push({ type: listKind, items: [...listItems] });
-    }
-    listKind = null;
-    listItems = [];
-  };
-
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
-    if (!line) {
-      flushParagraph();
-      flushList();
-      continue;
-    }
-
-    const orderedMatch = line.match(/^(\d+)[.)]\s+(.*)$/);
-    if (orderedMatch) {
-      flushParagraph();
-      if (listKind !== 'ordered-list') {
-        flushList();
-        listKind = 'ordered-list';
-      }
-      listItems.push(orderedMatch[2].trim());
-      continue;
-    }
-
-    const unorderedMatch = line.match(/^[-*•]\s+(.*)$/);
-    if (unorderedMatch) {
-      flushParagraph();
-      if (listKind !== 'unordered-list') {
-        flushList();
-        listKind = 'unordered-list';
-      }
-      listItems.push(unorderedMatch[1].trim());
-      continue;
-    }
-
-    flushList();
-    paragraphLines.push(line);
+function shouldTreatAsLineList(lines: string[]): boolean {
+  if (lines.length < 2) {
+    return false;
   }
 
-  flushParagraph();
-  flushList();
+  if (lines.some((line) => line.length > 240 || line.endsWith(':'))) {
+    return false;
+  }
 
-  return blocks;
+  return lines.every((line) => /[A-Za-z0-9\u00C0-\u024F\u0900-\u097F]/u.test(line));
+}
+
+function parseContentBlocks(value: string): ContentBlock[] {
+  const rawBlocks = String(value || '')
+    .replaceAll('\r\n', '\n')
+    .split(/\n\s*\n/g)
+    .map((block) => block.trim())
+    .filter(Boolean);
+
+  return rawBlocks.flatMap((rawBlock) => {
+    const lines = rawBlock
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (lines.length === 0) {
+      return [];
+    }
+
+    const orderedItems = lines
+      .map((line) => line.match(/^(\d+)[.)]\s+(.*)$/))
+      .filter((match): match is RegExpMatchArray => Boolean(match));
+    if (orderedItems.length === lines.length) {
+      return [{ type: 'ordered-list' as const, items: orderedItems.map((match) => match[2].trim()) }];
+    }
+
+    const explicitUnorderedItems = lines
+      .map((line) => line.match(/^[-*•]\s+(.*)$/))
+      .filter((match): match is RegExpMatchArray => Boolean(match));
+    if (explicitUnorderedItems.length === lines.length) {
+      return [{ type: 'unordered-list' as const, items: explicitUnorderedItems.map((match) => match[1].trim()) }];
+    }
+
+    if (lines.every((line) => isEmojiOrSymbolBullet(line))) {
+      return [{ type: 'unordered-list' as const, items: lines }];
+    }
+
+    if (shouldTreatAsLineList(lines)) {
+      return [{ type: 'unordered-list' as const, items: lines }];
+    }
+
+    return [{ type: 'paragraph' as const, text: lines.join(' ') }];
+  });
 }
 
 function renderFormattedContent(value: string) {
