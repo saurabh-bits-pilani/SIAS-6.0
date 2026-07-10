@@ -75,29 +75,100 @@ function renderTextWithLinks(value: string) {
   });
 }
 
-function renderParagraphs(value: string) {
-  return value
-    .split(/\n{2,}/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
-    .map((paragraph, index) => (
-      <p key={`${paragraph.slice(0, 24)}-${index}`} className="leading-8 text-slate-700">
-        {renderTextWithLinks(paragraph)}
-      </p>
-    ));
+type ContentBlock =
+  | { type: 'paragraph'; text: string }
+  | { type: 'ordered-list'; items: string[] }
+  | { type: 'unordered-list'; items: string[] };
+
+function parseContentBlocks(value: string): ContentBlock[] {
+  const lines = String(value || '').replaceAll('\r\n', '\n').split('\n');
+  const blocks: ContentBlock[] = [];
+  let paragraphLines: string[] = [];
+  let listKind: 'ordered-list' | 'unordered-list' | null = null;
+  let listItems: string[] = [];
+
+  const flushParagraph = () => {
+    const text = paragraphLines.join(' ').trim();
+    if (text) {
+      blocks.push({ type: 'paragraph', text });
+    }
+    paragraphLines = [];
+  };
+
+  const flushList = () => {
+    if (listKind && listItems.length > 0) {
+      blocks.push({ type: listKind, items: [...listItems] });
+    }
+    listKind = null;
+    listItems = [];
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const orderedMatch = line.match(/^(\d+)[.)]\s+(.*)$/);
+    if (orderedMatch) {
+      flushParagraph();
+      if (listKind !== 'ordered-list') {
+        flushList();
+        listKind = 'ordered-list';
+      }
+      listItems.push(orderedMatch[2].trim());
+      continue;
+    }
+
+    const unorderedMatch = line.match(/^[-*•]\s+(.*)$/);
+    if (unorderedMatch) {
+      flushParagraph();
+      if (listKind !== 'unordered-list') {
+        flushList();
+        listKind = 'unordered-list';
+      }
+      listItems.push(unorderedMatch[1].trim());
+      continue;
+    }
+
+    flushList();
+    paragraphLines.push(line);
+  }
+
+  flushParagraph();
+  flushList();
+
+  return blocks;
 }
 
-function renderLinkEntries(value: string) {
-  return value
-    .split('\n')
-    .map((line) => line.trim())
-    .map((line) => line.replace(/^[-*•]\s*/, ''))
-    .filter(Boolean)
-    .map((line, index) => (
-      <li key={`${line.slice(0, 24)}-${index}`} className="leading-8 text-slate-700">
-        {renderTextWithLinks(line)}
-      </li>
-    ));
+function renderFormattedContent(value: string) {
+  return parseContentBlocks(value).map((block, index) => {
+    if (block.type === 'paragraph') {
+      return (
+        <p key={`${block.text.slice(0, 24)}-${index}`} className="leading-8 text-slate-700">
+          {renderTextWithLinks(block.text)}
+        </p>
+      );
+    }
+
+    const ListTag = block.type === 'ordered-list' ? 'ol' : 'ul';
+    const listClassName =
+      block.type === 'ordered-list'
+        ? 'list-decimal space-y-3 pl-6 text-slate-700 marker:font-semibold'
+        : 'list-disc space-y-3 pl-6 text-slate-700 marker:text-amber-700';
+
+    return (
+      <ListTag key={`list-${index}`} className={listClassName}>
+        {block.items.map((item, itemIndex) => (
+          <li key={`${item.slice(0, 24)}-${itemIndex}`} className="leading-8">
+            {renderTextWithLinks(item)}
+          </li>
+        ))}
+      </ListTag>
+    );
+  });
 }
 
 const MyAnalysis = () => {
@@ -455,7 +526,7 @@ const MyAnalysis = () => {
                           </p>
                           <h3 className="mt-2 font-heading text-2xl font-bold text-slate-900">Planetary Analysis</h3>
                           <div className="mt-4 space-y-4">
-                            {renderParagraphs(activeReport.analysisBody || activeReport.reportBody)}
+                            {renderFormattedContent(activeReport.analysisBody || activeReport.reportBody)}
                           </div>
                         </section>
 
@@ -466,7 +537,7 @@ const MyAnalysis = () => {
                             </p>
                             <h3 className="mt-2 font-heading text-2xl font-bold text-slate-900">Recommended Remedies</h3>
                             <div className="mt-4 space-y-4">
-                              {renderParagraphs(activeReport.remediesBody)}
+                              {renderFormattedContent(activeReport.remediesBody)}
                             </div>
                           </section>
                         )}
@@ -477,9 +548,9 @@ const MyAnalysis = () => {
                               Section 3
                             </p>
                             <h3 className="mt-2 font-heading text-2xl font-bold text-slate-900">Mantras And Helpful Links</h3>
-                            <ul className="mt-4 space-y-3">
-                              {renderLinkEntries(activeReport.resourceLinksBody)}
-                            </ul>
+                            <div className="mt-4 space-y-4">
+                              {renderFormattedContent(activeReport.resourceLinksBody)}
+                            </div>
                           </section>
                         )}
                       </div>

@@ -406,6 +406,69 @@ function extractResourceEntries(value) {
     .filter(Boolean);
 }
 
+function parseRichTextBlocks(value) {
+  const lines = String(value || '').replaceAll('\r\n', '\n').split('\n');
+  const blocks = [];
+  let paragraphLines = [];
+  let listKind = null;
+  let listItems = [];
+
+  const flushParagraph = () => {
+    const text = paragraphLines.join(' ').trim();
+    if (text) {
+      blocks.push({ type: 'paragraph', text });
+    }
+    paragraphLines = [];
+  };
+
+  const flushList = () => {
+    if (listKind && listItems.length > 0) {
+      blocks.push({ type: listKind, items: [...listItems] });
+    }
+    listKind = null;
+    listItems = [];
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const orderedMatch = line.match(/^(\d+)[.)]\s+(.*)$/);
+    if (orderedMatch) {
+      flushParagraph();
+      if (listKind !== 'ordered-list') {
+        flushList();
+        listKind = 'ordered-list';
+      }
+      listItems.push(orderedMatch[2].trim());
+      continue;
+    }
+
+    const unorderedMatch = line.match(/^[-*•]\s+(.*)$/);
+    if (unorderedMatch) {
+      flushParagraph();
+      if (listKind !== 'unordered-list') {
+        flushList();
+        listKind = 'unordered-list';
+      }
+      listItems.push(unorderedMatch[1].trim());
+      continue;
+    }
+
+    flushList();
+    paragraphLines.push(line);
+  }
+
+  flushParagraph();
+  flushList();
+
+  return blocks;
+}
+
 async function createReportPdf(report, submission) {
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
@@ -756,6 +819,95 @@ async function createReportPdf(report, submission) {
     });
   };
 
+  const drawListCard = (items, options = {}) => {
+    if (!items.length) {
+      return;
+    }
+
+    const {
+      ordered = false,
+      outerX = marginX,
+      innerX = marginX + 16,
+      width = contentWidth,
+      font = bodyFont,
+      size = normalTextSize,
+      color = palette.ink,
+      lineHeight = size + lineGap,
+      fillColor = rgb(1, 1, 1),
+      borderColor = palette.line,
+      paddingTop = 16,
+      paddingBottom = 14,
+      gapAfter = 10,
+    } = options;
+
+    const markerGap = ordered ? 28 : 20;
+    const availableWidth = Math.max(40, width - (innerX - outerX) * 2 - markerGap);
+    const wrappedItems = items.map((item, index) => {
+      const marker = ordered ? `${index + 1}.` : '-';
+      return {
+        marker,
+        lines: wrapTextToWidth(item, font, size, availableWidth),
+      };
+    });
+
+    const contentHeight = wrappedItems.reduce(
+      (total, entry) => total + entry.lines.length * lineHeight + 6,
+      0,
+    );
+    const boxHeight = paddingTop + paddingBottom + Math.max(0, contentHeight - 6);
+
+    ensureSpace(boxHeight + 10);
+    page.drawRectangle({
+      x: outerX,
+      y: cursorY - boxHeight + paddingTop,
+      width,
+      height: boxHeight,
+      color: fillColor,
+      borderColor,
+      borderWidth: 1,
+    });
+
+    let textY = cursorY - paddingTop;
+    wrappedItems.forEach((entry) => {
+      drawTextSafe(entry.marker, {
+        x: innerX,
+        y: textY,
+        font: boldFont,
+        size,
+        color: ordered ? palette.navySoft : palette.gold,
+      });
+
+      entry.lines.forEach((line, lineIndex) => {
+        drawTextSafe(line, {
+          x: innerX + markerGap,
+          y: textY - lineIndex * lineHeight,
+          font,
+          size,
+          color,
+        });
+      });
+
+      textY -= entry.lines.length * lineHeight + 6;
+    });
+
+    cursorY -= boxHeight + gapAfter;
+  };
+
+  const drawFormattedSectionBody = (body, options = {}) => {
+    const blocks = parseRichTextBlocks(body);
+    blocks.forEach((block) => {
+      if (block.type === 'paragraph') {
+        drawParagraphBlock(block.text, options);
+        return;
+      }
+
+      drawListCard(block.items, {
+        ...options,
+        ordered: block.type === 'ordered-list',
+      });
+    });
+  };
+
   const drawSectionHeading = (title) => {
     sectionIndex += 1;
     ensureSpace(58);
@@ -975,7 +1127,7 @@ async function createReportPdf(report, submission) {
         cursorY -= 10;
       });
     } else {
-      drawParagraphBlock(body, {
+      drawFormattedSectionBody(body, {
         boxed: true,
         outerX: marginX,
         innerX: marginX + 16,
