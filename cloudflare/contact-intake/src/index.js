@@ -333,16 +333,32 @@ async function fetchBinaryAsset(url) {
   }
 }
 
+function asEmbeddedImageAsset(asset) {
+  if (!asset || !asset.contentType) {
+    return null;
+  }
+
+  const contentType = String(asset.contentType).toLowerCase();
+  if (contentType.includes('png')) {
+    return {
+      bytes: asset.bytes,
+      isPng: true,
+    };
+  }
+
+  if (contentType.includes('jpeg') || contentType.includes('jpg')) {
+    return {
+      bytes: asset.bytes,
+      isPng: false,
+    };
+  }
+
+  return null;
+}
+
 async function fetchReportLogoBytes() {
   if (!reportLogoAssetPromise) {
-    reportLogoAssetPromise = fetchBinaryAsset(REPORT_LOGO_URL).then((asset) =>
-      asset
-        ? {
-            bytes: asset.bytes,
-            isPng: asset.contentType.includes('png'),
-          }
-        : null,
-    );
+    reportLogoAssetPromise = fetchBinaryAsset(REPORT_LOGO_URL).then(asEmbeddedImageAsset);
   }
 
   return reportLogoAssetPromise;
@@ -358,14 +374,7 @@ async function fetchReportScriptFontBytes() {
 
 async function fetchReportProfileStampBytes() {
   if (!reportProfileStampPromise) {
-    reportProfileStampPromise = fetchBinaryAsset(REPORT_PROFILE_STAMP_URL).then((asset) =>
-      asset
-        ? {
-            bytes: asset.bytes,
-            isPng: asset.contentType.includes('png'),
-          }
-        : null,
-    );
+    reportProfileStampPromise = fetchBinaryAsset(REPORT_PROFILE_STAMP_URL).then(asEmbeddedImageAsset);
   }
 
   return reportProfileStampPromise;
@@ -389,14 +398,10 @@ async function createReportPdf(report, submission) {
   const logoAsset = await fetchReportLogoBytes();
   const profileStampAsset = await fetchReportProfileStampBytes();
   const embeddedLogo = logoAsset
-    ? logoAsset.isPng
-      ? await pdfDoc.embedPng(logoAsset.bytes)
-      : await pdfDoc.embedJpg(logoAsset.bytes)
+    ? await (logoAsset.isPng ? pdfDoc.embedPng(logoAsset.bytes) : pdfDoc.embedJpg(logoAsset.bytes)).catch(() => null)
     : null;
   const embeddedProfileStamp = profileStampAsset
-    ? profileStampAsset.isPng
-      ? await pdfDoc.embedPng(profileStampAsset.bytes)
-      : await pdfDoc.embedJpg(profileStampAsset.bytes)
+    ? await (profileStampAsset.isPng ? pdfDoc.embedPng(profileStampAsset.bytes) : pdfDoc.embedJpg(profileStampAsset.bytes)).catch(() => null)
     : null;
 
   const pageWidth = 595.28;
@@ -2721,29 +2726,42 @@ export default {
         return json({ error: 'PDF download is not enabled for this report yet.' }, 403, corsHeaders);
       }
 
-      const pdfBytes = await createReportPdf(report, report);
-      const filenameBase = `${report.full_name || 'soul-infinity-client'}-${report.title || 'analysis-report'}`
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '') || 'analysis-report';
+      try {
+        const pdfBytes = await createReportPdf(report, report);
+        const filenameBase = `${report.full_name || 'soul-infinity-client'}-${report.title || 'analysis-report'}`
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '') || 'analysis-report';
 
-      await env.CONTACT_DB.prepare(
-        `UPDATE analysis_reports
-        SET pdf_generated_at = ?
-        WHERE id = ?`
-      )
-        .bind(new Date().toISOString(), report.id)
-        .run();
+        await env.CONTACT_DB.prepare(
+          `UPDATE analysis_reports
+          SET pdf_generated_at = ?
+          WHERE id = ?`
+        )
+          .bind(new Date().toISOString(), report.id)
+          .run();
 
-      return new Response(pdfBytes, {
-        status: 200,
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/pdf',
-          'Cache-Control': 'no-store',
-          'Content-Disposition': `attachment; filename="${filenameBase}.pdf"`,
-        },
-      });
+        return new Response(pdfBytes, {
+          status: 200,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/pdf',
+            'Cache-Control': 'no-store',
+            'Content-Disposition': `attachment; filename="${filenameBase}.pdf"`,
+          },
+        });
+      } catch (error) {
+        return json(
+          {
+            error:
+              error instanceof Error
+                ? error.message
+                : 'We could not prepare the PDF report right now.',
+          },
+          500,
+          corsHeaders,
+        );
+      }
     }
 
     if (url.pathname === '/api/portal/logout' && request.method === 'POST') {
