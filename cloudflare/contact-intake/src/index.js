@@ -265,8 +265,26 @@ function combineReportSections({ analysisBody, remediesBody, resourceLinksBody }
     .join('\n\n');
 }
 
+function sanitizePdfText(value) {
+  return String(value || '')
+    .replaceAll('\r\n', '\n')
+    .replaceAll('🕉', 'Om')
+    .replaceAll('ॐ', 'Om')
+    .replaceAll('•', '-')
+    .replaceAll('–', '-')
+    .replaceAll('—', '-')
+    .replaceAll('’', "'")
+    .replaceAll('‘', "'")
+    .replaceAll('“', '"')
+    .replaceAll('”', '"')
+    .replaceAll('…', '...')
+    .replaceAll('→', '->')
+    .replaceAll('₹', 'Rs.')
+    .replace(/[^\x09\x0A\x0D\x20-\x7E\xA0-\xFF]/g, '');
+}
+
 function wrapTextToWidth(text, font, size, maxWidth) {
-  const normalized = String(text || '').trim();
+  const normalized = sanitizePdfText(text).trim();
   if (!normalized) {
     return [''];
   }
@@ -439,6 +457,9 @@ async function createReportPdf(report, submission) {
   const bodyFont = regularFont;
   const titleFont = boldFont;
   const accentFont = scriptFont || boldFont;
+  const drawTextSafe = (text, options) => {
+    page.drawText(sanitizePdfText(text), options);
+  };
 
   const drawWrappedParagraph = (text, options = {}) => {
     const {
@@ -454,7 +475,7 @@ async function createReportPdf(report, submission) {
     const lines = wrapTextToWidth(text.replaceAll('\n', ' '), font, size, width);
     for (const line of lines) {
       ensureSpace(lineHeight + 2);
-      page.drawText(line, {
+      drawTextSafe(line, {
         x,
         y: cursorY,
         font,
@@ -499,7 +520,7 @@ async function createReportPdf(report, submission) {
     });
 
     lines.forEach((line) => {
-      page.drawText(line, {
+      drawTextSafe(line, {
         x: innerX,
         y: cursorY,
         font,
@@ -582,42 +603,42 @@ async function createReportPdf(report, submission) {
       });
     }
 
-    page.drawText('Soul Infinity', {
+    drawTextSafe('Soul Infinity', {
       x: marginX + 78,
       y: pageHeight - 76,
       font: titleFont,
       size: 22,
       color: rgb(1, 0.973, 0.91),
     });
-    page.drawText('Vedic Astrology And Spiritual Guidance', {
+    drawTextSafe('Vedic Astrology And Spiritual Guidance', {
       x: marginX + 78,
       y: pageHeight - 98,
       font: bodyFont,
       size: 10,
       color: rgb(0.95, 0.92, 0.85),
     });
-    page.drawText('Sacred guidance report', {
+    drawTextSafe('Sacred guidance report', {
       x: marginX + 78,
       y: pageHeight - 122,
       font: accentFont,
       size: scriptFont ? 18 : 11,
       color: rgb(0.95, 0.83, 0.56),
     });
-    page.drawText(REPORT_CONTACT_EMAIL, {
+    drawTextSafe(REPORT_CONTACT_EMAIL, {
       x: pageWidth - marginX - 180,
       y: pageHeight - 76,
       font: bodyFont,
       size: 9,
       color: rgb(0.95, 0.92, 0.85),
     });
-    page.drawText(REPORT_CONTACT_PHONE, {
+    drawTextSafe(REPORT_CONTACT_PHONE, {
       x: pageWidth - marginX - 180,
       y: pageHeight - 94,
       font: bodyFont,
       size: 9,
       color: rgb(0.95, 0.92, 0.85),
     });
-    page.drawText(REPORT_SITE_URL, {
+    drawTextSafe(REPORT_SITE_URL, {
       x: pageWidth - marginX - 180,
       y: pageHeight - 112,
       font: bodyFont,
@@ -645,7 +666,7 @@ async function createReportPdf(report, submission) {
         width: stampSize,
         height: stampSize,
       });
-      page.drawText('Saurabh Jain', {
+      drawTextSafe('Saurabh Jain', {
         x: pageWidth - marginX - 112,
         y: stampY - 14,
         font: boldFont,
@@ -654,28 +675,28 @@ async function createReportPdf(report, submission) {
       });
     }
 
-    page.drawText('Prepared with care for your spiritual journey', {
+    drawTextSafe('Prepared with care for your spiritual journey', {
       x: marginX,
       y: 34,
       font: accentFont,
       size: scriptFont ? 15 : 9,
       color: palette.gold,
     });
-    page.drawText(`Website: ${REPORT_SITE_URL} | Email: ${REPORT_CONTACT_EMAIL}`, {
+    drawTextSafe(`Website: ${REPORT_SITE_URL} | Email: ${REPORT_CONTACT_EMAIL}`, {
       x: marginX,
       y: 20,
       font: bodyFont,
       size: 8.5,
       color: palette.muted,
     });
-    page.drawText(`${REPORT_CONTACT_PHONE} | WhatsApp: ${REPORT_CONTACT_WHATSAPP}`, {
+    drawTextSafe(`${REPORT_CONTACT_PHONE} | WhatsApp: ${REPORT_CONTACT_WHATSAPP}`, {
       x: marginX,
       y: 8,
       font: bodyFont,
       size: 8.5,
       color: palette.muted,
     });
-    page.drawText(`Page ${pageNumber}`, {
+    drawTextSafe(`Page ${pageNumber}`, {
       x: pageWidth - marginX - 34,
       y: 20,
       font: boldFont,
@@ -709,7 +730,7 @@ async function createReportPdf(report, submission) {
 
     for (const line of lines) {
       ensureSpace(lineHeight + 4);
-      page.drawText(line, {
+      drawTextSafe(line, {
         x: x + indent,
         y: cursorY,
         font,
@@ -755,21 +776,21 @@ async function createReportPdf(report, submission) {
       height: 40,
       color: accent,
     });
-    page.drawText(String(sectionIndex).padStart(2, '0'), {
+    drawTextSafe(String(sectionIndex).padStart(2, '0'), {
       x: marginX + 18,
       y: cursorY - 2,
       font: titleFont,
       size: 13,
       color: palette.navy,
     });
-    page.drawText(title, {
+    drawTextSafe(title, {
       x: marginX + 74,
       y: cursorY - 2,
       font: titleFont,
       size: 14,
       color: palette.navySoft,
     });
-    page.drawText('Guidance section', {
+    drawTextSafe('Guidance section', {
       x: pageWidth - marginX - 94,
       y: cursorY + 1,
       font: accentFont,
@@ -812,7 +833,7 @@ async function createReportPdf(report, submission) {
           borderColor: palette.line,
           borderWidth: 1,
         });
-        page.drawText(item.label.toUpperCase(), {
+        drawTextSafe(item.label.toUpperCase(), {
           x: cardX + 14,
           y: cursorY - 10,
           font: boldFont,
@@ -821,7 +842,7 @@ async function createReportPdf(report, submission) {
         });
         const lines = wrapTextToWidth(item.value, bodyFont, 10.5, cardWidth - 28).slice(0, 2);
         lines.forEach((line, lineIndex) => {
-          page.drawText(line, {
+          drawTextSafe(line, {
             x: cardX + 14,
             y: cursorY - 26 - lineIndex * 12,
             font: bodyFont,
@@ -835,7 +856,7 @@ async function createReportPdf(report, submission) {
   };
 
   createPage();
-  page.drawText('CONFIDENTIAL CLIENT REPORT', {
+  drawTextSafe('CONFIDENTIAL CLIENT REPORT', {
     x: marginX,
     y: cursorY,
     font: boldFont,
@@ -846,7 +867,7 @@ async function createReportPdf(report, submission) {
 
   const titleLines = wrapTextToWidth(report.title || 'Kundali Analysis', titleFont, 24, contentWidth - 18);
   titleLines.forEach((line) => {
-    page.drawText(line, {
+    drawTextSafe(line, {
       x: marginX,
       y: cursorY,
       font: titleFont,
@@ -856,7 +877,7 @@ async function createReportPdf(report, submission) {
     cursorY -= 28;
   });
 
-  page.drawText(`Prepared for ${submission.full_name || report.fullName || 'Soul Infinity Client'}`, {
+  drawTextSafe(`Prepared for ${submission.full_name || report.fullName || 'Soul Infinity Client'}`, {
     x: marginX,
     y: cursorY,
     font: accentFont,
@@ -880,7 +901,7 @@ async function createReportPdf(report, submission) {
     10.5,
     contentWidth - 32,
   ).forEach((line, index) => {
-    page.drawText(line, {
+    drawTextSafe(line, {
       x: marginX + 16,
       y: cursorY - 14 - index * 14,
       font: bodyFont,
@@ -985,7 +1006,7 @@ async function createReportPdf(report, submission) {
     scriptFont ? 17 : 10,
     contentWidth - 36,
   ).forEach((line, index) => {
-    page.drawText(line, {
+    drawTextSafe(line, {
       x: marginX + 18,
       y: cursorY - 8 - index * (scriptFont ? 18 : 12),
       font: accentFont,
@@ -999,7 +1020,7 @@ async function createReportPdf(report, submission) {
     10,
     contentWidth - 36,
   ).forEach((line, index) => {
-    page.drawText(line, {
+    drawTextSafe(line, {
       x: marginX + 18,
       y: cursorY - 32 - index * 12,
       font: bodyFont,
