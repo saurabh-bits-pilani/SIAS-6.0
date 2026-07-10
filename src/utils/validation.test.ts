@@ -17,6 +17,7 @@ const validData: ContactFormData = {
   birthSecond: '00',
   country: 'India',
   placeOfBirth: 'Pune',
+  consultationType: 'Paid consultation',
   preferredLanguage: 'English',
   discussionMode: 'On call',
   phoneNumber: '+91 90790 53840',
@@ -72,10 +73,11 @@ describe('validateContactForm', () => {
     });
   });
 
-  it('rejects missing meridiem, language, and discussion mode', () => {
+  it('rejects missing meridiem, consultation type, language, and discussion mode', () => {
     const errors = validateContactForm({
       ...validData,
       birthMeridiem: '',
+      consultationType: '',
       preferredLanguage: '',
       discussionMode: '',
     });
@@ -83,6 +85,10 @@ describe('validateContactForm', () => {
     expect(errors).toContainEqual({
       field: 'birthDate',
       message: expect.stringContaining('complete time'),
+    });
+    expect(errors).toContainEqual({
+      field: 'consultationType',
+      message: expect.stringContaining('consultation type'),
     });
     expect(errors).toContainEqual({
       field: 'preferredLanguage',

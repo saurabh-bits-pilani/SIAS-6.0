@@ -1340,6 +1340,11 @@ function validatePayload(data) {
     errors.push('Preferred language is required.');
   }
 
+  const consultationType = String(data.consultationType || '').trim();
+  if (consultationType && !['Free consultation', 'Paid consultation'].includes(consultationType)) {
+    errors.push('Consultation type is required.');
+  }
+
   const discussionMode = String(data.discussionMode || '').trim();
   if (discussionMode && !['On call', 'On chat'].includes(discussionMode)) {
     errors.push('Discussion mode is required.');
@@ -1357,6 +1362,7 @@ async function loadPortalProfile(env, email) {
       phone_number,
       country,
       place_of_birth,
+      consultation_type,
       preferred_language,
       discussion_mode,
       created_at
@@ -1379,6 +1385,7 @@ async function loadPortalProfile(env, email) {
     phoneNumber: result.phone_number,
     country: result.country,
     placeOfBirth: result.place_of_birth,
+    consultationType: result.consultation_type,
     preferredLanguage: result.preferred_language,
     discussionMode: result.discussion_mode,
     createdAt: result.created_at,
@@ -1579,6 +1586,7 @@ function renderLeadsHtml(rows) {
             row.full_name,
             row.country,
             row.place_of_birth,
+            row.consultation_type,
             row.preferred_language,
             row.discussion_mode,
             row.gender,
@@ -1633,6 +1641,10 @@ function renderLeadsHtml(rows) {
             <div class="meta">
               <span>Place of birth</span>
               <strong>${escapeHtml(row.place_of_birth || 'Not shared')}</strong>
+            </div>
+            <div class="meta">
+              <span>Consultation type</span>
+              <strong>${escapeHtml(row.consultation_type || 'Not shared')}</strong>
             </div>
             <div class="meta">
               <span>Language</span>
@@ -2537,6 +2549,7 @@ export default {
           email_address,
           country,
           place_of_birth,
+          consultation_type,
           preferred_language,
           discussion_mode,
           gender,
@@ -2992,6 +3005,7 @@ export default {
         birth_second,
         country,
         place_of_birth,
+        consultation_type,
         preferred_language,
         discussion_mode,
         phone_number,
@@ -3002,7 +3016,7 @@ export default {
         user_agent,
         cf_country,
         created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         submissionId,
@@ -3018,6 +3032,7 @@ export default {
         Number(payload.birthSecond),
         String(payload.country || '').trim(),
         String(payload.placeOfBirth || '').trim(),
+        String(payload.consultationType || '').trim(),
         String(payload.preferredLanguage || '').trim(),
         String(payload.discussionMode || '').trim(),
         String(payload.phoneNumber || '').trim(),

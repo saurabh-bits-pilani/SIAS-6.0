@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS contact_submissions (
   birth_second INTEGER NOT NULL,
   country TEXT NOT NULL,
   place_of_birth TEXT NOT NULL,
+  consultation_type TEXT NOT NULL DEFAULT '',
   preferred_language TEXT NOT NULL DEFAULT '',
   discussion_mode TEXT NOT NULL DEFAULT '',
   phone_number TEXT NOT NULL,

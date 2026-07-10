@@ -37,6 +37,7 @@ const initialFormData: ContactFormData = {
   birthSecond: '',
   country: '',
   placeOfBirth: '',
+  consultationType: '',
   preferredLanguage: '',
   discussionMode: '',
   phoneNumber: '',
@@ -109,6 +110,7 @@ const seconds: readonly string[] = Array.from(
 );
 const genders: readonly string[] = ['Male', 'Female', 'Other'];
 const meridiems: readonly string[] = ['AM', 'PM'];
+const consultationTypes: readonly string[] = ['Free consultation', 'Paid consultation'];
 const preferredLanguages: readonly string[] = ['English', 'Hindi'];
 const discussionModes: readonly string[] = ['On call', 'On chat'];
 
@@ -228,6 +230,7 @@ const Contact = () => {
     trackEvent('contact_form_submit', {
       country: formData.country,
       has_birth_time: Boolean(formData.birthHour && formData.birthMinute),
+      consultation_type: formData.consultationType,
       preferred_language: formData.preferredLanguage,
       discussion_mode: formData.discussionMode,
     });
@@ -246,6 +249,7 @@ const Contact = () => {
         trackEvent('contact_form_saved', {
           contact_id: result.id,
           country: formData.country,
+          consultation_type: formData.consultationType,
         });
 
         window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
@@ -802,6 +806,29 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                       <div>
+                        <label htmlFor="consultationType" className="mb-2 block text-sm font-medium text-gray-700">
+                          Type of Consultation *
+                        </label>
+                        <select
+                          id="consultationType"
+                          name="consultationType"
+                          value={formData.consultationType}
+                          onChange={handleChange}
+                          required
+                          className="w-full rounded-xl border border-gray-300 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                        >
+                          <option value="">Select Consultation Type</option>
+                          {consultationTypes.map((type) => (
+                            <option key={type} value={type}>
+                              {type}
+                            </option>
+                          ))}
+                        </select>
+                        <p className="mt-2 text-sm leading-6 text-slate-500">
+                          Paid consultation is <strong>Rs 500</strong> and includes remedies plus a proper written report.
+                        </p>
+                      </div>
+                      <div>
                         <label htmlFor="preferredLanguage" className="mb-2 block text-sm font-medium text-gray-700">
                           Preferred Language *
                         </label>
@@ -915,7 +942,7 @@ const Contact = () => {
                   <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 p-4">
                     <p className="text-sm text-blue-800">
                       <strong>Note:</strong> Your birth date, birth time with AM or PM, place of birth,
-                      preferred language, and discussion mode are all saved for consultation follow-up.
+                      consultation type, preferred language, and discussion mode are all saved for consultation follow-up.
                       If the save service is unavailable, we automatically fall back to WhatsApp so your
                       inquiry is not lost.
                     </p>

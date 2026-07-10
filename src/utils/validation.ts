@@ -10,6 +10,7 @@ export interface ContactFormData {
   birthSecond: string;
   country: string;
   placeOfBirth: string;
+  consultationType: string;
   preferredLanguage: string;
   discussionMode: string;
   phoneNumber: string;
@@ -25,6 +26,7 @@ const MONTH_INDEX: Record<string, number> = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[+\d][\d\s\-()]{6,20}$/;
 const VALID_MERIDIEMS = new Set(['AM', 'PM']);
+const VALID_CONSULTATION_TYPES = new Set(['Free consultation', 'Paid consultation']);
 const VALID_LANGUAGES = new Set(['English', 'Hindi']);
 const VALID_DISCUSSION_MODES = new Set(['On call', 'On chat']);
 
@@ -53,6 +55,9 @@ export function validateContactForm(data: ContactFormData): ValidationError[] {
   }
   if (!data.gender) {
     errors.push({ field: 'gender', message: 'Please select a gender.' });
+  }
+  if (!VALID_CONSULTATION_TYPES.has(data.consultationType)) {
+    errors.push({ field: 'consultationType', message: 'Please select your consultation type.' });
   }
   if (!VALID_LANGUAGES.has(data.preferredLanguage)) {
     errors.push({ field: 'preferredLanguage', message: 'Please select your preferred language.' });
@@ -116,6 +121,7 @@ export function buildWhatsappUrl(phone: string, data: ContactFormData): string {
     `Gender: ${data.gender}`,
     '',
     'Contact Details:',
+    `Consultation type: ${data.consultationType}`,
     `Preferred language: ${data.preferredLanguage}`,
     `Discussion mode: ${data.discussionMode}`,
     `Email: ${data.emailAddress}`,
