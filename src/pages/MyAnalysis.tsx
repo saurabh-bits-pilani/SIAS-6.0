@@ -269,16 +269,33 @@ const MyAnalysis = () => {
                 </p>
               </div>
 
-              {portalState.status === 'ready' && (
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="inline-flex items-center justify-center rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Sign Out
-                </button>
-              )}
+              <div className="flex flex-col items-start gap-4 lg:items-end">
+                <div className="relative h-20 w-20 overflow-hidden rounded-full border-4 border-white/90 bg-white shadow-[0_16px_36px_rgba(15,23,42,0.18)] ring-2 ring-amber-200/80">
+                  <img
+                    src="/saurabh-jain-portal-stamp.png"
+                    alt="Saurabh Jain"
+                    className="h-full w-full object-cover object-[center_22%]"
+                    loading="eager"
+                  />
+                </div>
+                <div className="text-left lg:text-right">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-700">
+                    Guided by
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-slate-800">Saurabh Jain</p>
+                </div>
+
+                {portalState.status === 'ready' && (
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="inline-flex items-center justify-center rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </button>
+                )}
+              </div>
             </div>
 
             {portalState.status === 'loading' && (
