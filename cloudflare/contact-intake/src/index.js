@@ -2017,6 +2017,13 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         node.innerHTML = '<strong>' + title + '</strong>' + (detail ? '<code>' + detail.replaceAll('<', '&lt;') + '</code>' : '');
       }
 
+      function clearStatus(elementId) {
+        const node = document.getElementById(elementId);
+        if (!node) return;
+        node.className = 'status';
+        node.innerHTML = '';
+      }
+
       function showToast(tone, title, message) {
         const node = document.getElementById('admin-toast');
         if (!node) return;
@@ -2092,6 +2099,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         const quickLeads = document.getElementById(config.quickId);
         const metaId = config.metaId;
         const readinessId = config.readinessId;
+        const statusToClear = config.statusToClear;
 
         function filteredLeads() {
           const query = (searchInput.value || '').trim().toLowerCase();
@@ -2121,6 +2129,9 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
           const activeLead = leads.find((lead) => lead.id === select.value) || null;
           renderLeadMeta(metaId, activeLead);
           renderLeadReadiness(readinessId, activeLead);
+          if (statusToClear) {
+            clearStatus(statusToClear);
+          }
         }
 
         function fillQuickLeads() {
@@ -2146,15 +2157,26 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
               const activeLead = leads.find((lead) => lead.id === select.value) || null;
               renderLeadMeta(metaId, activeLead);
               renderLeadReadiness(readinessId, activeLead);
+              if (statusToClear) {
+                clearStatus(statusToClear);
+              }
             });
           });
         }
 
-        searchInput.addEventListener('input', fillOptions);
+        searchInput.addEventListener('input', () => {
+          fillOptions();
+          if (statusToClear) {
+            clearStatus(statusToClear);
+          }
+        });
         select.addEventListener('change', () => {
           const activeLead = leads.find((lead) => lead.id === select.value) || null;
           renderLeadMeta(metaId, activeLead);
           renderLeadReadiness(readinessId, activeLead);
+          if (statusToClear) {
+            clearStatus(statusToClear);
+          }
         });
 
         fillQuickLeads();
@@ -2168,6 +2190,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         quickId: 'reportQuickLeads',
         metaId: 'reportLeadMeta',
         readinessId: 'reportReadiness',
+        statusToClear: 'report-status',
       });
 
       createLeadPicker({
@@ -2176,6 +2199,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         quickId: 'linkQuickLeads',
         metaId: 'linkLeadMeta',
         readinessId: 'linkReadiness',
+        statusToClear: 'link-status',
       });
 
       function resetReportDraft() {
@@ -2223,6 +2247,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         try {
           const result = await postJson('/api/admin/reports', payload);
           showStatus('report-status', 'success', 'Analysis saved successfully.', JSON.stringify(result, null, 2));
+          clearStatus('link-status');
           const savedLead = leads.find((lead) => lead.id === payload.submissionId);
           if (savedLead) {
             savedLead.reportSummary = savedLead.reportSummary || { totalReports: 0, visibleReports: 0, pdfReports: 0, latestVisibleTitle: '' };
