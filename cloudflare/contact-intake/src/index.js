@@ -1,3 +1,4 @@
+import fontkit from '@pdf-lib/fontkit';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 const MONTH_INDEX = {
@@ -20,11 +21,16 @@ const PHONE_PATTERN = /^[+\d][\d\s\-()]{6,20}$/;
 const SESSION_LIFETIME_DAYS = 30;
 const DEFAULT_LINK_EXPIRY_HOURS = 72;
 const REPORT_LOGO_URL = 'https://pub-5d1db6c95ad0491c90e15290c1e62703.r2.dev/Logo/Soul%20-Infinity-logo%201.png';
+const REPORT_SCRIPT_FONT_URL = 'https://raw.githubusercontent.com/google/fonts/main/ofl/marckscript/MarckScript-Regular.ttf';
 const REPORT_SITE_URL = 'https://www.soulinfinity.space';
+const REPORT_PROFILE_STAMP_URL = `${REPORT_SITE_URL}/saurabh-jain-pdf-stamp.png`;
 const REPORT_CONTACT_EMAIL = 'soul.infinity.astro@gmail.com';
 const REPORT_CONTACT_PHONE = '+91 90790 53840';
 const REPORT_CONTACT_WHATSAPP = 'https://wa.me/919079053840';
 const textEncoder = new TextEncoder();
+let reportLogoAssetPromise;
+let reportScriptFontPromise;
+let reportProfileStampPromise;
 
 function escapeHtml(value) {
   return String(value)
@@ -312,21 +318,57 @@ function wrapTextToWidth(text, font, size, maxWidth) {
   return lines.length > 0 ? lines : [''];
 }
 
-async function fetchReportLogoBytes() {
+async function fetchBinaryAsset(url) {
   try {
-    const response = await fetch(REPORT_LOGO_URL);
+    const response = await fetch(url);
     if (!response.ok) {
       return null;
     }
-    const contentType = response.headers.get('content-type') || '';
-    const bytes = new Uint8Array(await response.arrayBuffer());
     return {
-      bytes,
-      isPng: contentType.includes('png'),
+      bytes: new Uint8Array(await response.arrayBuffer()),
+      contentType: response.headers.get('content-type') || '',
     };
   } catch {
     return null;
   }
+}
+
+async function fetchReportLogoBytes() {
+  if (!reportLogoAssetPromise) {
+    reportLogoAssetPromise = fetchBinaryAsset(REPORT_LOGO_URL).then((asset) =>
+      asset
+        ? {
+            bytes: asset.bytes,
+            isPng: asset.contentType.includes('png'),
+          }
+        : null,
+    );
+  }
+
+  return reportLogoAssetPromise;
+}
+
+async function fetchReportScriptFontBytes() {
+  if (!reportScriptFontPromise) {
+    reportScriptFontPromise = fetchBinaryAsset(REPORT_SCRIPT_FONT_URL).then((asset) => asset?.bytes || null);
+  }
+
+  return reportScriptFontPromise;
+}
+
+async function fetchReportProfileStampBytes() {
+  if (!reportProfileStampPromise) {
+    reportProfileStampPromise = fetchBinaryAsset(REPORT_PROFILE_STAMP_URL).then((asset) =>
+      asset
+        ? {
+            bytes: asset.bytes,
+            isPng: asset.contentType.includes('png'),
+          }
+        : null,
+    );
+  }
+
+  return reportProfileStampPromise;
 }
 
 function extractResourceEntries(value) {
@@ -339,103 +381,309 @@ function extractResourceEntries(value) {
 
 async function createReportPdf(report, submission) {
   const pdfDoc = await PDFDocument.create();
+  pdfDoc.registerFontkit(fontkit);
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  const scriptFontBytes = await fetchReportScriptFontBytes();
+  const scriptFont = scriptFontBytes ? await pdfDoc.embedFont(scriptFontBytes).catch(() => null) : null;
   const logoAsset = await fetchReportLogoBytes();
+  const profileStampAsset = await fetchReportProfileStampBytes();
   const embeddedLogo = logoAsset
     ? logoAsset.isPng
       ? await pdfDoc.embedPng(logoAsset.bytes)
       : await pdfDoc.embedJpg(logoAsset.bytes)
     : null;
+  const embeddedProfileStamp = profileStampAsset
+    ? profileStampAsset.isPng
+      ? await pdfDoc.embedPng(profileStampAsset.bytes)
+      : await pdfDoc.embedJpg(profileStampAsset.bytes)
+    : null;
 
   const pageWidth = 595.28;
   const pageHeight = 841.89;
   const marginX = 48;
-  const topMargin = 54;
-  const bottomMargin = 52;
+  const topMargin = 52;
+  const bottomMargin = 78;
   const contentWidth = pageWidth - marginX * 2;
   const normalTextSize = 11;
   const lineGap = 5;
+  const palette = {
+    paper: rgb(0.995, 0.984, 0.957),
+    navy: rgb(0.08, 0.118, 0.188),
+    navySoft: rgb(0.17, 0.22, 0.31),
+    gold: rgb(0.79, 0.61, 0.24),
+    goldSoft: rgb(0.96, 0.93, 0.84),
+    sage: rgb(0.79, 0.88, 0.83),
+    blush: rgb(0.98, 0.94, 0.92),
+    ink: rgb(0.16, 0.19, 0.25),
+    muted: rgb(0.37, 0.42, 0.5),
+    line: rgb(0.88, 0.83, 0.74),
+    link: rgb(0.14, 0.42, 0.68),
+  };
+  const sectionAccent = {
+    'Planetary Analysis': rgb(0.92, 0.84, 0.63),
+    'Recommended Remedies': rgb(0.78, 0.88, 0.81),
+    'Mantras And Helpful Links': rgb(0.84, 0.9, 0.95),
+  };
 
   let page;
   let cursorY;
+  let pageNumber = 0;
+  let sectionIndex = 0;
 
-  const createPage = () => {
-    page = pdfDoc.addPage([pageWidth, pageHeight]);
+  const bodyFont = regularFont;
+  const titleFont = boldFont;
+  const accentFont = scriptFont || boldFont;
+
+  const drawWrappedParagraph = (text, options = {}) => {
+    const {
+      x = marginX,
+      width = contentWidth,
+      font = bodyFont,
+      size = normalTextSize,
+      color = palette.ink,
+      lineHeight = size + lineGap,
+      gapAfter = 0,
+    } = options;
+
+    const lines = wrapTextToWidth(text.replaceAll('\n', ' '), font, size, width);
+    for (const line of lines) {
+      ensureSpace(lineHeight + 2);
+      page.drawText(line, {
+        x,
+        y: cursorY,
+        font,
+        size,
+        color,
+      });
+      cursorY -= lineHeight;
+    }
+
+    cursorY -= gapAfter;
+  };
+
+  const drawParagraphCard = (text, options = {}) => {
+    const {
+      outerX = marginX,
+      innerX = marginX + 16,
+      width = contentWidth,
+      font = bodyFont,
+      size = normalTextSize,
+      color = palette.ink,
+      lineHeight = size + lineGap,
+      fillColor = rgb(1, 1, 1),
+      borderColor = palette.line,
+      paddingTop = 14,
+      paddingBottom = 14,
+      gapAfter = 10,
+    } = options;
+
+    const availableWidth = Math.max(40, width - (innerX - outerX) * 2);
+    const lines = wrapTextToWidth(text.replaceAll('\n', ' '), font, size, availableWidth);
+    const boxHeight = paddingTop + paddingBottom + lines.length * lineHeight;
+
+    ensureSpace(boxHeight + 10);
+    page.drawRectangle({
+      x: outerX,
+      y: cursorY - boxHeight + paddingTop,
+      width,
+      height: boxHeight,
+      color: fillColor,
+      borderColor,
+      borderWidth: 1,
+    });
+
+    lines.forEach((line) => {
+      page.drawText(line, {
+        x: innerX,
+        y: cursorY,
+        font,
+        size,
+        color,
+      });
+      cursorY -= lineHeight;
+    });
+
+    cursorY -= paddingBottom + gapAfter;
+  };
+
+  const drawPageChrome = () => {
     page.drawRectangle({
       x: 0,
       y: 0,
       width: pageWidth,
       height: pageHeight,
-      color: rgb(0.995, 0.984, 0.957),
+      color: palette.paper,
     });
     page.drawRectangle({
-      x: marginX,
-      y: pageHeight - 148,
-      width: contentWidth,
-      height: 110,
-      color: rgb(0.09, 0.125, 0.196),
-      borderColor: rgb(0.79, 0.61, 0.24),
-      borderWidth: 1,
+      x: 0,
+      y: pageHeight - 166,
+      width: pageWidth,
+      height: 166,
+      color: palette.navy,
+    });
+    page.drawRectangle({
+      x: 0,
+      y: pageHeight - 174,
+      width: pageWidth,
+      height: 8,
+      color: palette.gold,
+    });
+    page.drawRectangle({
+      x: 0,
+      y: 0,
+      width: pageWidth,
+      height: 52,
+      color: rgb(0.985, 0.972, 0.94),
+    });
+    page.drawLine({
+      start: { x: marginX, y: 56 },
+      end: { x: pageWidth - marginX, y: 56 },
+      thickness: 1,
+      color: palette.line,
+    });
+    page.drawEllipse({
+      x: pageWidth - 76,
+      y: pageHeight - 80,
+      xScale: 56,
+      yScale: 56,
+      color: rgb(1, 1, 1),
+      opacity: 0.08,
+    });
+    page.drawEllipse({
+      x: pageWidth - 104,
+      y: pageHeight - 80,
+      xScale: 28,
+      yScale: 28,
+      color: rgb(1, 1, 1),
+      opacity: 0.08,
+    });
+    page.drawEllipse({
+      x: 74,
+      y: 26,
+      xScale: 20,
+      yScale: 20,
+      color: palette.sage,
+      opacity: 0.35,
     });
 
-    cursorY = pageHeight - topMargin;
-
     if (embeddedLogo) {
-      const logoDims = embeddedLogo.scale(0.24);
+      const logoDims = embeddedLogo.scale(0.23);
       page.drawImage(embeddedLogo, {
-        x: marginX + 16,
-        y: pageHeight - 128,
+        x: marginX,
+        y: pageHeight - 118,
         width: logoDims.width,
         height: logoDims.height,
       });
     }
 
     page.drawText('Soul Infinity', {
-      x: marginX + 90,
-      y: pageHeight - 84,
-      font: boldFont,
-      size: 20,
+      x: marginX + 78,
+      y: pageHeight - 76,
+      font: titleFont,
+      size: 22,
       color: rgb(1, 0.973, 0.91),
     });
     page.drawText('Vedic Astrology And Spiritual Guidance', {
-      x: marginX + 90,
-      y: pageHeight - 104,
-      font: regularFont,
+      x: marginX + 78,
+      y: pageHeight - 98,
+      font: bodyFont,
       size: 10,
-      color: rgb(0.94, 0.91, 0.84),
+      color: rgb(0.95, 0.92, 0.85),
     });
-    page.drawText(REPORT_SITE_URL, {
-      x: marginX + 90,
+    page.drawText('Sacred guidance report', {
+      x: marginX + 78,
       y: pageHeight - 122,
-      font: regularFont,
-      size: 9,
-      color: rgb(0.6, 0.86, 0.98),
+      font: accentFont,
+      size: scriptFont ? 18 : 11,
+      color: rgb(0.95, 0.83, 0.56),
     });
-
     page.drawText(REPORT_CONTACT_EMAIL, {
-      x: pageWidth - marginX - 170,
-      y: pageHeight - 84,
-      font: regularFont,
+      x: pageWidth - marginX - 180,
+      y: pageHeight - 76,
+      font: bodyFont,
       size: 9,
-      color: rgb(0.94, 0.91, 0.84),
+      color: rgb(0.95, 0.92, 0.85),
     });
     page.drawText(REPORT_CONTACT_PHONE, {
-      x: pageWidth - marginX - 170,
-      y: pageHeight - 102,
-      font: regularFont,
+      x: pageWidth - marginX - 180,
+      y: pageHeight - 94,
+      font: bodyFont,
       size: 9,
-      color: rgb(0.94, 0.91, 0.84),
+      color: rgb(0.95, 0.92, 0.85),
     });
-    page.drawText(REPORT_CONTACT_WHATSAPP, {
-      x: pageWidth - marginX - 170,
-      y: pageHeight - 120,
-      font: regularFont,
+    page.drawText(REPORT_SITE_URL, {
+      x: pageWidth - marginX - 180,
+      y: pageHeight - 112,
+      font: bodyFont,
       size: 9,
       color: rgb(0.6, 0.86, 0.98),
     });
 
-    cursorY = pageHeight - 176;
+    if (pageNumber === 1 && embeddedProfileStamp) {
+      const stampSize = 58;
+      const stampX = pageWidth - marginX - 72;
+      const stampY = pageHeight - 134;
+      page.drawEllipse({
+        x: stampX + stampSize / 2,
+        y: stampY + stampSize / 2,
+        xScale: stampSize / 2 + 5,
+        yScale: stampSize / 2 + 5,
+        color: rgb(1, 1, 1),
+        opacity: 0.98,
+        borderColor: palette.gold,
+        borderWidth: 2,
+      });
+      page.drawImage(embeddedProfileStamp, {
+        x: stampX,
+        y: stampY,
+        width: stampSize,
+        height: stampSize,
+      });
+      page.drawText('Saurabh Jain', {
+        x: pageWidth - marginX - 112,
+        y: stampY - 14,
+        font: boldFont,
+        size: 8.5,
+        color: rgb(0.95, 0.92, 0.85),
+      });
+    }
+
+    page.drawText('Prepared with care for your spiritual journey', {
+      x: marginX,
+      y: 34,
+      font: accentFont,
+      size: scriptFont ? 15 : 9,
+      color: palette.gold,
+    });
+    page.drawText(`Website: ${REPORT_SITE_URL} | Email: ${REPORT_CONTACT_EMAIL}`, {
+      x: marginX,
+      y: 20,
+      font: bodyFont,
+      size: 8.5,
+      color: palette.muted,
+    });
+    page.drawText(`${REPORT_CONTACT_PHONE} | WhatsApp: ${REPORT_CONTACT_WHATSAPP}`, {
+      x: marginX,
+      y: 8,
+      font: bodyFont,
+      size: 8.5,
+      color: palette.muted,
+    });
+    page.drawText(`Page ${pageNumber}`, {
+      x: pageWidth - marginX - 34,
+      y: 20,
+      font: boldFont,
+      size: 9,
+      color: palette.navySoft,
+    });
+  };
+
+  const createPage = () => {
+    pageNumber += 1;
+    page = pdfDoc.addPage([pageWidth, pageHeight]);
+    drawPageChrome();
+    cursorY = pageHeight - topMargin - 144;
   };
 
   const ensureSpace = (requiredHeight) => {
@@ -447,9 +695,9 @@ async function createReportPdf(report, submission) {
   const drawLines = (lines, options = {}) => {
     const {
       x = marginX,
-      font = regularFont,
+      font = bodyFont,
       size = normalTextSize,
-      color = rgb(0.16, 0.19, 0.25),
+      color = palette.ink,
       lineHeight = size + lineGap,
       indent = 0,
     } = options;
@@ -470,62 +718,190 @@ async function createReportPdf(report, submission) {
   const drawParagraphBlock = (body, options = {}) => {
     const paragraphs = normalizeWhitespace(body).split('\n\n').filter(Boolean);
     paragraphs.forEach((paragraph, index) => {
-      const lines = wrapTextToWidth(paragraph.replaceAll('\n', ' '), regularFont, normalTextSize, contentWidth - 12);
-      drawLines(lines, options);
-      if (index < paragraphs.length - 1) {
-        cursorY -= 6;
+      if (options.boxed) {
+        drawParagraphCard(paragraph, options);
+      } else {
+        const lines = wrapTextToWidth(paragraph.replaceAll('\n', ' '), bodyFont, normalTextSize, (options.width || contentWidth) - 12);
+        drawLines(lines, options);
+        if (index < paragraphs.length - 1) {
+          cursorY -= 6;
+        }
       }
     });
   };
 
   const drawSectionHeading = (title) => {
-    ensureSpace(42);
+    sectionIndex += 1;
+    ensureSpace(58);
+    const accent = sectionAccent[title] || palette.goldSoft;
     page.drawRectangle({
       x: marginX,
-      y: cursorY - 12,
+      y: cursorY - 18,
       width: contentWidth,
-      height: 26,
-      color: rgb(0.977, 0.949, 0.898),
-      borderColor: rgb(0.89, 0.8, 0.62),
+      height: 40,
+      color: rgb(1, 1, 1),
+      borderColor: palette.line,
       borderWidth: 1,
     });
-    page.drawText(title, {
-      x: marginX + 14,
-      y: cursorY - 3,
-      font: boldFont,
-      size: 13,
-      color: rgb(0.43, 0.31, 0.15),
+    page.drawRectangle({
+      x: marginX,
+      y: cursorY - 18,
+      width: 58,
+      height: 40,
+      color: accent,
     });
-    cursorY -= 38;
+    page.drawText(String(sectionIndex).padStart(2, '0'), {
+      x: marginX + 18,
+      y: cursorY - 2,
+      font: titleFont,
+      size: 13,
+      color: palette.navy,
+    });
+    page.drawText(title, {
+      x: marginX + 74,
+      y: cursorY - 2,
+      font: titleFont,
+      size: 14,
+      color: palette.navySoft,
+    });
+    page.drawText('Guidance section', {
+      x: pageWidth - marginX - 94,
+      y: cursorY + 1,
+      font: accentFont,
+      size: scriptFont ? 11.5 : 8.5,
+      color: palette.gold,
+    });
+    cursorY -= 54;
+  };
+
+  const drawPanelStart = (height = 18) => {
+    ensureSpace(height + 22);
+    page.drawRectangle({
+      x: marginX,
+      y: cursorY - height + 8,
+      width: contentWidth,
+      height,
+      color: rgb(1, 1, 1),
+      borderColor: palette.line,
+      borderWidth: 1,
+      opacity: 0.88,
+    });
+  };
+
+  const drawSummaryGrid = (rows) => {
+    const cardGap = 12;
+    const cardWidth = (contentWidth - cardGap) / 2;
+    const cardHeight = 52;
+
+    for (let index = 0; index < rows.length; index += 2) {
+      ensureSpace(cardHeight + 14);
+      const rowItems = rows.slice(index, index + 2);
+      rowItems.forEach((item, itemIndex) => {
+        const cardX = marginX + itemIndex * (cardWidth + cardGap);
+        page.drawRectangle({
+          x: cardX,
+          y: cursorY - cardHeight + 8,
+          width: cardWidth,
+          height: cardHeight,
+          color: rgb(1, 1, 1),
+          borderColor: palette.line,
+          borderWidth: 1,
+        });
+        page.drawText(item.label.toUpperCase(), {
+          x: cardX + 14,
+          y: cursorY - 10,
+          font: boldFont,
+          size: 8.5,
+          color: palette.gold,
+        });
+        const lines = wrapTextToWidth(item.value, bodyFont, 10.5, cardWidth - 28).slice(0, 2);
+        lines.forEach((line, lineIndex) => {
+          page.drawText(line, {
+            x: cardX + 14,
+            y: cursorY - 26 - lineIndex * 12,
+            font: bodyFont,
+            size: 10.5,
+            color: palette.ink,
+          });
+        });
+      });
+      cursorY -= cardHeight + 12;
+    }
   };
 
   createPage();
-
-  page.drawText(report.title || 'Kundali Analysis', {
+  page.drawText('CONFIDENTIAL CLIENT REPORT', {
     x: marginX,
     y: cursorY,
     font: boldFont,
-    size: 22,
-    color: rgb(0.1, 0.14, 0.2),
+    size: 9.5,
+    color: palette.gold,
   });
-  cursorY -= 26;
+  cursorY -= 24;
 
-  const summaryRows = [
-    `Client: ${submission.full_name || report.fullName || 'Soul Infinity Client'}`,
-    `Email: ${submission.email_address || ''}`,
-    `Phone: ${submission.phone_number || ''}`,
-    `Birth details: ${formatBirthDate(submission) || 'Not shared'}${formatBirthTime(submission) ? ` | ${formatBirthTime(submission)}` : ''}`,
-    `Place of birth: ${submission.place_of_birth || 'Not shared'}${submission.country ? `, ${submission.country}` : ''}`,
-    `Report type: ${report.report_type || 'Kundali Analysis'}`,
-    `Prepared on: ${formatIstTimestamp(report.updated_at || report.created_at)}`,
-  ].filter(Boolean);
-
-  drawLines(summaryRows.map((line) => line.trim()), {
-    size: 10,
-    color: rgb(0.33, 0.38, 0.46),
-    lineHeight: 16,
+  const titleLines = wrapTextToWidth(report.title || 'Kundali Analysis', titleFont, 24, contentWidth - 18);
+  titleLines.forEach((line) => {
+    page.drawText(line, {
+      x: marginX,
+      y: cursorY,
+      font: titleFont,
+      size: 24,
+      color: palette.navy,
+    });
+    cursorY -= 28;
   });
-  cursorY -= 8;
+
+  page.drawText(`Prepared for ${submission.full_name || report.fullName || 'Soul Infinity Client'}`, {
+    x: marginX,
+    y: cursorY,
+    font: accentFont,
+    size: scriptFont ? 18 : 11,
+    color: palette.gold,
+  });
+  cursorY -= 28;
+
+  page.drawRectangle({
+    x: marginX,
+    y: cursorY - 48,
+    width: contentWidth,
+    height: 56,
+    color: palette.blush,
+    borderColor: rgb(0.95, 0.81, 0.78),
+    borderWidth: 1,
+  });
+  wrapTextToWidth(
+    'This document brings together your planetary reading, spiritual remedies, and curated mantra or blog guidance in one beautifully organized report.',
+    bodyFont,
+    10.5,
+    contentWidth - 32,
+  ).forEach((line, index) => {
+    page.drawText(line, {
+      x: marginX + 16,
+      y: cursorY - 14 - index * 14,
+      font: bodyFont,
+      size: 10.5,
+      color: palette.navySoft,
+    });
+  });
+  cursorY -= 74;
+
+  drawSummaryGrid([
+    { label: 'Client', value: submission.full_name || report.fullName || 'Soul Infinity Client' },
+    { label: 'Report type', value: report.report_type || 'Kundali Analysis' },
+    { label: 'Email', value: submission.email_address || 'Not shared' },
+    { label: 'Phone', value: submission.phone_number || 'Not shared' },
+    {
+      label: 'Birth details',
+      value: `${formatBirthDate(submission) || 'Not shared'}${formatBirthTime(submission) ? ` | ${formatBirthTime(submission)}` : ''}`,
+    },
+    {
+      label: 'Birth place',
+      value: `${submission.place_of_birth || 'Not shared'}${submission.country ? `, ${submission.country}` : ''}`,
+    },
+    { label: 'Prepared on', value: formatIstTimestamp(report.updated_at || report.created_at) || 'Not available' },
+    { label: 'Guidance by', value: 'Soul Infinity Vedic Astrology Team' },
+  ]);
+  cursorY -= 6;
 
   const sections = [
     ['Planetary Analysis', report.analysis_body || report.report_body],
@@ -539,45 +915,93 @@ async function createReportPdf(report, submission) {
     }
 
     drawSectionHeading(title);
+    drawPanelStart(18);
+    cursorY -= 8;
 
     if (title === 'Mantras And Helpful Links') {
       const entries = extractResourceEntries(body);
       entries.forEach((entry) => {
-        const wrapped = wrapTextToWidth(`• ${entry}`, regularFont, normalTextSize, contentWidth - 8);
+        const wrapped = wrapTextToWidth(entry, bodyFont, normalTextSize, contentWidth - 70);
+        const entryHeight = Math.max(26, wrapped.length * 18 + 14);
+        ensureSpace(entryHeight + 8);
+        page.drawRectangle({
+          x: marginX,
+          y: cursorY - entryHeight + 10,
+          width: contentWidth,
+          height: entryHeight,
+          color: rgb(1, 1, 1),
+          borderColor: palette.line,
+          borderWidth: 1,
+        });
+        page.drawRectangle({
+          x: marginX + 12,
+          y: cursorY - 7,
+          width: 10,
+          height: 10,
+          color: palette.gold,
+        });
         drawLines(wrapped, {
+          x: marginX + 30,
           size: normalTextSize,
-          color: rgb(0.16, 0.19, 0.25),
+          color: entry.includes('http') ? palette.link : palette.ink,
           lineHeight: 18,
         });
-        cursorY -= 4;
+        cursorY -= 10;
       });
     } else {
-      drawParagraphBlock(body);
+      drawParagraphBlock(body, {
+        boxed: true,
+        outerX: marginX,
+        innerX: marginX + 16,
+        width: contentWidth,
+        size: normalTextSize,
+        color: palette.ink,
+        lineHeight: 18,
+        gapAfter: 10,
+      });
     }
 
-    cursorY -= 12;
+    cursorY -= 14;
   }
 
-  ensureSpace(42);
-  page.drawLine({
-    start: { x: marginX, y: cursorY },
-    end: { x: pageWidth - marginX, y: cursorY },
-    thickness: 1,
-    color: rgb(0.88, 0.83, 0.74),
+  ensureSpace(112);
+  page.drawRectangle({
+    x: marginX,
+    y: cursorY - 72,
+    width: contentWidth,
+    height: 84,
+    color: rgb(1, 1, 1),
+    borderColor: palette.line,
+    borderWidth: 1,
   });
-  cursorY -= 20;
-  drawLines(
-    [
-      'Soul Infinity | Vedic Astrology And Spiritual Guidance',
-      `Website: ${REPORT_SITE_URL} | Email: ${REPORT_CONTACT_EMAIL} | Phone: ${REPORT_CONTACT_PHONE}`,
-      `WhatsApp: ${REPORT_CONTACT_WHATSAPP}`,
-    ],
-    {
-      size: 9,
-      color: rgb(0.4, 0.42, 0.48),
-      lineHeight: 14,
-    },
-  );
+  wrapTextToWidth(
+    'May this guidance support clarity, balance, and confident next steps.',
+    accentFont,
+    scriptFont ? 17 : 10,
+    contentWidth - 36,
+  ).forEach((line, index) => {
+    page.drawText(line, {
+      x: marginX + 18,
+      y: cursorY - 8 - index * (scriptFont ? 18 : 12),
+      font: accentFont,
+      size: scriptFont ? 17 : 10,
+      color: palette.gold,
+    });
+  });
+  wrapTextToWidth(
+    'For follow-up consultation, remedies clarification, or future reports, reconnect through Soul Infinity.',
+    bodyFont,
+    10,
+    contentWidth - 36,
+  ).forEach((line, index) => {
+    page.drawText(line, {
+      x: marginX + 18,
+      y: cursorY - 32 - index * 12,
+      font: bodyFont,
+      size: 10,
+      color: palette.muted,
+    });
+  });
 
   pdfDoc.setTitle(report.title || 'Soul Infinity Analysis Report');
   pdfDoc.setAuthor('Soul Infinity');
@@ -1264,6 +1688,36 @@ function renderLeadsHtml(rows) {
 }
 
 function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
+  const reportSummaryByEmail = {};
+
+  reports.forEach((report) => {
+    const emailKey = normalizeEmail(report.email_address);
+    if (!emailKey) {
+      return;
+    }
+
+    if (!reportSummaryByEmail[emailKey]) {
+      reportSummaryByEmail[emailKey] = {
+        totalReports: 0,
+        visibleReports: 0,
+        pdfReports: 0,
+        latestVisibleTitle: '',
+      };
+    }
+
+    const summary = reportSummaryByEmail[emailKey];
+    summary.totalReports += 1;
+    if (report.visible_to_client) {
+      summary.visibleReports += 1;
+      if (!summary.latestVisibleTitle) {
+        summary.latestVisibleTitle = report.title || '';
+      }
+    }
+    if (report.pdf_enabled) {
+      summary.pdfReports += 1;
+    }
+  });
+
   const leadDataJson = safeJsonForScript(
     leads.map((lead) => ({
       id: lead.id,
@@ -1272,6 +1726,12 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
       phoneNumber: lead.phone_number || '',
       createdAt: lead.created_at,
       createdAtLabel: formatIstTimestamp(lead.created_at),
+      reportSummary: reportSummaryByEmail[normalizeEmail(lead.email_address)] || {
+        totalReports: 0,
+        visibleReports: 0,
+        pdfReports: 0,
+        latestVisibleTitle: '',
+      },
     })),
   );
 
@@ -1333,16 +1793,32 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
       .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
       button { border: 0; border-radius: 999px; background: var(--navy); color: white; padding: 12px 18px; font-weight: 700; cursor: pointer; }
       button.secondary { background: #f0e5d0; color: #5b4b32; border: 1px solid #d5c7ae; }
+      .button-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
       .status { margin-top: 14px; padding: 14px 16px; border-radius: 16px; display: none; }
       .status.show { display: block; }
       .status.success { background: #ecfdf5; color: var(--green); border: 1px solid #a7f3d0; }
       .status.error { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
       .status code { display: block; white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 8px; }
+      .status p { margin: 8px 0 0; color: inherit; font-size: 13px; line-height: 1.6; }
       .picker-meta { margin-top: 8px; color: var(--muted); font-size: 13px; }
+      .picker-meta strong { color: #174a7a; }
+      .readiness-note { margin-top: 10px; padding: 12px 14px; border-radius: 14px; font-size: 13px; line-height: 1.6; border: 1px solid #d5c7ae; }
+      .readiness-note.ready { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+      .readiness-note.warning { background: #fff7ed; color: #9a3412; border-color: #fdba74; }
       .quick-leads { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
       .quick-lead { border: 1px solid #cfe0f5; background: #f7fbff; color: #174a7a; border-radius: 999px; padding: 8px 12px; font-size: 13px; cursor: pointer; }
       .quick-lead:hover { background: #edf6ff; }
       .helper { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+      .helper-inline { margin-top: 10px; color: #6b7280; font-size: 13px; line-height: 1.6; }
+      .save-badge { display: none; margin-top: 12px; padding: 10px 14px; border-radius: 14px; background: #eff6ff; border: 1px solid #bfdbfe; color: #174a7a; font-size: 13px; line-height: 1.6; }
+      .save-badge.show { display: block; }
+      .save-badge strong { display: block; margin-bottom: 4px; }
+      .toast { position: fixed; right: 22px; bottom: 22px; max-width: 380px; padding: 16px 18px; border-radius: 18px; background: #111827; color: white; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.26); display: none; z-index: 50; }
+      .toast.show { display: block; }
+      .toast.success { background: linear-gradient(135deg, #0f766e, #115e59); }
+      .toast.error { background: linear-gradient(135deg, #b91c1c, #991b1b); }
+      .toast strong { display: block; margin-bottom: 6px; font-size: 14px; }
+      .toast p { margin: 0; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.92); }
       table { width: 100%; border-collapse: collapse; }
       th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); font-size: 14px; }
       th { background: #fbf6ed; color: #6e5530; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
@@ -1386,6 +1862,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
                   <option value="">Select a saved lead</option>
                 </select>
                 <div id="reportLeadMeta" class="picker-meta"></div>
+                <div id="reportReadiness" class="readiness-note warning">Select a lead to check whether a visible report is ready for the client portal.</div>
               </div>
               <div class="row">
                 <div class="field">
@@ -1432,8 +1909,13 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
                 <label><input type="checkbox" name="pdfEnabled" style="width:auto; margin-right:8px;" /> Generate downloadable PDF for client</label>
                 <div class="helper">Only reports with this checked will show a PDF download button inside the secure client portal.</div>
               </div>
-              <button type="submit">Save Analysis</button>
+              <div class="button-row">
+                <button type="submit">Save Analysis</button>
+                <button type="button" id="reset-report-form" class="secondary">Start New Report</button>
+              </div>
+              <div class="helper-inline">After save, the report text will clear so you can immediately start the next report without mixing old content.</div>
             </form>
+            <div id="report-reset-note" class="save-badge"></div>
             <div id="report-status" class="status"></div>
           </div>
         </section>
@@ -1457,6 +1939,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
                   <option value="">Select a saved lead</option>
                 </select>
                 <div id="linkLeadMeta" class="picker-meta"></div>
+                <div id="linkReadiness" class="readiness-note warning">Select a lead first. A secure link should be generated only after at least one report is visible to the client.</div>
               </div>
               <div class="row">
                 <div class="field">
@@ -1505,10 +1988,12 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         </div>
       </section>
     </div>
+    <div id="admin-toast" class="toast" role="status" aria-live="polite"></div>
 
     <script>
       const leads = ${leadDataJson};
       const recentThreshold = Date.now() - 5 * 24 * 60 * 60 * 1000;
+      let toastTimer;
 
       async function postJson(url, payload) {
         const response = await fetch(url, {
@@ -1530,6 +2015,18 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         const node = document.getElementById(elementId);
         node.className = 'status show ' + tone;
         node.innerHTML = '<strong>' + title + '</strong>' + (detail ? '<code>' + detail.replaceAll('<', '&lt;') + '</code>' : '');
+      }
+
+      function showToast(tone, title, message) {
+        const node = document.getElementById('admin-toast');
+        if (!node) return;
+        node.className = 'toast show ' + tone;
+        node.innerHTML = '<strong>' + title + '</strong><p>' + escapeInlineHtml(message || '') + '</p>';
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => {
+          node.className = 'toast';
+          node.innerHTML = '';
+        }, 4200);
       }
 
       function buildLeadLabel(lead) {
@@ -1556,11 +2053,45 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         metaNode.textContent = 'Selected: ' + lead.fullName + ' | ' + lead.emailAddress + (lead.phoneNumber ? ' | ' + lead.phoneNumber : '');
       }
 
+      function renderLeadReadiness(nodeId, lead) {
+        const node = document.getElementById(nodeId);
+        if (!node) return;
+        if (!lead) {
+          node.className = 'readiness-note warning';
+          node.textContent = 'Select a lead to check whether a visible report is ready for the client portal.';
+          return;
+        }
+
+        const summary = lead.reportSummary || {};
+        const visibleReports = Number(summary.visibleReports || 0);
+        const totalReports = Number(summary.totalReports || 0);
+        const pdfReports = Number(summary.pdfReports || 0);
+        const latestVisibleTitle = String(summary.latestVisibleTitle || '').trim();
+
+        if (visibleReports > 0) {
+          node.className = 'readiness-note ready';
+          node.innerHTML = '<strong>Portal ready.</strong> ' +
+            visibleReports + ' visible report' + (visibleReports === 1 ? '' : 's') +
+            ' found for this client' +
+            (latestVisibleTitle ? '. Latest visible report: ' + escapeInlineHtml(latestVisibleTitle) + '.' : '.') +
+            (pdfReports > 0 ? ' PDF download is enabled on at least one report.' : '');
+          return;
+        }
+
+        node.className = 'readiness-note warning';
+        node.innerHTML = '<strong>Portal not ready yet.</strong> ' +
+          (totalReports > 0
+            ? 'This client has saved report drafts, but none are marked visible to the client.'
+            : 'No saved report exists for this client yet.') +
+          ' Save the analysis and tick "Visible to client now" before generating the secure link.';
+      }
+
       function createLeadPicker(config) {
         const searchInput = document.getElementById(config.searchId);
         const select = document.getElementById(config.selectId);
         const quickLeads = document.getElementById(config.quickId);
         const metaId = config.metaId;
+        const readinessId = config.readinessId;
 
         function filteredLeads() {
           const query = (searchInput.value || '').trim().toLowerCase();
@@ -1589,6 +2120,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
 
           const activeLead = leads.find((lead) => lead.id === select.value) || null;
           renderLeadMeta(metaId, activeLead);
+          renderLeadReadiness(readinessId, activeLead);
         }
 
         function fillQuickLeads() {
@@ -1613,6 +2145,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
               select.value = button.getAttribute('data-lead-id') || '';
               const activeLead = leads.find((lead) => lead.id === select.value) || null;
               renderLeadMeta(metaId, activeLead);
+              renderLeadReadiness(readinessId, activeLead);
             });
           });
         }
@@ -1621,10 +2154,12 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         select.addEventListener('change', () => {
           const activeLead = leads.find((lead) => lead.id === select.value) || null;
           renderLeadMeta(metaId, activeLead);
+          renderLeadReadiness(readinessId, activeLead);
         });
 
         fillQuickLeads();
         fillOptions();
+        renderLeadReadiness(readinessId, leads.find((lead) => lead.id === select.value) || null);
       }
 
       createLeadPicker({
@@ -1632,6 +2167,7 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         selectId: 'submissionId',
         quickId: 'reportQuickLeads',
         metaId: 'reportLeadMeta',
+        readinessId: 'reportReadiness',
       });
 
       createLeadPicker({
@@ -1639,6 +2175,42 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         selectId: 'linkSubmissionId',
         quickId: 'linkQuickLeads',
         metaId: 'linkLeadMeta',
+        readinessId: 'linkReadiness',
+      });
+
+      function resetReportDraft() {
+        const reportForm = document.getElementById('report-form');
+        if (!reportForm) return;
+        const titleInput = document.getElementById('title');
+        const reportTypeInput = document.getElementById('reportType');
+        const analysisBody = document.getElementById('analysisBody');
+        const remediesBody = document.getElementById('remediesBody');
+        const resourceLinksBody = document.getElementById('resourceLinksBody');
+        const adminNotes = document.getElementById('adminNotes');
+        const visibleCheckbox = reportForm.querySelector('input[name="visibleToClient"]');
+        const pdfCheckbox = reportForm.querySelector('input[name="pdfEnabled"]');
+
+        if (titleInput) titleInput.value = '';
+        if (reportTypeInput) reportTypeInput.value = 'Kundali Analysis';
+        if (analysisBody) analysisBody.value = '';
+        if (remediesBody) remediesBody.value = '';
+        if (resourceLinksBody) resourceLinksBody.value = '';
+        if (adminNotes) adminNotes.value = '';
+        if (visibleCheckbox) visibleCheckbox.checked = false;
+        if (pdfCheckbox) pdfCheckbox.checked = false;
+      }
+
+      function showResetNote(message) {
+        const note = document.getElementById('report-reset-note');
+        if (!note) return;
+        note.className = 'save-badge show';
+        note.innerHTML = '<strong>Ready for next report</strong>' + escapeInlineHtml(message);
+      }
+
+      document.getElementById('reset-report-form').addEventListener('click', () => {
+        resetReportDraft();
+        showResetNote('The report fields were cleared. Select the next lead or continue with the current one.');
+        showToast('success', 'Fresh draft started', 'The previous text has been cleared and the form is ready for your next report.');
       });
 
       document.getElementById('report-form').addEventListener('submit', async (event) => {
@@ -1651,8 +2223,29 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         try {
           const result = await postJson('/api/admin/reports', payload);
           showStatus('report-status', 'success', 'Analysis saved successfully.', JSON.stringify(result, null, 2));
+          const savedLead = leads.find((lead) => lead.id === payload.submissionId);
+          if (savedLead) {
+            savedLead.reportSummary = savedLead.reportSummary || { totalReports: 0, visibleReports: 0, pdfReports: 0, latestVisibleTitle: '' };
+            savedLead.reportSummary.totalReports += 1;
+            if (payload.visibleToClient) {
+              savedLead.reportSummary.visibleReports += 1;
+              savedLead.reportSummary.latestVisibleTitle = payload.title || savedLead.reportSummary.latestVisibleTitle;
+            }
+            if (payload.pdfEnabled) {
+              savedLead.reportSummary.pdfReports += 1;
+            }
+            renderLeadReadiness('reportReadiness', savedLead);
+            renderLeadReadiness('linkReadiness', savedLead);
+          }
+          resetReportDraft();
+          const visibilityMessage = payload.visibleToClient
+            ? 'The report is live in the client portal now.'
+            : 'The report was saved as a draft, so the client portal will still show no analysis until you tick "Visible to client now".';
+          showResetNote('Saved for ' + (result.emailAddress || 'the selected client') + '. ' + visibilityMessage + ' The text areas were cleared so you can start a new report safely.');
+          showToast('success', 'Report saved', visibilityMessage);
         } catch (error) {
           showStatus('report-status', 'error', 'Unable to save analysis.', error instanceof Error ? error.message : String(error));
+          showToast('error', 'Save failed', error instanceof Error ? error.message : String(error));
         }
       });
 
@@ -1660,12 +2253,29 @@ function renderPortalAdminHtml(leads, reports, defaultPortalBase) {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
         const payload = Object.fromEntries(form.entries());
+        const selectedLead = leads.find((lead) => lead.id === payload.submissionId) || null;
+
+        if (!selectedLead) {
+          showStatus('link-status', 'error', 'Lead selection is required.', 'Please select a saved lead before generating the secure link.');
+          showToast('error', 'Lead not selected', 'Choose the client first, then generate the secure portal link.');
+          return;
+        }
+
+        const visibleReports = Number(selectedLead.reportSummary?.visibleReports || 0);
+        if (visibleReports < 1) {
+          showStatus('link-status', 'error', 'Visible report required first.', 'Save the analysis and tick "Visible to client now" before generating the client access link.');
+          renderLeadReadiness('linkReadiness', selectedLead);
+          showToast('error', 'Portal not ready', 'This client does not have a visible report yet, so the secure link was stopped.');
+          return;
+        }
 
         try {
           const result = await postJson('/api/admin/access-links', payload);
           showStatus('link-status', 'success', 'Secure link generated.', result.portalLink || JSON.stringify(result, null, 2));
+          showToast('success', 'Secure link ready', 'The client access link has been generated and is shown on the screen.');
         } catch (error) {
           showStatus('link-status', 'error', 'Unable to generate link.', error instanceof Error ? error.message : String(error));
+          showToast('error', 'Link generation failed', error instanceof Error ? error.message : String(error));
         }
       });
     </script>
