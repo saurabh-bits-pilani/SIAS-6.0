@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS contact_submissions (
   consultation_type TEXT NOT NULL DEFAULT '',
   preferred_language TEXT NOT NULL DEFAULT '',
   discussion_mode TEXT NOT NULL DEFAULT '',
+  admin_comments TEXT NOT NULL DEFAULT '',
+  archived_at TEXT NOT NULL DEFAULT '',
   phone_number TEXT NOT NULL,
   email_address TEXT NOT NULL,
   message_text TEXT NOT NULL DEFAULT '',

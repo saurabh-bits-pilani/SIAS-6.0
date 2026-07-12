@@ -48,6 +48,20 @@ function safeJsonForScript(value) {
     .replaceAll('&', '\\u0026');
 }
 
+function toWhatsAppDigits(value) {
+  return String(value || '').replace(/[^\d]/g, '');
+}
+
+function buildLeadWhatsAppUrl(row) {
+  const digits = toWhatsAppDigits(row.phone_number);
+  if (!digits) {
+    return '';
+  }
+
+  const message = `Hi ${String(row.full_name || '').trim()}, this is Soul Infinity regarding your consultation request.`;
+  return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+}
+
 function unauthorizedResponse() {
   return new Response('Authentication required.', {
     status: 401,
@@ -1578,6 +1592,8 @@ async function createPortalSession(env, submissionId, emailAddress) {
 }
 
 function renderLeadsHtml(rows) {
+  const archivedCount = rows.filter((row) => row.archived_at).length;
+  const activeCount = rows.length - archivedCount;
   const leadCards = rows
     .map(
       (row) => `
@@ -1591,6 +1607,7 @@ function renderLeadsHtml(rows) {
             row.discussion_mode,
             row.gender,
             row.message_text,
+            row.admin_comments,
             row.source_page,
           ]
             .filter(Boolean)
@@ -1605,13 +1622,23 @@ function renderLeadsHtml(rows) {
             .filter(Boolean)
             .join(' ')
             .toLowerCase(),
-        )}">
+        )}" data-lead-id="${escapeHtml(row.id)}" data-archived="${row.archived_at ? 'true' : 'false'}">
           <div class="lead-top">
             <div>
               <p class="lead-time">${escapeHtml(formatIstTimestamp(row.created_at))}</p>
               <h3>${escapeHtml(row.full_name)}</h3>
+              ${
+                row.archived_at
+                  ? `<div class="lead-badge">Archived on ${escapeHtml(formatIstTimestamp(row.archived_at))}</div>`
+                  : ''
+              }
             </div>
             <div class="lead-actions">
+              ${
+                buildLeadWhatsAppUrl(row)
+                  ? `<a href="${escapeHtml(buildLeadWhatsAppUrl(row))}" target="_blank" rel="noopener noreferrer">WhatsApp</a>`
+                  : ''
+              }
               <a href="tel:${escapeHtml(row.phone_number)}">Call</a>
               <a href="mailto:${escapeHtml(row.email_address)}">Email</a>
             </div>
@@ -1668,6 +1695,17 @@ function renderLeadsHtml(rows) {
             <span>Message</span>
             <p>${escapeHtml(row.message_text || 'No additional message shared.')}</p>
           </div>
+
+          <div class="admin-box">
+            <span>Admin Comments</span>
+            <textarea class="admin-comment-input" placeholder="Example: No need to follow up further.">${escapeHtml(row.admin_comments || '')}</textarea>
+            <div class="admin-actions">
+              <button type="button" class="admin-btn save-comment-btn" data-lead-id="${escapeHtml(row.id)}">Save Comment</button>
+              <button type="button" class="admin-btn secondary archive-toggle-btn" data-lead-id="${escapeHtml(row.id)}" data-next-action="${row.archived_at ? 'unarchive' : 'archive'}">
+                ${row.archived_at ? 'Unarchive Lead' : 'Archive Lead'}
+              </button>
+            </div>
+          </div>
         </article>`
     )
     .join('');
@@ -1709,11 +1747,15 @@ function renderLeadsHtml(rows) {
       .search-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
       .search-input { flex: 1 1 300px; min-width: 0; border: 1px solid #d8cdb8; border-radius: 999px; padding: 12px 16px; background: white; font: inherit; }
       .results-chip { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 16px; border-radius: 999px; background: #fbf6ed; border: 1px solid #e7dcc7; color: #5f4b28; font-weight: 700; white-space: nowrap; }
+      .filter-row { display: flex; flex-wrap: wrap; gap: 10px; }
+      .filter-chip { border: 1px solid #d7c8ae; background: white; color: #5f4b28; border-radius: 999px; padding: 10px 14px; font: inherit; font-weight: 700; cursor: pointer; }
+      .filter-chip.active { background: #243042; color: #fff7ea; border-color: #243042; }
       .lead-list { display: grid; gap: 18px; padding: 20px; }
       .lead-card { border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(180deg, #fffefb 0%, #fdf7ec 100%); padding: 20px; box-shadow: 0 14px 30px rgba(120, 93, 47, 0.06); }
       .lead-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
       .lead-top h3 { margin: 8px 0 0; font-size: 24px; line-height: 1.15; color: #243042; }
       .lead-time { margin: 0; color: #8a6a39; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+      .lead-badge { display: inline-flex; margin-top: 10px; padding: 7px 12px; border-radius: 999px; background: #f5e7d6; color: #8a5a20; font-size: 12px; font-weight: 700; }
       .lead-actions { display: flex; gap: 10px; flex-wrap: wrap; }
       .lead-actions a { display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 999px; color: #243042; text-decoration: none; border: 1px solid #d7c8ae; background: rgba(255,255,255,0.95); font-weight: 700; }
       .lead-actions a:hover { background: #fbf6ed; }
@@ -1726,6 +1768,16 @@ function renderLeadsHtml(rows) {
       .message-box { margin-top: 14px; padding: 16px; border-radius: 18px; background: #fffaf1; border: 1px solid #ead8b8; }
       .message-box span { display: block; color: #8b6f45; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
       .message-box p { margin: 8px 0 0; color: #2f3948; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+      .admin-box { margin-top: 14px; padding: 16px; border-radius: 18px; background: #fffdfa; border: 1px solid #e9dcc2; }
+      .admin-box span { display: block; color: #8b6f45; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+      .admin-comment-input { width: 100%; min-height: 96px; margin-top: 10px; border: 1px solid #d8cdb8; border-radius: 16px; padding: 12px 14px; font: inherit; resize: vertical; background: white; color: #243042; }
+      .admin-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+      .admin-btn { border: 1px solid #243042; background: #243042; color: #fff7ea; border-radius: 999px; padding: 10px 16px; font: inherit; font-weight: 700; cursor: pointer; }
+      .admin-btn.secondary { background: white; color: #243042; border-color: #d7c8ae; }
+      .admin-btn:disabled { opacity: 0.6; cursor: wait; }
+      .admin-status { color: var(--muted); font-size: 13px; }
+      .admin-status.success { color: #0f766e; }
+      .admin-status.error { color: #b91c1c; }
       .pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 0 20px 20px; }
       .pagination-meta { color: var(--muted); font-size: 14px; }
       .pagination-actions { display: flex; gap: 10px; }
@@ -1754,6 +1806,14 @@ function renderLeadsHtml(rows) {
             <strong>${rows.length}</strong>
           </div>
           <div class="stat">
+            <span>Active leads</span>
+            <strong>${activeCount}</strong>
+          </div>
+          <div class="stat">
+            <span>Archived leads</span>
+            <strong>${archivedCount}</strong>
+          </div>
+          <div class="stat">
             <span>Data order</span>
             <strong>Newest first</strong>
           </div>
@@ -1770,6 +1830,11 @@ function renderLeadsHtml(rows) {
             <div class="search-bar">
               <input id="leadSearch" class="search-input" type="search" placeholder="Search by name, email, phone, country, birth place, message..." />
               <div id="resultsChip" class="results-chip">Showing ${rows.length} records</div>
+            </div>
+            <div class="filter-row">
+              <button type="button" class="filter-chip active" data-filter="active">Active</button>
+              <button type="button" class="filter-chip" data-filter="archived">Archived</button>
+              <button type="button" class="filter-chip" data-filter="all">All</button>
             </div>
           </div>
         </div>
@@ -1799,21 +1864,51 @@ function renderLeadsHtml(rows) {
             const searchInput = document.getElementById('leadSearch');
             const leadCards = Array.from(document.querySelectorAll('.lead-card'));
             const resultsChip = document.getElementById('resultsChip');
+            const filterButtons = Array.from(document.querySelectorAll('.filter-chip'));
             const paginationMeta = document.getElementById('paginationMeta');
             const prevPage = document.getElementById('prevPage');
             const nextPage = document.getElementById('nextPage');
             const pageSize = 10;
             let currentPage = 1;
+            let activeFilter = 'active';
+
+            function syncCardArchiveState(card, archivedAt) {
+              const isArchived = Boolean(archivedAt);
+              card.dataset.archived = isArchived ? 'true' : 'false';
+
+              let badge = card.querySelector('.lead-badge');
+              const titleBlock = card.querySelector('.lead-top > div');
+              if (isArchived) {
+                if (!badge) {
+                  badge = document.createElement('div');
+                  badge.className = 'lead-badge';
+                  titleBlock.appendChild(badge);
+                }
+                badge.textContent = 'Archived on ' + archivedAt;
+              } else if (badge) {
+                badge.remove();
+              }
+
+              const archiveButton = card.querySelector('.archive-toggle-btn');
+              if (archiveButton) {
+                archiveButton.dataset.nextAction = isArchived ? 'unarchive' : 'archive';
+                archiveButton.textContent = isArchived ? 'Unarchive Lead' : 'Archive Lead';
+              }
+            }
 
             function filteredCards() {
               const query = (searchInput.value || '').trim().toLowerCase();
-              if (!query) return leadCards;
+              return leadCards.filter((card) => {
+                const isArchived = card.dataset.archived === 'true';
+                if (activeFilter === 'active' && isArchived) return false;
+                if (activeFilter === 'archived' && !isArchived) return false;
+                if (!query) return true;
 
-              const isEmailLike = query.includes('@') || query.includes('.');
-              const hasDigits = /[0-9+]/.test(query);
-              const datasetKey = isEmailLike || hasDigits ? 'searchContact' : 'searchPrimary';
-
-              return leadCards.filter((card) => (card.dataset[datasetKey] || '').includes(query));
+                const isEmailLike = query.includes('@') || query.includes('.');
+                const hasDigits = /[0-9+]/.test(query);
+                const datasetKey = isEmailLike || hasDigits ? 'searchContact' : 'searchPrimary';
+                return (card.dataset[datasetKey] || '').includes(query);
+              });
             }
 
             function renderCards() {
@@ -1844,9 +1939,72 @@ function renderLeadsHtml(rows) {
               nextPage.disabled = currentPage >= totalPages || matches.length === 0;
             }
 
+            async function manageLead(card, action, adminComments) {
+              const leadId = card.dataset.leadId;
+              const payload = { submissionId: leadId, action };
+              if (action === 'comment') {
+                payload.adminComments = adminComments;
+              }
+
+              const status = card.querySelector('.admin-status');
+              const saveButton = card.querySelector('.save-comment-btn');
+              const archiveButton = card.querySelector('.archive-toggle-btn');
+              if (status) {
+                status.className = 'admin-status';
+                status.textContent = 'Saving...';
+              }
+              [saveButton, archiveButton].forEach((button) => {
+                if (button) button.disabled = true;
+              });
+
+              try {
+                const response = await fetch('/api/admin/leads/manage', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  credentials: 'same-origin',
+                  body: JSON.stringify(payload),
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                  throw new Error(result.error || 'Unable to update this lead.');
+                }
+
+                if (action === 'comment' && status) {
+                  status.className = 'admin-status success';
+                  status.textContent = 'Comment saved.';
+                }
+
+                if ((action === 'archive' || action === 'unarchive') && status) {
+                  syncCardArchiveState(card, result.archivedAt ? new Date(result.archivedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) : '');
+                  status.className = 'admin-status success';
+                  status.textContent = action === 'archive' ? 'Lead archived.' : 'Lead moved back to active.';
+                  currentPage = 1;
+                  renderCards();
+                }
+              } catch (error) {
+                if (status) {
+                  status.className = 'admin-status error';
+                  status.textContent = error.message || 'Unable to update this lead.';
+                }
+              } finally {
+                [saveButton, archiveButton].forEach((button) => {
+                  if (button) button.disabled = false;
+                });
+              }
+            }
+
             searchInput.addEventListener('input', () => {
               currentPage = 1;
               renderCards();
+            });
+
+            filterButtons.forEach((button) => {
+              button.addEventListener('click', () => {
+                activeFilter = button.dataset.filter || 'active';
+                filterButtons.forEach((item) => item.classList.toggle('active', item === button));
+                currentPage = 1;
+                renderCards();
+              });
             });
 
             prevPage.addEventListener('click', () => {
@@ -1862,6 +2020,29 @@ function renderLeadsHtml(rows) {
               if (currentPage < totalPages) {
                 currentPage += 1;
                 renderCards();
+              }
+            });
+
+            leadCards.forEach((card) => {
+              const textarea = card.querySelector('.admin-comment-input');
+              const saveButton = card.querySelector('.save-comment-btn');
+              const archiveButton = card.querySelector('.archive-toggle-btn');
+              const actions = card.querySelector('.admin-actions');
+
+              const status = document.createElement('span');
+              status.className = 'admin-status';
+              actions.appendChild(status);
+
+              if (saveButton) {
+                saveButton.addEventListener('click', () => {
+                  manageLead(card, 'comment', textarea ? textarea.value : '');
+                });
+              }
+
+              if (archiveButton) {
+                archiveButton.addEventListener('click', () => {
+                  manageLead(card, archiveButton.dataset.nextAction || 'archive');
+                });
               }
             });
 
@@ -2552,6 +2733,8 @@ export default {
           consultation_type,
           preferred_language,
           discussion_mode,
+          admin_comments,
+          archived_at,
           gender,
           message_text,
           source_page,
@@ -2568,6 +2751,78 @@ export default {
           'Cache-Control': 'no-store',
         },
       });
+    }
+
+    if (url.pathname === '/api/admin/leads/manage' && request.method === 'POST') {
+      if (!isAuthorized(request, env)) {
+        return unauthorizedResponse();
+      }
+
+      let payload;
+      try {
+        payload = await request.json();
+      } catch {
+        return json({ error: 'Invalid JSON body.' }, 400, corsHeaders);
+      }
+
+      const submissionId = String(payload.submissionId || '').trim();
+      const action = String(payload.action || '').trim();
+
+      if (!submissionId) {
+        return json({ error: 'Lead selection is required.' }, 400, corsHeaders);
+      }
+
+      const existingLead = await env.CONTACT_DB.prepare(
+        `SELECT id, archived_at, admin_comments FROM contact_submissions WHERE id = ? LIMIT 1`
+      )
+        .bind(submissionId)
+        .first();
+
+      if (!existingLead) {
+        return json({ error: 'Selected lead was not found.' }, 404, corsHeaders);
+      }
+
+      if (action === 'comment') {
+        const adminComments = String(payload.adminComments || '').trim().slice(0, 5000);
+        await env.CONTACT_DB.prepare(
+          `UPDATE contact_submissions SET admin_comments = ? WHERE id = ?`
+        )
+          .bind(adminComments, submissionId)
+          .run();
+
+        return json(
+          {
+            ok: true,
+            action,
+            submissionId,
+            adminComments,
+          },
+          200,
+          corsHeaders,
+        );
+      }
+
+      if (action === 'archive' || action === 'unarchive') {
+        const archivedAt = action === 'archive' ? new Date().toISOString() : '';
+        await env.CONTACT_DB.prepare(
+          `UPDATE contact_submissions SET archived_at = ? WHERE id = ?`
+        )
+          .bind(archivedAt, submissionId)
+          .run();
+
+        return json(
+          {
+            ok: true,
+            action,
+            submissionId,
+            archivedAt,
+          },
+          200,
+          corsHeaders,
+        );
+      }
+
+      return json({ error: 'Unsupported admin action.' }, 400, corsHeaders);
     }
 
     if (url.pathname === '/admin/portal' && request.method === 'GET') {
