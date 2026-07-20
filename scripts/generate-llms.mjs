@@ -1,10 +1,7 @@
 #!/usr/bin/env node
-// Regenerate public/llms.txt — the short LLM-discovery manifest per
-// llmstxt.org spec. Lists canonical URLs grouped by section so AI
-// assistants can quickly map the site without scraping every page.
-//
-// Generated rather than hand-authored so it stays in sync with the
-// canonical origin (VITE_SITE_URL) and the route list in prerender.mjs.
+// Regenerate llms.txt for both the deployed site and the local reference copy.
+// The file is built from the canonical route inventory so it stays in sync
+// with every published page, including blog posts discovered at build time.
 
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -12,159 +9,382 @@ import { fileURLToPath } from 'node:url';
 import { ROUTES } from './prerender.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT_PATH = path.resolve(__dirname, '..', 'public', 'llms.txt');
+const ROOT = path.resolve(__dirname, '..');
+const OUT_PATHS = [
+  path.join(ROOT, 'public', 'llms.txt'),
+  path.join(ROOT, 'LLMs-text', 'llms.text'),
+];
+const BLOG_MANIFEST_PATH = path.join(ROOT, 'src', 'data', 'blog-manifest.json');
 
 const SITE_URL =
-  (process.env.VITE_SITE_URL || process.env.VITE_SITE_ORIGIN || 'https://soul-infinity-liard.vercel.app').replace(/\/$/, '');
+  (process.env.VITE_SITE_URL || process.env.VITE_SITE_ORIGIN || 'https://www.soulinfinity.space').replace(/\/$/, '');
+
+const BUILD_DATE = new Date();
+const UPDATED_ON = BUILD_DATE.toISOString().slice(0, 10);
 
 function abs(route) {
   return route === '/' ? `${SITE_URL}/` : `${SITE_URL}${route}`;
 }
 
-/**
- * Per-route descriptor: short sentence describing the page's purpose.
- * Grouped into four sections per the llmstxt.org convention.
- */
-const DESCRIPTIONS = {
-  '/': 'Home — certified Vedic astrologer Saurabh Jain, 4.9★ rated in Ahmedabad.',
-  '/cosmic-guide': 'About Saurabh Jain — credentials, methodology, and practice philosophy.',
-  '/services': 'Overview of all 12 consultation services across Vedic, Western, and Healing categories.',
-  '/services/vedic-astrology': 'Vedic astrology service category — Parashari, BNN, KP, Astro Vastu, Gemstones.',
-  '/services/western-astrology': 'Western astrology service category — Tarot, Symbol Analysis, Past Life Regression.',
-  '/services/healing': 'Spiritual healing service category — Reiki, Pranic, Theta, Crystal.',
-  '/services/vedic-astrology/parashari-jyotish': 'Parashari Jyotish consultation — classical Vedic birth-chart analysis.',
-  '/services/vedic-astrology/bnn': 'Bhrigu Nandi Nadi astrology — precise predictions from palm-leaf tradition.',
-  '/services/vedic-astrology/kp-astrology': 'KP Astrology consultation — Krishnamurti Paddhati sub-lord method.',
-  '/services/vedic-astrology/astro-vastu': 'Astro Vastu — birth-chart-informed home and office Vastu analysis.',
-  '/services/vedic-astrology/gem-stone': 'Gemstone consultation — birth-chart-based recommendations.',
-  '/services/western-astrology/tarot-card': 'Tarot Card Reading consultation.',
-  '/services/western-astrology/symbol-analysis': 'Astrological Symbol Analysis consultation.',
-  '/services/western-astrology/past-life-regression': 'Past Life Regression therapy.',
-  '/services/healing/reiki': 'Reiki Healing session by a certified practitioner.',
-  '/services/healing/pranic-healing': 'Pranic Healing session — energy cleansing and chakra work.',
-  '/services/healing/theta-healing': 'Theta Healing session — deep meditative belief reprogramming.',
-  '/services/healing/crystal-healing': 'Crystal Healing session — chakra balancing with crystal therapy.',
-  '/cosmic-podcast': 'Cosmic Podcast — Vedic astrology and spiritual wisdom episodes.',
-  '/blog': 'Blog index — articles on Vedic astrology, remedies, and spiritual growth.',
-  '/blog/mantra': 'Navagraha mantras — meanings, benefits, and chanting methodology.',
-  '/panchang': 'Today’s Panchang — Tithi, Nakshatra, Yoga, Karana, and muhurat timings.',
-  '/planets': 'Planets — the nine planets (Navagraha) in Vedic astrology: Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu. Learn each planet’s significance, signs ruled, exaltation, debilitation, and remedies.',
-  '/planets/jupiter': "Guru (Jupiter), the great benefic of wisdom, dharma, and expansion. Mantras, gemstone (Yellow Sapphire), remedies, and Vedic traditions for awakening Guru's blessings in your life.",
-  '/planets/ketu': "Ketu, the South Node of the Moon and shadow lord of liberation, intuition, and spiritual release. Mantras, gemstone (Cat's Eye), remedies, and Vedic traditions for awakening Ketu's wisdom in your life.",
-  '/planets/mars': "Mangala (Mars), the planet of courage, strength, and determination. Mantras, gemstone, remedies, and traditions for awakening Mangala's blessings in your life.",
-  '/planets/mercury': "Budh (Mercury), the planet of intellect, communication, and adaptability. Mantras, gemstone, remedies, and traditions for awakening Budh's blessings in your life.",
-  '/planets/sun': 'Surya (Sun) — karaka of the soul, authority, and father. Mantras, 12-house significations, exaltation in Aries, debilitation in Libra, Ruby (Manikya) gemstone guidance, and six-year Mahadasha themes.',
-  '/planets/moon': 'Chandra (Moon) — karaka of the mind, emotions, and mother. Mantras, 12-house significations, exaltation in Taurus, debilitation in Scorpio, Pearl (Moti) gemstone guidance, and ten-year Mahadasha themes.',
-  '/planets/rahu': "Rahu, the North Node of the Moon and shadow lord of ambition, illusion, and transformation. Mantras, gemstone (Hessonite), remedies, and Vedic traditions for awakening Rahu's wisdom in your life.",
-  '/planets/saturn': "Shani (Saturn), the lord of karma, discipline, and dharmic maturity. Mantras, gemstone (Blue Sapphire), Sade Sati guidance, and Vedic remedies for awakening Shani's blessings in your life.",
-  '/planets/venus': "Shukra (Venus), the lord of love, beauty, art, and refinement. Mantras, gemstone (Diamond), remedies, and Vedic traditions for awakening Shukra's blessings in your life.",
-  '/zodiac': 'Zodiac Signs — the twelve zodiac signs (Rashi) in Vedic astrology: Aries through Pisces. Explore each sign’s ruling planet, element, nature, character traits, and life themes.',
-  '/zodiac/aries': 'Mesha Rashi (Aries) in Vedic astrology — detailed guide covering characteristics, planetary ruler Mangala (Mars), strengths, challenges, Mesha in 12 houses, classical remedies, mantras, and FAQ by Soul Infinity Astro Solutions Ahmedabad.',
-  '/nakshatra/rohini': 'Complete Vedic guide to Moon in Rohini nakshatra, mythology, characteristics, effects in the 12 houses, mantras, classical remedies, and FAQ by Soul Infinity Astro Solutions.',
-  '/dosha': 'Doshas — common doshas in Vedic astrology: Mangal Dosha, Kaal Sarp Dosh, Sade Sati, Pitru Dosh, and Nadi Dosh. Understand what they mean, how they affect life, and their traditional remedies.',
-  '/dosha/mangal': 'Mangal Dosha in Vedic astrology, also called Kuja Dosha or Manglik Dosha. Learn house placements, marriage effects, cancellation rules, remedies, and Mars guidance by Soul Infinity.',
-  '/gallery': 'Photo gallery — consultations, healing sessions, and sacred spaces.',
-  '/gallery/remedies': 'Vedic planetary remedies — mantras, gemstones, rituals.',
-  '/gallery/pitra-dosh': 'Pitra Dosh — causes, symptoms, and Vedic remedies for ancestral karma.',
-  '/contact': 'Contact — book a consultation via phone, WhatsApp, email, or visit in Ahmedabad.',
-  '/privacy': 'Privacy policy.',
-  '/blog/finding-a-vedic-astrologer-in-ahmedabad': 'How to find a genuine Vedic astrologer in Ahmedabad — practical guide to credentials, K.N. Rao Institute / Bharatiya Vidya Bhavan lineage, classical Jyotish training, questions to ask before booking, red flags to avoid, and what a real consultation should feel like. By Saurabh Jain, Soul Infinity Astro Solutions.',
-  '/blog/shani-jayanti-2026': 'Shani Jayanti 2026 guide by Saurabh Jain, meaning, rituals, karmic philosophy, zodiac insights, and Lord Shani mythology. Published May 16, 2026.',
-  '/blog/sade-sati-effects-remedies': 'Sade Sati effects and remedies: the three phases of Saturn transit over natal Moon, real effects on career, health and relationships, and classical Vedic remedies.',
-  '/blog/saturn-karma-two-souls': 'Vedic astrology case study: Saturn Mahadasha activating 12th house karma across two generations. BNN analysis of yogas, dasha timing, and remedies.',
-  '/blog/can-ai-do-vedic-astrology': 'Can AI do Vedic astrology? A K.N. Rao Institute trained Jyotishi explains what ChatGPT gets wrong in kundali analysis and what only a human astrologer can see in classical Jyotish.',
+function titleCaseSlug(slug) {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+const STATIC_META = {
+  '/': {
+    title: 'Home',
+    desc: 'Homepage for Soul Infinity, introducing Saurabh Jain, consultation categories, testimonials, FAQs, and ways to begin a Vedic astrology or healing journey.',
+  },
+  '/services': {
+    title: 'All Services',
+    desc: 'Overview of all consultation categories and service offerings across Vedic astrology, Western astrology, and spiritual healing.',
+  },
+  '/services/vedic-astrology': {
+    title: 'Vedic Astrology Services',
+    desc: 'Hub for Vedic astrology consultations, including Parashari Jyotish, BNN, KP Astrology, Astro Vastu, and gemstone guidance.',
+  },
+  '/services/western-astrology': {
+    title: 'Western Astrology Services',
+    desc: 'Hub for tarot card reading, astrological symbol analysis, and past life regression sessions.',
+  },
+  '/services/healing': {
+    title: 'Healing Services',
+    desc: 'Hub for Reiki, Pranic Healing, Theta Healing, and Crystal Healing sessions designed for emotional, energetic, and spiritual balance.',
+  },
+  '/services/vedic-astrology/parashari-jyotish': {
+    title: 'Parashari Jyotish Consultation',
+    desc: 'Classical Vedic birth-chart consultation using houses, grahas, dashas, yogas, and divisional charts for life guidance and timing.',
+  },
+  '/services/vedic-astrology/bnn': {
+    title: 'Bhrigu Nandi Nadi Consultation',
+    desc: 'BNN astrology consultation focused on karmic patterns, event timing, and prediction windows using the Sage Bhrigu lineage.',
+  },
+  '/services/vedic-astrology/kp-astrology': {
+    title: 'KP Astrology Consultation',
+    desc: 'Krishnamurti Paddhati consultation for precise timing, sub-lord analysis, and question-specific predictive astrology.',
+  },
+  '/services/vedic-astrology/astro-vastu': {
+    title: 'Astro Vastu Consultation',
+    desc: 'Astro Vastu consultation combining birth-chart insight with home and office directional energy corrections.',
+  },
+  '/services/vedic-astrology/gem-stone': {
+    title: 'Gemstone Consultation',
+    desc: 'Birth-chart-based gemstone guidance covering suitability, wearing method, timing, and safety before recommending any stone.',
+  },
+  '/services/western-astrology/tarot-card': {
+    title: 'Tarot Card Reading',
+    desc: 'Tarot consultation for clarity around relationships, career, inner blocks, and near-term decision-making.',
+  },
+  '/services/western-astrology/symbol-analysis': {
+    title: 'Astrological Symbol Analysis',
+    desc: 'Interpretive consultation focused on symbols, recurring archetypes, and intuitive pattern-reading within a client’s life journey.',
+  },
+  '/services/western-astrology/past-life-regression': {
+    title: 'Past Life Regression',
+    desc: 'Past life regression session exploring repeating emotional themes, karmic relationships, and memory-based healing work.',
+  },
+  '/services/healing/reiki': {
+    title: 'Reiki Healing',
+    desc: 'Reiki healing session for relaxation, emotional release, energy balance, and spiritual support.',
+  },
+  '/services/healing/pranic-healing': {
+    title: 'Pranic Healing',
+    desc: 'Pranic Healing consultation focused on cleansing, energizing, chakra balancing, and stress relief support.',
+  },
+  '/services/healing/theta-healing': {
+    title: 'Theta Healing',
+    desc: 'Theta Healing session using meditative awareness and belief-work for deeper emotional and spiritual transformation.',
+  },
+  '/services/healing/crystal-healing': {
+    title: 'Crystal Healing',
+    desc: 'Crystal Healing and chakra-balancing session using curated crystals for emotional, energetic, and spiritual support.',
+  },
+  '/cosmic-guide': {
+    title: 'Cosmic Guide',
+    desc: 'About page for Saurabh Jain, including credentials, training, practice philosophy, client trust markers, and consultation approach.',
+  },
+  '/cosmic-podcast': {
+    title: 'Cosmic Podcast',
+    desc: 'Podcast hub for spiritual and astrological audio content from Soul Infinity.',
+  },
+  '/blog': {
+    title: 'Blog',
+    desc: 'Blog index for articles on Vedic astrology, remedies, nakshatras, planets, healing, and spiritual education.',
+  },
+  '/blog/mantra': {
+    title: 'Mantra Guide',
+    desc: 'Guide to sacred mantras, their meaning, benefits, chanting method, and devotional use in spiritual practice.',
+  },
+  '/blog/shani-jayanti-2026': {
+    title: 'Shani Jayanti 2026',
+    desc: 'Festival guide explaining Shani Jayanti 2026 significance, rituals, remedies, discipline, and devotional observance.',
+  },
+  '/blog/saturn-karma-two-souls': {
+    title: 'Saturn Karma Case Study',
+    desc: 'Case-study article examining Saturn, karma, dasha timing, and intergenerational patterns through chart interpretation.',
+  },
+  '/blog/can-ai-do-vedic-astrology': {
+    title: 'Can AI Do Vedic Astrology?',
+    desc: 'Editorial article explaining the limits of AI-led kundli reading and the human judgment required in classical Jyotish.',
+  },
+  '/gallery': {
+    title: 'Gallery',
+    desc: 'Gallery of consultations, events, healing spaces, and visual moments from the Soul Infinity practice.',
+  },
+  '/gallery/remedies': {
+    title: 'Remedies Gallery',
+    desc: 'Visual and educational page on Vedic remedies such as mantras, gemstones, rituals, and supportive spiritual practices.',
+  },
+  '/gallery/pitra-dosh': {
+    title: 'Pitra Dosh Guide',
+    desc: 'Focused page on Pitra Dosh, including causes, symptoms, ancestral karma themes, and remedy-oriented guidance.',
+  },
+  '/panchang': {
+    title: 'Daily Panchang',
+    desc: 'Daily Panchang page showing tithi, nakshatra, yoga, karana, and muhurat information for practical spiritual timing.',
+  },
+  '/planets': {
+    title: 'Planets Hub',
+    desc: 'Hub for the Navagraha, introducing the nine planetary forces of Vedic astrology and their meanings, remedies, and symbolism.',
+  },
+  '/planets/jupiter': {
+    title: 'Guru (Jupiter)',
+    desc: 'Planet page for Jupiter, covering wisdom, dharma, blessings, gemstone guidance, remedies, and devotional references.',
+  },
+  '/planets/ketu': {
+    title: 'Ketu',
+    desc: 'Planet page for Ketu, covering detachment, moksha, intuition, karmic release, remedies, and spiritual symbolism.',
+  },
+  '/planets/mars': {
+    title: 'Mangala (Mars)',
+    desc: 'Planet page for Mars, covering courage, discipline, vitality, conflict, remedies, and spiritual strengthening.',
+  },
+  '/planets/mercury': {
+    title: 'Budh (Mercury)',
+    desc: 'Planet page for Mercury, covering intellect, speech, adaptability, gemstone guidance, and balancing remedies.',
+  },
+  '/planets/moon': {
+    title: 'Chandra (Moon)',
+    desc: 'Planet page for the Moon, covering mind, emotions, mother, intuition, remedies, gemstone guidance, and house meanings.',
+  },
+  '/planets/rahu': {
+    title: 'Rahu',
+    desc: 'Planet page for Rahu, covering desire, ambition, illusion, transformation, remedies, and karmic lessons.',
+  },
+  '/planets/saturn': {
+    title: 'Shani (Saturn)',
+    desc: 'Planet page for Saturn, covering karma, discipline, maturity, Sade Sati, remedies, and life lessons through time.',
+  },
+  '/planets/sun': {
+    title: 'Surya (Sun)',
+    desc: 'Planet page for the Sun, covering soul, father, authority, vitality, remedies, gemstone guidance, and house meanings.',
+  },
+  '/planets/venus': {
+    title: 'Shukra (Venus)',
+    desc: 'Planet page for Venus, covering love, beauty, refinement, relationships, remedies, and spiritualized enjoyment.',
+  },
+  '/zodiac': {
+    title: 'Zodiac Hub',
+    desc: 'Hub for the twelve rashis of Vedic astrology, summarizing ruling planets, elements, temperaments, and life themes.',
+  },
+  '/nakshatra/rohini': {
+    title: 'Rohini Nakshatra',
+    desc: 'Long-form guide to Rohini Nakshatra, including mythology, personality, house placements, compatibility, and remedies.',
+  },
+  '/dosha': {
+    title: 'Dosha Hub',
+    desc: 'Hub for major Vedic astrology doshas, covering definition, symptoms, karmic meaning, and possible remedies.',
+  },
+  '/dosha/mangal': {
+    title: 'Mangal Dosha',
+    desc: 'Guide to Mangal Dosha, including house placements, relationship effects, cancellation rules, and remedies.',
+  },
+  '/dosha/saade-sati': {
+    title: 'Saade Sati',
+    desc: 'Guide to Saade Sati, covering Saturn’s 7.5-year Moon transit, phases, effects, and practical remedies.',
+  },
+  '/dosha/kaal-sarp': {
+    title: 'Kaal Sarp Dosha',
+    desc: 'Guide to Kaal Sarp Dosha, including Rahu-Ketu enclosure, life effects, misconceptions, and remedies.',
+  },
+  '/dosha/nadi': {
+    title: 'Nadi Dosha',
+    desc: 'Guide to Nadi Dosha, especially for kundli matching, marriage compatibility, cancellation, and remedies.',
+  },
+  '/dosha/pitru': {
+    title: 'Pitru Dosha',
+    desc: 'Guide to Pitru Dosha, focusing on ancestral patterns, karmic indications, family effects, and remedies.',
+  },
+  '/contact': {
+    title: 'Contact',
+    desc: 'Contact page with booking options, WhatsApp, phone, email, address, and consultation inquiry flow.',
+  },
+  '/my-analysis': {
+    title: 'My Analysis Portal',
+    desc: 'Private client portal entry point for Soul Infinity astrology analysis and consultation follow-up access.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy',
+    desc: 'Privacy policy describing how Soul Infinity handles personal details, birth data, and client communications.',
+  },
 };
 
-const SECTIONS = [
-  {
-    heading: 'About',
-    routes: ['/', '/cosmic-guide'],
-  },
-  {
-    heading: 'Services',
-    routes: [
-      '/services',
-      '/services/vedic-astrology',
-      '/services/vedic-astrology/parashari-jyotish',
-      '/services/vedic-astrology/bnn',
-      '/services/vedic-astrology/kp-astrology',
-      '/services/vedic-astrology/astro-vastu',
-      '/services/vedic-astrology/gem-stone',
-      '/services/western-astrology',
-      '/services/western-astrology/tarot-card',
-      '/services/western-astrology/symbol-analysis',
-      '/services/western-astrology/past-life-regression',
-      '/services/healing',
-      '/services/healing/reiki',
-      '/services/healing/pranic-healing',
-      '/services/healing/theta-healing',
-      '/services/healing/crystal-healing',
-    ],
-  },
-  {
-    heading: 'Learn',
-    routes: ['/planets', '/planets/jupiter', '/planets/ketu', '/planets/mars', '/planets/mercury', '/planets/rahu', '/planets/saturn', '/planets/venus', '/zodiac', '/dosha', '/dosha/mangal'],
-  },
-  {
-    heading: 'Content',
-    routes: [
-      '/blog',
-      '/blog/mantra',
-      '/blog/shani-jayanti-2026',
-      '/blog/sade-sati-effects-remedies',
-      '/blog/finding-a-vedic-astrologer-in-ahmedabad',
-      '/cosmic-podcast',
-      '/panchang',
-      '/gallery',
-      '/gallery/remedies',
-      '/gallery/pitra-dosh',
-    ],
-  },
-  {
-    heading: 'Contact',
-    routes: ['/contact'],
-  },
-];
+const ZODIAC_META = {
+  aries: { title: 'Mesha Rashi (Aries)', ruler: 'Mars' },
+  taurus: { title: 'Vrishabha Rashi (Taurus)', ruler: 'Venus' },
+  gemini: { title: 'Mithuna Rashi (Gemini)', ruler: 'Mercury' },
+  cancer: { title: 'Karka Rashi (Cancer)', ruler: 'Moon' },
+  leo: { title: 'Simha Rashi (Leo)', ruler: 'Sun' },
+  virgo: { title: 'Kanya Rashi (Virgo)', ruler: 'Mercury' },
+  libra: { title: 'Tula Rashi (Libra)', ruler: 'Venus' },
+  scorpio: { title: 'Vrischika Rashi (Scorpio)', ruler: 'Mars' },
+  sagittarius: { title: 'Dhanu Rashi (Sagittarius)', ruler: 'Jupiter' },
+  capricorn: { title: 'Makara Rashi (Capricorn)', ruler: 'Saturn' },
+  aquarius: { title: 'Kumbha Rashi (Aquarius)', ruler: 'Saturn' },
+  pisces: { title: 'Meena Rashi (Pisces)', ruler: 'Jupiter' },
+};
 
-function routeLine(route) {
-  const url = abs(route);
-  const desc = DESCRIPTIONS[route] ?? '';
-  const label = DESCRIPTIONS[route]?.split(' — ')[0] ?? route;
-  return `- [${label}](${url}): ${desc}`;
+function routeMeta(route, blogManifest) {
+  if (STATIC_META[route]) return STATIC_META[route];
+
+  if (route.startsWith('/blog/')) {
+    const slug = route.replace('/blog/', '');
+    const blog = blogManifest[slug];
+    if (blog) {
+      return {
+        title: blog.title,
+        desc: blog.excerpt || `Article about ${titleCaseSlug(slug)} from Soul Infinity.`,
+      };
+    }
+  }
+
+  if (route.startsWith('/zodiac/')) {
+    const slug = route.replace('/zodiac/', '');
+    const info = ZODIAC_META[slug];
+    if (info) {
+      return {
+        title: info.title,
+        desc: `${info.title} guide covering personality, strengths, challenges, remedies, mantra, and house-wise effects in Vedic astrology. Ruled by ${info.ruler}.`,
+      };
+    }
+  }
+
+  return {
+    title: titleCaseSlug(route.split('/').filter(Boolean).pop() || 'Home'),
+    desc: `Reference page for ${route} on Soul Infinity.`,
+  };
+}
+
+function formatLine(route, meta) {
+  return `- [${meta.title}](${abs(route)}): ${meta.desc}`;
+}
+
+function sortBlogRoutes(routes, blogManifest) {
+  return [...routes].sort((a, b) => {
+    const aMeta = blogManifest[a.replace('/blog/', '')];
+    const bMeta = blogManifest[b.replace('/blog/', '')];
+    const aDate = aMeta?.date || aMeta?.publishedAt || '';
+    const bDate = bMeta?.date || bMeta?.publishedAt || '';
+    return bDate.localeCompare(aDate);
+  });
 }
 
 async function main() {
-  // Warn if any route from the canonical list is missing a description.
-  const missing = ROUTES.filter((r) => r !== '/404' && !DESCRIPTIONS[r]);
+  const publishedRoutes = ROUTES.filter((route) => route !== '/404');
+  const blogManifest = JSON.parse(await fs.readFile(BLOG_MANIFEST_PATH, 'utf-8'));
+
+  const sections = [
+    {
+      heading: 'About',
+      routes: ['/', '/cosmic-guide'],
+    },
+    {
+      heading: 'Services',
+      routes: publishedRoutes.filter((route) => route === '/services' || route.startsWith('/services/')),
+    },
+    {
+      heading: 'Learning Pages',
+      routes: publishedRoutes.filter(
+        (route) =>
+          route === '/panchang' ||
+          route === '/planets' ||
+          route.startsWith('/planets/') ||
+          route === '/zodiac' ||
+          route.startsWith('/zodiac/') ||
+          route === '/nakshatra/rohini' ||
+          route === '/dosha' ||
+          route.startsWith('/dosha/'),
+      ),
+    },
+    {
+      heading: 'Articles',
+      routes: [
+        '/blog',
+        ...sortBlogRoutes(
+          publishedRoutes.filter((route) => route.startsWith('/blog/') && route !== '/blog/mantra'),
+          blogManifest,
+        ),
+      ],
+    },
+    {
+      heading: 'Resources',
+      routes: ['/blog/mantra', '/cosmic-podcast', '/gallery', '/gallery/remedies', '/gallery/pitra-dosh'],
+    },
+    {
+      heading: 'Client Pages',
+      routes: ['/contact', '/my-analysis', '/privacy'],
+    },
+  ];
+
+  const missing = publishedRoutes.filter((route) => !sections.some((section) => section.routes.includes(route)));
   if (missing.length > 0) {
-    console.warn(`[llms] missing DESCRIPTIONS for: ${missing.join(', ')}`);
+    console.warn(`[llms] routes missing from sections: ${missing.join(', ')}`);
   }
 
-  const sectionBlocks = SECTIONS.map((section) => {
-    const lines = section.routes
-      .filter((r) => ROUTES.includes(r))
-      .map(routeLine);
-    return `## ${section.heading}\n\n${lines.join('\n')}`;
-  });
+  const sectionBlocks = sections
+    .map((section) => {
+      const uniqueRoutes = [...new Set(section.routes)].filter((route) => publishedRoutes.includes(route));
+      const lines = uniqueRoutes.map((route) => formatLine(route, routeMeta(route, blogManifest)));
+      return `## ${section.heading}\n\n${lines.join('\n')}`;
+    })
+    .join('\n\n');
 
-  const body = `# Soul Infinity
+  const body = `# Soul Infinity\n
+> Soul Infinity is a Vedic astrology, spiritual guidance, and healing practice based in Ahmedabad, Gujarat, India. The practice is led by Saurabh Jain, a certified astrologer trained in classical systems including Parashari Jyotish, Bhrigu Nandi Nadi, and KP Astrology.
 
-> Vedic astrology, tarot, and spiritual healing practice in Ahmedabad, Gujarat, India. Founded by certified astrologer Saurabh Jain (K.N. Rao Institute; M.Tech, MBA, M.Phil). 4.9★ from 65 Google reviews.
+## Overview
 
-${sectionBlocks.join('\n\n')}
-
-## Metadata
-
-- Location: Ahmedabad, Gujarat, India
-- Founder: Saurabh Jain (Certified Professional Astrologer, K.N. Rao Institute)
-- Contact: +91-9079053840 · soul.infinity.astro@gmail.com
-- Languages: English, Hindi, Gujarati
 - Canonical site: ${SITE_URL}
-- Sitemap: ${SITE_URL}/sitemap.xml
+- Last updated: ${UPDATED_ON}
+- Coverage: ${publishedRoutes.length} published routes
+- Founder: Saurabh Jain
+- Credentials: Certified Professional Astrologer, K.N. Rao Institute; M.Tech, MBA, M.Phil
+- Languages: English, Hindi, Gujarati
+- Contact: +91 90790 53840 · soul.infinity.astro@gmail.com
+- Location: Ahmedabad, Gujarat, India
+
+## Key Facts
+
+- Soul Infinity offers consultation paths across Vedic astrology, Western astrology, and healing.
+- The service catalog includes Parashari Jyotish, BNN, KP Astrology, Astro Vastu, gemstone guidance, tarot, symbol analysis, past life regression, Reiki, Pranic Healing, Theta Healing, and Crystal Healing.
+- The learning library covers planets, zodiac signs, doshas, nakshatras, blog articles, Panchang, mantras, and remedy-focused guidance.
+- The site includes both public educational pages and a private client analysis portal.
+
+${sectionBlocks}
 `;
 
-  await fs.writeFile(OUT_PATH, body, 'utf-8');
-  console.log(`Generated public/llms.txt (${body.length} bytes, origin: ${SITE_URL})`);
+  await Promise.all(
+    OUT_PATHS.map(async (outPath) => {
+      await fs.mkdir(path.dirname(outPath), { recursive: true });
+      await fs.writeFile(outPath, body, 'utf-8');
+    }),
+  );
+
+  console.log(`Generated llms index for ${publishedRoutes.length} route(s) at ${OUT_PATHS.join(', ')}`);
 }
 
 main().catch((err) => {
