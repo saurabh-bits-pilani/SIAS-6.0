@@ -12,6 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT_PATHS = [
   path.join(ROOT, 'public', 'llms.txt'),
+  path.join(ROOT, 'public', 'llms.text'),
   path.join(ROOT, 'LLMs-text', 'llms.text'),
 ];
 const BLOG_MANIFEST_PATH = path.join(ROOT, 'src', 'data', 'blog-manifest.json');

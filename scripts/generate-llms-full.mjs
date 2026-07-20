@@ -13,6 +13,7 @@ const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 const OUT_PATHS = [
   path.join(DIST, 'llms-full.txt'),
+  path.join(DIST, 'llms-full.text'),
   path.join(ROOT, 'LLMs-text', 'llms-full.text'),
 ];
 
